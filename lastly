@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Boom shakala.mp3", details: "🎬 Kulir 100 Degrees (2015) / 🎙️ Bobo Shashi, Benny Dayal, Abishek & Nrithya / 🎼 Bobo Shashi / 📝 Pa. Vijay" },
 { file: "Ayyayo Nenju.mp3", details: "🎬 Aadukalam (2011) / 🎙️ G. V. Prakash Kumar, S. P. Balasubrahmanyam, S. P. B. Charan, Prashanthini / 🎼 G. V. Prakash Kumar / 📝 Snehan" },
 { file: "Otha Sollaala.mp3", details: "🎬 Aadukalam (2011) / 🎙️ G. V. Prakash Kumar, Velmurugan / 🎼 G. V. Prakash Kumar / 📝 Snehan" },
 { file: "Yathe Yathe.mp3", details: "🎬 Aadukalam (2011) / 🎙️ G. V. Prakash Kumar / 🎼 G. V. Prakash Kumar / 📝 Snehan" },
