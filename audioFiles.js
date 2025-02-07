@@ -4,6 +4,14 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Pattu Poove.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Nila Kayum Neram.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ Mano, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Nadanthaal.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Kadalile Thanimayil.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ Nagoor Haniffa, Mano / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Kadalile Ezhumpura.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Chemparuthi Poovu.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ Mano, K. S. Chithra, Dr. Bhanumathi / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Chalakku Chalakku Selai.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ Mano, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Boom shakala.mp3", details: "🎬 Kulir 100 Degrees (2015) / 🎙️ Bobo Shashi, Benny Dayal, Abishek & Nrithya / 🎼 Bobo Shashi / 📝 Pa. Vijay" },
 { file: "Ayyayo Nenju.mp3", details: "🎬 Aadukalam (2011) / 🎙️ G. V. Prakash Kumar, S. P. Balasubrahmanyam, S. P. B. Charan, Prashanthini / 🎼 G. V. Prakash Kumar / 📝 Snehan" },
 { file: "Otha Sollaala.mp3", details: "🎬 Aadukalam (2011) / 🎙️ G. V. Prakash Kumar, Velmurugan / 🎼 G. V. Prakash Kumar / 📝 Snehan" },
 { file: "Yathe Yathe.mp3", details: "🎬 Aadukalam (2011) / 🎙️ G. V. Prakash Kumar / 🎼 G. V. Prakash Kumar / 📝 Snehan" },
@@ -63,3 +71,4 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
+
