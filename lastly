@@ -1,1 +1,66 @@
+ 
+// Configuration: Add/remove repos here easily
+const repositories = [
+  {
+    url: "https://github.com/atsuperman/play2/raw/main/",
+    songs: [
+{ file: "Ayyayo Nenju.mp3", details: "🎬 Aadukalam (2011) / 🎙️ G. V. Prakash Kumar, S. P. Balasubrahmanyam, S. P. B. Charan, Prashanthini / 🎼 G. V. Prakash Kumar / 📝 Snehan" },
+{ file: "Otha Sollaala.mp3", details: "🎬 Aadukalam (2011) / 🎙️ G. V. Prakash Kumar, Velmurugan / 🎼 G. V. Prakash Kumar / 📝 Snehan" },
+{ file: "Yathe Yathe.mp3", details: "🎬 Aadukalam (2011) / 🎙️ G. V. Prakash Kumar / 🎼 G. V. Prakash Kumar / 📝 Snehan" },
+{ file: "Ponnu Oruthi Summa.mp3", details: "🎬 Charlie Chaplin (2002) / 🎙️ S. P. Balasubrahmanyam, Harish Ragavendra / 🎼 Bharani / 📝 Palani Bharathi" },
+{ file: "Ava Kanna Partha.mp3", details: "🎬 Charlie Chaplin (2002) / 🎙️ S. P. Balasubrahmanyam, Harish Ragavendra / 🎼 Bharani / 📝 Palani Bharathi" },
+{ file: "Muthalam Santhipil.mp3", details: "🎬 Charlie Chaplin (2002) / 🎙️ Swarnalatha, Unni Krishnan / 🎼 Bharani / 📝 Palani Bharathi" },
+{ file: "Unthan Vizhi Munai.mp3", details: "🎬 4 Students (2004) / 🎙️ Jassie Gift, Jyotsna / 🎼 Jassie Gift / 📝 Palani Bharathi" },
+{ file: "Lajjavathiyea.mp3", details: "🎬 4 Students (2004) / 🎙️ Jassie Gift / 🎼 Jassie Gift / 📝 Palani Bharathi" },
+{ file: "Lajjavathiyea II.mp3", details: "🎬 4 Students (2004) / 🎙️ Jassie Gift / 🎼 Jassie Gift / 📝 Palani Bharathi" },
+{ file: "Annakili II.mp3", details: "🎬 4 Students (2004) / 🎙️ Prasanna chorus / 🎼 Jassie Gift / 📝 Palani Bharathi" },
+{ file: "Annakili.mp3", details: "🎬 4 Students (2004) / 🎙️ Jassie Gift / 🎼 Jassie Gift / 📝 Kaithapram" },
+{ file: "Padagottum Pattamma.mp3", details: "🎬 Chinnavar (2020) / 🎙️ Malaysia Vasudevan, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
+{ file: "Maaraappu Chela.mp3", details: "🎬 Chinnavar (2020) / 🎙️ Mano, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
+{ file: "Kottukkili.mp3", details: "🎬 Chinnavar (2020) / 🎙️ K. S. Chithra, S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
+             { file: "Gunturu Gongura.mp3", details: "🎬 Chinnavar (2020) / 🎙️ Mano, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
+         { file: "Paal Vannam.mp3", details: "🎬 Paasam (1962) / 🎤 P. B. Srinivas, P. Susheela / 🎼 Viswanathan - Ramamoorthy" },
+             { file: "Andhiyiley Vaanam.mp3", details: "🎬 Chinnavar (2020) / 🎙️ Mano, Swarnalatha / 🎼 Ilayaraja / 📝 Gangai Amaran" },
+             { file: "Kadavullum Neeyam.mp3", details: "🎬 Sindhu Nathi Poo (1994) / 🎙️ Unni Menon, S. Janaki / 🎼 Soundaryan / 📝 Vairamuthu" },
+             { file: "Adiye Adi Chinnapulla.mp3", details: "🎬 Sindhu Nathi Poo (1994) / 🎙️ Mano, S. Janaki / 🎼 Soundaryan / 📝 Vairamuthu" },
+             { file: "Mathalam Kottudhadi.mp3", details: "🎬 Sindhu Nathi Poo (1994) / 🎙️ S. P. Balasubrahmanyam, Swarnalatha, Loose Mohan / 🎼 Soundaryan / 📝 Vairamuthu" },
+             { file: "Aathadi Enna Odambu.mp3", details: "🎬 Sindhu Nathi Poo (1994) / 🎙️ Shahul Hameed / 🎼 Soundaryan / 📝 Vairamuthu" },
+             { file: "Aathi Vadayile.mp3", details: "🎬 Sindhu Nathi Poo (1994) / 🎙️ K. J. Yesudas / 🎼 Soundaryan / 📝 Vairamuthu" },
+             { file: "Poi Vaada.mp3", details: "🎬 Dharmadurai (2016) / 🎙️ Srimathumitha / 🎼 Yuvan Shankar Raja / 📝 Vairamuthu" },
+             { file: "Endha Pakkam.mp3", details: "🎬 Dharmadurai (2016) / 🎙️ Rahul Nambiar, Chinmayi Sripada / 🎼 Yuvan Shankar Raja / 📝 Vairamuthu" },
+             { file: "Makka Kalanguthappa.mp3", details: "🎬 Dharmadurai (2016) / 🎙️ Mathichiyam Bala / 🎼 Yuvan Shankar Raja / 📝 Mathichiyam Bala" },
+             { file: "Aandipatti.mp3", details: "🎬 Dharmadurai (2016) / 🎙️ Senthil Dass, Surmukhi / 🎼 Yuvan Shankar Raja / 📝 Vairamuthu" },
+             { file: "Adi Raakkumuthu.mp3", details: "🎬 Ejamaan (1993) / 🎙️ S.P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali" },
+     { file: "Ulagam Piranthathu.mp3", details: "🎬 Paasam (1962) / 🎤 T. M. Soundararajan / 🎼 Viswanathan - Ramamoorthy / 📝 Kannadasan" },
+             { file: "Nilave Mugam.mp3", details: "🎬 Ejamaan (1993) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
+             { file: "Oru Naalum Unai.mp3", details: "🎬 Ejamaan (1993) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
+             { file: "Urakka Kaththu.mp3", details: "🎬 Ejamaan (1993) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
+ { file: "Poothathu_Poonthoppu.mp3", details: "🎬 Thanga Manasukkaran / 1992 /🎙️  Mano, S.Janaki /🎼  Ilaiyaraaja / 📝 Piraisoodan, Kamakodiyan, GangaiAmaran" },
+             { file: "Aalappol_Velapol.mp3", details: "🎬 Ejamaan (1993) / 🎤 S.P. Balasubrahmanyam, Chithra / 🎼 Ilaiyaraaja / 📝 Vaali" },
+   { file: "Peelings.mp3", details: "🎬 Pushpa 2 - The Rule ( Tamil) / 2024 /🎙️ Senthil Ganesh, Rajalakshmi /🎼 Devi Sri Prasad / 📝 Viveka, Siju Thuravoor" },
+     { file: "Nee_Pottu_Vacha.mp3", details: "🎬 Ponmana Selvan (1989) / 🎤 Malaysia Vasudevan, Mano, K.S. Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
+      { file: "Naa_Ready.mp3", details: "🎬 Leo (2023) / 🎤 Thalapathy Vijay, Anirudh Ravichander / 🎼 Anirudh Ravichander / 📝 Vishnu Edavan" },
+     { file: "Hey_Minnale.mp3", details: "🎬 Amaran (2024) / 🎤 Haricharan, Shweta Mohan / 🎼 G.V Prakash Kumar / 📝 Karthik Netha" },
+     { file: "Achacho.mp3", details: "🎬 Aranmanai 4 (2024) / 🎤 Kharesma Ravichandran, Srinisha Jayaseelan, Hiphop Tamizha / 🎼 Hiphop Tamizha / 📝 Vignesh Srikanth" },
+     { file: "Edho Solla.mp3", details: "🎬 Murungakkai Chips (2020) / 🎤 Sid Sriram / 🎼 Dharan Kumar / 📝 Ravindhar Chandrasekaran" },
+      { file: "Chillanjirukkiye.mp3", details: "🎬 Lubber Pandhu (2024) / 🎤 Pradeep Kumar, Shivangi / 🎼 Sean Roldan / 📝 Mohan Rajan" }
+    ]
+  },
+
+  {
+    url: "https://github.com/atsuperman/PLAY/raw/main/",
+    songs: [
+     { file: "Beer_song_Pacha_Kuthikennen.mp3", details: "🎬 Diesel (2024) / 🎤 Gana Guna, Dhibu Ninan Thomas, Maniratnam, Kapil Kapilan / 🎼 Dhibu Ninan Thomas / 📝 Rokesh" },
+     { file: "Kaattumalli.mp3", details: "🎬 Viduthalai Part 1 (2023) / 🎤 Ilaiyaraaja, Ananya Bhat / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja" }
+    ]
+  }
+];
+
+// Generate allSongs with encoded URLs
+export const allSongs = repositories.flatMap(repo => 
+  repo.songs.map(song => ({
+    ...song,
+    path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
+  }))
+);
 
