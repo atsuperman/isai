@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aagaya Vennilavae.mp3", details: "🎬 Arangetra Velai (1990) / 🎙️ K. J. Yesudas, Uma Ramanan / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Pattu Poove.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Nila Kayum Neram.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ Mano, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Nadanthaal.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali" },
