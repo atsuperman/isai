@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+      { file: "tamil_iragai_pole_clup_mix_tape.mp3", details: "Remix By dj jose" },
 { file: "Kissik.mp3", details: "🎬 Pushpa 2: The Rule (2024) / 🎙️ Sreeleela / 🎼 Devi Sri Prasad / 📝 Chandrabose" },
 { file: "Pushpa Pushpa.mp3", details: "🎬 Pushpa 2: The Rule (2024) / 🎙️ Nakash Aziz / 🎼 Devi Sri Prasad / 📝 Chandrabose" },
 { file: "Kavalaiyai Theerpadhu Naatiya.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar / 🎼 Papanasam Sivan / 📝 Papanasam Sivan" },
