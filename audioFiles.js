@@ -1,10 +1,12 @@
-  
+ 
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
-      { file: "tamil_iragai_pole_clup_mix_tape.mp3", details: "Remix By dj jose" },
+{ file: "Kannathil Kannam.mp3", details: "🎬 Watchman Vadivel (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
+{ file: "Chandiranum Sooriyanum.mp3", details: "🎬 Watchman Vadivel (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
+{ file: "tamil_iragai_pole_clup_mix_tape.mp3", details: "Remix By dj jose" },
 { file: "Kissik.mp3", details: "🎬 Pushpa 2: The Rule (2024) / 🎙️ Sreeleela / 🎼 Devi Sri Prasad / 📝 Chandrabose" },
 { file: "Pushpa Pushpa.mp3", details: "🎬 Pushpa 2: The Rule (2024) / 🎙️ Nakash Aziz / 🎼 Devi Sri Prasad / 📝 Chandrabose" },
 { file: "Kavalaiyai Theerpadhu Naatiya.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar / 🎼 Papanasam Sivan / 📝 Papanasam Sivan" },
@@ -80,4 +82,3 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
-
