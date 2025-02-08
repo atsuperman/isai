@@ -4,6 +4,14 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kissik.mp3", details: "🎬 Pushpa 2: The Rule (2024) / 🎙️ Sreeleela / 🎼 Devi Sri Prasad / 📝 Chandrabose" },
+{ file: "Pushpa Pushpa.mp3", details: "🎬 Pushpa 2: The Rule (2024) / 🎙️ Nakash Aziz / 🎼 Devi Sri Prasad / 📝 Chandrabose" },
+{ file: "Kavalaiyai Theerpadhu Naatiya.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar / 🎼 Papanasam Sivan / 📝 Papanasam Sivan" },
+{ file: "Soppana Vaazhvil.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar / 🎼 Papanasam Sivan / 📝 Papanasam Sivan" },
+{ file: "Vadhaname Chandra Bimbamo.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar / 🎼 Papanasam Sivan / 📝 Papanasam Sivan" },
+{ file: "Vallalai Paadum Vaayal.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar / 🎼 Papanasam Sivan" },
+{ file: "Vasantha Ruthu.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar, S. Jayalakshmi / 🎼 Papanasam Sivan / 📝 Papanasam Sivan" },
+{ file: "Aagaya Vennilavae.mp3", details: "🎬 Arangetra Velai (1990) / 🎙️ K. J. Yesudas, Uma Ramanan / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Pattu Poove.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Nila Kayum Neram.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ Mano, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Nadanthaal.mp3", details: "🎬 Sembaruthi (1992) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali" },
