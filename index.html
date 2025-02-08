@@ -20,6 +20,9 @@
     overflow-y: auto; /* Allow vertical scrolling */
     padding: 20px 0; /* Add top/bottom padding */
 }
+
+/* Add these at the top of your CSS */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap');
     
     /* Add a wrapper for main content */
 .content-wrapper {
@@ -439,16 +442,10 @@
             animation: floatUp 10s ease-out forwards;
         }
 
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-200px) scale(0.5);
-                opacity: 0;
-            }
-        }
+       @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+}
 
 
     /* Add these styles to your existing CSS */
@@ -592,6 +589,10 @@
     
     
         @media screen and (max-width: 768px) {
+          #songList::-webkit-scrollbar-thumb {
+        background: #888 !important;
+    }
+}
             
 body {
         padding: 5px 0;
@@ -683,7 +684,7 @@ body {
     
      <!-- Add this HTML after the .a-container but before .b-container -->
 <div class="links-container" id="linksContainer">
-    <div class="link-item" data-url="https://atsuperman.github.io/RED-Beats-/">RED Beats</div>
+    <div class="link-item" data-url="https://atsuperman.github.io/RED/">RED Beat`s</div>
 
 </div>
   <div class="c-container" id="c-container" style="display: none;">
@@ -697,13 +698,13 @@ body {
 
    <div class="a-container">
        <div class="icon-row">
-    <span class="icon" id="play-pause">
+    <span class="icon" id="play-pause" aria-label="Play/Pause">
         <svg width="24" height="24" viewBox="0 0 24 24">
             <path id="play-path" d="M8 5v14l11-7z" />
             <path id="pause-path" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" style="display: none;" />
         </svg>
     </span>
-   <span class="icon" id="next">
+  <span class="icon" id="next" aria-label="Next Track">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="#000000">
         <path d="M4 4v16l12-8-12-8zm14 0h2v16h-2z"></path>
     </svg>
@@ -1055,8 +1056,6 @@ audioPlayer.addEventListener('pause', () => {
         navigator.mediaSession.playbackState = 'paused';
     }
 });
-
-
     
     // Inside playSong() function - Add this after audioPlayer.src = song.path:
 audioPlayer.addEventListener('loadedmetadata', () => {
@@ -1339,4 +1338,4 @@ document.querySelectorAll('.link-item').forEach(link => {
     
     </script>
 </body>
-</html> 
+</html>
