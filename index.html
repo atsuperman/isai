@@ -779,6 +779,19 @@ let isSearchVisible = false;
 let currentIndex = -1;
 let playlist = [];
 let originalSongs = [...allSongs];
+// Add at the top of your script
+let isPageVisible = true;
+
+document.addEventListener('visibilitychange', () => {
+    isPageVisible = !document.hidden;
+    const audioPlayer = document.getElementById('audioPlayer');
+    
+    if (isPageVisible && audioPlayer.paused && playlist.length > 0) {
+        audioPlayer.play().catch(error => {
+            console.log('Playback requires user interaction');
+        });
+    }
+});
 
 // Function to shuffle array
 function shuffleArray(array) {
@@ -944,64 +957,88 @@ function playSong(index) {
     let playPath = document.getElementById('play-path');
     let pausePath = document.getElementById('pause-path');
 
-    if (index >= playlist.length) {
-        playlist = shuffleArray([...originalSongs]); // Reshuffle when all are played
+    // Handle audio context suspension
+    if (window.AudioContext && audioPlayer.context) {
+        if (audioPlayer.context.state === 'suspended') {
+            audioPlayer.context.resume().catch(error => {
+                console.log('Audio context resume failed:', error);
+            });
+        }
+    }
+
+    const playAfterInteraction = () => {
+        if (index >= playlist.length) {
+            playlist = shuffleArray([...originalSongs]);
+            updatePlaylist();
+            index = 0;
+        }
+
+        currentIndex = index;
+        let song = playlist[currentIndex];
+
+        audioPlayer.src = song.path;
+        const cleanSongName = song.file.replace(/\.mp3$/i, '').replace(/_/g, ' ');
+        document.getElementById('currentSongName').textContent = cleanSongName;
+        const details = song.details || "Unknown Artist - Unknown Album";
+        document.getElementById('songDetails').textContent = details;
+
+        // Remove the song from playlist before playing
+        playlist.splice(currentIndex, 1);
         updatePlaylist();
-        index = 0;
-    }
 
-    currentIndex = index;
-    let song = playlist[currentIndex];
+        // Modern play promise handling with visibility check
+        const playPromise = audioPlayer.play();
 
-    audioPlayer.src = song.path;
-    // Clean up song name display (remove .mp3 extension)
-    const cleanSongName = song.file.replace(/\.mp3$/i, '').replace(/_/g, ' ');
-    document.getElementById('currentSongName').textContent = cleanSongName;
-    
-    // Format details with fallback
-    const details = song.details || "Unknown Artist - Unknown Album";
-    document.getElementById('songDetails').textContent = details;
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                playPath.style.display = "none";
+                pausePath.style.display = "block";
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.playbackState = 'playing';
+                }
+            }).catch(error => {
+                console.log('Playback failed:', error);
+                if (error.name === 'NotAllowedError') {
+                    // Show UI indication that interaction is needed
+                    document.body.addEventListener('click', () => {
+                        audioPlayer.play().catch(e => console.log('Still blocked:', e));
+                    }, { once: true });
+                }
+            });
+        }
 
-    audioPlayer.play();
-
-    // Remove the song immediately after playing
-    playlist.splice(currentIndex, 1);
-    updatePlaylist();
-
-    playPath.style.display = "none";
-    pausePath.style.display = "block";
-    
         // Update media session metadata
-    if ('mediaSession' in navigator) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-            title: song.file.replace('.mp3', ''),
-            artist: song.details || 'Unknown Artist',
-            // artwork: [{ src: 'album-art.jpg', sizes: '96x96', type: 'image/jpeg' }]
-        });
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: cleanSongName,
+                artist: details.split('/')[0]?.trim() || 'Unknown Artist'
+            });
+        }
+    };
 
-        // Set media session actions
-        navigator.mediaSession.setActionHandler('play', () => {
-            audioPlayer.play();
-            updatePlayPauseIcon();
-        });
-
-        navigator.mediaSession.setActionHandler('pause', () => {
-            audioPlayer.pause();
-            updatePlayPauseIcon();
-        });
-
-        navigator.mediaSession.setActionHandler('nexttrack', () => {
-            document.getElementById('next').click();
-        });
-
-        // Limit shown controls
-        navigator.mediaSession.setPositionState(null); // Remove progress bar
-        navigator.mediaSession.playbackState = 'playing';
+    // Try to play immediately with fallback to user interaction
+    if (document.visibilityState === 'visible') {
+        try {
+            playAfterInteraction();
+        } catch (error) {
+            console.log('Initial play failed, waiting for interaction:', error);
+            const playOnInteraction = () => {
+                playAfterInteraction();
+                document.removeEventListener('click', playOnInteraction);
+            };
+            document.addEventListener('click', playOnInteraction, { once: true });
+        }
+    } else {
+        // Queue playback when page becomes visible
+        const visibilityHandler = () => {
+            if (document.visibilityState === 'visible') {
+                playAfterInteraction();
+                document.removeEventListener('visibilitychange', visibilityHandler);
+            }
+        };
+        document.addEventListener('visibilitychange', visibilityHandler);
     }
-
-
 }
-
 // Auto-play next song when current ends
 document.getElementById('audioPlayer').addEventListener('ended', () => {
     if (playlist.length > 0) {
@@ -1339,4 +1376,4 @@ document.querySelectorAll('.link-item').forEach(link => {
     
     </script>
 </body>
-</html>
+</html> 
