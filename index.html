@@ -1,10 +1,14 @@
-  
+   
    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUPER இசை </title>
+    <!-- Existing meta tags -->
+    <meta name="theme-color" content="#008000">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>SUPER இசை  </title>
   <link rel="icon" href="https://raw.githubusercontent.com/atsuperman/isai/refs/heads/main/Sisai.png" type="png/x-icon"> 
     <style>
         body {
@@ -685,8 +689,7 @@ body {
     
      <!-- Add this HTML after the .a-container but before .b-container -->
 <div class="links-container" id="linksContainer">
-    <div class="link-item" data-url="https://atsuperman.github.io/RED/">RED Beat`s</div>
-
+   <div class="link-item" data-url="https://atsuperman.github.io/RED/">RED Beat`s</div>
 </div>
   <div class="c-container" id="c-container" style="display: none;">
   <h4>search Results..</h4>
@@ -779,19 +782,32 @@ let isSearchVisible = false;
 let currentIndex = -1;
 let playlist = [];
 let originalSongs = [...allSongs];
-// Add at the top of your script
-let isPageVisible = true;
+let wakeLock = null;
+let isTabVisible = true;
 
-document.addEventListener('visibilitychange', () => {
-    isPageVisible = !document.hidden;
-    const audioPlayer = document.getElementById('audioPlayer');
-    
-    if (isPageVisible && audioPlayer.paused && playlist.length > 0) {
-        audioPlayer.play().catch(error => {
-            console.log('Playback requires user interaction');
-        });
+    // Initialize wake lock
+    async function requestWakeLock() {
+        try {
+            wakeLock = await navigator.wakeLock.request('screen');
+        } catch (err) {
+            console.log('Wake Lock error:', err);
+        }
     }
-});
+
+    // Tab visibility handler
+    document.addEventListener('visibilitychange', () => {
+        const audioPlayer = document.getElementById('audioPlayer');
+        isTabVisible = document.visibilityState === 'visible';
+        
+        if (isTabVisible) {
+            requestWakeLock();
+            if (audioPlayer.paused && playlist.length > 0) {
+                audioPlayer.play().catch(console.error);
+            }
+        } else {
+            if (wakeLock) wakeLock.release();
+        }
+    });
 
 // Function to shuffle array
 function shuffleArray(array) {
@@ -904,6 +920,25 @@ playBtn.addEventListener('click', (e) => {
     }
 });
 
+    // Enhanced Media Session
+    // ====================
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.setActionHandler('play', () => {
+            audioPlayer.play();
+            updatePlayPauseIcon();
+        });
+        
+        navigator.mediaSession.setActionHandler('pause', () => {
+            audioPlayer.pause();
+            updatePlayPauseIcon();
+        });
+        
+        navigator.mediaSession.setActionHandler('nexttrack', () => {
+            document.getElementById('next').click();
+        });
+    }
+
+
 // Add these helper functions
 function stopMainPlayer() {
     const audioPlayer = document.getElementById('audioPlayer');
@@ -957,88 +992,87 @@ function playSong(index) {
     let playPath = document.getElementById('play-path');
     let pausePath = document.getElementById('pause-path');
 
-    // Handle audio context suspension
-    if (window.AudioContext && audioPlayer.context) {
-        if (audioPlayer.context.state === 'suspended') {
-            audioPlayer.context.resume().catch(error => {
-                console.log('Audio context resume failed:', error);
-            });
-        }
+    // Force background audio capabilities
+        audioPlayer.mozPreservesPitch = false;
+        audioPlayer.webkitPreservesPitch = false;
+        
+    if (index >= playlist.length) {
+        playlist = shuffleArray([...originalSongs]); // Reshuffle when all are played
+        updatePlaylist();
+        index = 0;
     }
 
-    const playAfterInteraction = () => {
-        if (index >= playlist.length) {
-            playlist = shuffleArray([...originalSongs]);
-            updatePlaylist();
-            index = 0;
-        }
-
         currentIndex = index;
-        let song = playlist[currentIndex];
-
+        const song = playlist[currentIndex];
         audioPlayer.src = song.path;
-        const cleanSongName = song.file.replace(/\.mp3$/i, '').replace(/_/g, ' ');
-        document.getElementById('currentSongName').textContent = cleanSongName;
-        const details = song.details || "Unknown Artist - Unknown Album";
-        document.getElementById('songDetails').textContent = details;
-
-        // Remove the song from playlist before playing
-        playlist.splice(currentIndex, 1);
-        updatePlaylist();
-
-        // Modern play promise handling with visibility check
-        const playPromise = audioPlayer.play();
-
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                playPath.style.display = "none";
-                pausePath.style.display = "block";
-                if ('mediaSession' in navigator) {
-                    navigator.mediaSession.playbackState = 'playing';
-                }
-            }).catch(error => {
-                console.log('Playback failed:', error);
-                if (error.name === 'NotAllowedError') {
-                    // Show UI indication that interaction is needed
-                    document.body.addEventListener('click', () => {
-                        audioPlayer.play().catch(e => console.log('Still blocked:', e));
-                    }, { once: true });
-                }
-            });
-        }
-
+    // Clean up song name display (remove .mp3 extension)
+    const cleanSongName = song.file.replace(/\.mp3$/i, '').replace(/_/g, ' ');
+    document.getElementById('currentSongName').textContent = cleanSongName;
+    
+    // Format details with fallback
+    const details = song.details || "Unknown Artist - Unknown Album";
+    document.getElementById('songDetails').textContent = details;
         // Update media session metadata
         if ('mediaSession' in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
-                title: cleanSongName,
-                artist: details.split('/')[0]?.trim() || 'Unknown Artist'
+                title: song.file.replace('.mp3', ''),
+                artist: song.details || 'Unknown Artist',
+                artwork: [{
+                    src: 'https://raw.githubusercontent.com/atsuperman/isai/refs/heads/main/Sisai.png',
+                    sizes: '192x192',
+                    type: 'image/png'
+                }]
             });
         }
-    };
 
-    // Try to play immediately with fallback to user interaction
-    if (document.visibilityState === 'visible') {
-        try {
-            playAfterInteraction();
-        } catch (error) {
-            console.log('Initial play failed, waiting for interaction:', error);
-            const playOnInteraction = () => {
-                playAfterInteraction();
-                document.removeEventListener('click', playOnInteraction);
-            };
-            document.addEventListener('click', playOnInteraction, { once: true });
-        }
-    } else {
-        // Queue playback when page becomes visible
-        const visibilityHandler = () => {
-            if (document.visibilityState === 'visible') {
-                playAfterInteraction();
-                document.removeEventListener('visibilitychange', visibilityHandler);
+    audioPlayer.play().then(() => {
+            // Background playback optimization
+            if (!isTabVisible) {
+                audioPlayer.mozPreservesPitch = false;
+                audioPlayer.webkitPreservesPitch = false;
             }
-        };
-        document.addEventListener('visibilitychange', visibilityHandler);
+        }).catch(error => {
+            console.log('Playback error:', error);
+        });
+
+    // Remove the song immediately after playing
+    playlist.splice(currentIndex, 1);
+    updatePlaylist();
+
+    playPath.style.display = "none";
+    pausePath.style.display = "block";
+    
+        // Update media session metadata
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: song.file.replace('.mp3', ''),
+            artist: song.details || 'Unknown Artist',
+            // artwork: [{ src: 'album-art.jpg', sizes: '96x96', type: 'image/jpeg' }]
+        });
+
+        // Set media session actions
+        navigator.mediaSession.setActionHandler('play', () => {
+            audioPlayer.play();
+            updatePlayPauseIcon();
+        });
+
+        navigator.mediaSession.setActionHandler('pause', () => {
+            audioPlayer.pause();
+            updatePlayPauseIcon();
+        });
+
+        navigator.mediaSession.setActionHandler('nexttrack', () => {
+            document.getElementById('next').click();
+        });
+
+        // Limit shown controls
+        navigator.mediaSession.setPositionState(null); // Remove progress bar
+        navigator.mediaSession.playbackState = 'playing';
     }
+
+
 }
+
 // Auto-play next song when current ends
 document.getElementById('audioPlayer').addEventListener('ended', () => {
     if (playlist.length > 0) {
@@ -1049,6 +1083,40 @@ document.getElementById('audioPlayer').addEventListener('ended', () => {
         playSong(0);
     }
 });
+  // Persistent Queue
+    // ====================
+    function saveQueue() {
+        localStorage.setItem('musicQueue', JSON.stringify({
+            playlist,
+            currentIndex,
+            currentTime: audioPlayer.currentTime
+        }));
+    }
+
+    function loadQueue() {
+        const saved = localStorage.getItem('musicQueue');
+        if (saved) {
+            const data = JSON.parse(saved);
+            playlist = data.playlist;
+            currentIndex = data.currentIndex;
+            if (currentIndex >= 0) {
+                audioPlayer.currentTime = data.currentTime;
+                playSong(currentIndex);
+            }
+        }
+    }
+
+    // Initialize queue
+    window.addEventListener('load', () => {
+        loadQueue();
+        requestWakeLock();
+    });
+
+    // Save queue on changes
+    audioPlayer.addEventListener('timeupdate', saveQueue);
+    window.addEventListener('beforeunload', saveQueue);
+
+
 
 /// Modified play/pause handler with small player coordination
 document.getElementById('play-pause').addEventListener('click', () => {
@@ -1376,4 +1444,4 @@ document.querySelectorAll('.link-item').forEach(link => {
     
     </script>
 </body>
-</html> 
+</html>
