@@ -1,4 +1,4 @@
-   
+    
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -689,7 +689,7 @@ body {
     
      <!-- Add this HTML after the .a-container but before .b-container -->
 <div class="links-container" id="linksContainer">
-   <div class="link-item" data-url="https://atsuperman.github.io/RED/"target="_blank">RED Beat`s</div>
+   <div class="link-item" data-url="https://atsuperman.github.io/RED/">RED Beat`s</div>
 </div>
   <div class="c-container" id="c-container" style="display: none;">
   <h4>search Results..</h4>
@@ -765,7 +765,10 @@ body {
     <div id="songList" style="max-height: 200px; overflow-y: auto; border: 1px solid blue; border-radius: 5px; padding: 10px; background: #c89666;">
         </div>
       <div class="link-container">
-        <a href="https://fb.com/atSUPERMAN" target="_blank" class="link">ⓕ atSUPERMAN</a>
+       <a href="https://fb.com/atSUPERMAN" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   class="link">ⓕ atSUPERMAN</a>
     </div>
 
 </div>
@@ -1428,12 +1431,12 @@ document.getElementById('switch').addEventListener('click', function() {
 });
 
 // Handle link clicks
+// Modify the existing link handler code
 document.querySelectorAll('.link-item').forEach(link => {
-    link.addEventListener('click', function() {
+    link.addEventListener('click', function(e) {
+        e.preventDefault(); // Add this line
         const url = this.dataset.url;
-        window.open(url, '_blank');
-        
-        // Add click feedback
+        window.open(url, '_blank', 'noopener,noreferrer');
         this.style.animation = 'linkClick 0.5s';
         setTimeout(() => {
             this.style.animation = '';
