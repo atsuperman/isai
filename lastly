@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Ordinary Person.mp3", details: "🎬 Leo (2023) / 🎙️ Anirudh Ravichander, Nikhita Gandhi / 🎼 Anirudh Ravichander / 📝 Heisenberg" },
 { file: "Kannathil Kannam.mp3", details: "🎬 Watchman Vadivel (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
 { file: "Chandiranum Sooriyanum.mp3", details: "🎬 Watchman Vadivel (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
 { file: "tamil_iragai_pole_clup_mix_tape.mp3", details: "Remix By dj jose" },
