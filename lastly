@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Thom Thom.mp3", details: "🎬 Alli Thandha Vaanam (2001) / 🎙️ Hariharan, K. S. Chithra / 🎼 Vidyasagar" },
+{ file: "Vadi Vadi Nattukkattai.mp3", details: "🎬 Alli Thandha Vaanam (2001) / 🎙️ Shankar Mahadevan, Sujatha Mohan / 🎼 Vidyasagar" },
 { file: "Bothai yeri pochu.mp3", details: "🎬 Jai Hind (1994) / 🎙️ S. P. Sailaja, Suresh Peters / 🎼 Vidyasagar / 📝 Vairamuthu" },
 { file: "Kanna En Selaikulla.mp3", details: "🎬 Jai Hind (1994) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Vidyasagar / 📝 Vairamuthu" },
 { file: "Mutham thara.mp3", details: "🎬 Jai Hind (1994) / 🎙️ Mano, Sindhu / 🎼 Vidyasagar / 📝 Vairamuthu" },
