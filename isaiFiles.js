@@ -1,9 +1,15 @@
- 
+  
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Bothai yeri pochu.mp3", details: "🎬 Jai Hind (1994) / 🎙️ S. P. Sailaja, Suresh Peters / 🎼 Vidyasagar / 📝 Vairamuthu" },
+{ file: "Kanna En Selaikulla.mp3", details: "🎬 Jai Hind (1994) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Vidyasagar / 📝 Vairamuthu" },
+{ file: "Mutham thara.mp3", details: "🎬 Jai Hind (1994) / 🎙️ Mano, Sindhu / 🎼 Vidyasagar / 📝 Vairamuthu" },
+{ file: "Thanni Vachu.mp3", details: "🎬 Jai Hind (1994) / 🎙️ Arjun, Malgudi Shubha, Vidyasagar / 🎼 Vidyasagar / 📝 Vairamuthu" },
+{ file: "Katchi Sera.mp3", details: "🎬 Think Indie (2024) / 🎙️ Sai Abhyankar / 🎼 Sai Abhyankar / 📝 Adesh Krishna" },
+{ file: "Ordinary Person.mp3", details: "🎬 Leo (2023) / 🎙️ Anirudh Ravichander, Nikhita Gandhi / 🎼 Anirudh Ravichander / 📝 Heisenberg" },
 { file: "Kannathil Kannam.mp3", details: "🎬 Watchman Vadivel (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
 { file: "Chandiranum Sooriyanum.mp3", details: "🎬 Watchman Vadivel (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
 { file: "tamil_iragai_pole_clup_mix_tape.mp3", details: "Remix By dj jose" },
@@ -82,3 +88,4 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
+
