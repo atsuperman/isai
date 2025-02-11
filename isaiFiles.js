@@ -1,9 +1,12 @@
-  
+ 
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Thottu Thottu.mp3", details: "🎬 Ethirum Puthirum (1999) / 🎙️ Swarnalatha, Pushpavanam Kuppusamy / 🎼 Vidyasagar / 📝 Vairamuthu" },
+{ file: "Kaathu Pasapasanga.mp3", details: "🎬 Ethirum Puthirum (1999) / 🎙️ Pushpavanam Kuppusamy, Malaysia Vasudevan, Anuradha Sriram, Gopal Rao / 🎼 Vidyasagar / 📝 Vairamuthu" },
+{ file: "Potteduthu vachuvidava.mp3", details: "🎬 Style (2002) / 🎙️ Pushpavanam Kuppusamy, Swarnalatha / 🎼 Bharani / 📝 Pa. Vijay" },
 { file: "Thom Thom.mp3", details: "🎬 Alli Thandha Vaanam (2001) / 🎙️ Hariharan, K. S. Chithra / 🎼 Vidyasagar" },
 { file: "Vadi Vadi Nattukkattai.mp3", details: "🎬 Alli Thandha Vaanam (2001) / 🎙️ Shankar Mahadevan, Sujatha Mohan / 🎼 Vidyasagar" },
 { file: "Bothai yeri pochu.mp3", details: "🎬 Jai Hind (1994) / 🎙️ S. P. Sailaja, Suresh Peters / 🎼 Vidyasagar / 📝 Vairamuthu" },
@@ -90,4 +93,3 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
-
