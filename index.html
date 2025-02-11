@@ -1041,9 +1041,6 @@ function playSong(index) {
     // Remove the song immediately after playing
     playlist.splice(currentIndex, 1);
     updatePlaylist();
-
-    playPath.style.display = "none";
-    pausePath.style.display = "block";
     
         // Update media session metadata
     if ('mediaSession' in navigator) {
