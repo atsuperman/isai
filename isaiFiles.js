@@ -4,6 +4,12 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Appan Panna Thappula.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Pushpavanam Kuppusamy, Anuradha Sriram / 🎼 Dhina / 📝 Perarasu" },
+{ file: "Kannum Kannumthan.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Harish Raghavendra, Uma Ramanan, Premji Amaren / 🎼 Mani Sharma / 📝 Perarasu" },
+{ file: "Kattu Kattu.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Manikka Vinayagam, Sumangali / 🎼 Devi Sri Prasad / 📝 Perarasu" },
+{ file: "Kumbida Pona deivam.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Shankar Mahadevan, Malathy Lakshman / 🎼 Dhina / 📝 Perarasu" },
+{ file: "Nee Entha Ooru.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Tippu / 🎼 Dhina / 📝 Perarasu" },
+{ file: "Adho Varaa.mp3", details: "🎬 Sullan (2004) / 🎙️ Pushpavanam Kuppusamy, Harini / 🎼 Vidyasagar / 📝 Pa. Vijay" },
 { file: "Thottu Thottu.mp3", details: "🎬 Ethirum Puthirum (1999) / 🎙️ Swarnalatha, Pushpavanam Kuppusamy / 🎼 Vidyasagar / 📝 Vairamuthu" },
 { file: "Kaathu Pasapasanga.mp3", details: "🎬 Ethirum Puthirum (1999) / 🎙️ Pushpavanam Kuppusamy, Malaysia Vasudevan, Anuradha Sriram, Gopal Rao / 🎼 Vidyasagar / 📝 Vairamuthu" },
 { file: "Potteduthu vachuvidava.mp3", details: "🎬 Style (2002) / 🎙️ Pushpavanam Kuppusamy, Swarnalatha / 🎼 Bharani / 📝 Pa. Vijay" },
@@ -13,7 +19,7 @@ const repositories = [
 { file: "Kanna En Selaikulla.mp3", details: "🎬 Jai Hind (1994) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Vidyasagar / 📝 Vairamuthu" },
 { file: "Mutham thara.mp3", details: "🎬 Jai Hind (1994) / 🎙️ Mano, Sindhu / 🎼 Vidyasagar / 📝 Vairamuthu" },
 { file: "Thanni Vachu.mp3", details: "🎬 Jai Hind (1994) / 🎙️ Arjun, Malgudi Shubha, Vidyasagar / 🎼 Vidyasagar / 📝 Vairamuthu" },
-{ file: "Katchi Sera.mp3", details: "🎬 Think Indie (2024) / 🎙️ Sai Abhyankar / 🎼 Sai Abhyankar / 📝 Adesh Krishna" },
+{ file: "Katchi Sera.mp3", details: "💿 Think Indie (2024) / 🎙️ Sai Abhyankar / 🎼 Sai Abhyankar / 📝 Adesh Krishna" },
 { file: "Ordinary Person.mp3", details: "🎬 Leo (2023) / 🎙️ Anirudh Ravichander, Nikhita Gandhi / 🎼 Anirudh Ravichander / 📝 Heisenberg" },
 { file: "Kannathil Kannam.mp3", details: "🎬 Watchman Vadivel (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
 { file: "Chandiranum Sooriyanum.mp3", details: "🎬 Watchman Vadivel (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
