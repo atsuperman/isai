@@ -1,9 +1,12 @@
- 
+  
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Oru Naalil Dream Mix.mp3", details: "🎬 Pudhupettai (2006) / 🎙️ Yuvan Shankar Raja / 🎼 Yuvan Shankar Raja / 📝 Na. Muthukumar" },
+{ file: "Oru Naalil.mp3", details: "🎬 Pudhupettai (2006) / 🎙️ Yuvan Shankar Raja / 🎼 Yuvan Shankar Raja / 📝 Na. Muthukumar" },
+{ file: "Pulpesum Poo Pesum.mp3", details: "🎬 Pudhupettai (2006) / 🎙️ Vijay Yesudas, Tanvi Shah, Premji Amaran, Yuvan Shankar Raja / 🎼 Yuvan Shankar Raja / 📝 Na. Muthukumar" },
 { file: "Appan Panna Thappula.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Pushpavanam Kuppusamy, Anuradha Sriram / 🎼 Dhina / 📝 Perarasu" },
 { file: "Kannum Kannumthan.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Harish Raghavendra, Uma Ramanan, Premji Amaren / 🎼 Mani Sharma / 📝 Perarasu" },
 { file: "Kattu Kattu.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Manikka Vinayagam, Sumangali / 🎼 Devi Sri Prasad / 📝 Perarasu" },
@@ -99,3 +102,4 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
+
