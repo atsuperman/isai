@@ -4,6 +4,11 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Appan Panna Thappula.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Pushpavanam Kuppusamy, Anuradha Sriram / 🎼 Dhina / 📝 Perarasu" },
+{ file: "Kannum Kannumthan.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Harish Raghavendra, Uma Ramanan, Premji Amaren / 🎼 Mani Sharma / 📝 Perarasu" },
+{ file: "Kattu Kattu.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Manikka Vinayagam, Sumangali / 🎼 Devi Sri Prasad / 📝 Perarasu" },
+{ file: "Kumbida Pona deivam.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Shankar Mahadevan, Malathy Lakshman / 🎼 Dhina / 📝 Perarasu" },
+{ file: "Nee Entha Ooru.mp3", details: "🎬 Thirupaachi (2005) / 🎙️ Tippu / 🎼 Dhina / 📝 Perarasu" },
 { file: "Adho Varaa.mp3", details: "🎬 Sullan (2004) / 🎙️ Pushpavanam Kuppusamy, Harini / 🎼 Vidyasagar / 📝 Pa. Vijay" },
 { file: "Thottu Thottu.mp3", details: "🎬 Ethirum Puthirum (1999) / 🎙️ Swarnalatha, Pushpavanam Kuppusamy / 🎼 Vidyasagar / 📝 Vairamuthu" },
 { file: "Kaathu Pasapasanga.mp3", details: "🎬 Ethirum Puthirum (1999) / 🎙️ Pushpavanam Kuppusamy, Malaysia Vasudevan, Anuradha Sriram, Gopal Rao / 🎼 Vidyasagar / 📝 Vairamuthu" },
