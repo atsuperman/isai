@@ -4,6 +4,13 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Balle Lakka.mp3", details: "🎬 Mankatha (2011) / 🎙️ Karthik, Vijay Yesudas, Anusha Dhayanidhi / 🎼 Yuvan Shankar Raja / 📝 Vaali" },
+{ file: "January Madham.mp3", details: "🎬 7G Rainbow Colony (2004) / 🎙️ Mathangi Jagdish, Kunal Ganjawala / 🎼 Yuvan Shankar Raja / 📝 Na. Muthukumar" },
+{ file: "Machi Open The Bottle.mp3", details: "🎬 Mankatha (2011) / 🎙️ Mano, Haricharan, Tippu, Naveen Madhav / 🎼 Yuvan Shankar Raja / 📝 Vaali" },
+{ file: "Mangatha Extended Dance.mp3", details: "🎬 Mankatha (2011) / 🎙️ Yuvan Shankar Raja, Ranjith, Premgi Amaren, Sucharita, Anitha / 🎼 Yuvan Shankar Raja / 📝 Gangai Amaren, Sucharita, Yuvan Shankar Raja" },
+{ file: "Vaada Bin Laada.mp3", details: "🎬 Mankatha (2011) / 🎙️ Krish, Suchitra / 🎼 Yuvan Shankar Raja / 📝 Vaali" },
+{ file: "Vilayadu Mangatha.mp3", details: "🎬 Mankatha (2011) / 🎙️ Yuvan Shankar Raja, Ranjith, Premgi Amaren, Sucharita, Anitha / 🎼 Yuvan Shankar Raja / 📝 Gangai Amaren, Sucharita, Yuvan Shankar Raja" },
+{ file: "Asku Maaro.mp3", details: "💽 Independent Single (2021) / 🎙️ Dharan Kumar, Sivaangi Krishnakumar / 🎼 Dharan Kumar / 📝 Dharan Kumar" },
 { file: "Bae.mp3", details: "🎬 Don (2022) / 🎙️ Adithya RK / 🎼 Anirudh Ravichander / 📝 Vignesh Shivan" },
 { file: "Jalabulajangu.mp3", details: "🎬 Don (2022) / 🎙️ Anirudh Ravichander / 🎼 Anirudh Ravichander / 📝 Rokesh" },
 { file: "Private Party.mp3", details: "🎬 Don (2022) / 🎙️ Anirudh Ravichander, Jonita Gandhi / 🎼 Anirudh Ravichander / 📝 Sivakarthikeyan" },
