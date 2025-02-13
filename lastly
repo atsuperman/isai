@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Bae.mp3", details: "🎬 Don (2022) / 🎙️ Adithya RK / 🎼 Anirudh Ravichander / 📝 Vignesh Shivan" },
+{ file: "Jalabulajangu.mp3", details: "🎬 Don (2022) / 🎙️ Anirudh Ravichander / 🎼 Anirudh Ravichander / 📝 Rokesh" },
+{ file: "Private Party.mp3", details: "🎬 Don (2022) / 🎙️ Anirudh Ravichander, Jonita Gandhi / 🎼 Anirudh Ravichander / 📝 Sivakarthikeyan" },
 { file: "Anaarkali.mp3", details: "🎬 Varushamellam Vasantham (2002) / 🎙️ P. Unnikrishnan, Ganga Sitharasu / 🎼 Sirpy / 📝 Ra. Ravishankar" },
 { file: "Enge andha vennila.mp3", details: "🎬 Varushamellam Vasantham (2002) / 🎙️ Unni Menon / 🎼 Sirpy / 📝 Ra. Ravishankar" },
 { file: "Enge Antha Vennila Female.mp3", details: "🎬 Varushamellam Vasantham (2002) / 🎙️ Sujatha Mohan / 🎼 Sirpy / 📝 Ra. Ravishankar" },
