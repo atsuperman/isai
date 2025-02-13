@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Poththu Athai.mp3", details: "🎬 Kadhal Kirukkan (2003) / 🎙️ Manikka Vinayagam, Malathy / 🎼 Deva / 📝 Deva Kumar" },
+{ file: "Poove Muthal Poove.mp3", details: "🎬 Kadhal Kirukkan (2003) / 🎙️ Harish Raghavendra / 🎼 Deva / 📝 Kabilan" },
+{ file: "Poove Mudhal poove female.mp3", details: "🎬 Kadhal Kirukkan (2003) / 🎙️ Chinmayi Sripada / 🎼 Deva / 📝 Kabilan" },
 { file: "Aattama TherottamaMix.mp3", details: "🎬 Singakutty (2008) / 🎙️ Anuradha Sriram, DJ Ewan / 🎼 Prasanna Shekhar / 📝 Vaali" },
 { file: "Aalana Naal Mudhala.mp3", details: "🎬 Kaadhal Kavithai (1998) / 🎙️ Pushpavanam Kuppusamy, Sowmya Raoh / 🎼 Ilaiyaraaja / 📝 Agathiyan" },
 { file: "Thath Thom thakdheemi.mp3", details: "🎬 Kaadhal Kavithai (1998) / 🎙️ Ila Arun, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Agathiyan" },
