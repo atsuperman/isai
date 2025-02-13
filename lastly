@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aalana Naal Mudhala.mp3", details: "🎬 Kaadhal Kavithai (1998) / 🎙️ Pushpavanam Kuppusamy, Sowmya Raoh / 🎼 Ilaiyaraaja / 📝 Agathiyan" },
+{ file: "Thath Thom thakdheemi.mp3", details: "🎬 Kaadhal Kavithai (1998) / 🎙️ Ila Arun, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Agathiyan" },
 { file: "Oru Naalil Dream Mix.mp3", details: "🎬 Pudhupettai (2006) / 🎙️ Yuvan Shankar Raja / 🎼 Yuvan Shankar Raja / 📝 Na. Muthukumar" },
 { file: "Oru Naalil.mp3", details: "🎬 Pudhupettai (2006) / 🎙️ Yuvan Shankar Raja / 🎼 Yuvan Shankar Raja / 📝 Na. Muthukumar" },
 { file: "Pulpesum Poo Pesum.mp3", details: "🎬 Pudhupettai (2006) / 🎙️ Vijay Yesudas, Tanvi Shah, Premji Amaran, Yuvan Shankar Raja / 🎼 Yuvan Shankar Raja / 📝 Na. Muthukumar" },
