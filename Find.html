@@ -1,0 +1,146 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text File Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        #searchInput {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result-item {
+            margin-bottom: 30px;
+            border-left: 4px solid #4CAF50;
+            padding-left: 15px;
+        }
+
+        .filename {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .match-box {
+            background-color: #f8f8f8;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .line-number {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .line-text {
+            color: #333;
+            white-space: pre-wrap;
+        }
+
+        .no-results {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Enter search term...">
+        <button onclick="performSearch()">Search</button>
+    </div>
+    <div id="resultsContainer"></div>
+
+    <script>
+        // List of text files to search through
+        const textFiles = [
+            'isaiFiles.js',
+         'redfiles.txt',
+            'Zeno.txt',
+            'list.txt'
+        ];
+
+        async function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.innerHTML = '';
+
+            if (!searchTerm) {
+                resultsContainer.innerHTML = '<div class="no-results">Please enter a search term</div>';
+                return;
+            }
+
+            let hasResults = false;
+
+            for (const file of textFiles) {
+                try {
+                    const response = await fetch(file);
+                    const text = await response.text();
+                    const lines = text.split('\n');
+                    const matches = [];
+
+                    for (let i = 0; i < lines.length; i++) {
+                        if (lines[i].toLowerCase().includes(searchTerm)) {
+                            matches.push({
+                                lineNumber: i + 1,
+                                text: lines[i]
+                            });
+                        }
+                    }
+
+                    if (matches.length > 0) {
+                        hasResults = true;
+                        const resultDiv = document.createElement('div');
+                        resultDiv.className = 'result-item';
+                        resultDiv.innerHTML = `
+                            <div class="filename">${file}</div>
+                            ${matches.map(match => `
+                                <div class="match-box">
+                                    <div class="line-number">Line ${match.lineNumber}</div>
+                                    <div class="line-text">${match.text}</div>
+                                </div>
+                            `).join('')}
+                        `;
+                        resultsContainer.appendChild(resultDiv);
+                    }
+                } catch (error) {
+                    console.error(`Error loading file ${file}:`, error);
+                }
+            }
+
+            if (!hasResults) {
+                resultsContainer.innerHTML = '<div class="no-results">No matching results found</div>';
+            }
+        }
+    </script>
+</body>
+  </html>
