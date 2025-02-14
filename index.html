@@ -1,4 +1,4 @@
-     
+      
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1272,7 +1272,19 @@ audioPlayer.addEventListener('pause', () => {
     }
 });
     
-    // Add this with your other event listeners
+  // Add at the end of your window load event listener
+window.addEventListener('load', () => {
+    loadQueue();
+    requestWakeLock();
+    
+    // Auto-reload once after 5 seconds
+    setTimeout(() => {
+        playlist = shuffleArray([...originalSongs]);
+        updatePlaylist();
+    }, 5000);
+});
+
+// Keep existing reload button handler
 document.getElementById('reloadBtn').addEventListener('click', () => {
     playlist = shuffleArray([...originalSongs]);
     updatePlaylist();
@@ -1559,4 +1571,4 @@ document.querySelectorAll('.link-item').forEach(link => {
     
     </script>
 </body>
-    </html>
+     </html>
