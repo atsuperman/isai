@@ -1,4 +1,4 @@
-       
+        
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -839,7 +839,7 @@ let isSearchVisible = false;
 let currentIndex = -1;
 let playlist = [];
 let originalSongs = [...allSongs];
-
+let preloadAudio = null;
 let isTabVisible = true;
 // Add these variables at the top of your script
 let isProgressDragging = false;
@@ -1166,16 +1166,40 @@ function playSong(index) {
         navigator.mediaSession.setPositionState(null); // Remove progress bar
         navigator.mediaSession.playbackState = 'playing';
     }
+   // Set current song source
+    audioPlayer.src = song.path;
+    
+    // Preload next song
+    if (preloadAudio) {
+        preloadAudio.pause();
+        preloadAudio.removeAttribute('src');
+    }
+    
+    if (playlist.length > 0) {
+        preloadAudio = new Audio(playlist[0].path);
+        preloadAudio.preload = 'auto';
+        preloadAudio.load();
+    }
 
+    audioPlayer.play().then(() => {
+        // ... existing code ...
+    });
+    
 
 }
 
-// Auto-play next song when current ends
-document.getElementById('audioPlayer').addEventListener('ended', () => {
-    if (playlist.length > 0) {
+// event listen end switch to preloaded source
+audioPlayer.addEventListener('ended', () => {
+    if (preloadAudio && preloadAudio.readyState > 2) {
+        // If preloaded, switch to preloaded source
+        audioPlayer.src = preloadAudio.src;
+        audioPlayer.play();
+        playlist.shift();
+        updatePlaylist();
+    } else if (playlist.length > 0) {
         playSong(0);
     } else {
-        playlist = shuffleArray([...originalSongs]); // Reshuffle for a new order
+        playlist = shuffleArray([...originalSongs]);
         updatePlaylist();
         playSong(0);
     }
@@ -1213,6 +1237,13 @@ document.getElementById('audioPlayer').addEventListener('ended', () => {
     window.addEventListener('beforeunload', saveQueue);
 
 
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && audioPlayer.paused) {
+        audioPlayer.play().catch(() => {
+            // Handle play failure
+        });
+    }
+});
 
 /// Modified play/pause handler with small player coordination
 document.getElementById('play-pause').addEventListener('click', () => {
@@ -1558,4 +1589,4 @@ document.querySelectorAll('.link-item').forEach(link => {
     
     </script>
 </body>
-      </html>
+       </html>
