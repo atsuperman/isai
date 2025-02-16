@@ -1,4 +1,4 @@
-        
+       
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Existing meta tags -->
     <meta name="theme-color" content="#008000">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Add this meta tag in the head section: -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>SUPER இசை  </title>
   <link rel="icon" href="https://raw.githubusercontent.com/atsuperman/isai/refs/heads/main/Sisai.png" type="png/x-icon"> 
     <style>
@@ -839,7 +840,7 @@ let isSearchVisible = false;
 let currentIndex = -1;
 let playlist = [];
 let originalSongs = [...allSongs];
-let preloadAudio = null;
+let wakeLock = null;
 let isTabVisible = true;
 // Add these variables at the top of your script
 let isProgressDragging = false;
@@ -897,15 +898,26 @@ audioPlayer.addEventListener('timeupdate', () => {
 });
 
 
-   
+    // Initialize wake lock
+    async function requestWakeLock() {
+        try {
+            wakeLock = await navigator.wakeLock.request('screen');
+        } catch (err) {
+            console.log('Wake Lock error:', err);
+        }
+    }
 
-    // Modified visibilitychange handler without wake lock:
-document.addEventListener('visibilitychange', () => {
+    // Tab visibility handler
+    document.addEventListener('visibilitychange', () => {
     const audioPlayer = document.getElementById('audioPlayer');
     isTabVisible = document.visibilityState === 'visible';
     
-    if (isTabVisible && audioPlayer.paused && playlist.length > 0) {
-        audioPlayer.play().catch(console.error);
+    if (isTabVisible) {
+        requestWakeLock();
+        // Simply update UI without auto-play
+        updatePlayPauseIcon();
+    } else {
+        if (wakeLock) wakeLock.release();
     }
 });
 
@@ -1166,40 +1178,16 @@ function playSong(index) {
         navigator.mediaSession.setPositionState(null); // Remove progress bar
         navigator.mediaSession.playbackState = 'playing';
     }
-   // Set current song source
-    audioPlayer.src = song.path;
-    
-    // Preload next song
-    if (preloadAudio) {
-        preloadAudio.pause();
-        preloadAudio.removeAttribute('src');
-    }
-    
-    if (playlist.length > 0) {
-        preloadAudio = new Audio(playlist[0].path);
-        preloadAudio.preload = 'auto';
-        preloadAudio.load();
-    }
 
-    audioPlayer.play().then(() => {
-        // ... existing code ...
-    });
-    
 
 }
 
-// event listen end switch to preloaded source
-audioPlayer.addEventListener('ended', () => {
-    if (preloadAudio && preloadAudio.readyState > 2) {
-        // If preloaded, switch to preloaded source
-        audioPlayer.src = preloadAudio.src;
-        audioPlayer.play();
-        playlist.shift();
-        updatePlaylist();
-    } else if (playlist.length > 0) {
+// Auto-play next song when current ends
+document.getElementById('audioPlayer').addEventListener('ended', () => {
+    if (playlist.length > 0) {
         playSong(0);
     } else {
-        playlist = shuffleArray([...originalSongs]);
+        playlist = shuffleArray([...originalSongs]); // Reshuffle for a new order
         updatePlaylist();
         playSong(0);
     }
@@ -1230,6 +1218,7 @@ audioPlayer.addEventListener('ended', () => {
     // Initialize queue
     window.addEventListener('load', () => {
         loadQueue();
+        requestWakeLock();
     });
 
     // Save queue on changes
@@ -1237,19 +1226,15 @@ audioPlayer.addEventListener('ended', () => {
     window.addEventListener('beforeunload', saveQueue);
 
 
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible' && audioPlayer.paused) {
-        audioPlayer.play().catch(() => {
-            // Handle play failure
-        });
-    }
-});
 
 /// Modified play/pause handler with small player coordination
 document.getElementById('play-pause').addEventListener('click', () => {
     const audioPlayer = document.getElementById('audioPlayer');
     const playPath = document.getElementById('play-path');
     const pausePath = document.getElementById('pause-path');
+
+    
+    
 
     // New: Pause all small players while keeping original logic
     document.querySelectorAll('.small-play-btn').forEach(btn => {
@@ -1264,13 +1249,32 @@ document.getElementById('play-pause').addEventListener('click', () => {
     // Original logic preserved
     if (audioPlayer.paused && currentIndex !== -1) {
         audioPlayer.play();
+        if (typeof audioPlayer.webkitResume === 'function') {
+            audioPlayer.webkitResume();
+        }
+        audioPlayer.play().catch(error => {
+            console.log('Playback failed:', error);
+            showResumeAlert();
+        });
     } else if (!audioPlayer.paused) {
         audioPlayer.pause();
     } else {
         playSong(0);
     }
 
+
     updatePlayPauseIcon();
+    // Add this alert function
+function showResumeAlert() {
+    const alertBox = document.createElement('div');
+    alertBox.style = `position: fixed; top: 20px; left: 50%; transform: translateX(-50%); 
+        background: #ff4444; color: white; padding: 10px; border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 1000;`;
+    alertBox.textContent = "Tap ▶ to resume playback";
+    document.body.appendChild(alertBox);
+    
+    setTimeout(() => alertBox.remove(), 3000);
+}
 });
 // Ensure the play/pause icon updates when audio plays or pauses
 audioPlayer.addEventListener('play', updatePlayPauseIcon);
@@ -1589,4 +1593,4 @@ document.querySelectorAll('.link-item').forEach(link => {
     
     </script>
 </body>
-       </html>
+        </html>
