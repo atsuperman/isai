@@ -4,6 +4,10 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Annan Adhiradi.mp3", details: "🎬 Leo Promo Track (2023) / 🎙️ Tha Mystro, MC SAI / 🎼 MJ Melodies / 📝 Tha Mystro, MC SAI / 🎥 Saanmuu" },
+{ file: "Hey Saloma.mp3", details: "🎬 Subash (1996) / 🎙️ Vidyasagar, Swarnalatha / 🎼 Vidyasagar / 📝 R. V. Udayakumar" },
+{ file: "Sudum Nilavu.mp3", details: "🎬 Thambi (2006) / 🎙️ P. Unnikrishnan, Harini / 🎼 Vidyasagar / 📝 Vairamuthu" },
+{ file: "Summa Kidantha.mp3", details: "🎬 Thambi (2006) / 🎙️ Karthik, Kalyani Nair / 🎼 Vidyasagar / 📝 Vairamuthu" },
 { file: "Balle Lakka.mp3", details: "🎬 Mankatha (2011) / 🎙️ Karthik, Vijay Yesudas, Anusha Dhayanidhi / 🎼 Yuvan Shankar Raja / 📝 Vaali" },
 { file: "January Madham.mp3", details: "🎬 7G Rainbow Colony (2004) / 🎙️ Mathangi Jagdish, Kunal Ganjawala / 🎼 Yuvan Shankar Raja / 📝 Na. Muthukumar" },
 { file: "Machi Open The Bottle.mp3", details: "🎬 Mankatha (2011) / 🎙️ Mano, Haricharan, Tippu, Naveen Madhav / 🎼 Yuvan Shankar Raja / 📝 Vaali" },
