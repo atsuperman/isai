@@ -4,6 +4,16 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "En Nenjee.mp3", details: "🎬 Vamsam (2010) / 🎙️ Ananthu, Priyadharshini / 🎼 Taj Noor / 📝 Na. Muthukumar" },
+{ file: "Kompula Poove Suthi.mp3", details: "🎬 Virumaandi (2004) / 🎙️ Kamal Haasan / 🎼 Ilaiyaraaja / 📝 Kamal Haasan" },
+{ file: "Maruthani Poova Pola.mp3", details: "🎬 Vamsam (2010) / 🎙️ Mukesh, Surmukhi / 🎼 Taj Noor / 📝 Na. Muthukumar" },
+{ file: "Unnaivida.mp3", details: "🎬 Virumaandi (2004) / 🎙️ Kamal Haasan, Shreya Ghoshal / 🎼 Ilaiyaraaja / 📝 Kamal Haasan" },
+{ file: "katthavaraya.mp3", details: "🎬 Kavithai (1976) / 🎙️ Malathi,  Sabesh / 🎼 Deva" },
+{ file: "Kotha Raja.mp3", details: "🎬 King of Kotha (2023) / 🎙️ Asal Kolaar, Dabzee, Roll Rida, Resmi Sateesh / 🎼 Jakes Bejoy / 📝 Mu.Ri" },
+{ file: "Oru Kola Kili.mp3", details: "🎬 Uzhaippali (1993) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Oru Maina.mp3", details: "🎬 Uzhaippali (1993) / 🎙️ Mano, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Umma Ummamaa.mp3", details: "🎬 Adithadi (2004) / 🎙️ Malathi, Manikka Vinayagam / 🎼 Deva" },
+{ file: "Uzhaippali illatha.mp3", details: "🎬 Uzhaippali (1993) / 🎙️ Mano / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Annan Adhiradi.mp3", details: "🎬 Leo Promo Track (2023) / 🎙️ Tha Mystro, MC SAI / 🎼 MJ Melodies / 📝 Tha Mystro, MC SAI / 🎥 Saanmuu" },
 { file: "Hey Saloma.mp3", details: "🎬 Subash (1996) / 🎙️ Vidyasagar, Swarnalatha / 🎼 Vidyasagar / 📝 R. V. Udayakumar" },
 { file: "Sudum Nilavu.mp3", details: "🎬 Thambi (2006) / 🎙️ P. Unnikrishnan, Harini / 🎼 Vidyasagar / 📝 Vairamuthu" },
