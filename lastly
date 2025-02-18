@@ -4,6 +4,12 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aalaala Kandaa.mp3", details: "🎬 Sangamam (1999) / 🎙️ Hariharan, M. S. Viswanathan / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Margazhi Thingal.mp3", details: "🎬 Sangamam (1999) / 🎙️ P. Unnikrishnan, S. Janaki, A. R. Rahman, Srimathumitha / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Mazhaithuli Mazhaithuli.mp3", details: "🎬 Sangamam (1999) / 🎙️ Hariharan, M. S. Viswanathan / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Mudhal Murai.mp3", details: "🎬 Sangamam (1999) / 🎙️ Srinivas, Sujatha Mohan / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Sowkiyama Kanne.mp3", details: "🎬 Sangamam (1999) / 🎙️ Nithyasree Mahadevan / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Varaha Nadikkarai Oram.mp3", details: "🎬 Sangamam (1999) / 🎙️ Shankar Mahadevan / 🎼 A. R. Rahman / 📝 Vairamuthu" },
 { file: "En Nenjee.mp3", details: "🎬 Vamsam (2010) / 🎙️ Ananthu, Priyadharshini / 🎼 Taj Noor / 📝 Na. Muthukumar" },
 { file: "Kompula Poove Suthi.mp3", details: "🎬 Virumaandi (2004) / 🎙️ Kamal Haasan / 🎼 Ilaiyaraaja / 📝 Kamal Haasan" },
 { file: "Maruthani Poova Pola.mp3", details: "🎬 Vamsam (2010) / 🎙️ Mukesh, Surmukhi / 🎼 Taj Noor / 📝 Na. Muthukumar" },
