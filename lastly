@@ -4,6 +4,11 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Dhavanipotta Deepavali.mp3", details: "🎬 Sandakozhi (2005) / 🎙️ Vijay Yesudas, Shreya Ghoshal / 🎼 Yuvan Shankar Raja / 📝 Yugabharathi" },
+{ file: "Kaadhal Neethana.mp3", details: "🎬 Time (1999) / 🎙️ P. Unnikrishnan, Sujatha Mohan / 🎼 Ilaiyaraaja / 📝 Palani Bharathi" },
+{ file: "Ketta Kodukkira Boomi.mp3", details: "🎬 Sandakozhi (2005) / 🎙️ Jassie Gift, Sujatha Mohan, Chinmayi Sripaada, Ganga / 🎼 Yuvan Shankar Raja / 📝 Thamarai" },
+{ file: "Muthu Nilavae.mp3", details: "🎬 Time (1999) / 🎙️ Karthik Raja, Gopika Poornima / 🎼 Ilaiyaraaja / 📝 Palani Bharathi" },
+{ file: "Thavikiren.mp3", details: "🎬 Time (1999) / 🎙️ Hariharan, Bhavatharini / 🎼 Ilaiyaraaja / 📝 Palani Bharathi" },
 { file: "Cho Larey.mp3", details: "🎬 Ullaasam (1997) / 🎙️ S. P. Balasubrahmanyam, Harini, Venkat Prabhu / 🎼 Karthik Raja / 📝 Paarthi Bhaskar" },
 { file: "Konjum Manjal.mp3", details: "🎬 Ullaasam (1997) / 🎙️ Hariharan, Harini / 🎼 Karthik Raja / 📝 Palani Bharathi" },
 { file: "Muthae Muthamma.mp3", details: "🎬 Ullaasam (1997) / 🎙️ Kamal Haasan, Bhavatharini, Swarnalatha / 🎼 Karthik Raja / 📝 Palani Bharathi" },
