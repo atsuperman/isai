@@ -1032,6 +1032,31 @@ playBtn.addEventListener('click', (e) => {
     }
 });
 
+          // Inside the playlist.forEach((song, index) => { ... }) loop in updatePlaylist()
+songItem.dataset.songPath = song.path; // Add data attribute
+
+// Add this click handler to the songItem element
+songItem.addEventListener('click', function(e) {
+    e.stopPropagation();
+    
+    // Stop all players
+    stopMainPlayer();
+    stopAllSmallPlayers();
+    
+    // Get song path from data attribute
+    const songPath = this.dataset.songPath;
+    const songIndex = playlist.findIndex(s => s.path === songPath);
+    
+    if (songIndex === -1) return;
+    
+    // Move song to top of playlist
+    const [selectedSong] = playlist.splice(songIndex, 1);
+    playlist.unshift(selectedSong);
+    
+    updatePlaylist();
+    playSong(0);
+});
+
     // Enhanced Media Session
     // ====================
     if ('mediaSession' in navigator) {
