@@ -4,6 +4,12 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kadhal Vennila.mp3", details: "🎬 Vaanathaippola (2000) / 🎙️ Jayachandran / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar" },
+{ file: "Mainave Mainave.mp3", details: "🎬 Vaanathaippola (2000) / 🎙️ Unni Menon, K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar" },
+{ file: "Nadhiye Adi Nayil.mp3", details: "🎬 Vaanathaippola (2000) / 🎙️ Sukhwinder Singh, Anuradha Sriram / 🎼 S. A. Rajkumar / 📝 Pa. Vijay" },
+{ file: "RojaPoo Malaiyilae.mp3", details: "🎬 Vaanathaippola (2000) / 🎙️ K. S. Chithra, Mano / 🎼 S. A. Rajkumar / 📝 Pa. Vijay" },
+{ file: "Thavaniye Ennai.mp3", details: "🎬 Vaanathaippola (2000) / 🎙️ S. P. Balasubrahmanyam, Swarnalatha / 🎼 S. A. Rajkumar / 📝 Pa. Vijay" },
+{ file: "Yengal Veetil.mp3", details: "🎬 Vaanathaippola (2000) / 🎙️ S. P. Balasubrahmanyam, Sujatha, Arunmozhi / 🎼 S. A. Rajkumar / 📝 Na. Muthukumar, Pa. Vijay" },
 { file: "Dhavanipotta Deepavali.mp3", details: "🎬 Sandakozhi (2005) / 🎙️ Vijay Yesudas, Shreya Ghoshal / 🎼 Yuvan Shankar Raja / 📝 Yugabharathi" },
 { file: "Kaadhal Neethana.mp3", details: "🎬 Time (1999) / 🎙️ P. Unnikrishnan, Sujatha Mohan / 🎼 Ilaiyaraaja / 📝 Palani Bharathi" },
 { file: "Ketta Kodukkira Boomi.mp3", details: "🎬 Sandakozhi (2005) / 🎙️ Jassie Gift, Sujatha Mohan, Chinmayi Sripaada, Ganga / 🎼 Yuvan Shankar Raja / 📝 Thamarai" },
