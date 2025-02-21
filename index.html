@@ -1,4 +1,4 @@
-        
+         
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -691,6 +691,94 @@
 }
     
     
+    /* Revised moving to top animation */
+.song-item.moving-up {
+    animation: cyberMove 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+    filter: hue-rotate(0deg);
+    z-index: 100;
+}
+
+@keyframes cyberMove {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+    }
+    30% {
+        transform: translateY(-20px) scale(1.1) rotateZ(-2deg);
+        filter: hue-rotate(90deg);
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+        opacity: 0.9;
+    }
+    60% {
+        transform: translateY(-80px) scale(0.8) rotateZ(3deg);
+        filter: hue-rotate(180deg);
+        opacity: 0.7;
+        box-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+    }
+    80% {
+        transform: translateY(-120px) scale(0.9) rotateZ(-1deg);
+        filter: hue-rotate(270deg);
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateY(-150%) scale(1.2) rotateZ(0);
+        opacity: 0;
+        filter: hue-rotate(360deg);
+        box-shadow: 0 0 40px rgba(0, 255, 0, 1);
+    }
+}
+
+/* Glitch effect during movement */
+@keyframes glitch {
+    0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+    20% { clip-path: polygon(0 8%, 100% 22%, 100% 78%, 0 92%); }
+    40% { clip-path: polygon(0 42%, 100% 28%, 100% 68%, 0 58%); }
+    60% { clip-path: polygon(0 82%, 100% 68%, 100% 98%, 0 88%); }
+    80% { clip-path: polygon(0 32%, 100% 18%, 100% 58%, 0 48%); }
+    100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+}
+
+.song-item.moving-up::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        transparent 45%,
+        rgba(0, 255, 0, 0.2) 50%,
+        transparent 55%
+    );
+    animation: glitch 0.8s steps(4) infinite;
+    mix-blend-mode: overlay;
+}
+
+/* Neon trail effect */
+.song-item.moving-up::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, 
+        rgba(0, 255, 0, 0.4) 0%,
+        rgba(0, 255, 0, 0.3) 30%,
+        rgba(0, 255, 0, 0.1) 60%,
+        transparent 100%
+    );
+    transform: translate(-50%, -50%);
+    animation: trail 0.8s ease-out forwards;
+}
+
+@keyframes trail {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(0); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(3); }
+}
+    
+    
         @media screen and (max-width: 768px) {
           #songList::-webkit-scrollbar-thumb {
         background: #888 !important;
@@ -1093,22 +1181,28 @@ songItem.dataset.songPath = song.path; // Add data attribute
 songItem.addEventListener('click', function(e) {
     e.stopPropagation();
     
-    // Stop all players
-    stopMainPlayer();
-    stopAllSmallPlayers();
+    // Add moving-up class for animation
+    this.classList.add('moving-up');
     
-    // Get song path from data attribute
-    const songPath = this.dataset.songPath;
-    const songIndex = playlist.findIndex(s => s.path === songPath);
-    
-    if (songIndex === -1) return;
-    
-    // Move song to top of playlist
-    const [selectedSong] = playlist.splice(songIndex, 1);
-    playlist.unshift(selectedSong);
-    
-    updatePlaylist();
-    playSong(0);
+    setTimeout(() => {
+        // Rest of your existing code
+        stopMainPlayer();
+        stopAllSmallPlayers();
+        
+        const songPath = this.dataset.songPath;
+        const songIndex = playlist.findIndex(s => s.path === songPath);
+        
+        if (songIndex === -1) return;
+        
+        const [selectedSong] = playlist.splice(songIndex, 1);
+        playlist.unshift(selectedSong);
+        
+        updatePlaylist();
+        playSong(0);
+        
+        // Remove class after animation
+        this.classList.remove('moving-up');
+    }, 400);
 });
 
     // Enhanced Media Session
@@ -1653,4 +1747,4 @@ document.querySelectorAll('.link-item').forEach(link => {
     
     </script>
 </body>
-       </html>
+        </html>
