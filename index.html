@@ -1,4 +1,4 @@
-       
+        
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -636,6 +636,60 @@
     
 }
     
+    /* Add to existing CSS */
+.song-item {
+    transition: all 0.5s ease;
+    transform-origin: center;
+    overflow: hidden; /* Prevent content bleed during animation */
+}
+
+/* Removal animation */
+.song-item.removing {
+    animation: removeItem 0.8s ease forwards;
+}
+
+@keyframes removeItem {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        max-height: 100px;
+    }
+    30% {
+        transform: scale(0.95);
+        background-color: #ff444433;
+    }
+    100% {
+        transform: scale(0.5) translateX(100%);
+        opacity: 0;
+        max-height: 0;
+        margin-bottom: 0;
+        padding: 0;
+    }
+}
+
+/* Text fade effect */
+.song-item.removing .song-text {
+    animation: textFade 0.5s ease forwards;
+}
+
+@keyframes textFade {
+    0% { opacity: 1; }
+    100% { 
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+}
+
+/* Button shrink effect */
+.song-item.removing .remove-button {
+    animation: buttonShrink 0.4s ease forwards;
+}
+
+@keyframes buttonShrink {
+    0% { transform: scale(1); }
+    100% { transform: scale(0); }
+}
+    
     
         @media screen and (max-width: 768px) {
           #songList::-webkit-scrollbar-thumb {
@@ -1107,10 +1161,13 @@ function updateSmallIcons(button, isPlaying) {
         removeBtn.classList.add('remove-button');
         removeBtn.textContent = "X";
         removeBtn.onclick = (e) => {
-            e.stopPropagation();
-            playlist.splice(index, 1);
-            updatePlaylist();
-        };
+    e.stopPropagation();
+    songItem.classList.add('removing');
+    setTimeout(() => {
+        playlist.splice(index, 1);
+        updatePlaylist();
+    }, 700); // Match animation duration
+};
 
         // Add elements to DOM
         songItem.appendChild(playBtn);
@@ -1596,4 +1653,4 @@ document.querySelectorAll('.link-item').forEach(link => {
     
     </script>
 </body>
-  </html>
+       </html>
