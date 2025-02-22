@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Ninaitthathu Yaro.mp3", details: "🎬 Paattukku Oru Thalaivan (1989) / 🎙️ Mano, S. Janaki / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 Liaquat Ali Khan" },
 { file: "Kadhal Vennila.mp3", details: "🎬 Vaanathaippola (2000) / 🎙️ Jayachandran / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar" },
 { file: "Mainave Mainave.mp3", details: "🎬 Vaanathaippola (2000) / 🎙️ Unni Menon, K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar" },
 { file: "Nadhiye Adi Nayil.mp3", details: "🎬 Vaanathaippola (2000) / 🎙️ Sukhwinder Singh, Anuradha Sriram / 🎼 S. A. Rajkumar / 📝 Pa. Vijay" },
