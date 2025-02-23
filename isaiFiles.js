@@ -1,9 +1,17 @@
- 
+  
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Azhagiya Nadhi Enna.mp3", details: "🎬 Paattukku Oru Thalaivan (1989) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 Liaquat Ali Khan" },
+{ file: "Kaathalae Kaathalae Duet.mp3", details: "🎬 96 (2018) / 🎙️ Chinmayi, Govind Vasantha / 🎼 Govind Vasantha / 📝 Karthik Netha / 🎥 C. Prem Kumar" },
+{ file: "Kaathalae Kaathalae.mp3", details: "🎬 96 (2018) / 🎙️ Kalyani Menon, Chinmayi, Govind Vasantha / 🎼 Govind Vasantha / 📝 Karthik Netha / 🎥 C. Prem Kumar" },
+{ file: "Kana Kangiren.mp3", details: "🎬 Aanandha Thaandavam (2009) / 🎙️ Shubha Mudgal, Nithyasree Mahadevan, Vinitra / 🎼 G. V. Prakash Kumar / 📝 Vairamuthu / 🎥 A. R. Gandhi Krishna" },
+{ file: "Kodi Aruvi kottuthey.mp3", details: "🎬 Mehandi Circus (2019) / 🎙️ Pradeep Kumar, Nithyashree Venkataramanan / 🎼 Sean Roldan / 📝 Yugabharathi / 🎥 Saravana Rajendran" },
+{ file: "The Life Of Ram.mp3", details: "🎬 96 (2018) / 🎙️ Pradeep Kumar / 🎼 Govind Vasantha / 📝 Karthik Netha / 🎥 C. Prem Kumar" },
+{ file: "Vellattu Kannazhagi.mp3", details: "🎬 Mehandi Circus (2019) / 🎙️ Sean Roldan / 🎼 Sean Roldan / 📝 Yugabharathi / 🎥 Saravana Rajendran" },
+{ file: "Ninaitthathu Yaro.mp3", details: "🎬 Paattukku Oru Thalaivan (1989) / 🎙️ Mano, S. Janaki / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 Liaquat Ali Khan" },
 { file: "Kadhal Vennila.mp3", details: "🎬 Vaanathaippola (2000) / 🎙️ Jayachandran / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar" },
 { file: "Mainave Mainave.mp3", details: "🎬 Vaanathaippola (2000) / 🎙️ Unni Menon, K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar" },
 { file: "Nadhiye Adi Nayil.mp3", details: "🎬 Vaanathaippola (2000) / 🎙️ Sukhwinder Singh, Anuradha Sriram / 🎼 S. A. Rajkumar / 📝 Pa. Vijay" },
@@ -161,3 +169,4 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
+
