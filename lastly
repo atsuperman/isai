@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Iruvathu Vayathuvarai(Duet).mp3", details: "🎬 Kannodu Kanbathellam (1999) / 🎙️ Hariharan, S. Janaki / 🎼 Deva / 📝 Kalai Kumar / 🎥 Prabhu Solomon / 🏷️ Pyramid Music" },
+{ file: "Thaj Mahal Ondru.mp3", details: "🎬 Kannodu Kanbathellam (1999) / 🎙️ Hariharan / 🎼 Deva / 📝 Mayil / 🎥 Prabhu Solomon / 🏷️ Pyramid Music" },
 { file: "CBI Enge Theda.mp3", details: "🎬 Poovellam Kettuppar (1999) / 🎙️ Sukhwinder Singh / 🎼 Yuvan Shankar Raja / 📝 Palani Bharathi / 🎥 Vasanth / 🏷️ Sa Re Ga Ma" },
 { file: "Chudithar Aninthu Vantha.mp3", details: "🎬 Poovellam Kettuppar (1999) / 🎙️ Hariharan, Sadhana Sargam / 🎼 Yuvan Shankar Raja / 📝 Palani Bharathi / 🎥 Vasanth / 🏷️ Sa Re Ga Ma" },
 { file: "Irava Pagala.mp3", details: "🎬 Poovellam Kettuppar (1999) / 🎙️ P. Unnikrishnan / 🎼 Yuvan Shankar Raja / 📝 Palani Bharathi / 🎥 Vasanth / 🏷️ Sa Re Ga Ma" },
