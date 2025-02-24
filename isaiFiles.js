@@ -4,6 +4,15 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Ooradangum Samathulae.mp3", details: "🎬 Kalavani (2010) / 🎙️ Senthilvelan / 🎼 S. S. Kumaran / 📝 Na. Muthukumar / 🎥 A. Sarkunam" },
+{ file: "Orumurai Irumurai.mp3", details: "🎬 Kalavani (2010) / 🎙️ Harish Raghavendra, Srimathumitha / 🎼 S. S. Kumaran / 📝 Na. Muthukumar / 🎥 A. Sarkunam" },
+{ file: "Peancha Mazhai.mp3", details: "🎬 Kalavani (2010) / 🎙️ A. Devendran / 🎼 S. S. Kumaran / 📝 Na. Muthukumar / 🎥 A. Sarkunam" },
+{ file: "Sinthaiyiley.mp3", details: "🎬 Kalavani (2010) / 🎙️ Prasanna / 🎼 S. S. Kumaran / 📝 Na. Muthukumar / 🎥 A. Sarkunam" },
+{ file: "Machaan Machaan.mp3", details: "🎬 Silambattam (2008) / 🎙️ Ilaiyaraaja, Bela Shende / 🎼 Yuvan Shankar Raja / 📝 Na. Muthukumar / 🎥 S. Saravanan" },
+{ file: "Nalamdhana.mp3", details: "🎬 Silambattam (2008) / 🎙️ Silambarasan TR, Earl, Suzi Q, SUVI / 🎼 Yuvan Shankar Raja / 📝 Vaali, Gangai Amaran, Na. Muthukumar, Earl, Suzi Q, Silambarasan TR / 🎥 S. Saravanan" },
+{ file: "Tamizhanna Naan Oru.mp3", details: "🎬 Silambattam (2008) / 🎙️ Shankar Mahadevan / 🎼 Yuvan Shankar Raja / 📝 Vaali / 🎥 S. Saravanan" },
+{ file: "Vechikkava Remix.mp3", details: "🎬 Silambattam (2008) / 🎙️ Silambarasan Rajendar, Suchitra / 🎼 Yuvan Shankar Raja / 📝 Gangai Amaran / 🎥 S. Saravanan" },
+{ file: "Where Is The Party.mp3", details: "🎬 Silambattam (2008) / 🎙️ Mukesh, Priyadharshini / 🎼 Yuvan Shankar Raja / 📝 Silambarasan Rajendar / 🎥 S. Saravanan" },
 { file: "Gaana Karunkuyile.mp3", details: "🎬 Sethu (1999) / 🎙️ Kovai Kamala / 🎼 Ilaiyaraaja / 📝 Ponnadiyan / 🎥 Bala" },
 { file: "Maalai En Vethanai.mp3", details: "🎬 Sethu (1999) / 🎙️ Unni Krishnan, Arunmozhi, S. N. Surendar / 🎼 Ilaiyaraaja / 📝 Arivumathi / 🎥 Bala" },
 { file: "Sikaadha Sitrondru.mp3", details: "🎬 Sethu (1999) / 🎙️ P. Unnikrishnan, Arunmozhi, S. N. Surendar / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Bala" },
