@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aatha Adikkaiyilae.mp3", details: "🎬 Thenmerku Paruvakaatru (2010) / 🎙️ Harini / 🎼 N. R. Raghunanthan / 📝 Vairamuthu / 🎥 Seenu Ramasamy" },
+{ file: "Kalli Kallicheti.mp3", details: "🎬 Thenmerku Paruvakaatru (2010) / 🎙️ Shweta Mohan / 🎼 N. R. Raghunanthan / 📝 Vairamuthu / 🎥 Seenu Ramasamy" },
+{ file: "Yedi Kallachi.mp3", details: "🎬 Thenmerku Paruvakaatru (2010) / 🎙️ Vijay Prakash, Shreya Ghoshal / 🎼 N. R. Raghunanthan / 📝 Vairamuthu / 🎥 Seenu Ramasamy" },
 { file: "Ooradangum Samathulae.mp3", details: "🎬 Kalavani (2010) / 🎙️ Senthilvelan / 🎼 S. S. Kumaran / 📝 Na. Muthukumar / 🎥 A. Sarkunam" },
 { file: "Orumurai Irumurai.mp3", details: "🎬 Kalavani (2010) / 🎙️ Harish Raghavendra, Srimathumitha / 🎼 S. S. Kumaran / 📝 Na. Muthukumar / 🎥 A. Sarkunam" },
 { file: "Peancha Mazhai.mp3", details: "🎬 Kalavani (2010) / 🎙️ A. Devendran / 🎼 S. S. Kumaran / 📝 Na. Muthukumar / 🎥 A. Sarkunam" },
