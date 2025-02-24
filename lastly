@@ -4,6 +4,11 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aana Aavanna.mp3", details: "🎬 Panchalankurichi (1996) / 🎙️ Krishnaraj, Sujatha / 🎼 Deva / 📝 Vairamuthu / 🎥 Seeman / 🏷️ Pyramid Music" },
+{ file: "Aathoram Thopukulae.mp3", details: "🎬 Panchalankurichi (1996) / 🎙️ Swarnalatha / 🎼 Deva / 📝 Vairamuthu / 🎥 Seeman / 🏷️ Pyramid Music" },
+{ file: "Chinna Chinna Panithuli.mp3", details: "🎬 Panchalankurichi (1996) / 🎙️ K. S. Chithra / 🎼 Deva / 📝 Vairamuthu / 🎥 Seeman / 🏷️ Pyramid Music" },
+{ file: "Othattora Sivappea.mp3", details: "🎬 Panchalankurichi (1996) / 🎙️ Hariharan, Anuradha Sriram / 🎼 Deva / 📝 Vairamuthu / 🎥 Seeman / 🏷️ Pyramid Music" },
+{ file: "Vantiyala Vantiyala.mp3", details: "🎬 Panchalankurichi (1996) / 🎙️ Suresh Peters, Anuradha Sriram / 🎼 Deva / 📝 Seeman / 🎥 Seeman / 🏷️ Pyramid Music" },
 { file: "Mazhaiye Mazhaiye.mp3", details: "🎬 Eeram (2009) / 🎙️ Ranjith Govind / 🎼 Thaman S / 📝 Viveka / 🎥 Arivazhagan / 🏷️ Sony Music India" },
 { file: "Tharai Erangiya.mp3", details: "🎬 Eeram (2009) / 🎙️ Suchitra / 🎼 Thaman S / 📝 Viveka / 🎥 Arivazhagan / 🏷️ Sony Music Entertainment India Pvt. Ltd." },
 { file: "Aatha Adikkaiyilae.mp3", details: "🎬 Thenmerku Paruvakaatru (2010) / 🎙️ Harini / 🎼 N. R. Raghunanthan / 📝 Vairamuthu / 🎥 Seenu Ramasamy" },
