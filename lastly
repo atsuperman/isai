@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Mazhaiye Mazhaiye.mp3", details: "🎬 Eeram (2009) / 🎙️ Ranjith Govind / 🎼 Thaman S / 📝 Viveka / 🎥 Arivazhagan / 🏷️ Sony Music India" },
+{ file: "Tharai Erangiya.mp3", details: "🎬 Eeram (2009) / 🎙️ Suchitra / 🎼 Thaman S / 📝 Viveka / 🎥 Arivazhagan / 🏷️ Sony Music Entertainment India Pvt. Ltd." },
 { file: "Aatha Adikkaiyilae.mp3", details: "🎬 Thenmerku Paruvakaatru (2010) / 🎙️ Harini / 🎼 N. R. Raghunanthan / 📝 Vairamuthu / 🎥 Seenu Ramasamy" },
 { file: "Kalli Kallicheti.mp3", details: "🎬 Thenmerku Paruvakaatru (2010) / 🎙️ Shweta Mohan / 🎼 N. R. Raghunanthan / 📝 Vairamuthu / 🎥 Seenu Ramasamy" },
 { file: "Yedi Kallachi.mp3", details: "🎬 Thenmerku Paruvakaatru (2010) / 🎙️ Vijay Prakash, Shreya Ghoshal / 🎼 N. R. Raghunanthan / 📝 Vairamuthu / 🎥 Seenu Ramasamy" },
