@@ -4,6 +4,17 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Naan Thamadikira.mp3", details: "🎬 Periyanna (1999) / 🎙️ Vijay / 🎼 Bharani / 📝 Bharani / 🎥 S. A. Chandrasekhar" },
+{ file: "Nilave Nilave.mp3", details: "🎬 Periyanna (1999) / 🎙️ Hariharan, Sujatha Mohan / 🎼 Bharani / 📝 Vasan / 🎥 S. A. Chandrasekhar" },
+{ file: "Pollachi Malay Rotula.mp3", details: "🎬 Periyanna (1999) / 🎙️ Malaysia Vasudevan, S. N. Surendar, Swarnalatha / 🎼 Bharani / 📝 Pulamaipithan / 🎥 S. A. Chandrasekhar" },
+{ file: "Roadtula Oru.mp3", details: "🎬 Periyanna (1999) / 🎙️ Vijay / 🎼 Bharani / 📝 Bharani / 🎥 S. A. Chandrasekhar" },
+{ file: "Thannane thamarapoo.mp3", details: "🎬 Periyanna (1999) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Bharani / 📝 Arivumathi / 🎥 S. A. Chandrasekhar" },
+{ file: "Chingucha Chingucha.mp3", details: "🎬 Porkkaalam (1997) / 🎙️ K. S. Chithra / 🎼 Deva / 📝 Vairamuthu / 🎥 Cheran / 🏷️ Sony Music Entertainment India Pvt. Ltd." },
+{ file: "Karuvella Kaatukkulae.mp3", details: "🎬 Porkkaalam (1997) / 🎙️ Arunmozhi, Sujatha Mohan, Anuradha Sriram / 🎼 Deva / 📝 Vairamuthu / 🎥 Cheran / 🏷️ Sony Music Entertainment India Pvt. Ltd." },
+{ file: "Oona Oonam.mp3", details: "🎬 Porkkaalam (1997) / 🎙️ Deva, Kovai Kamala / 🎼 Deva / 📝 Vairamuthu / 🎥 Cheran / 🏷️ Sony Music Entertainment India Pvt. Ltd." },
+{ file: "Thanjavooru Mannu Eduthu.mp3", details: "🎬 Porkkaalam (1997) / 🎙️ Krishnaraj / 🎼 Deva / 📝 Vairamuthu / 🎥 Cheran / 🏷️ Sony Music Entertainment India Pvt. Ltd." },
+{ file: "Iruvathu Vayathuvarai(Duet).mp3", details: "🎬 Kannodu Kanbathellam (1999) / 🎙️ Hariharan, S. Janaki / 🎼 Deva / 📝 Kalai Kumar / 🎥 Prabhu Solomon / 🏷️ Pyramid Music" },
+{ file: "Thaj Mahal Ondru.mp3", details: "🎬 Kannodu Kanbathellam (1999) / 🎙️ Hariharan / 🎼 Deva / 📝 Mayil / 🎥 Prabhu Solomon / 🏷️ Pyramid Music" },
 { file: "CBI Enge Theda.mp3", details: "🎬 Poovellam Kettuppar (1999) / 🎙️ Sukhwinder Singh / 🎼 Yuvan Shankar Raja / 📝 Palani Bharathi / 🎥 Vasanth / 🏷️ Sa Re Ga Ma" },
 { file: "Chudithar Aninthu Vantha.mp3", details: "🎬 Poovellam Kettuppar (1999) / 🎙️ Hariharan, Sadhana Sargam / 🎼 Yuvan Shankar Raja / 📝 Palani Bharathi / 🎥 Vasanth / 🏷️ Sa Re Ga Ma" },
 { file: "Irava Pagala.mp3", details: "🎬 Poovellam Kettuppar (1999) / 🎙️ P. Unnikrishnan / 🎼 Yuvan Shankar Raja / 📝 Palani Bharathi / 🎥 Vasanth / 🏷️ Sa Re Ga Ma" },
