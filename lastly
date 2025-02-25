@@ -4,6 +4,12 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aande Nootrande.mp3", details: "🎬 Mugavaree (2000) / 🎙️ Naveen / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Z. Durai" },
+{ file: "Hey Keechu Kiliye F.mp3", details: "🎬 Mugavaree (2000) / 🎙️ Harini, Chorus / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Z. Durai" },
+{ file: "Hey Keechu Kiliye M.mp3", details: "🎬 Mugavaree (2000) / 🎙️ Hariharan / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Z. Durai" },
+{ file: "Oh Nenje Nenje.mp3", details: "🎬 Mugavaree (2000) / 🎙️ Hariharan, Swarnalatha / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Z. Durai" },
+{ file: "Poo Virinchachu.mp3", details: "🎬 Mugavaree (2000) / 🎙️ P. Unnikrishnan, Anuradha Sriram / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Z. Durai" },
+{ file: "Yeh Nilave.mp3", details: "🎬 Mugavaree (2000) / 🎙️ Unni Menon / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Z. Durai" },
 { file: "Naan Thamadikira.mp3", details: "🎬 Periyanna (1999) / 🎙️ Vijay / 🎼 Bharani / 📝 Bharani / 🎥 S. A. Chandrasekhar" },
 { file: "Nilave Nilave.mp3", details: "🎬 Periyanna (1999) / 🎙️ Hariharan, Sujatha Mohan / 🎼 Bharani / 📝 Vasan / 🎥 S. A. Chandrasekhar" },
 { file: "Pollachi Malay Rotula.mp3", details: "🎬 Periyanna (1999) / 🎙️ Malaysia Vasudevan, S. N. Surendar, Swarnalatha / 🎼 Bharani / 📝 Pulamaipithan / 🎥 S. A. Chandrasekhar" },
