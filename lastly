@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Ootha Ootha.mp3", details: "🎬 Minsara Kanna (1999) / 🎙️ Hariharan, Harini / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar" },
+{ file: "Un Paer Solla.mp3", details: "🎬 Minsara Kanna (1999) / 🎙️ Hariharan, Sujatha Mohan / 🎼 Deva / 📝 Kalaikumar / 🎥 K. S. Ravikumar" },
 { file: "Aande Nootrande.mp3", details: "🎬 Mugavaree (2000) / 🎙️ Naveen / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Z. Durai" },
 { file: "Hey Keechu Kiliye F.mp3", details: "🎬 Mugavaree (2000) / 🎙️ Harini, Chorus / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Z. Durai" },
 { file: "Hey Keechu Kiliye M.mp3", details: "🎬 Mugavaree (2000) / 🎙️ Hariharan / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Z. Durai" },
