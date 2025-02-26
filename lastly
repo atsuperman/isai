@@ -4,6 +4,11 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Innisai Paadi Varum F.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Vairamuthu / 🎥 Ezhil" },
+{ file: "Innisai Paadi Varum M.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ P. Unnikrishnan / 🎼 S. A. Rajkumar / 📝 Vairamuthu / 🎥 Ezhil" },
+{ file: "Irupathu Kodi Nillavukal.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ Hariharan / 🎼 S. A. Rajkumar / 📝 Vairamuthu / 🎥 Ezhil" },
+{ file: "Megamai Vanthu.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ Rajesh Krishnan / 🎼 S. A. Rajkumar / 📝 Muthu Vijayan / 🎥 Ezhil" },
+{ file: "Thodu Thodu Enave.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ Hariharan, K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Vairamuthu / 🎥 Ezhil" },
 { file: "Nee Paarthuttu Ponaalum.mp3", details: "🎬 Paarvai Ondre Pothume (2001) / 🎙️ Krishnaraj, Sumithra / 🎼 Bharani / 📝 Bharani / 🎥 Murali Krishna" },
 { file: "Thirudiya Idhayathai.mp3", details: "🎬 Paarvai Ondre Pothume (2001) / 🎙️ Harish Raghavendra, K. S. Chithra / 🎼 Bharani / 📝 Pa. Vijay / 🎥 Murali Krishna" },
 { file: "Thirumba Thirumba.mp3", details: "🎬 Paarvai Ondre Pothume (2001) / 🎙️ P. Unnikrishnan, Harini / 🎼 Bharani / 📝 Pa. Vijay / 🎥 Murali Krishna" },
