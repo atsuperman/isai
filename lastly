@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kanni Koyil.mp3", details: "🎬 Vaanavil (2000) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vairamuthu / 🎥 Manoj Kumar" },
+{ file: "Velinattu Kaatru.mp3", details: "🎬 Vaanavil (2000) / 🎙️ Hariharan, Harini / 🎼 Deva / 📝 Vairamuthu / 🎥 Manoj Kumar" },
 { file: "Konja Naal Poru Thalaivaa.mp3", details: "🎬 Aasai (1995) / 🎙️ Hariharan / 🎼 Deva / 📝 Vaali / 🎥 Vasanth" },
 { file: "Meenamma Adikalayilum.mp3", details: "🎬 Aasai (1995) / 🎙️ P. Unnikrishnan, Anuradha Sriram / 🎼 Deva / 📝 Vaali / 🎥 Vasanth" },
 { file: "Pulveli Pulveli.mp3", details: "🎬 Aasai (1995) / 🎙️ K. S. Chithra, P. Unnikrishnan (humming) / 🎼 Deva / 📝 Vairamuthu / 🎥 Vasanth" },
