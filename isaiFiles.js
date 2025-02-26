@@ -1,9 +1,21 @@
-  
+ 
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Innisai Paadi Varum F.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Vairamuthu / 🎥 Ezhil" },
+{ file: "Innisai Paadi Varum M.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ P. Unnikrishnan / 🎼 S. A. Rajkumar / 📝 Vairamuthu / 🎥 Ezhil" },
+{ file: "Irupathu Kodi Nillavukal.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ Hariharan / 🎼 S. A. Rajkumar / 📝 Vairamuthu / 🎥 Ezhil" },
+{ file: "Megamai Vanthu.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ Rajesh Krishnan / 🎼 S. A. Rajkumar / 📝 Muthu Vijayan / 🎥 Ezhil" },
+{ file: "Thodu Thodu Enave.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ Hariharan, K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Vairamuthu / 🎥 Ezhil" },
+{ file: "Nee Paarthuttu Ponaalum.mp3", details: "🎬 Paarvai Ondre Pothume (2001) / 🎙️ Krishnaraj, Sumithra / 🎼 Bharani / 📝 Bharani / 🎥 Murali Krishna" },
+{ file: "Thirudiya Idhayathai.mp3", details: "🎬 Paarvai Ondre Pothume (2001) / 🎙️ Harish Raghavendra, K. S. Chithra / 🎼 Bharani / 📝 Pa. Vijay / 🎥 Murali Krishna" },
+{ file: "Thirumba Thirumba.mp3", details: "🎬 Paarvai Ondre Pothume (2001) / 🎙️ P. Unnikrishnan, Harini / 🎼 Bharani / 📝 Pa. Vijay / 🎥 Murali Krishna" },
+{ file: "Thuli Thuliyaai Kottum.mp3", details: "🎬 Paarvai Ondre Pothume (2001) / 🎙️ Hariharan, Swarnalatha / 🎼 Bharani / 📝 Pa. Vijay / 🎥 Murali Krishna" },
+{ file: "Yeh Asainthadum Katrukkum.mp3", details: "🎬 Paarvai Ondre Pothume (2001) / 🎙️ P. Unnikrishnan, S. Janaki / 🎼 Bharani / 📝 Pa. Vijay / 🎥 Murali Krishna" },
+{ file: "Ootha Ootha.mp3", details: "🎬 Minsara Kanna (1999) / 🎙️ Hariharan, Harini / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar" },
+{ file: "Un Paer Solla.mp3", details: "🎬 Minsara Kanna (1999) / 🎙️ Hariharan, Sujatha Mohan / 🎼 Deva / 📝 Kalaikumar / 🎥 K. S. Ravikumar" },
 { file: "Aande Nootrande.mp3", details: "🎬 Mugavaree (2000) / 🎙️ Naveen / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Z. Durai" },
 { file: "Hey Keechu Kiliye F.mp3", details: "🎬 Mugavaree (2000) / 🎙️ Harini, Chorus / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Z. Durai" },
 { file: "Hey Keechu Kiliye M.mp3", details: "🎬 Mugavaree (2000) / 🎙️ Hariharan / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Z. Durai" },
@@ -216,4 +228,4 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
-
+ 
