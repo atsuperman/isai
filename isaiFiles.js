@@ -1,9 +1,21 @@
- 
+  
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Alli Alli.mp3", details: "🎬 Arunachalam (1997) / 🎙️ Mano, Swarnalatha / 🎼 Deva / 📝 Palani Bharathi / 🎥 Sundar C" },
+{ file: "Athanda Ithanda.mp3", details: "🎬 Arunachalam (1997) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vairamuthu / 🎥 Sundar C" },
+{ file: "Mathadu Mathadu.mp3", details: "🎬 Arunachalam (1997) / 🎙️ S. P. Balasubrahmanyam, Sujatha Mohan, Meera, Manorama / 🎼 Deva / 📝 Palani Bharathi / 🎥 Sundar C" },
+{ file: "Nagumo.mp3", details: "🎬 Arunachalam (1997) / 🎙️ Hariharan, K. S. Chithra / 🎼 Deva / 📝 Vairamuthu / 🎥 Sundar C" },
+{ file: "Singam Ondru.mp3", details: "🎬 Arunachalam (1997) / 🎙️ Malaysia Vasudevan / 🎼 Deva / 📝 Vairamuthu / 🎥 Sundar C" },
+{ file: "Kanni Koyil.mp3", details: "🎬 Vaanavil (2000) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vairamuthu / 🎥 Manoj Kumar" },
+{ file: "Velinattu Kaatru.mp3", details: "🎬 Vaanavil (2000) / 🎙️ Hariharan, Harini / 🎼 Deva / 📝 Vairamuthu / 🎥 Manoj Kumar" },
+{ file: "Konja Naal Poru Thalaivaa.mp3", details: "🎬 Aasai (1995) / 🎙️ Hariharan / 🎼 Deva / 📝 Vaali / 🎥 Vasanth" },
+{ file: "Meenamma Adikalayilum.mp3", details: "🎬 Aasai (1995) / 🎙️ P. Unnikrishnan, Anuradha Sriram / 🎼 Deva / 📝 Vaali / 🎥 Vasanth" },
+{ file: "Pulveli Pulveli.mp3", details: "🎬 Aasai (1995) / 🎙️ K. S. Chithra, P. Unnikrishnan (humming) / 🎼 Deva / 📝 Vairamuthu / 🎥 Vasanth" },
+{ file: "Shock Adikuthu.mp3", details: "🎬 Aasai (1995) / 🎙️ Suresh Peters, G. V. Prakash Kumar / 🎼 Deva / 📝 Vaali / 🎥 Vasanth" },
+{ file: "Thiloththama.mp3", details: "🎬 Aasai (1995) / 🎙️ S. P. Balasubrahmanyam, Swarnalatha / 🎼 Deva / 📝 Vairamuthu / 🎥 Vasanth" },
 { file: "Innisai Paadi Varum F.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Vairamuthu / 🎥 Ezhil" },
 { file: "Innisai Paadi Varum M.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ P. Unnikrishnan / 🎼 S. A. Rajkumar / 📝 Vairamuthu / 🎥 Ezhil" },
 { file: "Irupathu Kodi Nillavukal.mp3", details: "🎬 Thulladha Manamum Thullum (1999) / 🎙️ Hariharan / 🎼 S. A. Rajkumar / 📝 Vairamuthu / 🎥 Ezhil" },
@@ -228,4 +240,4 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
- 
+
