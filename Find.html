@@ -80,63 +80,57 @@
     </div>
     <div id="resultsContainer"></div>
 <script>
-    // List of text files to search through
     const textFiles = [
         'isaiFiles.js',
         'lastly',
         'list.txt'
     ];
 
-    // Advanced matching functions
     function normalizeText(text) {
         return text.toLowerCase().replace(/[^a-z0-9]/g, '');
     }
 
-    function similarityScore(a, b) {
-        const longer = a.length > b.length ? a : b;
-        const shorter = a.length <= b.length ? a : b;
-        const maxLength = longer.length;
-        
-        // Exact match at start
-        if (longer.startsWith(shorter)) return 1.0;
-        
-        // Calculate Jaro-Winkler similarity
-        const matchingWindow = Math.floor(Math.max(longer.length, shorter.length) / 2) - 1;
-        let matches = 0;
-        let transpositions = 0;
-        const shorts = new Array(shorter.length).fill(false);
+    function calculateMatchScore(searchWords, lineWords) {
+        let exactMatches = 0;
+        let partialMatches = 0;
+        let totalScore = 0;
 
-        for (let i = 0; i < longer.length; i++) {
-            const start = Math.max(0, i - matchingWindow);
-            const end = Math.min(i + matchingWindow + 1, shorter.length);
-            
-            for (let j = start; j < end; j++) {
-                if (!shorts[j] && longer[i] === shorter[j]) {
-                    shorts[j] = true;
-                    matches++;
-                    if (i !== j) transpositions++;
+        for (const searchWord of searchWords) {
+            let wordMatched = false;
+            let bestWordScore = 0;
+
+            for (const lineWord of lineWords) {
+                // Exact match check
+                if (lineWord === searchWord) {
+                    exactMatches++;
+                    totalScore += 2; // Higher weight for exact matches
+                    wordMatched = true;
                     break;
                 }
+
+                // Partial match check (prefix or substring)
+                const partialScore = lineWord.startsWith(searchWord) ? 1 : 
+                                   lineWord.includes(searchWord) ? 0.5 : 0;
+                
+                if (partialScore > bestWordScore) {
+                    bestWordScore = partialScore;
+                }
+            }
+
+            if (!wordMatched && bestWordScore > 0) {
+                partialMatches++;
+                totalScore += bestWordScore;
             }
         }
 
-        if (matches === 0) return 0.0;
+        // Bonus for matching more search words
+        const coverageBonus = (exactMatches + partialMatches) / searchWords.length;
         
-        transpositions /= 2;
-        const jaro = (
-            (matches / longer.length) +
-            (matches / shorter.length) +
-            ((matches - transpositions) / matches)
-        ) / 3.0;
-
-        // Winkler modification for prefix emphasis
-        const prefixLimit = Math.min(4, shorter.length);
-        let prefix = 0;
-        while (prefix < prefixLimit && longer[prefix] === shorter[prefix]) {
-            prefix++;
-        }
-        
-        return jaro + (prefix * 0.1 * (1 - jaro));
+        return {
+            score: totalScore + coverageBonus,
+            exactMatches,
+            partialMatches
+        };
     }
 
     async function performSearch() {
@@ -149,60 +143,71 @@
             return;
         }
 
-        // Normalize and split search terms
         const searchTerms = normalizeText(rawSearch).split(/\s+/).filter(w => w.length > 0);
         let hasResults = false;
+        const allMatches = [];
 
         for (const file of textFiles) {
             try {
                 const response = await fetch(file);
                 const text = await response.text();
                 const lines = text.split('\n');
-                const matches = [];
 
                 for (let i = 0; i < lines.length; i++) {
                     const originalLine = lines[i];
                     const line = normalizeText(originalLine);
-                    const words = line.split(/\s+/);
-                    
-                    // Check all search terms against all words
-                    const matchFound = searchTerms.some(searchTerm => 
-                        words.some(word => {
-                            // Prioritize prefix matches
-                            if (word.startsWith(searchTerm)) return true;
-                            
-                            // Calculate similarity for non-prefix matches
-                            const similarity = similarityScore(word, searchTerm);
-                            return similarity >= 0.85 - (0.05 * searchTerm.length);
-                        })
-                    );
+                    const lineWords = line.split(/\s+/);
 
-                    if (matchFound) {
-                        matches.push({
+                    if (lineWords.length === 0) continue;
+
+                    const { score, exactMatches } = calculateMatchScore(searchTerms, lineWords);
+                    
+                    if (score > 0) {
+                        allMatches.push({
+                            file,
                             lineNumber: i + 1,
-                            text: originalLine
+                            text: originalLine,
+                            score,
+                            exactMatches
                         });
                     }
-                }
-
-                if (matches.length > 0) {
-                    hasResults = true;
-                    const resultDiv = document.createElement('div');
-                    resultDiv.className = 'result-item';
-                    resultDiv.innerHTML = `
-                        <div class="filename">${file}</div>
-                        ${matches.map(match => `
-                            <div class="match-box">
-                                <div class="line-number">Line ${match.lineNumber}</div>
-                                <div class="line-text">${match.text}</div>
-                            </div>
-                        `).join('')}
-                    `;
-                    resultsContainer.appendChild(resultDiv);
                 }
             } catch (error) {
                 console.error(`Error loading file ${file}:`, error);
             }
+        }
+
+        // Sort matches by relevance
+        allMatches.sort((a, b) => {
+            if (b.exactMatches !== a.exactMatches) return b.exactMatches - a.exactMatches;
+            if (b.score !== a.score) return b.score - a.score;
+            return a.file.localeCompare(b.file);
+        });
+
+        // Group results by file
+        const fileGroups = {};
+        for (const match of allMatches) {
+            if (!fileGroups[match.file]) {
+                fileGroups[match.file] = [];
+            }
+            fileGroups[match.file].push(match);
+        }
+
+        // Display results
+        for (const [file, matches] of Object.entries(fileGroups)) {
+            hasResults = true;
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'result-item';
+            resultDiv.innerHTML = `
+                <div class="filename">${file}</div>
+                ${matches.map(match => `
+                    <div class="match-box">
+                        <div class="line-number">Line ${match.lineNumber}</div>
+                        <div class="line-text">${match.text}</div>
+                    </div>
+                `).join('')}
+            `;
+            resultsContainer.appendChild(resultDiv);
         }
 
         if (!hasResults) {
@@ -211,4 +216,4 @@
     }
 </script>
 </body>
-  </html>
+</html>
