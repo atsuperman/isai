@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -87,42 +87,70 @@
         'list.txt'
     ];
 
-    // Levenshtein distance function for fuzzy matching
-    function levenshteinDistance(a, b) {
-        const matrix = [];
-        for (let i = 0; i <= b.length; i++) {
-            matrix[i] = [i];
-        }
-        for (let j = 0; j <= a.length; j++) {
-            matrix[0][j] = j;
-        }
-        for (let i = 1; i <= b.length; i++) {
-            for (let j = 1; j <= a.length; j++) {
-                const cost = b.charAt(i-1) === a.charAt(j-1) ? 0 : 1;
-                matrix[i][j] = Math.min(
-                    matrix[i-1][j-1] + cost,
-                    Math.min(
-                        matrix[i][j-1] + 1,
-                        matrix[i-1][j] + 1
-                    )
-                );
+    // Advanced matching functions
+    function normalizeText(text) {
+        return text.toLowerCase().replace(/[^a-z0-9]/g, '');
+    }
+
+    function similarityScore(a, b) {
+        const longer = a.length > b.length ? a : b;
+        const shorter = a.length <= b.length ? a : b;
+        const maxLength = longer.length;
+        
+        // Exact match at start
+        if (longer.startsWith(shorter)) return 1.0;
+        
+        // Calculate Jaro-Winkler similarity
+        const matchingWindow = Math.floor(Math.max(longer.length, shorter.length) / 2) - 1;
+        let matches = 0;
+        let transpositions = 0;
+        const shorts = new Array(shorter.length).fill(false);
+
+        for (let i = 0; i < longer.length; i++) {
+            const start = Math.max(0, i - matchingWindow);
+            const end = Math.min(i + matchingWindow + 1, shorter.length);
+            
+            for (let j = start; j < end; j++) {
+                if (!shorts[j] && longer[i] === shorter[j]) {
+                    shorts[j] = true;
+                    matches++;
+                    if (i !== j) transpositions++;
+                    break;
+                }
             }
         }
-        return matrix[b.length][a.length];
+
+        if (matches === 0) return 0.0;
+        
+        transpositions /= 2;
+        const jaro = (
+            (matches / longer.length) +
+            (matches / shorter.length) +
+            ((matches - transpositions) / matches)
+        ) / 3.0;
+
+        // Winkler modification for prefix emphasis
+        const prefixLimit = Math.min(4, shorter.length);
+        let prefix = 0;
+        while (prefix < prefixLimit && longer[prefix] === shorter[prefix]) {
+            prefix++;
+        }
+        
+        return jaro + (prefix * 0.1 * (1 - jaro));
     }
 
     async function performSearch() {
-        const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+        const rawSearch = document.getElementById('searchInput').value.trim();
         const resultsContainer = document.getElementById('resultsContainer');
         resultsContainer.innerHTML = '';
 
-        if (!searchTerm) {
+        if (!rawSearch) {
             resultsContainer.innerHTML = '<div class="no-results">Please enter a search term</div>';
             return;
         }
 
-        const searchWords = searchTerm.split(/\s+/).filter(word => word.length > 0);
-        const MAX_EDIT_DISTANCE = 2; // Adjust this value for more/less fuzzy matching
+        // Normalize and split search terms
+        const searchTerms = normalizeText(rawSearch).split(/\s+/).filter(w => w.length > 0);
         let hasResults = false;
 
         for (const file of textFiles) {
@@ -133,21 +161,26 @@
                 const matches = [];
 
                 for (let i = 0; i < lines.length; i++) {
-                    const lineText = lines[i];
-                    const lineLower = lineText.toLowerCase();
-                    const lineWords = lineLower.split(/\s+/);
+                    const originalLine = lines[i];
+                    const line = normalizeText(originalLine);
+                    const words = line.split(/\s+/);
                     
-                    const hasMatch = searchWords.some(searchWord => 
-                        lineWords.some(lineWord => {
-                            const distance = levenshteinDistance(searchWord, lineWord);
-                            return distance <= MAX_EDIT_DISTANCE;
+                    // Check all search terms against all words
+                    const matchFound = searchTerms.some(searchTerm => 
+                        words.some(word => {
+                            // Prioritize prefix matches
+                            if (word.startsWith(searchTerm)) return true;
+                            
+                            // Calculate similarity for non-prefix matches
+                            const similarity = similarityScore(word, searchTerm);
+                            return similarity >= 0.85 - (0.05 * searchTerm.length);
                         })
                     );
 
-                    if (hasMatch) {
+                    if (matchFound) {
                         matches.push({
                             lineNumber: i + 1,
-                            text: lineText
+                            text: originalLine
                         });
                     }
                 }
@@ -178,4 +211,4 @@
     }
 </script>
 </body>
-</html> 
+  </html>
