@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aattakkari Maman Ponnu.mp3", details: "🎬 Thaarai Thappattai (2016) / 🎙️ M.M. Manasi, Prasanna / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 Bala" },
 { file: "Anbe Nee yenna.mp3", details: "🎬 Pandiyan (1992) / 🎙️ Mano, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 SP. Muthuraman" },
 { file: "Paandiyana Kokka.mp3", details: "🎬 Pandiyan (1992) / 🎙️ Mano / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 SP. Muthuraman" },
 { file: "Paandiyanin Rajayathil.mp3", details: "🎬 Pandiyan (1992) / 🎙️ Mano, K. S. Chithra / 🎼 Karthik Raja / 📝 Panchu Arunachalam / 🎥 S. P. Muthuraman" },
