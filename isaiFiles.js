@@ -4,6 +4,15 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Chinna Chinna Vanna Kuyil.mp3", details: "🎬 Mouna Ragam (1986) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Mani Ratnam" },
+{ file: "Mandram Vandha Thendralukku.mp3", details: "🎬 Mouna Ragam (1986) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Mani Ratnam" },
+{ file: "Nilaave Vaa.mp3", details: "🎬 Mouna Ragam (1986) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Mani Ratnam" },
+{ file: "Oho Megam Vandhadho.mp3", details: "🎬 Mouna Ragam (1986) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Mani Ratnam" },
+{ file: "Panivizhum Iravu.mp3", details: "🎬 Mouna Ragam (1986) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Mani Ratnam" },
+{ file: "Aattakkari Maman Ponnu.mp3", details: "🎬 Thaarai Thappattai (2016) / 🎙️ M.M. Manasi, Prasanna / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 Bala" },
+{ file: "Anbe Nee yenna.mp3", details: "🎬 Pandiyan (1992) / 🎙️ Mano, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 SP. Muthuraman" },
+{ file: "Paandiyana Kokka.mp3", details: "🎬 Pandiyan (1992) / 🎙️ Mano / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 SP. Muthuraman" },
+{ file: "Paandiyanin Rajayathil.mp3", details: "🎬 Pandiyan (1992) / 🎙️ Mano, K. S. Chithra / 🎼 Karthik Raja / 📝 Panchu Arunachalam / 🎥 S. P. Muthuraman" },
 { file: "Alli Alli.mp3", details: "🎬 Arunachalam (1997) / 🎙️ Mano, Swarnalatha / 🎼 Deva / 📝 Palani Bharathi / 🎥 Sundar C" },
 { file: "Athanda Ithanda.mp3", details: "🎬 Arunachalam (1997) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vairamuthu / 🎥 Sundar C" },
 { file: "Mathadu Mathadu.mp3", details: "🎬 Arunachalam (1997) / 🎙️ S. P. Balasubrahmanyam, Sujatha Mohan, Meera, Manorama / 🎼 Deva / 📝 Palani Bharathi / 🎥 Sundar C" },
