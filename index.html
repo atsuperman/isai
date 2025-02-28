@@ -1,4 +1,4 @@
-         
+          
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -778,6 +778,40 @@
     100% { opacity: 0; transform: translate(-50%, -50%) scale(3); }
 }
     
+    .delete-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.delete-icon:hover {
+    transform: scale(1.1) rotate(15deg);
+}
+
+.delete-icon.active {
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(5px); }
+    50% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+}
+
+.delete-icon path {
+    transition: all 0.3s ease;
+}
+
+.delete-icon.active .lid {
+    transform: rotate(-30deg);
+    transform-origin: 52px 24px;
+}
+    
     
         @media screen and (max-width: 768px) {
           #songList::-webkit-scrollbar-thumb {
@@ -969,7 +1003,13 @@ body {
 
 </div>
 </div>
-
+<!-- Add to HTML before closing body tag -->
+<div class="delete-icon" id="deleteIcon">
+    <svg width="40" height="40" viewBox="0 0 60 60">
+        <path class="lid" d="M20 15h20l-2-4H22z" fill="orange"/>
+        <path d="M25 20v25h2V20zm8 0v25h2V20zm8 0v25h2V20zm5 30H14V20h32v30z" fill="silver"/>
+    </svg>
+</div>
       <audio id="audioPlayer">
         Your browser does not support the audio element.
     </audio>
@@ -1744,7 +1784,46 @@ document.querySelectorAll('.link-item').forEach(link => {
     });
 });
    
+   document.getElementById('deleteIcon').addEventListener('click', async function() {
+    // Add animation
+    this.classList.add('active');
+    
+    // Clear caches
+    try {
+        // Clear localStorage
+        localStorage.clear();
+        
+        // Clear service workers
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        for(let registration of registrations) {
+            await registration.unregister();
+        }
+        
+        // Clear cache API
+        if('caches' in window) {
+            await caches.keys().then(cacheNames => {
+                return Promise.all(cacheNames.map(cacheName => {
+                    return caches.delete(cacheName);
+                }));
+            });
+        }
+        
+        // Force reload
+        setTimeout(() => {
+            window.location.reload(true);
+        }, 1000);
+        
+    } catch(error) {
+        console.error('Cache clearing failed:', error);
+    }
+    
+    // Remove animation after 1s
+    setTimeout(() => {
+        this.classList.remove('active');
+    }, 1000);
+});
+   
     
     </script>
 </body>
-        </html>
+         </html>
