@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Poraney Poraney.mp3", details: "🎬 Vaagai Sooda Vaa (2011) / 🎙️ Ranjith, Neha Bhasin / 🎼 Ghibran / 📝 Karthik Netha / 🎥 A. Sarkunam" },
+{ file: "Sara Sara Saara Kathu.mp3", details: "🎬 Vaagai Sooda Vaa (2011) / 🎙️ Chinmayi / 🎼 Ghibran / 📝 Vairamuthu / 🎥 A. Sarkunam" },
 { file: "Chinna Chinna Vanna Kuyil.mp3", details: "🎬 Mouna Ragam (1986) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Mani Ratnam" },
 { file: "Mandram Vandha Thendralukku.mp3", details: "🎬 Mouna Ragam (1986) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Mani Ratnam" },
 { file: "Nilaave Vaa.mp3", details: "🎬 Mouna Ragam (1986) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Mani Ratnam" },
