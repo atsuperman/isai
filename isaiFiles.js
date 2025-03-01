@@ -4,6 +4,18 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Damaku Damakkudam.mp3", details: "🎬 Azhagi (2002) / 🎙️ Bhavatharini, Chorus / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Thangar Bachan" },
+{ file: "Kuruvi Kodanja.mp3", details: "🎬 Azhagi (2002) / 🎙️ Pushpavanam Kuppusamy, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Thangar Bachan" },
+{ file: "Oliyile Therivadhu Devadhaya.mp3", details: "🎬 Azhagi (2002) / 🎙️ Karthik, Bhavatharini / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 Thangar Bachan" },
+{ file: "Paattu Solli Paada Solli.mp3", details: "🎬 Azhagi (2002) / 🎙️ Sadhana Sargam / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 Thangar Bachan" },
+{ file: "Un Kuthama En Kuthama.mp3", details: "🎬 Azhagi (2002) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 Thangar Bachan" },
+{ file: "Ananda Ragam Ketkum Kaalam.mp3", details: "🎬 Panneer Pushpangal (1981) / 🎙️ Uma Ramanan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 P. Vasu, Santhana Bharathi" },
+{ file: "Kodai Kaala Kaatre.mp3", details: "🎬 Panneer Pushpangal (1981) / 🎙️ Malaysia Vasudevan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 P. Vasu, Santhana Bharathi" },
+{ file: "Poonthalir Aada.mp3", details: "🎬 Panneer Pushpangal (1981) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 P. Vasu, Santhana Bharathi" },
+{ file: "Adi Yaarathu.mp3", details: "🎬 Mettukudi (1996) / 🎙️ Mano, K. S. Chithra / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 Sundar C." },
+{ file: "Anbulla Mannavane.mp3", details: "🎬 Mettukudi (1996) / 🎙️ Mano, Swarnalatha / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 S. Sundar C." },
+{ file: "Mana Madurai.mp3", details: "🎬 Mettukudi (1996) / 🎙️ Krishnachander, Swarnalatha / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 Sundar C." },
+{ file: "Velvatta Velvatta.mp3", details: "🎬 Mettukudi (1996) / 🎙️ Mano, K. S. Chithra / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 Sundar C." },
 { file: "Poraney Poraney.mp3", details: "🎬 Vaagai Sooda Vaa (2011) / 🎙️ Ranjith, Neha Bhasin / 🎼 Ghibran / 📝 Karthik Netha / 🎥 A. Sarkunam" },
 { file: "Sara Sara Saara Kathu.mp3", details: "🎬 Vaagai Sooda Vaa (2011) / 🎙️ Chinmayi / 🎼 Ghibran / 📝 Vairamuthu / 🎥 A. Sarkunam" },
 { file: "Chinna Chinna Vanna Kuyil.mp3", details: "🎬 Mouna Ragam (1986) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Mani Ratnam" },
