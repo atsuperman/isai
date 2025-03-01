@@ -4,6 +4,10 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Adi Yaarathu.mp3", details: "🎬 Mettukudi (1996) / 🎙️ Mano, K. S. Chithra / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 Sundar C." },
+{ file: "Anbulla Mannavane.mp3", details: "🎬 Mettukudi (1996) / 🎙️ Mano, Swarnalatha / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 S. Sundar C." },
+{ file: "Mana Madurai.mp3", details: "🎬 Mettukudi (1996) / 🎙️ Krishnachander, Swarnalatha / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 Sundar C." },
+{ file: "Velvatta Velvatta.mp3", details: "🎬 Mettukudi (1996) / 🎙️ Mano, K. S. Chithra / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 Sundar C." },
 { file: "Poraney Poraney.mp3", details: "🎬 Vaagai Sooda Vaa (2011) / 🎙️ Ranjith, Neha Bhasin / 🎼 Ghibran / 📝 Karthik Netha / 🎥 A. Sarkunam" },
 { file: "Sara Sara Saara Kathu.mp3", details: "🎬 Vaagai Sooda Vaa (2011) / 🎙️ Chinmayi / 🎼 Ghibran / 📝 Vairamuthu / 🎥 A. Sarkunam" },
 { file: "Chinna Chinna Vanna Kuyil.mp3", details: "🎬 Mouna Ragam (1986) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Mani Ratnam" },
