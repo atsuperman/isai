@@ -4,7 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
-{ file: "Guli Mata Tamil.mp3", details: "🎬 Guli Mata (Tamil Version) / 🎙️ Eric Fernando, Kiru / 🎼 Eric Fernando" },
+{ file: "Guli Mata Tamil.mp3", details: "🎬 Guli Mata (Tamil Version, 2023) / 🎙️ Eric Fernando, Kiru / 🎼 Eric Fernando" },
 { file: "Damaku Damakkudam.mp3", details: "🎬 Azhagi (2002) / 🎙️ Bhavatharini, Chorus / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Thangar Bachan" },
 { file: "Kuruvi Kodanja.mp3", details: "🎬 Azhagi (2002) / 🎙️ Pushpavanam Kuppusamy, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Thangar Bachan" },
 { file: "Oliyile Therivadhu Devadhaya.mp3", details: "🎬 Azhagi (2002) / 🎙️ Karthik, Bhavatharini / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 Thangar Bachan" },
