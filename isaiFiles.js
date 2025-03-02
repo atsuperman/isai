@@ -1,9 +1,26 @@
-  
+ 
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Bittu Padam Di.mp3", details: "🎬 Trisha Illana Nayanthara (2015) / 🎙️ G. V. Prakash Kumar, Adhik Ravichandran / 🎼 G. V. Prakash Kumar / 📝 G. Rokesh / 🎥 Adhik Ravichandran" },
+{ file: "Mutham Kodutha Mayakkari.mp3", details: "🎬 Trisha Illana Nayanthara (2015) / 🎙️ Yuvan Shankar Raja / 🎼 G. V. Prakash Kumar / 📝 Na. Muthukumar / 🎥 Adhik Ravichandran" },
+{ file: "Yennachu Yedhachu.mp3", details: "🎬 Trisha Illana Nayanthara (2015) / 🎙️ G. V. Prakash Kumar, Saindhavi, Kalyani Pradeep / 🎼 G. V. Prakash Kumar / 📝 Kabilan / 🎥 Adhik Ravichandran" },
+{ file: "Ennavale Ennavale.mp3", details: "🎬 Ninaithen Vandhai (1998) / 🎙️ Mano, Anuradha Sriram / 🎼 Deva / 📝 Palani Bharathi / 🎥 K. Selva Bharathy" },
+{ file: "Malligaiye Malligaiye.mp3", details: "🎬 Ninaithen Vandhai (1998) / 🎙️ K. S. Chithra, Anuradha Sriram / 🎼 Deva / 📝 Palani Bharathi / 🎥 K. Selva Bharathy" },
+{ file: "Manisha Manisha.mp3", details: "🎬 Ninaithen Vandhai (1998) / 🎙️ Deva, Sabesh, Krishnaraj / 🎼 Deva / 📝 K. Selva Bharathy / 🎥 K. Selva Bharathy" },
+{ file: "Pottu Vaithu.mp3", details: "🎬 Ninaithen Vandhai (1998) / 🎙️ S. P. Balasubrahmanyam, Swarnalatha / 🎼 Deva / 📝 Palani Bharathi / 🎥 K. Selva Bharathy" },
+{ file: "Un Marbil vizhi moodi.mp3", details: "🎬 Ninaithen Vandhai (1998) / 🎙️ K. S. Chithra / 🎼 Deva / 📝 Palani Bharathi / 🎥 K. Selva Bharathy" },
+{ file: "Unnai Ninaithu naan.mp3", details: "🎬 Ninaithen Vandhai (1998) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra, Sujatha / 🎼 Deva / 📝 Vaali / 🎥 K. Selva Bharathy" },
+{ file: "Vanna Nilave.mp3", details: "🎬 Ninaithen Vandhai (1998) / 🎙️ Hariharan / 🎼 Deva / 📝 Palani Bharathi / 🎥 K. Selva Bharathy" },
+{ file: "Enthen Kuilenge.mp3", details: "🎬 Kannukkul Nilavu (2000) / 🎙️ P. Unni Krishnan, Anuradha Sriram / 🎼 Ilaiyaraaja / 📝 Pazhani Bharathi / 🎥 Fazil" },
+{ file: "Nilavu Pattu.mp3", details: "🎬 Kannukkul Nilavu (2000) / 🎙️ Hariharan / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Fazil" },
+{ file: "Oru Naal Oru Kanavu.mp3", details: "🎬 Kannukkul Nilavu (2000) / 🎙️ K. J. Yesudas, Anuradha Sriram / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Fazil" },
+{ file: "Roja Poonthottam.mp3", details: "🎬 Kannukkul Nilavu (2000) / 🎙️ P. Unnikrishnan, Anuradha Sriram / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Fazil" },
+{ file: "Un Punagai Pothumadi.mp3", details: "🎬 Pass Mark (1993) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Balakrishnan" },
+{ file: "Yerikayya Yerikayya.mp3", details: "🎬 Pass Mark (1993) / 🎙️ Mano, K. S. Chithra / 🎼 Deva / 📝 Vairamuthu" },
+{ file: "Guli Mata Tamil.mp3", details: "🎬 Guli Mata (Tamil Version, 2023) / 🎙️ Eric Fernando, Kiru / 🎼 Eric Fernando" },
 { file: "Damaku Damakkudam.mp3", details: "🎬 Azhagi (2002) / 🎙️ Bhavatharini, Chorus / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Thangar Bachan" },
 { file: "Kuruvi Kodanja.mp3", details: "🎬 Azhagi (2002) / 🎙️ Pushpavanam Kuppusamy, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Thangar Bachan" },
 { file: "Oliyile Therivadhu Devadhaya.mp3", details: "🎬 Azhagi (2002) / 🎙️ Karthik, Bhavatharini / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 Thangar Bachan" },
@@ -263,4 +280,3 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
-
