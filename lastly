@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Bittu Padam Di.mp3", details: "🎬 Trisha Illana Nayanthara (2015) / 🎙️ G. V. Prakash Kumar, Adhik Ravichandran / 🎼 G. V. Prakash Kumar / 📝 G. Rokesh / 🎥 Adhik Ravichandran" },
+{ file: "Mutham Kodutha Mayakkari.mp3", details: "🎬 Trisha Illana Nayanthara (2015) / 🎙️ Yuvan Shankar Raja / 🎼 G. V. Prakash Kumar / 📝 Na. Muthukumar / 🎥 Adhik Ravichandran" },
+{ file: "Yennachu Yedhachu.mp3", details: "🎬 Trisha Illana Nayanthara (2015) / 🎙️ G. V. Prakash Kumar, Saindhavi, Kalyani Pradeep / 🎼 G. V. Prakash Kumar / 📝 Kabilan / 🎥 Adhik Ravichandran" },
 { file: "Ennavale Ennavale.mp3", details: "🎬 Ninaithen Vandhai (1998) / 🎙️ Mano, Anuradha Sriram / 🎼 Deva / 📝 Palani Bharathi / 🎥 K. Selva Bharathy" },
 { file: "Malligaiye Malligaiye.mp3", details: "🎬 Ninaithen Vandhai (1998) / 🎙️ K. S. Chithra, Anuradha Sriram / 🎼 Deva / 📝 Palani Bharathi / 🎥 K. Selva Bharathy" },
 { file: "Manisha Manisha.mp3", details: "🎬 Ninaithen Vandhai (1998) / 🎙️ Deva, Sabesh, Krishnaraj / 🎼 Deva / 📝 K. Selva Bharathy / 🎥 K. Selva Bharathy" },
