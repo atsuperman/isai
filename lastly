@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Un Punagai Pothumadi.mp3", details: "🎬 Pass Mark (1993) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Balakrishnan" },
+{ file: "Yerikayya Yerikayya.mp3", details: "🎬 Pass Mark (1993) / 🎙️ Mano, K. S. Chithra / 🎼 Deva / 📝 Vairamuthu" },
 { file: "Guli Mata Tamil.mp3", details: "🎬 Guli Mata (Tamil Version, 2023) / 🎙️ Eric Fernando, Kiru / 🎼 Eric Fernando" },
 { file: "Damaku Damakkudam.mp3", details: "🎬 Azhagi (2002) / 🎙️ Bhavatharini, Chorus / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Thangar Bachan" },
 { file: "Kuruvi Kodanja.mp3", details: "🎬 Azhagi (2002) / 🎙️ Pushpavanam Kuppusamy, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Thangar Bachan" },
