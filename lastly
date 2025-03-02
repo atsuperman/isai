@@ -4,6 +4,10 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Enthen Kuilenge.mp3", details: "🎬 Kannukkul Nilavu (2000) / 🎙️ P. Unni Krishnan, Anuradha Sriram / 🎼 Ilaiyaraaja / 📝 Pazhani Bharathi / 🎥 Fazil" },
+{ file: "Nilavu Pattu.mp3", details: "🎬 Kannukkul Nilavu (2000) / 🎙️ Hariharan / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Fazil" },
+{ file: "Oru Naal Oru Kanavu.mp3", details: "🎬 Kannukkul Nilavu (2000) / 🎙️ K. J. Yesudas, Anuradha Sriram / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Fazil" },
+{ file: "Roja Poonthottam.mp3", details: "🎬 Kannukkul Nilavu (2000) / 🎙️ P. Unnikrishnan, Anuradha Sriram / 🎼 Ilaiyaraaja / 📝 Palani Bharathi / 🎥 Fazil" },
 { file: "Un Punagai Pothumadi.mp3", details: "🎬 Pass Mark (1993) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vairamuthu / 🎥 V. Balakrishnan" },
 { file: "Yerikayya Yerikayya.mp3", details: "🎬 Pass Mark (1993) / 🎙️ Mano, K. S. Chithra / 🎼 Deva / 📝 Vairamuthu" },
 { file: "Guli Mata Tamil.mp3", details: "🎬 Guli Mata (Tamil Version, 2023) / 🎙️ Eric Fernando, Kiru / 🎼 Eric Fernando" },
