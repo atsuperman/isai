@@ -1,31 +1,33 @@
-    <!DOCTYPE html>
-<html lang="en">
+ <!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text File Search</title>
+    <title>File Search</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .container {
             max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
+            margin: 0 auto;
         }
 
         .search-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
+            position: relative;
+            margin-bottom: 20px;
         }
 
         #searchInput {
-            flex: 1;
+            width: 70%;
             padding: 10px;
             font-size: 16px;
         }
 
         button {
             padding: 10px 20px;
+            font-size: 16px;
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -36,189 +38,180 @@
             background-color: #45a049;
         }
 
-        .result-item {
-            margin-bottom: 30px;
-            border-left: 4px solid #4CAF50;
-            padding-left: 15px;
+        .suggestions {
+            position: center;
+            background-color: white;
+            border: 1px solid #ddd;
+            width: 70%;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
         }
 
-        .filename {
-            font-size: 20px;
-            color: #333;
+        .suggestion-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .result-section {
+            background-color: white;
             margin-bottom: 10px;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .match-box {
-            background-color: #f8f8f8;
-            padding: 15px;
-            margin: 10px 0;
+        .file-header {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #e0e0e0;
             border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-content {
+            margin-top: 10px;
+            padding: 10px;
+            display: none;
         }
 
         .line-number {
             color: #666;
-            font-size: 0.9em;
-            margin-bottom: 5px;
+            margin-right: 10px;
         }
 
-        .line-text {
-            color: #333;
-            white-space: pre-wrap;
-        }
-
-        .no-results {
-            color: #666;
-            font-style: italic;
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Enter search term...">
-        <button onclick="performSearch()">Search</button>
+    <div class="container">
+        <h1>File Search</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Enter search term...">
+            <div id="suggestions" class="suggestions"></div>
+            <button onclick="performSearch()">Search</button>
+        </div>
+        <div id="results"></div>
     </div>
-    <div id="resultsContainer"></div>
-<script>
-    const textFiles = [
-        'isaiFiles.js',
-        'lastly',
-        'list.txt'
-    ];
 
-    function normalizeText(text) {
-        return text.toLowerCase().replace(/[^a-z0-9]/g, '');
-    }
-// Add this function after normalizeText()
-function fuzzyMatch(searchWord, lineWord) {
-    let sIdx = 0;
-    for (const c of lineWord) {
-        if (c === searchWord[sIdx]) {
-            sIdx++;
-            if (sIdx === searchWord.length) break;
-        }
-    }
-    return sIdx === searchWord.length;
-}
+    <script>
+        let fileData = {};
+        let allWords = new Set();
 
+        // Load files on page load
+        window.onload = async function() {
+            const files = ['isaiFiles.js', 'lastly'];
+            
+            for (const file of files) {
+                try {
+                    const response = await fetch(file);
+                    const text = await response.text();
+                    const lines = text.split('\n').map(line => line.trim());
+                    fileData[file] = lines;
 
-    function calculateMatchScore(searchWords, lineWords) {
-        let exactMatches = 0;
-        let partialMatches = 0;
-        let totalScore = 0;
-
-        for (const searchWord of searchWords) {
-            let wordMatched = false;
-            let bestWordScore = 0;
-
-            for (const lineWord of lineWords) {
-                // Exact match check
-                if (lineWord === searchWord) {
-                    exactMatches++;
-                    totalScore += 2; // Higher weight for exact matches
-                    wordMatched = true;
-                    break;
-                }
-
-              let partialScore = 0;
-if (lineWord.startsWith(searchWord)) {
-    partialScore = 1;
-} else if (fuzzyMatch(searchWord, lineWord)) {
-    partialScore = 0.5;
-}
-        }
-
-        // Bonus for matching more search words
-        const coverageBonus = (exactMatches + partialMatches) / searchWords.length;
-        
-        return {
-            score: totalScore + coverageBonus,
-            exactMatches,
-            partialMatches
-        };
-    }
-
-    async function performSearch() {
-        const rawSearch = document.getElementById('searchInput').value.trim();
-        const resultsContainer = document.getElementById('resultsContainer');
-        resultsContainer.innerHTML = '';
-
-        if (!rawSearch) {
-            resultsContainer.innerHTML = '<div class="no-results">Please enter a search term</div>';
-            return;
-        }
-
-        const searchTerms = normalizeText(rawSearch).split(/\s+/).filter(w => w.length > 0);
-        let hasResults = false;
-        const allMatches = [];
-
-        for (const file of textFiles) {
-            try {
-                const response = await fetch(file);
-                const text = await response.text();
-                const lines = text.split('\n');
-
-                for (let i = 0; i < lines.length; i++) {
-                    const originalLine = lines[i];
-                    const line = normalizeText(originalLine);
-                    const lineWords = line.split(/\s+/);
-
-                    if (lineWords.length === 0) continue;
-
-                    const { score, exactMatches } = calculateMatchScore(searchTerms, lineWords);
-                    
-                    if (score > 0) {
-                        allMatches.push({
-                            file,
-                            lineNumber: i + 1,
-                            text: originalLine,
-                            score,
-                            exactMatches
+                    // Extract words for suggestions
+                    lines.forEach(line => {
+                        const words = line.toLowerCase().split(/[\s\W]+/);
+                        words.forEach(word => {
+                            if (word.length > 2) allWords.add(word);
                         });
-                    }
+                    });
+                } catch (error) {
+                    console.error(`Error loading ${file}:`, error);
                 }
-            } catch (error) {
-                console.error(`Error loading file ${file}:`, error);
             }
-        }
+        };
 
-        // Sort matches by relevance
-        allMatches.sort((a, b) => {
-            if (b.exactMatches !== a.exactMatches) return b.exactMatches - a.exactMatches;
-            if (b.score !== a.score) return b.score - a.score;
-            return a.file.localeCompare(b.file);
+        // Search input handler with suggestions
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const input = e.target.value.toLowerCase();
+            const suggestions = Array.from(allWords).filter(word => 
+                word.includes(input) && input.length > 0
+            ).slice(0, 5);
+
+            const suggestionsDiv = document.getElementById('suggestions');
+            suggestionsDiv.innerHTML = '';
+            
+            suggestions.forEach(word => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-item';
+                div.textContent = word;
+                div.onclick = () => {
+                    document.getElementById('searchInput').value = word;
+                    suggestionsDiv.innerHTML = '';
+                    performSearch();
+                };
+                suggestionsDiv.appendChild(div);
+            });
         });
 
-        // Group results by file
-        const fileGroups = {};
-        for (const match of allMatches) {
-            if (!fileGroups[match.file]) {
-                fileGroups[match.file] = [];
-            }
-            fileGroups[match.file].push(match);
-        }
+        // Main search function
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (!searchTerm) return;
 
-        // Display results
-        for (const [file, matches] of Object.entries(fileGroups)) {
-            hasResults = true;
-            const resultDiv = document.createElement('div');
-            resultDiv.className = 'result-item';
-            resultDiv.innerHTML = `
-                <div class="filename">${file}</div>
-                ${matches.map(match => `
-                    <div class="match-box">
-                        <div class="line-number">Line ${match.lineNumber}</div>
-                        <div class="line-text">${match.text}</div>
-                    </div>
-                `).join('')}
-            `;
-            resultsContainer.appendChild(resultDiv);
-        }
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
 
-        if (!hasResults) {
-            resultsContainer.innerHTML = '<div class="no-results">No matching results found</div>';
+            Object.entries(fileData).forEach(([fileName, lines]) => {
+                const matches = [];
+                lines.forEach((line, index) => {
+                    if (line.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        matches.push({ lineNumber: index + 1, text: line });
+                    }
+                });
+
+                if (matches.length > 0) {
+                    const section = document.createElement('div');
+                    section.className = 'result-section';
+                    
+                    const header = document.createElement('div');
+                    header.className = 'file-header';
+                    header.innerHTML = `
+                        <div>${fileName} (${matches.length} matches)</div>
+                        <div>▼</div>
+                    `;
+                    
+                    const content = document.createElement('div');
+                    content.className = 'file-content';
+                    
+                    matches.forEach(match => {
+                        const lineDiv = document.createElement('div');
+                        lineDiv.style.marginBottom = '5px';
+                        
+                        const highlighted = match.text.replace(
+                            new RegExp(searchTerm, 'gi'),
+                            match => `<span class="highlight">${match}</span>`
+                        );
+                        
+                        lineDiv.innerHTML = `
+                            <span class="line-number">Line ${match.lineNumber}:</span>
+                            ${highlighted}
+                        `;
+                        content.appendChild(lineDiv);
+                    });
+
+                    header.onclick = () => {
+                        content.style.display = content.style.display === 'none' ? 'block' : 'none';
+                        header.querySelector('div:last-child').textContent = 
+                            content.style.display === 'none' ? '▼' : '▲';
+                    };
+
+                    section.appendChild(header);
+                    section.appendChild(content);
+                    resultsDiv.appendChild(section);
+                }
+            });
         }
-    }
-</script>
+    </script>
 </body>
-</html>
+            </html>
