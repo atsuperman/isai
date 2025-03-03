@@ -1,9 +1,22 @@
- 
+  
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aasai Perasai.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Jayam Ravi / 🎼 Hiphop Tamizha / 📝 Mohan Raja / 🎥 Mohan Raja" },
+{ file: "Kadhal Cricket.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Kharesma Ravichandran / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha / 🎥 Mohan Raja" },
+{ file: "Kannala Kannala.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Kaushik Krish, Padmalatha / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha / 🎥 Mohan Raja" },
+{ file: "Thani Oruvan.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Bobo Shashi, Hiphop Tamizha / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha / 🎥 Mohan Raja" },
+{ file: "Theemai Dhan Vellum.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Arvind Swamy, Hiphop Tamizha / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha / 🎥 Mohan Raja" },
+{ file: "Lala Kadai Santhi.mp3", details: "🎬 Saravanan Irukka Bayamaen (2017) / 🎙️ Benny Dayal, Sunidhi Chauhan / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Ezhil" },
+{ file: "Yembuttu Irukkuthu Aasai.mp3", details: "🎬 Saravanan Irukka Bayamaen (2017) / 🎙️ Sean Roldan, Kalyani Nair / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Ezhil" },
+{ file: "Chikki Mukki Uyyala.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
+{ file: "Idhu Kaadhalin Sangeetham.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ P. Jayachandran / 🎼 S. A. Rajkumar / 📝 Pazhani Bharathi / 🎥 Raj Kapoor" },
+{ file: "Kaadhal Enna Kannamoochi.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ S. P. Balasubrahmanyam / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
+{ file: "Oh Vanthathu Penna.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ Hariharan / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
+{ file: "Rukku Rukku.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ Mano / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
+{ file: "Selaila Veedu Kattava.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ P. Unnikrishnan, K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
 { file: "Bittu Padam Di.mp3", details: "🎬 Trisha Illana Nayanthara (2015) / 🎙️ G. V. Prakash Kumar, Adhik Ravichandran / 🎼 G. V. Prakash Kumar / 📝 G. Rokesh / 🎥 Adhik Ravichandran" },
 { file: "Mutham Kodutha Mayakkari.mp3", details: "🎬 Trisha Illana Nayanthara (2015) / 🎙️ Yuvan Shankar Raja / 🎼 G. V. Prakash Kumar / 📝 Na. Muthukumar / 🎥 Adhik Ravichandran" },
 { file: "Yennachu Yedhachu.mp3", details: "🎬 Trisha Illana Nayanthara (2015) / 🎙️ G. V. Prakash Kumar, Saindhavi, Kalyani Pradeep / 🎼 G. V. Prakash Kumar / 📝 Kabilan / 🎥 Adhik Ravichandran" },
@@ -280,3 +293,4 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
+
