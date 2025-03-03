@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Lala Kadai Santhi.mp3", details: "🎬 Saravanan Irukka Bayamaen (2017) / 🎙️ Benny Dayal, Sunidhi Chauhan / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Ezhil" },
+{ file: "Yembuttu Irukkuthu Aasai.mp3", details: "🎬 Saravanan Irukka Bayamaen (2017) / 🎙️ Sean Roldan, Kalyani Nair / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Ezhil" },
 { file: "Chikki Mukki Uyyala.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
 { file: "Idhu Kaadhalin Sangeetham.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ P. Jayachandran / 🎼 S. A. Rajkumar / 📝 Pazhani Bharathi / 🎥 Raj Kapoor" },
 { file: "Kaadhal Enna Kannamoochi.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ S. P. Balasubrahmanyam / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
