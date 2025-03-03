@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text File Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .suggestions {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            width: 70%;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .suggestion-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .result-section {
+            background-color: white;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .file-header {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-content {
+            margin-top: 10px;
+            padding: 10px;
+            display: none;
+        }
+
+        .line-number {
+            color: #666;
+            margin-right: 10px;
+        }
+
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text File Search</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Enter search term...">
+            <div id="suggestions" class="suggestions"></div>
+            <button onclick="performSearch()">Search</button>
+        </div>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        let fileData = {};
+        let allWords = new Set();
+
+        // Load files on page load
+        window.onload = async function() {
+            const files = ['file1.txt', 'file2.txt', 'file3.txt'];
+            
+            for (const file of files) {
+                try {
+                    const response = await fetch(file);
+                    const text = await response.text();
+                    const lines = text.split('\n').map(line => line.trim());
+                    fileData[file] = lines;
+
+                    // Extract words for suggestions
+                    lines.forEach(line => {
+                        const words = line.toLowerCase().split(/[\s\W]+/);
+                        words.forEach(word => {
+                            if (word.length > 2) allWords.add(word);
+                        });
+                    });
+                } catch (error) {
+                    console.error(`Error loading ${file}:`, error);
+                }
+            }
+        };
+
+        // Search input handler with suggestions
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const input = e.target.value.toLowerCase();
+            const suggestions = Array.from(allWords).filter(word => 
+                word.includes(input) && input.length > 0
+            ).slice(0, 5);
+
+            const suggestionsDiv = document.getElementById('suggestions');
+            suggestionsDiv.innerHTML = '';
+            
+            suggestions.forEach(word => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-item';
+                div.textContent = word;
+                div.onclick = () => {
+                    document.getElementById('searchInput').value = word;
+                    suggestionsDiv.innerHTML = '';
+                    performSearch();
+                };
+                suggestionsDiv.appendChild(div);
+            });
+        });
+
+        // Main search function
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (!searchTerm) return;
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            Object.entries(fileData).forEach(([fileName, lines]) => {
+                const matches = [];
+                lines.forEach((line, index) => {
+                    if (line.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        matches.push({ lineNumber: index + 1, text: line });
+                    }
+                });
+
+                if (matches.length > 0) {
+                    const section = document.createElement('div');
+                    section.className = 'result-section';
+                    
+                    const header = document.createElement('div');
+                    header.className = 'file-header';
+                    header.innerHTML = `
+                        <div>${fileName} (${matches.length} matches)</div>
+                        <div>▼</div>
+                    `;
+                    
+                    const content = document.createElement('div');
+                    content.className = 'file-content';
+                    
+                    matches.forEach(match => {
+                        const lineDiv = document.createElement('div');
+                        lineDiv.style.marginBottom = '5px';
+                        
+                        const highlighted = match.text.replace(
+                            new RegExp(searchTerm, 'gi'),
+                            match => `<span class="highlight">${match}</span>`
+                        );
+                        
+                        lineDiv.innerHTML = `
+                            <span class="line-number">Line ${match.lineNumber}:</span>
+                            ${highlighted}
+                        `;
+                        content.appendChild(lineDiv);
+                    });
+
+                    header.onclick = () => {
+                        content.style.display = content.style.display === 'none' ? 'block' : 'none';
+                        header.querySelector('div:last-child').textContent = 
+                            content.style.display === 'none' ? '▼' : '▲';
+                    };
+
+                    section.appendChild(header);
+                    section.appendChild(content);
+                    resultsDiv.appendChild(section);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
