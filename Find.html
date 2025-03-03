@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -89,6 +89,18 @@
     function normalizeText(text) {
         return text.toLowerCase().replace(/[^a-z0-9]/g, '');
     }
+// Add this function after normalizeText()
+function fuzzyMatch(searchWord, lineWord) {
+    let sIdx = 0;
+    for (const c of lineWord) {
+        if (c === searchWord[sIdx]) {
+            sIdx++;
+            if (sIdx === searchWord.length) break;
+        }
+    }
+    return sIdx === searchWord.length;
+}
+
 
     function calculateMatchScore(searchWords, lineWords) {
         let exactMatches = 0;
@@ -108,19 +120,12 @@
                     break;
                 }
 
-                // Partial match check (prefix or substring)
-                const partialScore = lineWord.startsWith(searchWord) ? 1 : 
-                                   lineWord.includes(searchWord) ? 0.5 : 0;
-                
-                if (partialScore > bestWordScore) {
-                    bestWordScore = partialScore;
-                }
-            }
-
-            if (!wordMatched && bestWordScore > 0) {
-                partialMatches++;
-                totalScore += bestWordScore;
-            }
+              let partialScore = 0;
+if (lineWord.startsWith(searchWord)) {
+    partialScore = 1;
+} else if (fuzzyMatch(searchWord, lineWord)) {
+    partialScore = 0.5;
+}
         }
 
         // Bonus for matching more search words
