@@ -4,6 +4,12 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Chikki Mukki Uyyala.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
+{ file: "Idhu Kaadhalin Sangeetham.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ P. Jayachandran / 🎼 S. A. Rajkumar / 📝 Pazhani Bharathi / 🎥 Raj Kapoor" },
+{ file: "Kaadhal Enna Kannamoochi.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ S. P. Balasubrahmanyam / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
+{ file: "Oh Vanthathu Penna.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ Hariharan / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
+{ file: "Rukku Rukku.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ Mano / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
+{ file: "Selaila Veedu Kattava.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ P. Unnikrishnan, K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
 { file: "Bittu Padam Di.mp3", details: "🎬 Trisha Illana Nayanthara (2015) / 🎙️ G. V. Prakash Kumar, Adhik Ravichandran / 🎼 G. V. Prakash Kumar / 📝 G. Rokesh / 🎥 Adhik Ravichandran" },
 { file: "Mutham Kodutha Mayakkari.mp3", details: "🎬 Trisha Illana Nayanthara (2015) / 🎙️ Yuvan Shankar Raja / 🎼 G. V. Prakash Kumar / 📝 Na. Muthukumar / 🎥 Adhik Ravichandran" },
 { file: "Yennachu Yedhachu.mp3", details: "🎬 Trisha Illana Nayanthara (2015) / 🎙️ G. V. Prakash Kumar, Saindhavi, Kalyani Pradeep / 🎼 G. V. Prakash Kumar / 📝 Kabilan / 🎥 Adhik Ravichandran" },
