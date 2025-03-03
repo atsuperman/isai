@@ -4,6 +4,11 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aasai Perasai.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Jayam Ravi / 🎼 Hiphop Tamizha / 📝 Mohan Raja / 🎥 Mohan Raja" },
+{ file: "Kadhal Cricket.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Kharesma Ravichandran / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha / 🎥 Mohan Raja" },
+{ file: "Kannala Kannala.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Kaushik Krish, Padmalatha / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha / 🎥 Mohan Raja" },
+{ file: "Thani Oruvan.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Bobo Shashi, Hiphop Tamizha / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha / 🎥 Mohan Raja" },
+{ file: "Theemai Dhan Vellum.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Arvind Swamy, Hiphop Tamizha / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha / 🎥 Mohan Raja" },
 { file: "Lala Kadai Santhi.mp3", details: "🎬 Saravanan Irukka Bayamaen (2017) / 🎙️ Benny Dayal, Sunidhi Chauhan / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Ezhil" },
 { file: "Yembuttu Irukkuthu Aasai.mp3", details: "🎬 Saravanan Irukka Bayamaen (2017) / 🎙️ Sean Roldan, Kalyani Nair / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Ezhil" },
 { file: "Chikki Mukki Uyyala.mp3", details: "🎬 Aval Varuvala (1998) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Raj Kapoor" },
