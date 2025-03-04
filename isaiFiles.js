@@ -4,6 +4,14 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Chinnan Sirisu.mp3", details: "🎬 Kunguma Poovum Konjum Puravum (2009) / 🎙️ Javed Ali, Bela Shende / 🎼 Yuvan Shankar Raja / 📝 Vaali / 🎥 Rajamohan" },
+{ file: "Kadaloram oru Yuvan.mp3", details: "🎬 Kunguma Poovum Konjum Puravum (2009) / 🎙️ Yuvan Shankar Raja / 🎼 Yuvan Shankar Raja / 📝 Vaali / 🎥 Rajamohan" },
+{ file: "Kadaloram oru.mp3", details: "🎬 Kunguma Poovum Konjum Puravum (2009) / 🎙️ S. P. B. Charan / 🎼 Yuvan Shankar Raja / 📝 Vaali / 🎥 Rajamohan" },
+{ file: "Orunimisham.mp3", details: "🎬 Kunguma Poovum Konjum Puravum (2009) / 🎙️ Velmurugan / 🎼 Yuvan Shankar Raja / 📝 Gangai Amaran / 🎥 Rajamohan" },
+{ file: "Andha Arabi Kadaloram.mp3", details: "🎬 Bombay (1995) / 🎙️ A. R. Rahman, Remo Fernandes, Swarnalatha / 🎼 A. R. Rahman / 📝 Vairamuthu / 🎥 Mani Ratnam / 🏷️ Pyramid" },
+{ file: "Kannalane Enadhu.mp3", details: "🎬 Bombay (1995) / 🎙️ K. S. Chithra / 🎼 A. R. Rahman / 📝 Vairamuthu / 🎥 Mani Ratnam / 🏷️ Pyramid" },
+{ file: "Kuchi Kuchi Rakkamma.mp3", details: "🎬 Bombay (1995) / 🎙️ Hariharan, Swarnalatha, G. V. Prakash Kumar, Sharadha, Swetha Mohan / 🎼 A. R. Rahman / 📝 Vairamuthu / 🎥 Mani Ratnam / 🏷️ Pyramid" },
+{ file: "Uyire Uyire vanthu.mp3", details: "🎬 Bombay (1995) / 🎙️ Hariharan, K. S. Chithra, Swarnalatha (humming) / 🎼 A. R. Rahman / 📝 Vairamuthu / 🎥 Mani Ratnam / 🏷️ Pyramid Music" },
 { file: "Aasai Perasai.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Jayam Ravi / 🎼 Hiphop Tamizha / 📝 Mohan Raja / 🎥 Mohan Raja" },
 { file: "Kadhal Cricket.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Kharesma Ravichandran / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha / 🎥 Mohan Raja" },
 { file: "Kannala Kannala.mp3", details: "🎬 Thani Oruvan (2015) / 🎙️ Kaushik Krish, Padmalatha / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha / 🎥 Mohan Raja" },
