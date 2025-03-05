@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Mazhai Peyyum Podhu.mp3", details: "🎬 Renigunta (2009) / 🎙️ Harish Raghavendra / 🎼 Ganesh Raghavendra / 📝 Yugabharathi / 🎥 R. Panneerselvam" },
 { file: "Chinnan Sirisu.mp3", details: "🎬 Kunguma Poovum Konjum Puravum (2009) / 🎙️ Javed Ali, Bela Shende / 🎼 Yuvan Shankar Raja / 📝 Vaali / 🎥 Rajamohan" },
 { file: "Kadaloram oru Yuvan.mp3", details: "🎬 Kunguma Poovum Konjum Puravum (2009) / 🎙️ Yuvan Shankar Raja / 🎼 Yuvan Shankar Raja / 📝 Vaali / 🎥 Rajamohan" },
 { file: "Kadaloram oru.mp3", details: "🎬 Kunguma Poovum Konjum Puravum (2009) / 🎙️ S. P. B. Charan / 🎼 Yuvan Shankar Raja / 📝 Vaali / 🎥 Rajamohan" },
