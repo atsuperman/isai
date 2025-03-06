@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Music Player</title>
+    <style>
+        /* New CSS */
+        #songList {
+            max-height: 70vh;
+            overflow-y: auto;
+            width: 90%;
+            margin: 20px auto;
+            padding: 10px;
+        }
+
+        .song-item {
+            margin: 8px 0;
+            border-radius: 4px;
+            background: #f8f9fa;
+            transition: background 0.2s;
+        }
+
+        .song-name {
+            padding: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            color: #2c3e50;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .song-name:hover {
+            background: #f1f3f5;
+        }
+
+        .controls-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+            display: flex;
+            gap: 10px;
+            padding: 0 12px;
+        }
+
+        .controls-container.active {
+            max-height: 60px;
+            padding: 12px;
+        }
+
+        .control-btn {
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .play-btn {
+            background: #3498db;
+            color: white;
+        }
+
+        .download-btn {
+            background: #2ecc71;
+            color: white;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #bdc3c7;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="songList"></div>
+
+    <script type="module">
+        import { allSongs } from './redfiles.js';
+
+        const audio = new Audio();
+        let currentPlaying = null;
+
+        const songList = document.getElementById('songList');
+
+        allSongs.slice(0, 10).forEach(song => {
+            const songItem = document.createElement('div');
+            songItem.className = 'song-item';
+
+            const songName = document.createElement('div');
+            songName.className = 'song-name';
+            songName.textContent = song.file.replace('.mp3', '');
+
+            const controls = document.createElement('div');
+            controls.className = 'controls-container';
+
+            const playBtn = document.createElement('button');
+            playBtn.className = 'control-btn play-btn';
+            playBtn.textContent = 'Play';
+
+            const downloadBtn = document.createElement('button');
+            downloadBtn.className = 'control-btn download-btn';
+            downloadBtn.textContent = 'Download';
+
+            controls.append(playBtn, downloadBtn);
+            songItem.append(songName, controls);
+            songList.appendChild(songItem);
+
+            // Toggle controls
+            songName.addEventListener('click', () => {
+                // Close all other controls
+                document.querySelectorAll('.controls-container').forEach(c => {
+                    if (c !== controls) c.classList.remove('active');
+                });
+                controls.classList.toggle('active');
+            });
+
+            // Play/Pause functionality
+            playBtn.addEventListener('click', () => {
+                if (currentPlaying !== song.path) {
+                    audio.src = song.path;
+                    audio.play();
+                    currentPlaying = song.path;
+                    playBtn.textContent = 'Pause';
+                } else {
+                    if (audio.paused) {
+                        audio.play();
+                        playBtn.textContent = 'Pause';
+                    } else {
+                        audio.pause();
+                        playBtn.textContent = 'Play';
+                    }
+                }
+            });
+
+            // Download functionality
+            downloadBtn.addEventListener('click', () => {
+                const link = document.createElement('a');
+                link.href = song.path;
+                link.download = song.file;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        });
+
+        // Handle audio state
+        audio.addEventListener('pause', () => {
+            const currentBtn = document.querySelector(`.play-btn[data-playing="true"]`);
+            if (currentBtn) {
+                currentBtn.textContent = 'Play';
+                currentBtn.removeAttribute('data-playing');
+            }
+        });
+
+        audio.addEventListener('play', () => {
+            document.querySelectorAll('.play-btn').forEach(btn => {
+                btn.textContent = 'Play';
+                btn.removeAttribute('data-playing');
+            });
+            const currentBtn = document.querySelector(`button[data-playing="true"]`);
+            if (currentBtn) currentBtn.textContent = 'Play';
+        });
+    </script>
+</body>
+</html>
