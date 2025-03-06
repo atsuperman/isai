@@ -1,63 +1,75 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
     <title>Music Player</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* New CSS */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+        }
+
         #songList {
-            max-height: 70vh;
+            height: calc(100vh - 60px);
             overflow-y: auto;
-            width: 90%;
-            margin: 20px auto;
             padding: 10px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .song-item {
-            margin: 8px 0;
-            border-radius: 4px;
+            margin-bottom: 8px;
+            border-radius: 8px;
             background: #f8f9fa;
-            transition: background 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .song-name {
-            padding: 12px;
+            padding: 16px;
             cursor: pointer;
+            font-size: 16px;
+            color: #2d3436;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            font-weight: 500;
-            color: #2c3e50;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .song-name:hover {
-            background: #f1f3f5;
         }
 
         .controls-container {
             max-height: 0;
             overflow: hidden;
-            transition: all 0.3s ease;
-            background: white;
-            display: flex;
-            gap: 10px;
-            padding: 0 12px;
+            transition: max-height 0.3s ease-out;
+            background: #ffffff;
+            border-radius: 0 0 8px 8px;
         }
 
         .controls-container.active {
-            max-height: 60px;
-            padding: 12px;
+            max-height: 100px;
+        }
+
+        .controls {
+            padding: 10px 16px;
+            display: flex;
+            gap: 10px;
         }
 
         .control-btn {
+            flex: 1;
+            padding: 12px;
             border: none;
-            padding: 8px 20px;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
+            transition: transform 0.1s ease;
         }
 
-        .control-btn:hover {
-            transform: translateY(-1px);
+        .control-btn:active {
+            transform: scale(0.98);
         }
 
         .play-btn {
@@ -66,22 +78,20 @@
         }
 
         .download-btn {
-            background: #2ecc71;
+            background: #27ae60;
             color: white;
         }
 
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #bdc3c7;
-            border-radius: 4px;
+        @media (max-width: 480px) {
+            .song-name {
+                padding: 14px;
+                font-size: 15px;
+            }
+            
+            .control-btn {
+                padding: 10px;
+                font-size: 13px;
+            }
         }
     </style>
 </head>
@@ -89,14 +99,16 @@
     <div id="songList"></div>
 
     <script type="module">
-        import { allSongs } from './isaiFiles.js';
+        import { allSongs } from './redfiles.js';
 
         const audio = new Audio();
         let currentPlaying = null;
+        let currentControls = null;
 
         const songList = document.getElementById('songList');
 
-        allSongs.slice(0, 10).forEach(song => {
+        // Load all songs
+        allSongs.forEach(song => {
             const songItem = document.createElement('div');
             songItem.className = 'song-item';
 
@@ -104,8 +116,11 @@
             songName.className = 'song-name';
             songName.textContent = song.file.replace('.mp3', '');
 
+            const controlsContainer = document.createElement('div');
+            controlsContainer.className = 'controls-container';
+
             const controls = document.createElement('div');
-            controls.className = 'controls-container';
+            controls.className = 'controls';
 
             const playBtn = document.createElement('button');
             playBtn.className = 'control-btn play-btn';
@@ -116,16 +131,17 @@
             downloadBtn.textContent = 'Download';
 
             controls.append(playBtn, downloadBtn);
-            songItem.append(songName, controls);
+            controlsContainer.append(controls);
+            songItem.append(songName, controlsContainer);
             songList.appendChild(songItem);
 
             // Toggle controls
-            songName.addEventListener('click', () => {
-                // Close all other controls
-                document.querySelectorAll('.controls-container').forEach(c => {
-                    if (c !== controls) c.classList.remove('active');
-                });
-                controls.classList.toggle('active');
+            songName.addEventListener('click', (e) => {
+                if (currentControls && currentControls !== controlsContainer) {
+                    currentControls.classList.remove('active');
+                }
+                controlsContainer.classList.toggle('active');
+                currentControls = controlsContainer.classList.contains('active') ? controlsContainer : null;
             });
 
             // Play/Pause functionality
@@ -157,21 +173,17 @@
             });
         });
 
-        // Handle audio state
-        audio.addEventListener('pause', () => {
-            const currentBtn = document.querySelector(`.play-btn[data-playing="true"]`);
-            if (currentBtn) {
-                currentBtn.textContent = 'Play';
-                currentBtn.removeAttribute('data-playing');
-            }
-        });
-
+        // Audio state handling
         audio.addEventListener('play', () => {
             document.querySelectorAll('.play-btn').forEach(btn => {
-                btn.textContent = 'Play';
-                btn.removeAttribute('data-playing');
+                if (btn.textContent === 'Pause' && btn !== audio.currentSrc) {
+                    btn.textContent = 'Play';
+                }
             });
-            const currentBtn = document.querySelector(`button[data-playing="true"]`);
+        });
+
+        audio.addEventListener('ended', () => {
+            const currentBtn = document.querySelector(`.play-btn[style*="Pause"]`);
             if (currentBtn) currentBtn.textContent = 'Play';
         });
     </script>
