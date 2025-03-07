@@ -4,6 +4,15 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Dhimu Dhimu.mp3", details: "🎬 Engeyum Kadhal (2011) / 🎙️ Karthik / 🎼 Harris Jayaraj / 📝 Na. muthukumar / 🎥 Prabhu Deva / 🏷️ Sony Music India" },
+{ file: "Engeyum Kaadhal.mp3", details: "🎬 Engeyum Kadhal (2011) / 🎙️ Aalaap Raju, Devan Ekambaram, Ranina Reddy / 🎼 Harris Jayaraj / 📝 Thamarai / 🎥 Prabhu Deva / 🏷️ Sony Music India" },
+{ file: "Lolita.mp3", details: "🎬 Engeyum Kadhal (2011) / 🎙️ Karthik, Prashanthini / 🎼 Harris Jayaraj / 📝 Thamarai / 🎥 Prabhu Deva / 🏷️ Sony Music India" },
+{ file: "Nangaai.mp3", details: "🎬 Engeyum Kadhal (2011) / 🎙️ Richard, Rahul Nambiar, Naveen Madhav / 🎼 Harris Jayaraj / 📝 Vaalee / 🎥 Prabhu Deva / 🏷️ Sony Music India" },
+{ file: "Nenjil Nenjil.mp3", details: "🎬 Engeyum Kadhal (2011) / 🎙️ Harish Raghavendra, Chinmayi / 🎼 Harris Jayaraj / 📝 Madhan Karky / 🎥 Prabhu Deva / 🏷️ Sony Music India" },
+{ file: "Thee Illai.mp3", details: "🎬 Engeyum Kadhal (2011) / 🎙️ Naresh Iyer, Mukesh Mohamed, Gopal Rao, Mahathi, Ranina Reddy / 🎼 Harris Jayaraj / 📝 Vaali / 🎥 Prabhu Deva / 🏷️ Sony Music India" },
+{ file: "Epodhum Unmael Nyabagam.mp3", details: "🎬 Nimir (2018) / 🎙️ Vijay Prakash / 🎼 B. Ajaneesh Loknath / 📝 Thamarai / 🎥 Priyadarshan" },
+{ file: "Nenjil Mamazhai Thanthu.mp3", details: "🎬 Nimir (2018) / 🎙️ Haricharan, Shweta Mohan / 🎼 B. Ajaneesh Loknath / 📝 Thamarai / 🎥 Priyadarshan" },
+{ file: "Mazhai Peyyum Podhu.mp3", details: "🎬 Renigunta (2009) / 🎙️ Harish Raghavendra / 🎼 Ganesh Raghavendra / 📝 Yugabharathi / 🎥 R. Panneerselvam" },
 { file: "Chinnan Sirisu.mp3", details: "🎬 Kunguma Poovum Konjum Puravum (2009) / 🎙️ Javed Ali, Bela Shende / 🎼 Yuvan Shankar Raja / 📝 Vaali / 🎥 Rajamohan" },
 { file: "Kadaloram oru Yuvan.mp3", details: "🎬 Kunguma Poovum Konjum Puravum (2009) / 🎙️ Yuvan Shankar Raja / 🎼 Yuvan Shankar Raja / 📝 Vaali / 🎥 Rajamohan" },
 { file: "Kadaloram oru.mp3", details: "🎬 Kunguma Poovum Konjum Puravum (2009) / 🎙️ S. P. B. Charan / 🎼 Yuvan Shankar Raja / 📝 Vaali / 🎥 Rajamohan" },
