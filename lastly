@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Enakkaaga Poranthaayae.mp3", details: "🎬 Pannaiyarum Padminiyum (2014) / 🎙️ S. P. B. Charan, Anu Anand / 🎼 Justin Prabhakaran / 📝 Vaali / 🎥 S. U. Arun Kumar" },
+{ file: "Onakkaga Poranthaenae.mp3", details: "🎬 Pannaiyarum Padminiyum (2014) / 🎙️ Balram, Sandhya, S. P. B. Charan, Anu Anand / 🎼 Justin Prabhakaran / 📝 Vaali / 🎥 S. U. Arun Kumar" },
 { file: "Nila Nee Vaanam.mp3", details: "🎬 Pokkisham (2009) / 🎙️ Vijay Yesudas, Chinmayi Sripaada / 🎼 Sabesh–Murali / 📝 Yugabharathi / 🎥 Cheran / 🏷️ Saregama" },
 { file: "Dhimu Dhimu.mp3", details: "🎬 Engeyum Kadhal (2011) / 🎙️ Karthik / 🎼 Harris Jayaraj / 📝 Na. muthukumar / 🎥 Prabhu Deva / 🏷️ Sony Music India" },
 { file: "Engeyum Kaadhal.mp3", details: "🎬 Engeyum Kadhal (2011) / 🎙️ Aalaap Raju, Devan Ekambaram, Ranina Reddy / 🎼 Harris Jayaraj / 📝 Thamarai / 🎥 Prabhu Deva / 🏷️ Sony Music India" },
