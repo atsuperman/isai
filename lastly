@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Adiyae Enna Raagam.mp3", details: "🎬 Rummy (2014) / 🎙️ Abhay Jodhpurkar, Poornima Sathish / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Balakrishnan" },
+{ file: "Koodamela Koodavechi.mp3", details: "🎬 Rummy (2014) / 🎙️ Prasanna, Vandana Srinivasan / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Balakrishnan" },
+{ file: "Yethukkaaga Enna Neeyum.mp3", details: "🎬 Rummy (2014) / 🎙️ Santhosh Hariharan, A. V. Pooja / 🎼 D. Imman / 📝 Yugabharathi / 🎥 K. Balakrishnan" },
 { file: "Enakkaaga Poranthaayae.mp3", details: "🎬 Pannaiyarum Padminiyum (2014) / 🎙️ S. P. B. Charan, Anu Anand / 🎼 Justin Prabhakaran / 📝 Vaali / 🎥 S. U. Arun Kumar" },
 { file: "Onakkaga Poranthaenae.mp3", details: "🎬 Pannaiyarum Padminiyum (2014) / 🎙️ Balram, Sandhya, S. P. B. Charan, Anu Anand / 🎼 Justin Prabhakaran / 📝 Vaali / 🎥 S. U. Arun Kumar" },
 { file: "Nila Nee Vaanam.mp3", details: "🎬 Pokkisham (2009) / 🎙️ Vijay Yesudas, Chinmayi Sripaada / 🎼 Sabesh–Murali / 📝 Yugabharathi / 🎥 Cheran / 🏷️ Saregama" },
