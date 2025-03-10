@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Deeyaalo Deeyaalo (Ava Mela Aasa).mp3", details: "🎬 Kayal (2014) / 🎙️ Orathanadu Gopu / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music" },
+{ file: "Unna Ippo Paakkanum.mp3", details: "🎬 Kayal (2014) / 🎙️ Haricharan, Vandana Srinivasan / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music" },
+{ file: "Yen Aala Paakkaporen.mp3", details: "🎬 Kayal (2014) / 🎙️ K.G. Ranjith, Shreya Ghoshal / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music" },
 { file: "Adiyae Enna Raagam.mp3", details: "🎬 Rummy (2014) / 🎙️ Abhay Jodhpurkar, Poornima Sathish / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Balakrishnan" },
 { file: "Koodamela Koodavechi.mp3", details: "🎬 Rummy (2014) / 🎙️ Prasanna, Vandana Srinivasan / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Balakrishnan" },
 { file: "Yethukkaaga Enna Neeyum.mp3", details: "🎬 Rummy (2014) / 🎙️ Santhosh Hariharan, A. V. Pooja / 🎼 D. Imman / 📝 Yugabharathi / 🎥 K. Balakrishnan" },
