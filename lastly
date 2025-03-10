@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Nee Malaraa Malaraa.mp3", details: "🎬 Arputham (2002) / 🎙️ P. Unnikrishnan, K. S. Chithra / 🎼 Shiva / 📝 Pa. Vijay / 🎥 Arputhan / 🏷️ Super Good Films" },
+{ file: "Pothunda Pothunda.mp3", details: "🎬 Arputham (2002) / 🎙️ Tippu / 🎼 Shiva / 📝 Pa. Vijay / 🎥 Arputhan / 🏷️ Super Good Films" },
 { file: "Deeyaalo Deeyaalo (Ava Mela Aasa).mp3", details: "🎬 Kayal (2014) / 🎙️ Orathanadu Gopu / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music" },
 { file: "Unna Ippo Paakkanum.mp3", details: "🎬 Kayal (2014) / 🎙️ Haricharan, Vandana Srinivasan / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music" },
 { file: "Yen Aala Paakkaporen.mp3", details: "🎬 Kayal (2014) / 🎙️ K.G. Ranjith, Shreya Ghoshal / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music" },
