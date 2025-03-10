@@ -1,9 +1,20 @@
-  
+ 
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Nee Malaraa Malaraa.mp3", details: "🎬 Arputham (2002) / 🎙️ P. Unnikrishnan, K. S. Chithra / 🎼 Shiva / 📝 Pa. Vijay / 🎥 Arputhan / 🏷️ Super Good Films" },
+{ file: "Pothunda Pothunda.mp3", details: "🎬 Arputham (2002) / 🎙️ Tippu / 🎼 Shiva / 📝 Pa. Vijay / 🎥 Arputhan / 🏷️ Super Good Films" },
+{ file: "Deeyaalo Deeyaalo (Ava Mela Aasa).mp3", details: "🎬 Kayal (2014) / 🎙️ Orathanadu Gopu / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music" },
+{ file: "Unna Ippo Paakkanum.mp3", details: "🎬 Kayal (2014) / 🎙️ Haricharan, Vandana Srinivasan / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music" },
+{ file: "Yen Aala Paakkaporen.mp3", details: "🎬 Kayal (2014) / 🎙️ K.G. Ranjith, Shreya Ghoshal / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music" },
+{ file: "Adiyae Enna Raagam.mp3", details: "🎬 Rummy (2014) / 🎙️ Abhay Jodhpurkar, Poornima Sathish / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Balakrishnan" },
+{ file: "Koodamela Koodavechi.mp3", details: "🎬 Rummy (2014) / 🎙️ Prasanna, Vandana Srinivasan / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Balakrishnan" },
+{ file: "Yethukkaaga Enna Neeyum.mp3", details: "🎬 Rummy (2014) / 🎙️ Santhosh Hariharan, A. V. Pooja / 🎼 D. Imman / 📝 Yugabharathi / 🎥 K. Balakrishnan" },
+{ file: "Enakkaaga Poranthaayae.mp3", details: "🎬 Pannaiyarum Padminiyum (2014) / 🎙️ S. P. B. Charan, Anu Anand / 🎼 Justin Prabhakaran / 📝 Vaali / 🎥 S. U. Arun Kumar" },
+{ file: "Onakkaga Poranthaenae.mp3", details: "🎬 Pannaiyarum Padminiyum (2014) / 🎙️ Balram, Sandhya, S. P. B. Charan, Anu Anand / 🎼 Justin Prabhakaran / 📝 Vaali / 🎥 S. U. Arun Kumar" },
+{ file: "Nila Nee Vaanam.mp3", details: "🎬 Pokkisham (2009) / 🎙️ Vijay Yesudas, Chinmayi Sripaada / 🎼 Sabesh–Murali / 📝 Yugabharathi / 🎥 Cheran / 🏷️ Saregama" },
 { file: "Dhimu Dhimu.mp3", details: "🎬 Engeyum Kadhal (2011) / 🎙️ Karthik / 🎼 Harris Jayaraj / 📝 Na. muthukumar / 🎥 Prabhu Deva / 🏷️ Sony Music India" },
 { file: "Engeyum Kaadhal.mp3", details: "🎬 Engeyum Kadhal (2011) / 🎙️ Aalaap Raju, Devan Ekambaram, Ranina Reddy / 🎼 Harris Jayaraj / 📝 Thamarai / 🎥 Prabhu Deva / 🏷️ Sony Music India" },
 { file: "Lolita.mp3", details: "🎬 Engeyum Kadhal (2011) / 🎙️ Karthik, Prashanthini / 🎼 Harris Jayaraj / 📝 Thamarai / 🎥 Prabhu Deva / 🏷️ Sony Music India" },
@@ -310,4 +321,4 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
-
+ 
