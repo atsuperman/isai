@@ -1,9 +1,16 @@
- 
+  
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Unakkum enakkum remix.mp3", details: "💽 unknown (2017) / Unknown Dj" },
+{ file: "Chanda O Chanda.mp3", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Harini / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio" },
+{ file: "Chinna Chinna Kiliye.mp3", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Hariharan, Anuradha Sriram, Mahanadhi Shobana / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio" },
+{ file: "Eshwara Vaanum Mannum.mp3", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Udit Narayan / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio" },
+{ file: "Kanave Kalaiyathe.mp3", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ P. Unni Krishnan, K. S. Chitra / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio" },
+{ file: "Kothal Savadi Lady.mp3", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Sabesh / 🎼 Deva / 📝 Ponniyin Selvan / 🎥 Ravichandran / 🏷️ The Best Audio" },
+{ file: "Salomiya.mp3", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Deva / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio" },
 { file: "Nee Malaraa Malaraa.mp3", details: "🎬 Arputham (2002) / 🎙️ P. Unnikrishnan, K. S. Chithra / 🎼 Shiva / 📝 Pa. Vijay / 🎥 Arputhan / 🏷️ Super Good Films" },
 { file: "Pothunda Pothunda.mp3", details: "🎬 Arputham (2002) / 🎙️ Tippu / 🎼 Shiva / 📝 Pa. Vijay / 🎥 Arputhan / 🏷️ Super Good Films" },
 { file: "Deeyaalo Deeyaalo (Ava Mela Aasa).mp3", details: "🎬 Kayal (2014) / 🎙️ Orathanadu Gopu / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music" },
@@ -321,4 +328,4 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
- 
+
