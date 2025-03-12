@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Marutha Azhagaro.mp3", details: "🎬 Sundara Purushan (1996) / 🎙️ K. S. Chithra / 🎼 Sirpy / 📝 Vairamuthu / 🎥 Sabapathy Dekshinamurthy / 🏷️ The Best Audio" },
+{ file: "Raja Rajane.mp3", details: "🎬 Sundara Purushan (1996) / 🎙️ Sirpy, J. Livingston, Geetha / 🎼 Sirpy / 📝 Kalidasan / 🎥 Sabapathy Dekshinamurthy / 🏷️ The Best Audio" },
 { file: "Unakkum enakkum remix.mp3", details: "💽 unknown (2017) / Unknown Dj" },
 { file: "Chanda O Chanda.mp3", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Harini / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio" },
 { file: "Chinna Chinna Kiliye.mp3", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Hariharan, Anuradha Sriram, Mahanadhi Shobana / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio" },
