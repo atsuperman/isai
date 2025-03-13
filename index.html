@@ -1,4 +1,4 @@
-           
+            
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -812,6 +812,46 @@
     transform-origin: 52px 24px;
 }
     
+    .logo-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.logo, .delete-icon {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.delete-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1001;
+}
+
+.logo-container.active .logo {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.logo-container.active .delete-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: all;
+}
+
+.delete-icon svg {
+    transition: transform 0.3s ease;
+}
+
+.delete-icon:hover svg {
+    transform: rotate(15deg) scale(1.1);
+}
+    
     
         @media screen and (max-width: 768px) {
           #songList::-webkit-scrollbar-thumb {
@@ -905,9 +945,15 @@ body {
 </head>
 <body>
     <div class="content-wrapper">
+<div class="logo-container" id="logoContainer">
     <h1 class="logo">SUPER</h1>
-    
-     <!-- Add this HTML after the .a-container but before .b-container -->
+    <div class="delete-icon" id="deleteIcon">
+        <svg width="60" height="60" viewBox="0 0 60 60">
+            <path class="lid" d="M20 15h20l-2-4H22z" fill="orange"/>
+            <path d="M25 20v25h2V20zm8 0v25h2V20zm8 0v25h2V20zm5 30H14V20h32v30z" fill="silver"/>
+        </svg>
+    </div>
+</div>
 <div class="links-container" id="linksContainer">
    <div class="link-item" data-url="https://supersez.github.io/Ted/">RED Beat`s</div>
 </div>
@@ -1823,7 +1869,29 @@ document.querySelectorAll('.link-item').forEach(link => {
     }, 1000);
 });
    
+   let timeoutId = null;
+
+document.getElementById('logoContainer').addEventListener('click', function(e) {
+    if (!this.classList.contains('active') && e.target.closest('.logo')) {
+        this.classList.add('active');
+    }
+});
+
+document.getElementById('deleteIcon').addEventListener('click', function(e) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+        document.getElementById('logoContainer').classList.remove('active');
+    }, 2000); // 2-second delay
+});
+
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.logo-container')) {
+        clearTimeout(timeoutId);
+        document.getElementById('logoContainer').classList.remove('active');
+    }
+});
+   
     
     </script>
 </body>
-            </html>
+           </html>
