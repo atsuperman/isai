@@ -4,6 +4,11 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kaadhala Kaadhala.mp3", details: "🎬 Suryavamsam (1997) / 🎙️ Hariharan, Swarnalatha / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Vikraman / 🏷️ The Best Audio" },
+{ file: "Natchathira Jannalil.mp3", details: "🎬 Suryavamsam (1997) / 🎙️ Mano, Sunandha / 🎼 S. A. Rajkumar / 📝 Mu. Metha / 🎥 Vikraman / 🏷️ Star Music" },
+{ file: "Rosapoo-F.mp3", details: "🎬 Suryavamsam (1997) / 🎙️ Sujatha Mohan / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar / 🎥 Vikraman / 🏷️ Star Music" },
+{ file: "Rosapoo-M.mp3", details: "🎬 Suryavamsam (1997) / 🎙️ Hariharan / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar / 🎥 Vikraman / 🏷️ Star Music" },
+{ file: "Salakku Salakku Selai.mp3", details: "🎬 Suryavamsam (1997) / 🎙️ Arun Mozhi, Sujatha / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar / 🎥 Vikraman / 🏷️ Star Music" },
 { file: "Marutha Azhagaro.mp3", details: "🎬 Sundara Purushan (1996) / 🎙️ K. S. Chithra / 🎼 Sirpy / 📝 Vairamuthu / 🎥 Sabapathy Dekshinamurthy / 🏷️ The Best Audio" },
 { file: "Raja Rajane.mp3", details: "🎬 Sundara Purushan (1996) / 🎙️ Sirpy, J. Livingston, Geetha / 🎼 Sirpy / 📝 Kalidasan / 🎥 Sabapathy Dekshinamurthy / 🏷️ The Best Audio" },
 { file: "Unakkum enakkum remix.mp3", details: "💽 unknown (2017) / Unknown Dj" },
