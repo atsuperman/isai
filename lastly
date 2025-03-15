@@ -4,6 +4,12 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Ding Dang Dang.mp3", details: "🎬 Panakkaran (1990) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 P. Vasu" },
+{ file: "Maraththa Vechchavan.mp3", details: "🎬 Panakkaran (1990) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 P. Vasu" },
+{ file: "Nooru Varusham (Female).mp3", details: "🎬 Panakkaran (1990) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu" },
+{ file: "Nooru Varusham (Male).mp3", details: "🎬 Panakkaran (1990) / 🎙️ Mano / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu" },
+{ file: "Silence Silence.mp3", details: "🎬 Panakkaran (1990) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 P. Vasu" },
+{ file: "Ullukulla Chakaravarthy.mp3", details: "🎬 Panakkaran (1990) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 P. Vasu" },
 { file: "Kanakozhikku Kaluthula Vellai.mp3", details: "🎬 Suyamvaram (1999) / 🎙️ Anuradha Sriram, Sabesan / 🎼 Deva / 📝 Ponniyin Selvan / 🎥 Various Directors" },
 { file: "Margazhi Maasathu.mp3", details: "🎬 Suyamvaram (1999) / 🎙️ S. P. Balasubrahmanyam, Mano, Unnikrishnan, Swarnalatha, Sujatha Mohan / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Various Directors" },
 { file: "Sekka Sevantha Valea.mp3", details: "🎬 Suyamvaram (1999) / 🎙️ Hariharan, Sujatha Mohan / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 Various Directors" },
