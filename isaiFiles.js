@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kilakku Sivakiyile.mp3", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ Rajagopal, Sujatha Mohan, P. G. Srikanth / 🎼 Adithyan / 📝 K. Rajeshwar / 🎥 Pratap Pothen" },
+{ file: "Oyila Paadum Paatule.mp3", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ K. S. Chithra / 🎼 Adithyan / 📝 Vairamuthu / 🎥 Pratap Pothen" },
+{ file: "Thirunvelli Seemayile.mp3", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ S. P. Balasubrahmanyam / 🎼 Adithyan / 📝 Vairamuthu / 🎥 Pratap Pothen" },
 { file: "Kadhala Kadhala.mp3", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Hariharan, Sujatha / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar" },
 { file: "Kadhali Kadhali.mp3", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Hariharan / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar" },
 { file: "Kalyanam Katcheri.mp3", details: "🎬 Avvai Shanmugi (1996) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar" },
