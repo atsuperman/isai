@@ -1,9 +1,35 @@
-  
+ 
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kadhala Kadhala.mp3", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Hariharan, Sujatha / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar" },
+{ file: "Kadhali Kadhali.mp3", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Hariharan / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar" },
+{ file: "Kalyanam Katcheri.mp3", details: "🎬 Avvai Shanmugi (1996) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar" },
+{ file: "Rukku Rukku Rukku.mp3", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Kamal Haasan, Sujatha / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar" },
+{ file: "Velai Velai.mp3", details: "🎬 Avvai Shanmugi (1996) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar" },
+{ file: "Hey Unnaithaane.mp3", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu / 🎥 A. Jagannathan" },
+{ file: "Jaadhi Illai.mp3", details: "🎬 Kadhal Parisu (1987) / 🎙️ Malaysia Vasudevan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 A. Jagannathan" },
+{ file: "Kadhal Maharani Kavidhai.mp3", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Muthulingam / 🎥 A. Jagannathan" },
+{ file: "Koo Koo Endru Kuyil.mp3", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 A. Jagannathan" },
+{ file: "Journey.mp3", details: "🎬 Jaanu (2020) / 🎙️ Pradeep Kumar / 🎼 Govind Vasantha / 📝 Karthik Netha / 🎥 C. Prem Kumar" },
+{ file: "Ding Dang Dang.mp3", details: "🎬 Panakkaran (1990) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 P. Vasu" },
+{ file: "Maraththa Vechchavan.mp3", details: "🎬 Panakkaran (1990) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 P. Vasu" },
+{ file: "Nooru Varusham (Female).mp3", details: "🎬 Panakkaran (1990) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu" },
+{ file: "Nooru Varusham (Male).mp3", details: "🎬 Panakkaran (1990) / 🎙️ Mano / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu" },
+{ file: "Silence Silence.mp3", details: "🎬 Panakkaran (1990) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 P. Vasu" },
+{ file: "Ullukulla Chakaravarthy.mp3", details: "🎬 Panakkaran (1990) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 P. Vasu" },
+{ file: "Kanakozhikku Kaluthula Vellai.mp3", details: "🎬 Suyamvaram (1999) / 🎙️ Anuradha Sriram, Sabesan / 🎼 Deva / 📝 Ponniyin Selvan / 🎥 Various Directors" },
+{ file: "Margazhi Maasathu.mp3", details: "🎬 Suyamvaram (1999) / 🎙️ S. P. Balasubrahmanyam, Mano, Unnikrishnan, Swarnalatha, Sujatha Mohan / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Various Directors" },
+{ file: "Sekka Sevantha Valea.mp3", details: "🎬 Suyamvaram (1999) / 🎙️ Hariharan, Sujatha Mohan / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 Various Directors" },
+{ file: "Kaadhala Kaadhala.mp3", details: "🎬 Suryavamsam (1997) / 🎙️ Hariharan, Swarnalatha / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Vikraman / 🏷️ The Best Audio" },
+{ file: "Natchathira Jannalil.mp3", details: "🎬 Suryavamsam (1997) / 🎙️ Mano, Sunandha / 🎼 S. A. Rajkumar / 📝 Mu. Metha / 🎥 Vikraman / 🏷️ Star Music" },
+{ file: "Rosapoo-F.mp3", details: "🎬 Suryavamsam (1997) / 🎙️ Sujatha Mohan / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar / 🎥 Vikraman / 🏷️ Star Music" },
+{ file: "Rosapoo-M.mp3", details: "🎬 Suryavamsam (1997) / 🎙️ Hariharan / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar / 🎥 Vikraman / 🏷️ Star Music" },
+{ file: "Salakku Salakku Selai.mp3", details: "🎬 Suryavamsam (1997) / 🎙️ Arun Mozhi, Sujatha / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar / 🎥 Vikraman / 🏷️ Star Music" },
+{ file: "Marutha Azhagaro.mp3", details: "🎬 Sundara Purushan (1996) / 🎙️ K. S. Chithra / 🎼 Sirpy / 📝 Vairamuthu / 🎥 Sabapathy Dekshinamurthy / 🏷️ The Best Audio" },
+{ file: "Raja Rajane.mp3", details: "🎬 Sundara Purushan (1996) / 🎙️ Sirpy, J. Livingston, Geetha / 🎼 Sirpy / 📝 Kalidasan / 🎥 Sabapathy Dekshinamurthy / 🏷️ The Best Audio" },
 { file: "Unakkum enakkum remix.mp3", details: "💽 unknown (2017) / Unknown Dj" },
 { file: "Chanda O Chanda.mp3", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Harini / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio" },
 { file: "Chinna Chinna Kiliye.mp3", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Hariharan, Anuradha Sriram, Mahanadhi Shobana / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio" },
@@ -328,4 +354,3 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
-
