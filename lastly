@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Enga Vacha Enga vacha.mp3", details: "🎬 Pattikattan (1989) / 🎙️ Malaysia Vasudevan, K. S. Chithra / 🎼 Shankar–Ganesh / 📝 Vaali / 🎥 T. S. Krishnakumar" },
+{ file: "Valaiya Vesi Papom.mp3", details: "🎬 Pattikattan (1989) / 🎙️ C. S. Jayaraman / 🎼 Shankar–Ganesh / 📝 Vaali / 🎥 T. S. Krishnakumar" },
 { file: "Kilakku Sivakiyile.mp3", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ Rajagopal, Sujatha Mohan, P. G. Srikanth / 🎼 Adithyan / 📝 K. Rajeshwar / 🎥 Pratap Pothen" },
 { file: "Oyila Paadum Paatule.mp3", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ K. S. Chithra / 🎼 Adithyan / 📝 Vairamuthu / 🎥 Pratap Pothen" },
 { file: "Thirunvelli Seemayile.mp3", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ S. P. Balasubrahmanyam / 🎼 Adithyan / 📝 Vairamuthu / 🎥 Pratap Pothen" },
