@@ -4,6 +4,12 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Isthanbul.mp3", details: "🎬 Mazhai (2005) / 🎙️ Jassie Gift, Kalpana / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar" },
+{ file: "Kuchikaruvadu.mp3", details: "🎬 Mazhai (2005) / 🎙️ Tippu, Srilekha Parthasarathy / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar" },
+{ file: "Mannile.mp3", details: "🎬 Mazhai (2005) / 🎙️ S. P. B. Charan, Sumangali / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar" },
+{ file: "Muthu Mazhaiye.mp3", details: "🎬 Mazhai (2005) / 🎙️ Sagar, Sumangali / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar" },
+{ file: "Nee Varumbodhu.mp3", details: "🎬 Mazhai (2005) / 🎙️ K. S. Chithra, Kalpana, Raqueeb Alam / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar" },
+{ file: "Thappe Ille.mp3", details: "🎬 Mazhai (2005) / 🎙️ S. P. Balasubrahmanyam, Harini / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar" },
 { file: "Enga Vacha Enga vacha.mp3", details: "🎬 Pattikattan (1989) / 🎙️ Malaysia Vasudevan, K. S. Chithra / 🎼 Shankar–Ganesh / 📝 Vaali / 🎥 T. S. Krishnakumar" },
 { file: "Valaiya Vesi Papom.mp3", details: "🎬 Pattikattan (1989) / 🎙️ C. S. Jayaraman / 🎼 Shankar–Ganesh / 📝 Vaali / 🎥 T. S. Krishnakumar" },
 { file: "Kilakku Sivakiyile.mp3", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ Rajagopal, Sujatha Mohan, P. G. Srikanth / 🎼 Adithyan / 📝 K. Rajeshwar / 🎥 Pratap Pothen" },
