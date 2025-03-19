@@ -1,9 +1,22 @@
-  
+ 
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Adi Aathukulla Atthimaram.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 R. Sundarrajan" },
+{ file: "Enkitta Modhadhe.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ Mano, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Ponnadiyan / 🎥 R. Sundarrajan / 🏷️ Sony Music Entertainment India Pvt. Ltd. / Echo Recording Co. Pvt. Ltd." },
+{ file: "Maama Un Ponna Kodu.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 R. Sundarrajan" },
+{ file: "Malayaala Karaiyoram.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ Mano / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 R. Sundarrajan" },
+{ file: "Meenamma Meenamma.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ Mano, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Piraisoodan / 🎥 R. Sundarrajan" },
+{ file: "Un Nenja Thottu Sollu.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ P. Susheela, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 R. Sundarrajan" },
+{ file: "Vaa Vaa Manjal Malare.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ Mano, S. P. Sailaja / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 R. Sundarrajan" },
+{ file: "Isthanbul.mp3", details: "🎬 Mazhai (2005) / 🎙️ Jassie Gift, Kalpana / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar" },
+{ file: "Kuchikaruvadu.mp3", details: "🎬 Mazhai (2005) / 🎙️ Tippu, Srilekha Parthasarathy / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar" },
+{ file: "Mannile.mp3", details: "🎬 Mazhai (2005) / 🎙️ S. P. B. Charan, Sumangali / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar" },
+{ file: "Muthu Mazhaiye.mp3", details: "🎬 Mazhai (2005) / 🎙️ Sagar, Sumangali / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar" },
+{ file: "Nee Varumbodhu.mp3", details: "🎬 Mazhai (2005) / 🎙️ K. S. Chithra, Kalpana, Raqueeb Alam / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar" },
+{ file: "Thappe Ille.mp3", details: "🎬 Mazhai (2005) / 🎙️ S. P. Balasubrahmanyam, Harini / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar" },
 { file: "Enga Vacha Enga vacha.mp3", details: "🎬 Pattikattan (1989) / 🎙️ Malaysia Vasudevan, K. S. Chithra / 🎼 Shankar–Ganesh / 📝 Vaali / 🎥 T. S. Krishnakumar" },
 { file: "Valaiya Vesi Papom.mp3", details: "🎬 Pattikattan (1989) / 🎙️ C. S. Jayaraman / 🎼 Shankar–Ganesh / 📝 Vaali / 🎥 T. S. Krishnakumar" },
 { file: "Kilakku Sivakiyile.mp3", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ Rajagopal, Sujatha Mohan, P. G. Srikanth / 🎼 Adithyan / 📝 K. Rajeshwar / 🎥 Pratap Pothen" },
