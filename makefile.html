@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-File Details Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .input-group {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .custom-file-upload {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .selected-file-name {
+            margin-left: 10px;
+            color: #666;
+        }
+        .file-entries {
+            margin-top: 10px;
+        }
+        .file-entry {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+        .file-name {
+            display: block;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .details-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #generateBtn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .add-btn {
+            background-color: #2196F3;
+            color: white;
+            margin-right: 10px;
+        }
+        #resultWrapper {
+            position: relative;
+            margin-top: 20px;
+        }
+        #result {
+            padding: 15px;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            overflow-x: auto;
+            cursor: pointer;
+        }
+        .copy-status {
+            position: absolute;
+            top: -30px;
+            right: 0;
+            padding: 4px 12px;
+            font-size: 0.9em;
+            color: #666;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px 4px 0 0;
+            border-bottom: none;
+            transition: all 0.2s ease;
+        }
+        .copy-status.copied {
+            color: #4CAF50;
+            border-color: #4CAF50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>File Details Generator</h2>
+        <div class="input-groups">
+            <div class="input-group">
+                <label>Choose Files:</label>
+                <label class="custom-file-upload">
+                    Browse Files
+                    <input type="file" class="file-input" multiple style="display: none;">
+                </label>
+                <span class="selected-file-name">No files chosen</span>
+                <div class="file-entries"></div>
+            </div>
+        </div>
+        
+        <button class="add-btn" onclick="addInputGroup()">+ Add Group</button>
+        <button id="generateBtn" onclick="generateCode()">Generate</button>
+        
+        <div id="resultWrapper">
+            <div class="copy-status" id="copyStatus">Copy</div>
+            <div id="result" onclick="copyResult()">
+                <pre id="resultText"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('file-input')) {
+                const group = e.target.closest('.input-group');
+                const fileEntries = group.querySelector('.file-entries');
+                const fileNameSpan = group.querySelector('.selected-file-name');
+                const files = e.target.files;
+                
+                // Clear existing entries
+                fileEntries.innerHTML = '';
+                
+                // Update selected files count
+                fileNameSpan.textContent = files.length 
+                    ? `${files.length} file${files.length > 1 ? 's' : ''} selected`
+                    : 'No files chosen';
+
+                // Create new entries for each file
+                Array.from(files).forEach(file => {
+                    const entry = document.createElement('div');
+                    entry.className = 'file-entry';
+                    entry.innerHTML = `
+                        <span class="file-name">${file.name}</span>
+                        <input type="text" class="details-input" placeholder="Enter file details">
+                    `;
+                    fileEntries.appendChild(entry);
+                });
+            }
+        });
+
+        function addInputGroup() {
+            const inputGroups = document.querySelector('.input-groups');
+            const newGroup = document.createElement('div');
+            newGroup.className = 'input-group';
+            
+            newGroup.innerHTML = `
+                <label>Choose Files:</label>
+                <label class="custom-file-upload">
+                    Browse Files
+                    <input type="file" class="file-input" multiple style="display: none;">
+                </label>
+                <span class="selected-file-name">No files chosen</span>
+                <div class="file-entries"></div>
+            `;
+            
+            inputGroups.appendChild(newGroup);
+        }
+
+        function generateCode() {
+            const results = [];
+            document.querySelectorAll('.input-group').forEach(group => {
+                const entries = group.querySelectorAll('.file-entry');
+                entries.forEach(entry => {
+                    const fileName = entry.querySelector('.file-name').textContent;
+                    const details = entry.querySelector('.details-input').value.trim();
+                    if (fileName && details) {
+                        results.push(`{ file: "${fileName}", details: "${details}" },`);
+                    }
+                });
+            });
+
+            const resultText = results.join('\n');
+            document.getElementById('resultText').textContent = resultText;
+            resetCopyStatus();
+        }
+
+        function copyResult() {
+            const resultText = document.getElementById('resultText').textContent;
+            if (!resultText) return;
+
+            navigator.clipboard.writeText(resultText)
+                .then(() => {
+                    const status = document.getElementById('copyStatus');
+                    status.textContent = 'Copied!';
+                    status.classList.add('copied');
+                    setTimeout(resetCopyStatus, 2000);
+                })
+                .catch(err => console.error('Failed to copy:', err));
+        }
+
+        function resetCopyStatus() {
+            const status = document.getElementById('copyStatus');
+            status.textContent = 'Copy';
+            status.classList.remove('copied');
+        }
+    </script>
+</body>
+</html>
