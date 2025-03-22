@@ -4,6 +4,12 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kaatraga Varuvaya.mp3", details: "🎬 Unnai Thedi (1999) / 🎙️ Naveen / 🎼 Deva / 📝 Ra. Ravishankar / 🎥 Sundar C. / 🏷️ Pyramid Music" },
+{ file: "Maalavika.mp3", details: "🎬 Unnai Thedi (1999) / 🎙️ Hariharan, K. S. Chithra / 🎼 Deva / 📝 Kalaikumar / 🎥 Sundar C. / 🏷️ Pyramid Audio" },
+{ file: "Naalai Kaalai.mp3", details: "🎬 Unnai Thedi (1999) / 🎙️ Hariharan / 🎼 Deva / 📝 Palani Bharathi / 🎥 Sundar C. / 🏷️ Pyramid Audio" },
+{ file: "Neethana Neethana.mp3", details: "🎬 Unnai Thedi (1999) / 🎙️ Hariharan, Sujatha / 🎼 Deva / 📝 Palani Bharathi / 🎥 Sundar C. / 🏷️ Pyramid Audio" },
+{ file: "Oyilaa.mp3", details: "🎬 Unnai Thedi (1999) / 🎙️ Mano, Chorus / 🎼 Deva / 📝 Vaali / 🎥 Sundar C. / 🏷️ Pyramid Audio" },
+{ file: "Poorale.mp3", details: "🎬 Unnai Thedi (1999) / 🎙️ Hariharan / 🎼 Deva / 📝 Vaali / 🎥 Sundar C. / 🏷️ Pyramid Audio" },
 { file: "Adi Aathukulla Atthimaram.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 R. Sundarrajan" },
 { file: "Enkitta Modhadhe.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ Mano, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Ponnadiyan / 🎥 R. Sundarrajan / 🏷️ Sony Music Entertainment India Pvt. Ltd. / Echo Recording Co. Pvt. Ltd." },
 { file: "Maama Un Ponna Kodu.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 R. Sundarrajan" },
