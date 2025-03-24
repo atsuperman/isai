@@ -1,9 +1,21 @@
- 
+  
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "En Swasa Kaatre.m4a", details: "🎬 En Swasa Kaatre (1999) / 🎙️ M. G. Sreekumar, K. S. Chithra / 🎼 A. R. Rahman / 📝 Vairamuthu / 🎥 K. S. Ravi / 🏷️ Pyramid" },
+{ file: "Jumballakka.m4a", details: "🎬 En Swasa Kaatre (1999) / 🎙️ Rafee / 🎼 A. R. Rahman / 📝 Vairamuthu / 🎥 K. S. Ravi / 🏷️ Pyramid" },
+{ file: "Nayagra.m4a", details: "🎬 En Swasa Kaatre (1999) / 🎙️ Palakkad Sreeram, Harini, Anupama / 🎼 A. R. Rahman / 📝 Vaali / 🎥 K. S. Ravi / 🏷️ Pyramid" },
+{ file: "Oru Thuli.m4a", details: "🎬 En Swasa Kaatre (1999) / 🎙️ M. G. Sreekumar / 🎼 A. R. Rahman / 📝 Vairamuthu / 🎥 K. S. Ravi / 🏷️ Pyramid" },
+{ file: "Theenadai.m4a", details: "🎬 En Swasa Kaatre (1999) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 A. R. Rahman / 📝 Vairamuthu / 🎥 K. S. Ravi / 🏷️ Pyramid" },
+{ file: "Thirakkaatha.m4a", details: "🎬 En Swasa Kaatre (1999) / 🎙️ P. Unnikrishnan, K. S. Chithra / 🎼 A. R. Rahman / 📝 Vairamuthu / 🎥 K. S. Ravi / 🏷️ Pyramid" },
+{ file: "Kaatraga Varuvaya.mp3", details: "🎬 Unnai Thedi (1999) / 🎙️ Naveen / 🎼 Deva / 📝 Ra. Ravishankar / 🎥 Sundar C. / 🏷️ Pyramid Music" },
+{ file: "Maalavika.mp3", details: "🎬 Unnai Thedi (1999) / 🎙️ Hariharan, K. S. Chithra / 🎼 Deva / 📝 Kalaikumar / 🎥 Sundar C. / 🏷️ Pyramid Audio" },
+{ file: "Naalai Kaalai.mp3", details: "🎬 Unnai Thedi (1999) / 🎙️ Hariharan / 🎼 Deva / 📝 Palani Bharathi / 🎥 Sundar C. / 🏷️ Pyramid Audio" },
+{ file: "Neethana Neethana.mp3", details: "🎬 Unnai Thedi (1999) / 🎙️ Hariharan, Sujatha / 🎼 Deva / 📝 Palani Bharathi / 🎥 Sundar C. / 🏷️ Pyramid Audio" },
+{ file: "Oyilaa.mp3", details: "🎬 Unnai Thedi (1999) / 🎙️ Mano, Chorus / 🎼 Deva / 📝 Vaali / 🎥 Sundar C. / 🏷️ Pyramid Audio" },
+{ file: "Poorale.mp3", details: "🎬 Unnai Thedi (1999) / 🎙️ Hariharan / 🎼 Deva / 📝 Vaali / 🎥 Sundar C. / 🏷️ Pyramid Audio" },
 { file: "Adi Aathukulla Atthimaram.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 R. Sundarrajan" },
 { file: "Enkitta Modhadhe.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ Mano, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Ponnadiyan / 🎥 R. Sundarrajan / 🏷️ Sony Music Entertainment India Pvt. Ltd. / Echo Recording Co. Pvt. Ltd." },
 { file: "Maama Un Ponna Kodu.mp3", details: "🎬 Rajadhi Raja (1989) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 R. Sundarrajan" },
