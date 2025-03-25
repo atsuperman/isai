@@ -4,6 +4,12 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Adikkudhu Kuliru.m4a", details: "🎬 Mannan (1992) / 🎙️ S. Janaki, Rajinikanth / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu / 🏷️ Pyramid" },
+{ file: "Amma Endrazhaikadha.m4a", details: "🎬 Mannan (1992) / 🎙️ K. J. Yesudas / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu / 🏷️ Pyramid" },
+{ file: "Gumthalakkadi.m4a", details: "🎬 Mannan (1992) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu / 🏷️ Pyramid" },
+{ file: "Mannar Mannane.m4a", details: "🎬 Mannan (1992) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu / 🏷️ Pyramid" },
+{ file: "Rajadhi Raja un.m4a", details: "🎬 Mannan (1992) / 🎙️ S. P. Balasubrahmanyam, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu / 🏷️ Pyramid" },
+{ file: "Sandiraniyae bit.m4a", details: "🎬 Mannan (1992) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu / 🏷️ Pyramid" },
 { file: "En Swasa Kaatre.m4a", details: "🎬 En Swasa Kaatre (1999) / 🎙️ M. G. Sreekumar, K. S. Chithra / 🎼 A. R. Rahman / 📝 Vairamuthu / 🎥 K. S. Ravi / 🏷️ Pyramid" },
 { file: "Jumballakka.m4a", details: "🎬 En Swasa Kaatre (1999) / 🎙️ Rafee / 🎼 A. R. Rahman / 📝 Vairamuthu / 🎥 K. S. Ravi / 🏷️ Pyramid" },
 { file: "Nayagra.m4a", details: "🎬 En Swasa Kaatre (1999) / 🎙️ Palakkad Sreeram, Harini, Anupama / 🎼 A. R. Rahman / 📝 Vaali / 🎥 K. S. Ravi / 🏷️ Pyramid" },
