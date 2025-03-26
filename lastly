@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Ennai Thottu Vittu.m4a", details: "🎬 Poomaname Vaa (1999) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 V. Azhagappan" },
+{ file: "Kaathu Kulir kaathu.m4a", details: "🎬 Poomaname Vaa (1999) / 🎙️ S. P. Balasubrahmanyam, Swarnalatha / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 V. Azhagappan" },
 { file: "Adikkudhu Kuliru.m4a", details: "🎬 Mannan (1992) / 🎙️ S. Janaki, Rajinikanth / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu / 🏷️ Pyramid" },
 { file: "Amma Endrazhaikadha.m4a", details: "🎬 Mannan (1992) / 🎙️ K. J. Yesudas / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu / 🏷️ Pyramid" },
 { file: "Gumthalakkadi.m4a", details: "🎬 Mannan (1992) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu / 🏷️ Pyramid" },
