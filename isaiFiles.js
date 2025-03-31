@@ -4,6 +4,15 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Adhikalaiyil Shevalai.m4a", details: "🎬 Nee Varuvai Ena (1999) / 🎙️ P. Unnikrishnan, Sujatha Mohan / 🎼 S. A. Rajkumar / 📝 Ramesh Vaidya / 🎥 Rajakumaran / 🏷️ Sa Re Ga Ma, Star Music" },
+{ file: "Oru Devathai Vanthu female .m4a", details: "🎬 Nee Varuvai Ena (1999) / 🎙️ K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Ramesh Vaidya / 🎥 Rajakumaran / 🏷️ Sa Re Ga Ma, Star Music" },
+{ file: "Oru Devathai Vanthu Vittaal male.m4a", details: "🎬 Nee Varuvai Ena (1999) / 🎙️ Hariharan / 🎼 S. A. Rajkumar / 📝 Ramesh Vaidya / 🎥 Rajakumaran / 🏷️ Sa Re Ga Ma, Star Music" },
+{ file: "Parthu Parthu female.m4a", details: "🎬 Nee Varuvai Ena (1999) / 🎙️ K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Pa. Vijay / 🎥 Rajakumaran / 🏷️ Sa Re Ga Ma, Star Music" },
+{ file: "Parthu Parthu male.m4a", details: "🎬 Nee Varuvai Ena (1999) / 🎙️ S. P. Balasubrahmanyam / 🎼 S. A. Rajkumar / 📝 Pa. Vijay / 🎥 Rajakumaran / 🏷️ Sa Re Ga Ma, Star Music" },
+{ file: "Poonguil Pattu Putichirukka.m4a", details: "🎬 Nee Varuvai Ena (1999) / 🎙️ Arunmozhi, Harini / 🎼 S. A. Rajkumar / 📝 Viveka / 🎥 Rajakumaran / 🏷️ Sa Re Ga Ma, Star Music" },
+{ file: "Nandri Solla Unakku 1.m4a", details: "🎬 Marumalarchi (1998) / 🎙️ Hariharan, Amrutha / 🎼 S. A. Rajkumar / 📝 Vaali / 🎥 Bharathi / 🏷️ Five Star Audio" },
+{ file: "Nandri Solla Unaku 2.m4a", details: "🎬 Marumalarchi (1998) / 🎙️ P. Unnikrishnan, K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Vaali / 🎥 Bharathi / 🏷️ Five Star Audio" },
+{ file: "Rettaikili.m4a", details: "🎬 Marumalarchi (1998) / 🎙️ Mano, Swarnalatha, T. K. Kala / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Bharathi / 🏷️ Five Star Audio" },
 { file: "Clio Paattra.m4a", details: "🎬 Unakkaga Ellam Unakkaga (1999) / 🎙️ Yuvan Shankar Raja, Timmy, Sowmya Raoh / 🎼 Yuvan Shankar Raja / 📝 Viveka / 🎥 Sundar C" },
 { file: "Dhuniyaa.m4a", details: "🎬 Unakkaga Ellam Unakkaga (1999) / 🎙️ Srinivas, Sandeep / 🎼 Yuvan Shankar Raja / 📝 Kalaikumar / 🎥 Sundar C" },
 { file: "Monaalisa.m4a", details: "🎬 Unakkaga Ellam Unakkaga (1999) / 🎙️ Devan Ekambaram, Anuradha Sriram / 🎼 Yuvan Shankar Raja / 📝 Viveka / 🎥 Sundar C" },
