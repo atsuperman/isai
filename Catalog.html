@@ -1,0 +1,161 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Saver Guide</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px 16px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f0f0f0;
+            font-family: 'Roboto', sans-serif;
+            gap: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 auto;
+        }
+
+        /* Keep all previous styles below */
+        .container.expanded {
+            margin-bottom: 20px;
+        }
+
+        .header {
+            font-size: 22px;
+            color: #212121;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234CAF50"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>');
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .container.expanded .header::after {
+            opacity: 1;
+        }
+
+        .status-section {
+            margin-top: 16px;
+        }
+
+        .status-title {
+            font-size: 18px;
+            color: #4CAF50;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .status-description {
+            font-size: 14px;
+            color: #757575;
+            line-height: 1.5;
+        }
+
+        .expand-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            color: #757575;
+            font-size: 13px;
+            line-height: 1.6;
+            padding-left: 20px;
+            margin-top: 10px;
+            border-left: 2px solid #e0e0e0;
+        }
+
+        .container.expanded .expand-content {
+            max-height: 500px;
+        }
+
+        .expand-content p {
+            margin: 8px 0;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .expand-content p::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <!-- First Section -->
+    <div class="container" onclick="this.classList.toggle('expanded')" tabindex="0">
+        <div class="header">Battery Saver</div>
+        <div class="status-section">
+            <div class="status-title">No restrictions</div>
+            <div class="status-description">
+                Battery saver doesn't restrict app's activity
+            </div>
+        </div>
+        <div class="expand-content">
+            <p>For Androids</p>
+            <p>Go to browser app info (chrome),</p>
+            <p>or</p>
+            <p>Check mobile settings → Apps → Manage apps →</p>
+            <p>Choose browser → Battery → choose & select</p>
+            <p>"NO RESTRICTION"</p>
+        </div>
+    </div>
+
+    <!-- Second Section -->
+    <div class="container" onclick="this.classList.toggle('expanded')" tabindex="0">
+        <div class="header">Battery Saver</div>
+        <div class="status-section">
+            <div class="status-title">No restrictions</div>
+            <div class="status-description">
+                Battery saver doesn't restrict app's activity
+            </div>
+        </div>
+        <div class="expand-content">
+            <p>For Androids</p>
+            <p>Go to browser app info (chrome),</p>
+            <p>or</p>
+            <p>Check mobile settings → Apps → Manage apps →</p>
+            <p>Choose browser → Battery → choose & select</p>
+            <p>"NO RESTRICTION"</p>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.container').forEach(container => {
+            container.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    this.classList.toggle('expanded');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
