@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Battery Saver Guide</title>
+    <title> Guide</title>
     <style>
         body {
             margin: 0;
@@ -19,7 +19,7 @@
         }
 
         .container {
-            width: 100%;
+            width: 90%;
             max-width: 400px;
             background: #ffffff;
             border-radius: 16px;
@@ -92,7 +92,8 @@
         }
 
         .container.expanded .expand-content {
-            max-height: 500px;
+            max-height: 1000px;
+            transition: max-height 2s ease-in;
         }
 
         .expand-content p {
@@ -147,7 +148,8 @@
 <body>
 <div class="company-logo">SUPER ISAI</div>
     <!-- First Section -->
- <div <h2>LOV....</h2> </div>
+    To listen songs in the background without pauses and play them continuously, click and view slides, follow that steps.
+
     <div class="container" onclick="this.classList.toggle('expanded')" tabindex="0">
         <div class="header">Battery Saver</div>
         <div class="status-section">
@@ -167,7 +169,6 @@
     </div>
 
     <!-- Second Section -->
-    <div <h2>LOV....</h2> </div>
     <div class="container" onclick="this.classList.toggle('expanded')" tabindex="0">
         <div class="header">Battery Saver</div>
         <div class="status-section">
@@ -178,22 +179,27 @@
         </div>
         <div class="expand-content">
             <p>For Androids</p>
-            <p>Go to browser app info (chrome),</p>
+            <p>Go to browser app info (chrome)</p>
             <p>or</p>
-            <p>Check mobile settings → Apps → Manage apps →</p>
-            <p>Choose browser → Battery → choose & select</p>
-            <p>"NO RESTRICTION"</p>
+            <p>Check mobile settings → Apps → Manage apps → Choose browser → Battery → choose & select
+            "NO RESTRICTION"</p>
         </div>
     </div>
 
     <script>
+  
+    // Add this script right before closing </body>
+    window.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.container').forEach(container => {
+            container.classList.add('expanded'); // Add this line
             container.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     this.classList.toggle('expanded');
                 }
             });
         });
-    </script>
+    });
+</script>
+  
 </body>
 </html> 
