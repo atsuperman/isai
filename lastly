@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Arithaaratha Poosikolla Aasai.m4a", details: "🎬 Avatharam (1995) / 🎙️ Ilaiyaraaja, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Nassar / 🏷️ Echo" },
+{ file: "Oru Gundu Mani Kulunguthadi.m4a", details: "🎬 Avatharam (1995) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Nassar / 🏷️ Echo" },
+{ file: "Thendral Vanthu Theendumbothu.m4a", details: "🎬 Avatharam (1995) / 🎙️ Ilaiyaraaja, S. Janaki, Ganesh Manivannan / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Nassar / 🏷️ Echo" },
 { file: "Adhikalaiyil Shevalai.m4a", details: "🎬 Nee Varuvai Ena (1999) / 🎙️ P. Unnikrishnan, Sujatha Mohan / 🎼 S. A. Rajkumar / 📝 Ramesh Vaidya / 🎥 Rajakumaran / 🏷️ Sa Re Ga Ma, Star Music" },
 { file: "Oru Devathai Vanthu female .m4a", details: "🎬 Nee Varuvai Ena (1999) / 🎙️ K. S. Chithra / 🎼 S. A. Rajkumar / 📝 Ramesh Vaidya / 🎥 Rajakumaran / 🏷️ Sa Re Ga Ma, Star Music" },
 { file: "Oru Devathai Vanthu Vittaal male.m4a", details: "🎬 Nee Varuvai Ena (1999) / 🎙️ Hariharan / 🎼 S. A. Rajkumar / 📝 Ramesh Vaidya / 🎥 Rajakumaran / 🏷️ Sa Re Ga Ma, Star Music" },
