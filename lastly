@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "En Kannukoru Nilava.m4a", details: "🎬 Aararo Aariraro (1989) / 🎙️ S. P. Balasubrahmanyam, S. Janaki, Chorus / 🎼 K. Bhagyaraj / 📝 Vaali / 🎥 K. Bhagyaraj" },
 { file: "Adho Mega Oorvalam.m4a", details: "🎬 Eeramana Rojave (1991) / 🎙️ Mano, Sunanda / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 Keyaar" },
 { file: "Kalakalakum Maniosai.m4a", details: "🎬 Eeramana Rojave (1991) / 🎙️ Mano, S. Janaki / 🎼 Ilaiyaraaja / 📝 Piraisoodan / 🎥 Keyaar" },
 { file: "Thendral Kaatre.m4a", details: "🎬 Eeramana Rojave (1991) / 🎙️ K. J. Yesudas, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Keyaar" },
