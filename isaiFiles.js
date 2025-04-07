@@ -1,9 +1,20 @@
-  
+ 
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Adho Mega Oorvalam.m4a", details: "🎬 Eeramana Rojave (1991) / 🎙️ Mano, Sunanda / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 Keyaar" },
+{ file: "Kalakalakum Maniosai.m4a", details: "🎬 Eeramana Rojave (1991) / 🎙️ Mano, S. Janaki / 🎼 Ilaiyaraaja / 📝 Piraisoodan / 🎥 Keyaar" },
+{ file: "Thendral Kaatre.m4a", details: "🎬 Eeramana Rojave (1991) / 🎙️ K. J. Yesudas, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Keyaar" },
+{ file: "Vaa Vaa Anbe poojai.m4a", details: "🎬 Eeramana Rojave (1991) / 🎙️ K. J. Yesudas, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Keyaar" },
+{ file: "Vanna Poongavanam.m4a", details: "🎬 Eeramana Rojave (1991) / 🎙️ K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Muthulingam / 🎥 Keyaar" },
+{ file: "Chinna Purave.m4a", details: "🎬 Kannaal Pesavaa (2000) / 🎙️ P. Unnikrishnan / 🎼 Deva / 📝 M. Raaj Khanna / 🎥 M. Raaj Khanna" },
+{ file: "Kan Azhage female.m4a", details: "🎬 Kannaal Pesavaa (2000) / 🎙️ Sujatha Mohan / 🎼 Deva / 📝 M. Raaj Khanna / 🎥 M. Raaj Khanna" },
+{ file: "Kan Azhage.m4a", details: "🎬 Kannaal Pesavaa (2000) / 🎙️ Hariharan / 🎼 Deva / 📝 M. Raaj Khanna / 🎥 M. Raaj Khanna" },
+{ file: "Mathalathai Kottu.m4a", details: "🎬 Kannaal Pesavaa (2000) / 🎙️ Anuradha Sriram / 🎼 Deva / 📝 M. Raaj Khanna / 🎥 M. Raaj Khanna" },
+{ file: "Nenjikulla.m4a", details: "🎬 Kannaal Pesavaa (2000) / 🎙️ Sujatha Mohan / 🎼 Deva / 📝 M. Raaj Khanna / 🎥 M. Raaj Khanna" },
+{ file: "Thotta Chinunki pola.m4a", details: "🎬 Kannaal Pesavaa (2000) / 🎙️ Krishnaraj, Swarnalatha / 🎼 Deva / 📝 M. Raaj Khanna / 🎥 M. Raaj Khanna" },
 { file: "Arithaaratha Poosikolla Aasai.m4a", details: "🎬 Avatharam (1995) / 🎙️ Ilaiyaraaja, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Nassar / 🏷️ Echo" },
 { file: "Oru Gundu Mani Kulunguthadi.m4a", details: "🎬 Avatharam (1995) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Nassar / 🏷️ Echo" },
 { file: "Thendral Vanthu Theendumbothu.m4a", details: "🎬 Avatharam (1995) / 🎙️ Ilaiyaraaja, S. Janaki, Ganesh Manivannan / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 Nassar / 🏷️ Echo" },
