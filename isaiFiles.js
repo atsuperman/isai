@@ -1,9 +1,11 @@
-  
+ 
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Oh Kathal Ennai.m4a", details: "🎬 Kodi Parakkuthu (1988) / 🎙️ S. P. Balasubrahmanyam, Vani Jairam / 🎼 Hamsalekha" },
+{ file: "Selai Kattum.m4a", details: "🎬 Kodi Parakkuthu (1988) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Hamsalekha" },
 { file: "Bharathikku.m4a", details: "🎬 Priyamudan (1998) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Ra. Ravishankar / 🎥 Vincent Selva" },
 { file: "Pooja Vaa.m4a", details: "🎬 Priyamudan (1998) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Palani Bharathi / 🎥 Vincent Selva" },
 { file: "Whitulakkan.m4a", details: "🎬 Priyamudan (1998) / 🎙️ Deva / 🎼 Deva" },
@@ -433,3 +435,4 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
+ 
