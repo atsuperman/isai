@@ -1,9 +1,19 @@
- 
+  
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Adi Manjakilanka.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ Ganga Sitharasu, Febi Mani, Theni Kunjarammal, Kanchana / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Eetchi Elumichi reprise.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ Krishnaraj, Arundhathi, Raqeeb Alam / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Eetchi Elumichi.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ Manoj, Arundhathi, Raqeeb Alam, Parthasarathy, Navin / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Karisal Tarisal.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ M. G. Sreekumar, K. S. Chithra / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Kilakke Nanthavanam.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ Ganga Sitharasu, Febi Mani, Kanchana, Theni Kunjarammal / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Kulliruthu Kulliruthu.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ Unni Krishnan, Swarnalatha, R. Viswanathan / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Senkathay.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ T. K. Kala, Richa Sharma / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Sotta Sotta female.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ Sujatha Mohan / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Sotta Sotta male.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ Srinivas / 🎼 A. R. Rahman / 📝 Vairamuthu" },
+{ file: "Tirupatchi Aruvalle.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ Palakkad Sreeram, Kalpana Raghavendhar, Clinton Cerejo, Chandran / 🎼 A. R. Rahman / 📝 Vairamuthu" },
 { file: "Oh Kathal Ennai.m4a", details: "🎬 Kodi Parakkuthu (1988) / 🎙️ S. P. Balasubrahmanyam, Vani Jairam / 🎼 Hamsalekha" },
 { file: "Selai Kattum.m4a", details: "🎬 Kodi Parakkuthu (1988) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Hamsalekha" },
 { file: "Bharathikku.m4a", details: "🎬 Priyamudan (1998) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Ra. Ravishankar / 🎥 Vincent Selva" },
@@ -435,4 +445,3 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
- 
