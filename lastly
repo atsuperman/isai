@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Bharathikku.m4a", details: "🎬 Priyamudan (1998) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Ra. Ravishankar / 🎥 Vincent Selva" },
+{ file: "Pooja Vaa.m4a", details: "🎬 Priyamudan (1998) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Palani Bharathi / 🎥 Vincent Selva" },
+{ file: "Whitulakkan.m4a", details: "🎬 Priyamudan (1998) / 🎙️ Deva / 🎼 Deva" },
 { file: "Mellisaiyae.m4a", details: "🎬 Mr. Romeo (1996) / 🎙️ Swarnalatha, Unni Menon, Srinivas, Sujatha Mohan / 🎼 A. R. Rahman / 📝 Vaali / 🎥 K. S. Ravi" },
 { file: "Romeo Attam Potal.m4a", details: "🎬 Mr. Romeo (1996) / 🎙️ Hariharan, Udit Narayan / 🎼 A. R. Rahman / 📝 Vaali / 🎥 K. S. Ravi" },
 { file: "Thaneerai Khadalikum.m4a", details: "🎬 Mr. Romeo (1996) / 🎙️ Sangeetha Sajith / 🎼 A. R. Rahman / 📝 Vaali / 🎥 K. S. Ravi" },
