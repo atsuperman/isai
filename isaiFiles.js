@@ -4,6 +4,11 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Champagini.m4a", details: "📀 Champagini (2025) / 🎙️ Asal Kolaar / 🎼 Urban Thozha / 📝 Asal Kolaar" },
+{ file: "Jorthaale wraith Vs Remix.m4a", details: "📀 Jorthaale (Wraith V Remix) (2021) / 🎙️ Asal Kolaar, ofRO / 🎼 Wraith V / 📝 Asal Kolaar" },
+{ file: "Jorthaale.m4a", details: "📀 Jorthaale (2020) / 🎙️ Asal Kolaar, ofRo / 🎼 ofRo / 📝 Asal Kolaar" },
+{ file: "Paiya Dei.m4a", details: "📀 Paiya Dei (2024) / 🎙️ Asal Kolaar / 🎼 Anand Kashinath / 📝 Asal Kolaar" },
+{ file: "Vaanaambaa.m4a", details: "📀 Vaanaambaa (2020) / 🎙️ Asal Kolaar, ofRo / 🎼 ofRo / 📝 Asal Kolaar" },
 { file: "Adi Manjakilanka.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ Ganga Sitharasu, Febi Mani, Theni Kunjarammal, Kanchana / 🎼 A. R. Rahman / 📝 Vairamuthu" },
 { file: "Eetchi Elumichi reprise.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ Krishnaraj, Arundhathi, Raqeeb Alam / 🎼 A. R. Rahman / 📝 Vairamuthu" },
 { file: "Eetchi Elumichi.m4a", details: "🎬 Taj Mahal (1999) / 🎙️ Manoj, Arundhathi, Raqeeb Alam, Parthasarathy, Navin / 🎼 A. R. Rahman / 📝 Vairamuthu" },
