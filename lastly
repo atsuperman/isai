@@ -4,6 +4,12 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Ninnukori Varanam.m4a", details: "🎬 Agni Natchathiram (1988) / 🎙️ K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Oru Poonga Vanam.m4a", details: "🎬 Agni Natchathiram (1988) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Roja Poo Adivanthathu.m4a", details: "🎬 Agni Natchathiram (1988) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Raaja Raajathi.m4a", details: "🎬 Agni Natchathiram (1988) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Thoongatha Vizhigal.m4a", details: "🎬 Agni Natchathiram (1988) / 🎙️ K. J. Yesudas, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Vaa Vaa Anbe Anbe.m4a", details: "🎬 Agni Natchathiram (1988) / 🎙️ K. J. Yesudas, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Champagini.m4a", details: "📀 Champagini (2025) / 🎙️ Asal Kolaar / 🎼 Urban Thozha / 📝 Asal Kolaar" },
 { file: "Jorthaale wraith Vs Remix.m4a", details: "📀 Jorthaale (Wraith V Remix) (2021) / 🎙️ Asal Kolaar, ofRO / 🎼 Wraith V / 📝 Asal Kolaar" },
 { file: "Jorthaale.m4a", details: "📀 Jorthaale (2020) / 🎙️ Asal Kolaar, ofRo / 🎼 ofRo / 📝 Asal Kolaar" },
