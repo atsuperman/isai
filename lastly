@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kalayila.m4a", details: "🎬 Veeranadai (2000) / 🎙️ Krishnaraj, Jayalakshmi, Sabesh, Sushmitha, Amrutha, Yugendran, Prashanthini, Venkat Prabhu / 🎼 Deva / 📝 Na. Muthukumar" },
+{ file: "Muthu Muttha.m4a", details: "🎬 Veeranadai (2000) / 🎙️ Sujatha Mohan / 🎼 Deva / 📝 Na. Muthukumar" },
+{ file: "Usuravachen Mama.m4a", details: "🎬 Veeranadai (2000) / 🎙️ Swarnalatha / 🎼 Deva / 📝 Thamarai" },
 { file: "Kannil Unnai.m4a", details: "🎬 Kanave Kalaiyadhe (1999) / 🎙️ K. S. Chithra / 🎼 Deva / 📝 Vaali" },
 { file: "Kannodu Kannodu.m4a", details: "🎬 Kanave Kalaiyadhe (1999) / 🎙️ P. Unni Krishnan, Mahanadhi Shobana / 🎼 Deva / 📝 Vairamuthu" },
 { file: "Poosu Manjal female.m4a", details: "🎬 Kanave Kalaiyadhe (1999) / 🎙️ Anuradha Paudwal / 🎼 Deva / 📝 Vairamuthu" },
