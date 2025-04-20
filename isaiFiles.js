@@ -4,6 +4,13 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kalayila.m4a", details: "🎬 Veeranadai (2000) / 🎙️ Krishnaraj, Jayalakshmi, Sabesh, Sushmitha, Amrutha, Yugendran, Prashanthini, Venkat Prabhu / 🎼 Deva / 📝 Na. Muthukumar" },
+{ file: "Muthu Muttha.m4a", details: "🎬 Veeranadai (2000) / 🎙️ Sujatha Mohan / 🎼 Deva / 📝 Na. Muthukumar" },
+{ file: "Usuravachen Mama.m4a", details: "🎬 Veeranadai (2000) / 🎙️ Swarnalatha / 🎼 Deva / 📝 Thamarai" },
+{ file: "Kannil Unnai.m4a", details: "🎬 Kanave Kalaiyadhe (1999) / 🎙️ K. S. Chithra / 🎼 Deva / 📝 Vaali" },
+{ file: "Kannodu Kannodu.m4a", details: "🎬 Kanave Kalaiyadhe (1999) / 🎙️ P. Unni Krishnan, Mahanadhi Shobana / 🎼 Deva / 📝 Vairamuthu" },
+{ file: "Poosu Manjal female.m4a", details: "🎬 Kanave Kalaiyadhe (1999) / 🎙️ Anuradha Paudwal / 🎼 Deva / 📝 Vairamuthu" },
+{ file: "Poosu Manjal male.m4a", details: "🎬 Kanave Kalaiyadhe (1999) / 🎙️ Hariharan / 🎼 Deva / 📝 Vairamuthu" },
 { file: "Ninnukori Varanam.m4a", details: "🎬 Agni Natchathiram (1988) / 🎙️ K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Oru Poonga Vanam.m4a", details: "🎬 Agni Natchathiram (1988) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Roja Poo Adivanthathu.m4a", details: "🎬 Agni Natchathiram (1988) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
