@@ -4,6 +4,11 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Odugira Vandioda.m4a", details: "🎬 Mannukketha Maindan (1990) / 🎙️ A. R. Sheik Mohammed / 🎼 Deva / 📝 Kalidasan" },
+{ file: "Sendhamani Kuyile.m4a", details: "🎬 Mannukketha Maindan (1990) / 🎙️ Mano, S. Janaki / 🎼 Deva / 📝 Kalidasan" },
+{ file: "Jilla Mulukka.m4a", details: "🎬 Priyanka (1994) / 🎙️ Mano, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Vanakkuyile Kuyil.m4a", details: "🎬 Priyanka (1994) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Vettukili Vetti Vantha.m4a", details: "🎬 Priyanka (1994) / 🎙️ Mano, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Pulamaipithan" },
 { file: "Kalayila.m4a", details: "🎬 Veeranadai (2000) / 🎙️ Krishnaraj, Jayalakshmi, Sabesh, Sushmitha, Amrutha, Yugendran, Prashanthini, Venkat Prabhu / 🎼 Deva / 📝 Na. Muthukumar" },
 { file: "Muthu Muttha.m4a", details: "🎬 Veeranadai (2000) / 🎙️ Sujatha Mohan / 🎼 Deva / 📝 Na. Muthukumar" },
 { file: "Usuravachen Mama.m4a", details: "🎬 Veeranadai (2000) / 🎙️ Swarnalatha / 🎼 Deva / 📝 Thamarai" },
