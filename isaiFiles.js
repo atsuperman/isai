@@ -4,6 +4,11 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Andha Vaanam Enthan Kaiyil.m4a", details: "🎬 Gokulam (1993) / 🎙️ K. S. Chithra / 🎼 Sirpy / 📝 Pazhani Bharathi" },
+{ file: "Chevvanthi Pooveduthen.m4a", details: "🎬 Gokulam (1993) / 🎙️ Unni Menon, P. Susheela / 🎼 Sirpy / 📝 Pazhani Bharathi" },
+{ file: "Ponmaalaiyil.m4a", details: "🎬 Gokulam (1993) / 🎙️ Uma Ramanan / 🎼 Sirpy / 📝 Pazhani Bharathi" },
+{ file: "Puthuroja Poothirukku.m4a", details: "🎬 Gokulam (1993) / 🎙️ Mano, Swarnalatha / 🎼 Sirpy / 📝 Pazhani Bharathi" },
+{ file: "Therkke Adikkuthu Kaaththu.m4a", details: "🎬 Gokulam (1993) / 🎙️ K. S. Chithra / 🎼 Sirpy / 📝 Pazhani Bharathi" },
 { file: "Odugira Vandioda.m4a", details: "🎬 Mannukketha Maindan (1990) / 🎙️ A. R. Sheik Mohammed / 🎼 Deva / 📝 Kalidasan" },
 { file: "Sendhamani Kuyile.m4a", details: "🎬 Mannukketha Maindan (1990) / 🎙️ Mano, S. Janaki / 🎼 Deva / 📝 Kalidasan" },
 { file: "Jilla Mulukka.m4a", details: "🎬 Priyanka (1994) / 🎙️ Mano, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vaali" },
