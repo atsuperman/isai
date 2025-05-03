@@ -1,4 +1,4 @@
-               
+                
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -906,6 +906,96 @@
     transform: translateX(2px) scale(0.98);
     transition: all 0.2s ease;
 }
+
+
+#redBeatsLink {
+  position: relative;
+  cursor: pointer;
+  padding: 8px; /* Reduced padding */
+  margin: 4px 0; /* Added margin */
+  border-radius: 6px; /* Softer corners */
+  transition: all 0.2s ease;
+}
+
+#redBeatsLink:hover {
+  background: rgba(255,0,0,0.05); /* Subtle hover feedback */
+}
+
+#redBeatsLink.locked .verify-section {
+  display: none;
+}
+
+#redBeatsLink .locked-content {
+  padding: 8px; /* Reduced padding */
+  text-align: center;
+  font-size: 14px; /* Adjusted font size */
+  color: #ff4444; /* Brighter red */
+  pointer-events: none;
+}
+
+#redBeatsLink .locked-content small {
+  font-size: 12px; /* Smaller subtext */
+  color: #ff8888; /* Lighter red */
+  display: block;
+  margin-top: 2px;
+}
+
+#redBeatsLink .verify-section {
+  padding: 8px; /* Reduced padding */
+  background: rgba(0,0,0,0.15); /* Lighter background */
+  margin-top: 4px; /* Reduced margin */
+  border-radius: 4px; /* Tighter radius */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added depth */
+}
+
+#redBeatsLink .verify-wrapper {
+  display: flex;
+  gap: 4px; /* Tighter spacing */
+  align-items: center;
+}
+
+#redBeatsLink .verify-input {
+  flex: 1;
+  padding: 1px 1px; /* Compact padding */
+  font-size: 13px; /* Adjusted font size */
+  border: 1px solid #ff4444; /* Brighter border */
+  border-radius: 3px; /* Tighter radius */
+  background: rgba(255,255,255,0.9); /* Better contrast */
+}
+
+#redBeatsLink .verify-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255,0,0,0.2); /* Focus state */
+}
+
+#redBeatsLink .verify-button {
+  padding: 0 12px; /* Compact padding */
+  height: 32px; /* Fixed height */
+  background: #ff4444; /* Brighter red */
+  color: white;
+  border: none;
+  border-radius: 3px; /* Tighter radius */
+  cursor: pointer;
+  font-size: 13px; /* Adjusted font size */
+  transition: all 0.2s ease;
+}
+
+#redBeatsLink .verify-button:hover {
+  background: #ff2222; /* Darker hover */
+}
+
+#redBeatsLink .verify-button:active {
+  transform: scale(0.98); /* Click feedback */
+}
+
+#redBeatsLink .verify-message {
+  margin-top: 4px; /* Reduced margin */
+  font-size: 11px; /* Smaller text */
+  text-align: center;
+  color: #00ff00;
+  min-height: 14px;
+  transition: opacity 0.2s ease;
+}
     
         @media screen and (max-width: 768px) {
           #songList::-webkit-scrollbar-thumb {
@@ -1011,9 +1101,26 @@ body {
     </div>
 </div>
 <div class="links-container" id="linksContainer">
-   <div class="link-item" data-url="https://supersez.github.io/Ted/">RED Beat`s</div>
-   <div class="link-item" data-url="https://atsupergold.github.io/old/">GOLD</div>
+    <!-- RED Beat`s (with verification) -->
+<!-- Update the RED Beats link section in HTML -->
+<div class="link-item locked" id="redBeatsLink">
+    <div class="locked-content">
+        <span class="main-text">RED Beat`s</span>
+        <small class="sub-text">(Locked - Type RED)</small>
+    </div>
+    <div class="verify-section" style="display:none">
+        <div class="verify-wrapper">
+            <input type="text" class="verify-input" placeholder="Type RED" style="width: 120px;">
+            <button class="verify-button">Verify</button>
+        </div>
+        <div class="verify-message"></div>
+    </div>
 </div>
+    
+    <!-- GOLD (no verification) -->
+    <div class="link-item" data-url="https://atsupergold.github.io/old/">GOLD</div>
+</div>
+
   <div class="c-container" id="c-container" style="display: none;">
   <h4>search Results..</h4>
   <ul id="search-results">
@@ -1109,7 +1216,7 @@ body {
 <!-- Replace the existing rotating text code with this -->
 <div class="safe-rotating-text">
     <a href="catalog.html" target="_blank" rel="noopener noreferrer" class="safe-link">
-        <span class="safe-text safe-visible">VERSION 4.1</span>
+        <span class="safe-text safe-visible">VERSION 4.2</span>
         <span class="safe-text safe-hidden">How to Use?</span>
     </a>
 </div>
@@ -1880,18 +1987,63 @@ document.getElementById('switch').addEventListener('click', function() {
     aContainer.classList.toggle('expanded');
 });
 
-// Handle link clicks
-// Modify the existing link handler code
-document.querySelectorAll('.link-item').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault(); // Add this line
-        const url = this.dataset.url;
-        window.open(url, '_blank', 'noopener,noreferrer');
-        this.style.animation = 'linkClick 0.5s';
+// RED Beats Link Verification System
+const redBeatsLink = document.getElementById('redBeatsLink');
+const verifyInput = redBeatsLink.querySelector('.verify-input');
+const verifyButton = redBeatsLink.querySelector('.verify-button');
+const verifyMessage = redBeatsLink.querySelector('.verify-message');
+const lockedContent = redBeatsLink.querySelector('.locked-content');
+
+// Click handler for RED Beats link
+redBeatsLink.addEventListener('click', function(e) {
+    if (this.classList.contains('locked') && 
+       !e.target.classList.contains('verify-input') && 
+       !e.target.classList.contains('verify-button')) {
+        
+        // Hide the locked text but maintain space
+        lockedContent.style.display = 'none';
+        this.querySelector('.verify-section').style.display = 'block';
+        verifyInput.focus();
+    }
+});
+
+// Verification function
+function verifyRedBeats() {
+    if (verifyInput.value.trim().toUpperCase() === 'RED') {
+        verifyMessage.textContent = '✓ Verified! Redirecting...';
+        
+        // Keep space maintained with success message
+        lockedContent.innerHTML = `
+            <span class="main-text" style="color: #00ff00">✓ Access Granted</span>
+            <small class="sub-text" style="color: #00ff00">Opening...</small>
+        `;
+        lockedContent.style.display = 'block';
+        
+        // Hide verification UI
+        redBeatsLink.querySelector('.verify-section').style.display = 'none';
+        
         setTimeout(() => {
-            this.style.animation = '';
-        }, 500);
-    });
+            window.open('https://supersez.github.io/Ted/', '_blank', 'noopener,noreferrer');
+        }, 2000);
+    } else {
+        // Show error but keep original text hidden
+        verifyMessage.textContent = '❌ Incorrect! Try again...';
+        lockedContent.style.display = 'none';
+        verifyInput.value = '';
+        verifyInput.focus();
+    }
+}
+
+// Event listeners
+verifyButton.addEventListener('click', verifyRedBeats);
+verifyInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') verifyRedBeats();
+});
+
+// GOLD Link (direct access - unchanged)
+document.querySelector('.link-item[data-url="https://atsupergold.github.io/old/"]').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.open(this.dataset.url, '_blank', 'noopener,noreferrer');
 });
    
    document.getElementById('deleteIcon').addEventListener('click', async function() {
