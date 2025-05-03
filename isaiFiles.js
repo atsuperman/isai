@@ -4,6 +4,10 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Ithu Oru Ponmalai.m4a", details: "🎬 Nizhalgal (1980) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
+{ file: "Madai Thiranthu.m4a", details: "🎬 Nizhalgal (1980) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Poongathave Thaal.m4a", details: "🎬 Nizhalgal (1980) / 🎙️ Deepan Chakravarthy, Uma Ramanan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
+{ file: "Maalai Soodum Vaelai.m4a", details: "🎬 Naan Mahaan Alla (1984) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Andha Vaanam Enthan Kaiyil.m4a", details: "🎬 Gokulam (1993) / 🎙️ K. S. Chithra / 🎼 Sirpy / 📝 Pazhani Bharathi" },
 { file: "Chevvanthi Pooveduthen.m4a", details: "🎬 Gokulam (1993) / 🎙️ Unni Menon, P. Susheela / 🎼 Sirpy / 📝 Pazhani Bharathi" },
 { file: "Ponmaalaiyil.m4a", details: "🎬 Gokulam (1993) / 🎙️ Uma Ramanan / 🎼 Sirpy / 📝 Pazhani Bharathi" },
