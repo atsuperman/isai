@@ -1993,6 +1993,26 @@ const verifyInput = redBeatsLink.querySelector('.verify-input');
 const verifyButton = redBeatsLink.querySelector('.verify-button');
 const verifyMessage = redBeatsLink.querySelector('.verify-message');
 const lockedContent = redBeatsLink.querySelector('.locked-content');
+let resetTimer = null;
+
+// Reset to default state
+function resetToDefault() {
+    lockedContent.style.display = 'block';
+    redBeatsLink.querySelector('.verify-section').style.display = 'none';
+    verifyInput.value = '';
+    verifyMessage.textContent = '';
+}
+
+// Input field typing handler
+verifyInput.addEventListener('input', () => {
+    // Reset the timer on every keystroke
+    if (resetTimer) clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
+        if (redBeatsLink.classList.contains('locked')) {
+            resetToDefault();
+        }
+    }, 5000);
+});
 
 // Click handler for RED Beats link
 redBeatsLink.addEventListener('click', function(e) {
@@ -2000,37 +2020,52 @@ redBeatsLink.addEventListener('click', function(e) {
        !e.target.classList.contains('verify-input') && 
        !e.target.classList.contains('verify-button')) {
         
-        // Hide the locked text but maintain space
+        if (resetTimer) clearTimeout(resetTimer);
         lockedContent.style.display = 'none';
         this.querySelector('.verify-section').style.display = 'block';
         verifyInput.focus();
+        
+        resetTimer = setTimeout(() => {
+            if (this.classList.contains('locked')) {
+                resetToDefault();
+            }
+        }, 10000);
     }
 });
 
 // Verification function
 function verifyRedBeats() {
+    clearTimeout(resetTimer); // Clear any pending reset
+    
     if (verifyInput.value.trim().toUpperCase() === 'RED') {
         verifyMessage.textContent = '✓ Verified! Redirecting...';
         
-        // Keep space maintained with success message
+        // Update UI
         lockedContent.innerHTML = `
-            <span class="main-text" style="color: #00ff00">✓ Access Granted</span>
-            <small class="sub-text" style="color: #00ff00">Opening...</small>
+            <span class="main-text" style="color: #00ff00">✓ Access </span>
+            <small class="sub-text" style="color: #00ff00">Granted</small>
         `;
         lockedContent.style.display = 'block';
-        
-        // Hide verification UI
         redBeatsLink.querySelector('.verify-section').style.display = 'none';
+        
+        // Remove locked class and timer
+        redBeatsLink.classList.remove('locked');
+        clearTimeout(resetTimer);
         
         setTimeout(() => {
             window.open('https://supersez.github.io/Ted/', '_blank', 'noopener,noreferrer');
         }, 2000);
     } else {
-        // Show error but keep original text hidden
         verifyMessage.textContent = '❌ Incorrect! Try again...';
-        lockedContent.style.display = 'none';
         verifyInput.value = '';
         verifyInput.focus();
+        
+        // Restart timer only if still locked
+        if (redBeatsLink.classList.contains('locked')) {
+            resetTimer = setTimeout(() => {
+                resetToDefault();
+            }, 5000);
+        }
     }
 }
 
@@ -2040,7 +2075,7 @@ verifyInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') verifyRedBeats();
 });
 
-// GOLD Link (direct access - unchanged)
+// GOLD Link (unchanged)
 document.querySelector('.link-item[data-url="https://atsupergold.github.io/old/"]').addEventListener('click', function(e) {
     e.preventDefault();
     window.open(this.dataset.url, '_blank', 'noopener,noreferrer');
