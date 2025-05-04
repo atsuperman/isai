@@ -1,4 +1,4 @@
-                 
+                  
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1995,26 +1995,30 @@ const verifyMessage = redBeatsLink.querySelector('.verify-message');
 const lockedContent = redBeatsLink.querySelector('.locked-content');
 let resetTimer = null;
 
+// Store original locked content
+const originalLockedContent = lockedContent.innerHTML;
+
 // Reset to default state
 function resetToDefault() {
+    lockedContent.innerHTML = originalLockedContent;
     lockedContent.style.display = 'block';
     redBeatsLink.querySelector('.verify-section').style.display = 'none';
     verifyInput.value = '';
     verifyMessage.textContent = '';
+    redBeatsLink.classList.add('locked');
 }
 
 // Input field typing handler
 verifyInput.addEventListener('input', () => {
-    // Reset the timer on every keystroke
     if (resetTimer) clearTimeout(resetTimer);
     resetTimer = setTimeout(() => {
         if (redBeatsLink.classList.contains('locked')) {
             resetToDefault();
         }
-    }, 5000);
+    }, 10000);
 });
 
-// Click handler for RED Beats link
+// Click handler
 redBeatsLink.addEventListener('click', function(e) {
     if (this.classList.contains('locked') && 
        !e.target.classList.contains('verify-input') && 
@@ -2035,37 +2039,35 @@ redBeatsLink.addEventListener('click', function(e) {
 
 // Verification function
 function verifyRedBeats() {
-    clearTimeout(resetTimer); // Clear any pending reset
+    clearTimeout(resetTimer);
     
     if (verifyInput.value.trim().toUpperCase() === 'RED') {
         verifyMessage.textContent = '✓ Verified! Redirecting...';
         
-        // Update UI
+        // Temporary success state
         lockedContent.innerHTML = `
-            <span class="main-text" style="color: #00ff00">✓ Access </span>
-            <small class="sub-text" style="color: #00ff00">Granted</small>
+            <span class="main-text" style="color: #00ff00">✓ Access Granted</span>
+            <small class="sub-text" style="color: #00ff00">Opening...</small>
         `;
         lockedContent.style.display = 'block';
         redBeatsLink.querySelector('.verify-section').style.display = 'none';
         
-        // Remove locked class and timer
-        redBeatsLink.classList.remove('locked');
-        clearTimeout(resetTimer);
-        
+        // Redirect after 2 seconds
         setTimeout(() => {
             window.open('https://supersez.github.io/Ted/', '_blank', 'noopener,noreferrer');
         }, 2000);
+        
+        // Full reset after 1 second
+        setTimeout(resetToDefault, 1000);
+        
     } else {
         verifyMessage.textContent = '❌ Incorrect! Try again...';
         verifyInput.value = '';
         verifyInput.focus();
         
-        // Restart timer only if still locked
-        if (redBeatsLink.classList.contains('locked')) {
-            resetTimer = setTimeout(() => {
-                resetToDefault();
-            }, 5000);
-        }
+        resetTimer = setTimeout(() => {
+            resetToDefault();
+        }, 3000);
     }
 }
 
@@ -2074,6 +2076,7 @@ verifyButton.addEventListener('click', verifyRedBeats);
 verifyInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') verifyRedBeats();
 });
+
 
 // GOLD Link (unchanged)
 document.querySelector('.link-item[data-url="https://atsupergold.github.io/old/"]').addEventListener('click', function(e) {
