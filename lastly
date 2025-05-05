@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kattu Kuyilu.m4a", details: "🎬 Thalapathi (1991) / 🎙️ S. P. Balasubrahmanyam, K. J. Yesudas / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Rakkamma.m4a", details: "🎬 Thalapathi (1991) / 🎙️ S. P. Balasubrahmanyam, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Sundari kannal oru.m4a", details: "🎬 Thalapathi (1991) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Ithu Oru Ponmalai.m4a", details: "🎬 Nizhalgal (1980) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
 { file: "Madai Thiranthu.m4a", details: "🎬 Nizhalgal (1980) / 🎙️ S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Poongathave Thaal.m4a", details: "🎬 Nizhalgal (1980) / 🎙️ Deepan Chakravarthy, Uma Ramanan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
