@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kadhal Kasakkuthaiya.m4a", details: "🎬 Aan Paavam (1985) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Kuyile Kuyile Poonguyile.m4a", details: "🎬 Aan Paavam (1985) / 🎙️ Malaysia Vasudevan, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Kuruvikkarambai Shanmugam" },
 { file: "Kattu Kuyilu.m4a", details: "🎬 Thalapathi (1991) / 🎙️ S. P. Balasubrahmanyam, K. J. Yesudas / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Rakkamma.m4a", details: "🎬 Thalapathi (1991) / 🎙️ S. P. Balasubrahmanyam, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Sundari kannal oru.m4a", details: "🎬 Thalapathi (1991) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
