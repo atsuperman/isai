@@ -4,6 +4,16 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kattanum Kattanum.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ Malaysia Vasudevan, Swarnalatha / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Maamara Kuilea.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ S. P. Balasubrahmanyam, Swarnalatha / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Mayangaadha.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ Malaysia Vasudevan, Devi / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Mundhi Mundhi Vinaayaganea.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ Malaysia Vasudevan, Anuradha Sriram / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Pathu Roopa Ravikai Thuni.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ Arunmozhi, K. S. Chithra / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Solakkaattu.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ P. Unnikrishnan, Swarnalatha / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Yeh Panjaara Kooda.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ Krishnaraj, Devi / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Yennadi Nee.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ Krishnaraj, Devi Neithiyar / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Kadhal Kasakkuthaiya.m4a", details: "🎬 Aan Paavam (1985) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Kuyile Kuyile Poonguyile.m4a", details: "🎬 Aan Paavam (1985) / 🎙️ Malaysia Vasudevan, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Kuruvikkarambai Shanmugam" },
 { file: "Kattu Kuyilu.m4a", details: "🎬 Thalapathi (1991) / 🎙️ S. P. Balasubrahmanyam, K. J. Yesudas / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Rakkamma.m4a", details: "🎬 Thalapathi (1991) / 🎙️ S. P. Balasubrahmanyam, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Sundari kannal oru.m4a", details: "🎬 Thalapathi (1991) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
