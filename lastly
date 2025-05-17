@@ -415,7 +415,6 @@ const repositories = [
 { file: "Ordinary Person.mp3", details: "🎬 Leo (2023) / 🎙️ Anirudh Ravichander, Nikhita Gandhi / 🎼 Anirudh Ravichander / 📝 Heisenberg" },
 { file: "Kannathil Kannam.mp3", details: "🎬 Watchman Vadivel (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
 { file: "Chandiranum Sooriyanum.mp3", details: "🎬 Watchman Vadivel (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
-{ file: "tamil_iragai_pole_clup_mix_tape.mp3", details: "Remix By dj jose" },
 { file: "Kissik.mp3", details: "🎬 Pushpa 2: The Rule (2024) / 🎙️ Sreeleela / 🎼 Devi Sri Prasad / 📝 Chandrabose" },
 { file: "Pushpa Pushpa.mp3", details: "🎬 Pushpa 2: The Rule (2024) / 🎙️ Nakash Aziz / 🎼 Devi Sri Prasad / 📝 Chandrabose" },
 { file: "Aagaya Vennilavae.mp3", details: "🎬 Arangetra Velai (1990) / 🎙️ K. J. Yesudas, Uma Ramanan / 🎼 Ilaiyaraaja / 📝 Vaali" },
