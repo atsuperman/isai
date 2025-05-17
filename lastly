@@ -47,7 +47,6 @@ const repositories = [
 { file: "Thoongatha Vizhigal.m4a", details: "🎬 Agni Natchathiram (1988) / 🎙️ K. J. Yesudas, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Vaa Vaa Anbe Anbe.m4a", details: "🎬 Agni Natchathiram (1988) / 🎙️ K. J. Yesudas, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Champagini.m4a", details: "📀 Champagini (2025) / 🎙️ Asal Kolaar / 🎼 Urban Thozha / 📝 Asal Kolaar" },
-{ file: "Jorthaale wraith Vs Remix.m4a", details: "📀 Jorthaale (Wraith V Remix) (2021) / 🎙️ Asal Kolaar, ofRO / 🎼 Wraith V / 📝 Asal Kolaar" },
 { file: "Jorthaale.m4a", details: "📀 Jorthaale (2020) / 🎙️ Asal Kolaar, ofRo / 🎼 ofRo / 📝 Asal Kolaar" },
 { file: "Paiya Dei.m4a", details: "📀 Paiya Dei (2024) / 🎙️ Asal Kolaar / 🎼 Anand Kashinath / 📝 Asal Kolaar" },
 { file: "Vaanaambaa.m4a", details: "📀 Vaanaambaa (2020) / 🎙️ Asal Kolaar, ofRo / 🎼 ofRo / 📝 Asal Kolaar" },
