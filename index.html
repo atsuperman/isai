@@ -181,6 +181,9 @@
     caret-color: #j0ff00; /* Neon green cursor color */
     animation: blink 1s step-end infinite;
 }
+#searchBox {
+    caret-color: #000000; /* Fixed neon green color */
+}
 
 /* Blink animation */
 @keyframes blink {
@@ -583,7 +586,7 @@
 }
     
     
-    // Add this animation to your CSS
+/* Add this animation to your CSS */
 @keyframes linkClick {
     0% {
         transform: scale(1);
@@ -1117,8 +1120,6 @@ body {
     </div>
 </div>
     
-    <!-- GOLD (no verification) -->
-    <div class="link-item" data-url="https://atsupergold.github.io/old/">GOLD (Will be operational very soon)</div>
 </div>
 
   <div class="c-container" id="c-container" style="display: none;">
@@ -2078,11 +2079,6 @@ verifyInput.addEventListener('keypress', (e) => {
 });
 
 
-// GOLD Link (unchanged)
-document.querySelector('.link-item[data-url=""]').addEventListener('click', function(e) {
-    e.preventDefault();
-    window.open(this.dataset.url, '_blank', 'noopener,noreferrer');
-});
    
    document.getElementById('deleteIcon').addEventListener('click', async function() {
     // Add animation
