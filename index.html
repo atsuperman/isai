@@ -1,4 +1,4 @@
-                   
+                    
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1616,12 +1616,13 @@ function playSong(index) {
 
 }
 
-// Auto-play next song when current ends
+// Auto-play next song when current ends (REPLACE EXISTING VERSION)
 document.getElementById('audioPlayer').addEventListener('ended', () => {
     if (playlist.length > 0) {
-        playSong(0);
+        playSong(0); // Play next song in queue
     } else {
-        playlist = shuffleArray([...originalSongs]); // Reshuffle for a new order
+        // Refill playlist from original songs when empty
+        playlist = shuffleArray([...originalSongs]);
         updatePlaylist();
         playSong(0);
     }
@@ -1706,16 +1707,12 @@ audioPlayer.addEventListener('pause', () => {
     }
 });
     
-  // Add at the end of your window load event listener
+ // Initialize playlist immediately on load (REPLACE EXISTING VERSION)
 window.addEventListener('load', () => {
     loadQueue();
     requestWakeLock();
-    
-    // Auto-reload once after 5 seconds
-    setTimeout(() => {
-        playlist = shuffleArray([...originalSongs]);
-        updatePlaylist();
-    }, 5000);
+    playlist = shuffleArray([...originalSongs]); // Immediate shuffle
+    updatePlaylist();
 });
 
 // Keep existing reload button handler
