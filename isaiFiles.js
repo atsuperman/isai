@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Cheran chozha Pandiyar.m4a", details: "🎬 Namma Annachi (1994) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Deva / 📝 Vaali" },
+{ file: "Enna Dappa Partyinnu.m4a", details: "🎬 Namma Annachi (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Kalidasan" },
+{ file: "Neelagiri Mala Orathila.m4a", details: "🎬 Namma Annachi (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
 { file: "Mayanginen Solla Thayanginen.m4a", details: "🎬 Naane Raja Naane Mandhiri (1985) / 🎙️ P. Jayachandran, P. Susheela / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Thegam Siragadikkum.m4a", details: "🎬 Naane Raja Naane Mandhiri (1985) / 🎙️ P. Jayachandran, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Mu. Metha" },
 { file: "Kattanum Kattanum.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ Malaysia Vasudevan, Swarnalatha / 🎼 Deva / 📝 Kasthuri Raja" },
