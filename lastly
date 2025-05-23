@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kaatradikkum Neram.m4a", details: "🎬 Vivasaayi Magan (1997) / 🎙️ Mano, K. S. Chithra / 🎼 Sirpy / 📝 Palani Bharathi" },
+{ file: "Vettaveli Pottalilae.m4a", details: "🎬 Vivasaayi Magan (1997) / 🎙️ Mano, K. S. Chithra / 🎼 Sirpy / 📝 Palani Bharathi" },
 { file: "Ada Da Da Da.m4a", details: "🎬 Arai En 305-il Kadavul (2008) / 🎙️ Santhanam, Ganja Karuppu, Vineeth Sreenivasan, Jayamoorthy / 🎼 Vidyasagar / 📝 Pa. Vijay" },
 { file: "Chori Chori.m4a", details: "🎬 Maaman Magal (1995) / 🎙️ K. S. Chithra, Gurdas Maan / 🎼 Adithyan / 📝 Vaali" },
 { file: "Dhemthana Thomthana.m4a", details: "🎬 Maaman Magal (1995) / 🎙️ Mano, K. S. Chithra / 🎼 Adithyan / 📝 Kalidasan" },
