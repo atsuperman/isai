@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Mamara Anile.m4a", details: "🎬 Dharma Chakkaram (1997) / 🎙️ Sujatha Mohan / 🎼 Deva / 📝 R. V. Udayakumar" },
+{ file: "Putta Putta.m4a", details: "🎬 Dharma Chakkaram (1997) / 🎙️ K. S. Chithra, Deva, Krishnaraj / 🎼 Deva / 📝 R. V. Udayakumar" },
+{ file: "Sollaikulla Kaatukulla.m4a", details: "🎬 Dharma Chakkaram (1997) / 🎙️ S. P. Balasubrahmanyam, Sujatha / 🎼 Deva / 📝 R. V. Udayakumar" },
 { file: "Kaatradikkum Neram.m4a", details: "🎬 Vivasaayi Magan (1997) / 🎙️ Mano, K. S. Chithra / 🎼 Sirpy / 📝 Palani Bharathi" },
 { file: "Vettaveli Pottalilae.m4a", details: "🎬 Vivasaayi Magan (1997) / 🎙️ Mano, K. S. Chithra / 🎼 Sirpy / 📝 Palani Bharathi" },
 { file: "Ada Da Da Da.m4a", details: "🎬 Arai En 305-il Kadavul (2008) / 🎙️ Santhanam, Ganja Karuppu, Vineeth Sreenivasan, Jayamoorthy / 🎼 Vidyasagar / 📝 Pa. Vijay" },
