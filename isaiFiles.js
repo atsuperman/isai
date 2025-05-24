@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Poove Nee Aada Vaa.m4a", details: "🎬 Kalki (1996) / 🎙️ Sujatha Mohan / 🎼 Deva / 📝 Ilandevan" },
+{ file: "Singapore Selai.m4a", details: "🎬 Kalki (1996) / 🎙️ Mano / 🎼 Deva / 📝 Ilandevan" },
+{ file: "Yeazhudhkiren Oru Kadidham.m4a", details: "🎬 Kalki (1996) / 🎙️ K. S. Chithra, Anuradha Sriram / 🎼 Deva / 📝 Ilandevan" },
 { file: "Mamara Anile.m4a", details: "🎬 Dharma Chakkaram (1997) / 🎙️ Sujatha Mohan / 🎼 Deva / 📝 R. V. Udayakumar" },
 { file: "Putta Putta.m4a", details: "🎬 Dharma Chakkaram (1997) / 🎙️ K. S. Chithra, Deva, Krishnaraj / 🎼 Deva / 📝 R. V. Udayakumar" },
 { file: "Sollaikulla Kaatukulla.m4a", details: "🎬 Dharma Chakkaram (1997) / 🎙️ S. P. Balasubrahmanyam, Sujatha / 🎼 Deva / 📝 R. V. Udayakumar" },
