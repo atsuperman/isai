@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Idam Tharuvaya.m4a", details: "🎬 Appu (2000) / 🎙️ P. Unnikrishnan, Pop Shalini / 🎼 Deva / 📝 Vairamuthu" },
+{ file: "Yeno Yeno.m4a", details: "🎬 Appu (2000) / 🎙️ Hariharan, Sujatha Mohan, Harini / 🎼 Deva / 📝 Vairamuthu" },
 { file: "Kadalainna Kadalai.m4a", details: "🎬 Pirappu (2007) / 🎙️ Manickka Vinayagam, Anuradha Sriram / 🎼 Bharadwaj / 📝 Kamakodiyan" },
 { file: "En Manathai.m4a", details: "🎬 Kalloori Vaasal (1996) / 🎙️ Hariharan, Anuradha Sriram / 🎼 Deva / 📝 Vaali" },
 { file: "Nilagiri.m4a", details: "🎬 Kalloori Vaasal (1996) / 🎙️ Mano, Swarnalatha / 🎼 Deva / 📝 Vaali" },
