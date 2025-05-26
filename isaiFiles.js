@@ -4,6 +4,10 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Eettupatti Rasa.m4a", details: "🎬 Ettupatti Rasa (1997) / 🎙️ Napoleon, Swarnalatha / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Kathadikuthu.m4a", details: "🎬 Ettupatti Rasa (1997) / 🎙️ Malaysia Vasudevan, S. Janaki / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Merku Seemailaa.m4a", details: "🎬 Ettupatti Rasa (1997) / 🎙️ Deva, Swarnalatha / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Panju Mittai.m4a", details: "🎬 Ettupatti Rasa (1997) / 🎙️ Malaysia Vasudevan, S. Janaki / 🎼 Deva / 📝 Kasthuri Raja" },
 { file: "Mehangal Ennathottu.m4a", details: "🎬 Amarkalam (1999) / 🎙️ S. P. Balasubrahmanyam / 🎼 Bharadwaj / 📝 Vairamuthu" },
 { file: "Satham Illatha.m4a", details: "🎬 Amarkalam (1999) / 🎙️ S. P. Balasubrahmanyam, Sujatha Mohan / 🎼 Bharadwaj / 📝 Vairamuthu" },
 { file: "Sontha Kuralil Paada.m4a", details: "🎬 Amarkalam (1999) / 🎙️ Shalini / 🎼 Bharadwaj / 📝 Vairamuthu" },
