@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Tajmahal Oviya Kadhal.m4a", details: "🎬 Kalvanin Kadhali (2006) / 🎙️ Vijay Yesudas, Srimathumitha / 🎼 Yuvan Shankar Raja / 📝 Vaali" },
 { file: "Mudhalil Yennai.m4a", details: "🎬 Thalaivaa / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra" },
 { file: "Metti Metti.m4a", details: "🎬 Pullakuttikaran (1995) / 🎙️ S. Janaki, Arunmozhi, Parthiban / 🎼 Deva / 📝 Vairamuthu" },
 { file: "Eettupatti Rasa.m4a", details: "🎬 Ettupatti Rasa (1997) / 🎙️ Napoleon, Swarnalatha / 🎼 Deva / 📝 Kasthuri Raja" },
