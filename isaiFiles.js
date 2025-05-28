@@ -4,6 +4,12 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aayiram Kodi.m4a", details: "🎬 Karisakattu Poove (2000) / 🎙️ Hariharan / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
+{ file: "Ethana Manikku.m4a", details: "🎬 Karisakattu Poove (2000) / 🎙️ Arunmozhi, Anuradha Sriram / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
+{ file: "Kuchanooru.m4a", details: "🎬 Karisakattu Poove (2000) / 🎙️ Pushpavanam Kuppusamy, Anitha Kuppusamy / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
+{ file: "Mamarathule.m4a", details: "🎬 Karisakattu Poove (2000) / 🎙️ P. Unnikrishnan, Bhavatharini / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
+{ file: "Manasirukka.m4a", details: "🎬 Karisakattu Poove (2000) / 🎙️ Pushpavanam Kuppusamy, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
+{ file: "Un Kendakkalu.m4a", details: "🎬 Karisakattu Poove (2000) / 🎙️ Mano, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
 { file: "Elumicham Pazham.m4a", details: "🎬 Killadi Mappillai (1994) / 🎙️ Krishnaraj, Sindhu / 🎼 Deva / 📝 Vaali" },
 { file: "Tajmahal Oviya Kadhal.m4a", details: "🎬 Kalvanin Kadhali (2006) / 🎙️ Vijay Yesudas, Srimathumitha / 🎼 Yuvan Shankar Raja / 📝 Vaali" },
 { file: "Mudhalil Yennai.m4a", details: "🎬 Thalaivaa / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra" },
