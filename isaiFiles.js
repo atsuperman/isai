@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Bombay City.m4a", details: "🎬 Rasigan (1994) / 🎙️ Vijay, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
+{ file: "Jillena Jillena.m4a", details: "🎬 Rasigan (1994) / 🎙️ S. N. Surendar, Swarnalatha / 🎼 Deva / 📝 Vaali" },
 { file: "Aayiram Kodi.m4a", details: "🎬 Karisakattu Poove (2000) / 🎙️ Hariharan / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
 { file: "Ethana Manikku.m4a", details: "🎬 Karisakattu Poove (2000) / 🎙️ Arunmozhi, Anuradha Sriram / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
 { file: "Kuchanooru.m4a", details: "🎬 Karisakattu Poove (2000) / 🎙️ Pushpavanam Kuppusamy, Anitha Kuppusamy / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
