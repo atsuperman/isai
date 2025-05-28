@@ -1,9 +1,11 @@
- 
+  
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Elumicham Pazham.m4a", details: "🎬 Killadi Mappillai (1994) / 🎙️ Krishnaraj, Sindhu / 🎼 Deva / 📝 Vaali" },
+{ file: "Tajmahal Oviya Kadhal.m4a", details: "🎬 Kalvanin Kadhali (2006) / 🎙️ Vijay Yesudas, Srimathumitha / 🎼 Yuvan Shankar Raja / 📝 Vaali" },
 { file: "Mudhalil Yennai.m4a", details: "🎬 Thalaivaa / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra" },
 { file: "Metti Metti.m4a", details: "🎬 Pullakuttikaran (1995) / 🎙️ S. Janaki, Arunmozhi, Parthiban / 🎼 Deva / 📝 Vairamuthu" },
 { file: "Eettupatti Rasa.m4a", details: "🎬 Ettupatti Rasa (1997) / 🎙️ Napoleon, Swarnalatha / 🎼 Deva / 📝 Kasthuri Raja" },
@@ -513,4 +515,3 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
- 
