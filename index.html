@@ -1,4 +1,4 @@
-                     
+                      
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -771,80 +771,89 @@
     0% { opacity: 1; transform: translate(-50%, -50%) scale(0); }
     100% { opacity: 0; transform: translate(-50%, -50%) scale(3); }
 }
-    
-    .delete-icon {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 1000;
+   
+/* Replace the existing .version-container and .update-glitch styles with this */
+    /* FIXED VERSION CONTAINER */
+        .version-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* Align to right */
+            width: 18%; /* Match other containers */
+            max-width: 500px; /* Match other containers */
+            margin: 12px 0 0; /* Top margin only */
+            gap: 4px; /* Reduced spacing */
+            margin-left: 6%; /* Same margin as other containers */
+            padding: 4px 0; /* Add some padding */
+        }
+
+
+.update-glitch {
+    cursor: pointer; /* Add this line to existing rule */
+    font: 600 10px 'Poppins', sans-serif;
+    color: #00f;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: glitch 1s infinite;
+    position: relative;
+    margin-right: 2px;
 }
 
-.delete-icon:hover {
-    transform: scale(1.1) rotate(15deg);
+/* Add this to reduce spacing around separator */
+.separator {
+    color: #aaa;
+    font-weight: bold;
+    margin: 0 2px; /* Reduced horizontal spacing */
 }
 
-.delete-icon.active {
-    animation: shake 0.5s ease;
+@keyframes glitch {
+    0% { text-shadow: -1px 0 #00f, 1px 0 #0ff; transform: translate(0); }
+    25% { text-shadow: 1px 0 #00f, -1px 0 #0ff; transform: translate(-1px, 1px); }
+    50% { text-shadow: -1px 0 #0ff, 1px 0 #00f; transform: translate(1px, -1px); }
+    75% { text-shadow: 1px 0 #0ff, -1px 0 #00f; transform: translate(-1px, 1px); }
+    100% { text-shadow: -1px 0 #00f, 1px 0 #0ff; transform: translate(0); }
 }
 
-@keyframes shake {
+.update-glitch::before,
+.update-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.update-glitch::before {
+    color: #0ff;
+    animation: glitch-before 1.5s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.update-glitch::after {
+    color: #f0f;
+    animation: glitch-after 1.5s infinite;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-before {
     0% { transform: translateX(0); }
-    25% { transform: translateX(5px); }
-    50% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
+    33% { transform: translateX(-1px); }
+    66% { transform: translateX(1px); }
     100% { transform: translateX(0); }
 }
 
-.delete-icon path {
-    transition: all 0.3s ease;
+@keyframes glitch-after {
+    0% { transform: translateX(0); }
+    33% { transform: translateX(1px); }
+    66% { transform: translateX(-1px); }
+    100% { transform: translateX(0); }
 }
 
-.delete-icon.active .lid {
-    transform: rotate(-30deg);
-    transform-origin: 52px 24px;
+.separator {
+    color: #aaa;
+    font-weight: bold;
 }
-    
-    .logo-container {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.logo, .delete-icon {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.delete-icon {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    pointer-events: none;
-    z-index: 1001;
-}
-
-.logo-container.active .logo {
-    opacity: 0;
-    transform: scale(0.8);
-}
-
-.logo-container.active .delete-icon {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-    pointer-events: all;
-}
-
-.delete-icon svg {
-    transition: transform 0.3s ease;
-}
-
-.delete-icon:hover svg {
-    transform: rotate(15deg) scale(1.1);
-}
+ 
 .safe-rotating-text {
     position: relative;
     display: block;
@@ -992,6 +1001,84 @@
 }
     
         @media screen and (max-width: 768px) {
+        
+/* Replace the existing .version-container and .update-glitch styles with this */
+.version-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align content to the right */
+    margin: 12px 6% 0 auto; /* Same right margin as other containers */
+    width: 37%; /* Match other containers' width */
+    max-width: 500px; /* Match other containers' max-width */
+    text-align: right;
+    gap: 3px; /* Reduced from 8px to 4px */
+    padding-right: 5px; /* Add slight padding to match container padding */
+}
+
+.update-glitch {
+    cursor: pointer; /* Add this line to existing rule */
+    font: 600 10px 'Poppins', sans-serif;
+    color: #00f;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: glitch 1s infinite;
+    position: relative;
+    margin-right: 2px;
+}
+
+/* Add this to reduce spacing around separator */
+.separator {
+    color: #aaa;
+    font-weight: bold;
+    margin: 0 2px; /* Reduced horizontal spacing */
+}
+
+@keyframes glitch {
+    0% { text-shadow: -1px 0 #00f, 1px 0 #0ff; transform: translate(0); }
+    25% { text-shadow: 1px 0 #00f, -1px 0 #0ff; transform: translate(-1px, 1px); }
+    50% { text-shadow: -1px 0 #0ff, 1px 0 #00f; transform: translate(1px, -1px); }
+    75% { text-shadow: 1px 0 #0ff, -1px 0 #00f; transform: translate(-1px, 1px); }
+    100% { text-shadow: -1px 0 #00f, 1px 0 #0ff; transform: translate(0); }
+}
+
+.update-glitch::before,
+.update-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.update-glitch::before {
+    color: #0ff;
+    animation: glitch-before 1.5s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.update-glitch::after {
+    color: #f0f;
+    animation: glitch-after 1.5s infinite;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-before {
+    0% { transform: translateX(0); }
+    33% { transform: translateX(-1px); }
+    66% { transform: translateX(1px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes glitch-after {
+    0% { transform: translateX(0); }
+    33% { transform: translateX(1px); }
+    66% { transform: translateX(-1px); }
+    100% { transform: translateX(0); }
+}
+
+          
+          
           #songList::-webkit-scrollbar-thumb {
         background: #888 !important;
     }
@@ -1080,6 +1167,8 @@ body {
             }
         }
     
+    
+    
         
     </style>
 </head>
@@ -1087,12 +1176,6 @@ body {
     <div class="content-wrapper">
 <div class="logo-container" id="logoContainer">
     <h1 class="logo">SUPER</h1>
-    <div class="delete-icon" id="deleteIcon">
-        <svg width="60" height="60" viewBox="0 0 60 60">
-            <path class="lid" d="M20 15h20l-2-4H22z" fill="orange"/>
-            <path d="M25 20v25h2V20zm8 0v25h2V20zm8 0v25h2V20zm5 30H14V20h32v30z" fill="silver"/>
-        </svg>
-    </div>
 </div>
 <div class="links-container" id="linksContainer">
     <!-- RED Beat`s (with verification) -->
@@ -1205,20 +1288,19 @@ body {
 
 </div>
 </div>
-<!-- Replace the existing rotating text code with this -->
-<div class="safe-rotating-text">
-    <a href="catalog.html" target="_blank" rel="noopener noreferrer" class="safe-link">
-        <span class="safe-text safe-visible">VERSION 4.2</span>
-        <span class="safe-text safe-hidden">How to Use?</span>
-    </a>
-</div>
+   <!-- Fixed version container -->
+        <div class="version-container">
+            <div class="update-glitch">UPDATE</div>
+            <div class="separator">|</div>
+            <div class="safe-rotating-text">
+                <a href="catalog.html" target="_blank" rel="noopener noreferrer" class="safe-link">
+                    <span class="safe-text safe-visible">VERSION 4.3</span>
+                    <span class="safe-text safe-hidden">GUIDE</span>
+                </a>
+            </div>
+        </div>
+    </div>
 
-<div class="delete-icon" id="deleteIcon">
-    <svg width="40" height="40" viewBox="0 0 60 60">
-        <path class="lid" d="M20 15h20l-2-4H22z" fill="orange"/>
-        <path d="M25 20v25h2V20zm8 0v25h2V20zm8 0v25h2V20zm5 30H14V20h32v30z" fill="silver"/>
-    </svg>
-</div>
       <audio id="audioPlayer">
         Your browser does not support the audio element.
     </audio>
@@ -2070,68 +2152,52 @@ verifyInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') verifyRedBeats();
 });
 
+   // Cache clearing on UPDATE click
+const updateGlitch = document.querySelector('.update-glitch');
+let isClearing = false;
 
-   
-   document.getElementById('deleteIcon').addEventListener('click', async function() {
-    // Add animation
-    this.classList.add('active');
+updateGlitch.addEventListener('click', async function() {
+    if (isClearing) return;
+    isClearing = true;
     
-    // Clear caches
+    // Visual feedback
+    const originalText = updateGlitch.textContent;
+    updateGlitch.textContent = "Clearing...";
+    updateGlitch.style.pointerEvents = 'none';
+
     try {
         // Clear localStorage
         localStorage.clear();
         
-        // Clear service workers
-        const registrations = await navigator.serviceWorker.getRegistrations();
-        for(let registration of registrations) {
-            await registration.unregister();
+        // Clear caches
+        if ('caches' in window) {
+            const cacheKeys = await caches.keys();
+            await Promise.all(cacheKeys.map(key => caches.delete(key)));
         }
         
-        // Clear cache API
-        if('caches' in window) {
-            await caches.keys().then(cacheNames => {
-                return Promise.all(cacheNames.map(cacheName => {
-                    return caches.delete(cacheName);
-                }));
-            });
+        // Unregister service workers
+        if ('serviceWorker' in navigator) {
+            const registrations = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(registrations.map(reg => reg.unregister()));
         }
         
-        // Force reload
+        // Force reload after operations
         setTimeout(() => {
             window.location.reload(true);
         }, 1000);
         
-    } catch(error) {
+    } catch (error) {
         console.error('Cache clearing failed:', error);
+        updateGlitch.textContent = "Failed! Click again";
+        setTimeout(() => {
+            updateGlitch.textContent = originalText;
+            updateGlitch.style.pointerEvents = 'auto';
+            isClearing = false;
+        }, 2000);
     }
-    
-    // Remove animation after 1s
-    setTimeout(() => {
-        this.classList.remove('active');
-    }, 1000);
 });
    
-   let timeoutId = null;
-
-document.getElementById('logoContainer').addEventListener('click', function(e) {
-    if (!this.classList.contains('active') && e.target.closest('.logo')) {
-        this.classList.add('active');
-    }
-});
-
-document.getElementById('deleteIcon').addEventListener('click', function(e) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-        document.getElementById('logoContainer').classList.remove('active');
-    }, 2000); // 2-second delay
-});
-
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.logo-container')) {
-        clearTimeout(timeoutId);
-        document.getElementById('logoContainer').classList.remove('active');
-    }
-});
+   
    
 // Add this isolated script at the very end of your existing script
 (() => {
