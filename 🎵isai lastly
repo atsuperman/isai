@@ -4,6 +4,10 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Koottam Nalla.m4a", details: "🎬 Manu Needhi (2000) / 🎙️ Seerkazhi G. Sivachidambaram, Anuradha Sriram / 🎼 Deva / 📝 Lakshmi Priyan" },
+{ file: "Mayiladum Parai.m4a", details: "🎬 Manu Needhi (2000) / 🎙️ S. Sathya / 🎼 Deva / 📝 Kalaikumar" },
+{ file: "Oru Rojathottam.m4a", details: "🎬 Manu Needhi (2000) / 🎙️ P. Unnikrishnan, K. S. Chithra / 🎼 Deva / 📝 Snehan" },
+{ file: "Yele Karuthamma.m4a", details: "🎬 Manu Needhi (2000) / 🎙️ Krishnaraj, Anuradha Sriram / 🎼 Deva / 📝 Snehan" },
 { file: "Bombay City.m4a", details: "🎬 Rasigan (1994) / 🎙️ Vijay, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
 { file: "Jillena Jillena.m4a", details: "🎬 Rasigan (1994) / 🎙️ S. N. Surendar, Swarnalatha / 🎼 Deva / 📝 Vaali" },
 { file: "Aayiram Kodi.m4a", details: "🎬 Karisakattu Poove (2000) / 🎙️ Hariharan / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
