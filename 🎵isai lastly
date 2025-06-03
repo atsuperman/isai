@@ -4,6 +4,10 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Chillunu Kaaththu.m4a", details: "🎬 Looty (2001) / 🎙️ Mano, Swarnalatha / 🎼 Deva / 📝 Vaali" },
+{ file: "Madurakkara Vivekku.m4a", details: "🎬 Looty (2001) / 🎙️ Vadivelu, Sabesh / 🎼 Deva / 📝 Vaali" },
+{ file: "Missu Missu Pappa.m4a", details: "🎬 Looty (2001) / 🎙️ Krishnaraj, Anuradha Sriram / 🎼 Deva / 📝 Vaali" },
+{ file: "Velu Vadivelu.m4a", details: "🎬 Looty (2001) / 🎙️ Deva / 🎼 Deva / 📝 Vaali" },
 { file: "Aadiyae Attam Enna.m4a", details: "🎬 En Purusan Kuzhandhai Maadhiri (2001) / 🎙️ Deva / 🎼 Deva / 📝 Kalaikumar" },
 { file: "Chitraiyae Adi.m4a", details: "🎬 En Purushan Kuzhandhai Maadhiri (2001) / 🎙️ Hariharan, Anuradha Sriram / 🎼 Deva / 📝 Kamakodiyan" },
 { file: "Naladi Aaru Angulam.m4a", details: "🎬 En Purushan Kuzhandhai Maadhiri (2001) / 🎙️ Vadivelu / 🎼 Deva / 📝 Karupur Ramu" },
