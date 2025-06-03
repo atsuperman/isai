@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Vayakkadu.m4a", details: "🎬 Parambarai (1996) / 🎙️ Mano, K. S. Chithra / 🎼 Deva / 📝 Kalidasan" },
 { file: "Chillunu Kaaththu.m4a", details: "🎬 Looty (2001) / 🎙️ Mano, Swarnalatha / 🎼 Deva / 📝 Vaali" },
 { file: "Madurakkara Vivekku.m4a", details: "🎬 Looty (2001) / 🎙️ Vadivelu, Sabesh / 🎼 Deva / 📝 Vaali" },
 { file: "Missu Missu Pappa.m4a", details: "🎬 Looty (2001) / 🎙️ Krishnaraj, Anuradha Sriram / 🎼 Deva / 📝 Vaali" },
