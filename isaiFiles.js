@@ -4,6 +4,14 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Antha Nilava Thaan.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ Ilaiyaraaja, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
+{ file: "Eratha Malai Mele.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ Malaysia Vasudevan, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
+{ file: "Hey Kiliyirukku.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ Ilaiyaraaja, Chorus / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
+{ file: "Poongatru Thirumbuma.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ Malaysia Vasudevan, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
+{ file: "Raasave Unna Nambi.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
+{ file: "Vetti Veru Vasam.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ Malaysia Vasudevan, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
+{ file: "Yeh Kuruvi.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ Malaysia Vasudevan, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
+{ file: "Vayakkadu.m4a", details: "🎬 Parambarai (1996) / 🎙️ Mano, K. S. Chithra / 🎼 Deva / 📝 Kalidasan" },
 { file: "Chillunu Kaaththu.m4a", details: "🎬 Looty (2001) / 🎙️ Mano, Swarnalatha / 🎼 Deva / 📝 Vaali" },
 { file: "Madurakkara Vivekku.m4a", details: "🎬 Looty (2001) / 🎙️ Vadivelu, Sabesh / 🎼 Deva / 📝 Vaali" },
 { file: "Missu Missu Pappa.m4a", details: "🎬 Looty (2001) / 🎙️ Krishnaraj, Anuradha Sriram / 🎼 Deva / 📝 Vaali" },
