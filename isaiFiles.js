@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Adi Ammaadi.m4a", details: "🎬 Kanni Paruvathile (1979) / 🎙️ S. Janaki / 🎼 Shankar–Ganesh / 📝 Pulamaipithan" },
+{ file: "Pattu Vanna-F.m4a", details: "🎬 Kanni Paruvathile (1979) / 🎙️ S. Janaki / 🎼 Shankar–Ganesh / 📝 Pulamaipithan" },
+{ file: "Pattu Vanna-M.m4a", details: "🎬 Kanni Paruvathile (1979) / 🎙️ Malaysia Vasudevan / 🎼 Shankar–Ganesh / 📝 Pulamaipithan" },
 { file: "Koottam Nalla.m4a", details: "🎬 Manu Needhi (2000) / 🎙️ Seerkazhi G. Sivachidambaram, Anuradha Sriram / 🎼 Deva / 📝 Lakshmi Priyan" },
 { file: "Mayiladum Parai.m4a", details: "🎬 Manu Needhi (2000) / 🎙️ S. Sathya / 🎼 Deva / 📝 Kalaikumar" },
 { file: "Oru Rojathottam.m4a", details: "🎬 Manu Needhi (2000) / 🎙️ P. Unnikrishnan, K. S. Chithra / 🎼 Deva / 📝 Snehan" },
