@@ -1,9 +1,11 @@
-  
+ 
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Oorukulla Unnaiyum.m4a", details: "🎬 Ninaivu Chinnam (1989) / 🎙️ K. S. Chithra, Malaysia Vasudevan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
+{ file: "Vaikasi Maasthula.m4a", details: "🎬 Ninaivu Chinnam (1989) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
 { file: "Adi Ammaadi.m4a", details: "🎬 Kanni Paruvathile (1979) / 🎙️ S. Janaki / 🎼 Shankar–Ganesh / 📝 Pulamaipithan" },
 { file: "Pattu Vanna-F.m4a", details: "🎬 Kanni Paruvathile (1979) / 🎙️ S. Janaki / 🎼 Shankar–Ganesh / 📝 Pulamaipithan" },
 { file: "Pattu Vanna-M.m4a", details: "🎬 Kanni Paruvathile (1979) / 🎙️ Malaysia Vasudevan / 🎼 Shankar–Ganesh / 📝 Pulamaipithan" },
@@ -527,3 +529,4 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
+ 
