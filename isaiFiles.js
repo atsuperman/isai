@@ -1,9 +1,14 @@
- 
+  
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aadiyae Attam Enna.m4a", details: "🎬 En Purusan Kuzhandhai Maadhiri (2001) / 🎙️ Deva / 🎼 Deva / 📝 Kalaikumar" },
+{ file: "Chitraiyae Adi.m4a", details: "🎬 En Purushan Kuzhandhai Maadhiri (2001) / 🎙️ Hariharan, Anuradha Sriram / 🎼 Deva / 📝 Kamakodiyan" },
+{ file: "Naladi Aaru Angulam.m4a", details: "🎬 En Purushan Kuzhandhai Maadhiri (2001) / 🎙️ Vadivelu / 🎼 Deva / 📝 Karupur Ramu" },
+{ file: "Pattaam Poochi Podavai.m4a", details: "🎬 En Purushan Kuzhandhai Maadhiri (2001) / 🎙️ Mano, Anuradha Sriram / 🎼 Deva / 📝 Kalaikumar" },
+{ file: "Valavaikum Janangkaluku.m4a", details: "🎬 En Purushan Kuzhandhai Maadhiri (2001) / 🎙️ Sabesh, Krishna Raj / 🎼 Deva / 📝 S. P. Rajkumar" },
 { file: "Oorukulla Unnaiyum.m4a", details: "🎬 Ninaivu Chinnam (1989) / 🎙️ K. S. Chithra, Malaysia Vasudevan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
 { file: "Vaikasi Maasthula.m4a", details: "🎬 Ninaivu Chinnam (1989) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
 { file: "Adi Ammaadi.m4a", details: "🎬 Kanni Paruvathile (1979) / 🎙️ S. Janaki / 🎼 Shankar–Ganesh / 📝 Pulamaipithan" },
@@ -529,4 +534,3 @@ export const allSongs = repositories.flatMap(repo =>
     path: `${repo.url}${song.file}`.replace(/ /g, '%20') // Encode spaces
   }))
 );
- 
