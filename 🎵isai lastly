@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kona Kondakari.m4a", details: "🎬 Madha Yaanai Koottam (2013) / 🎙️ G. V. Prakash Kumar / 🎼 N. R. Raghunanthan / 📝 Yegathasi" },
 { file: "Ooru Oram.m4a", details: "🎬 Thaai Manasu (1994) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Deva / 📝 Kasthuri Raja" },
 { file: "Thoothuvelayela.m4a", details: "🎬 Thaai Manasu (1994) / 🎙️ Mano, S. Janaki / 🎼 Deva / 📝 Kasthuri Raja" },
 { file: "Thuppakinna.m4a", details: "🎬 Thaai Manasu (1994) / 🎙️ S. Janaki / 🎼 Deva / 📝 Kasthuri Raja" },
