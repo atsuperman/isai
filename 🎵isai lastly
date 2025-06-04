@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Vethala Madichu.m4a", details: "🎬 Mannukketha Ponnu (1985) / 🎙️ Gangai Amaran, S. P. Sailaja / 🎼 Gangai Amaran" },
 { file: "Antha Nilava Thaan.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ Ilaiyaraaja, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
 { file: "Eratha Malai Mele.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ Malaysia Vasudevan, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
 { file: "Hey Kiliyirukku.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ Ilaiyaraaja, Chorus / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
