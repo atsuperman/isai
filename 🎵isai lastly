@@ -4,6 +4,7 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Ezhumalaiyaney.m4a", details: "🎬 Thayumanavan (2003) / 🎙️ Manikka Vinayagam, Female Vocalist (Uncredited) / 🎼 Vaigundavasaan / 📝 Vaigundavasaan, Saravanan" },
 { file: "Karu Karu Karupayi.m4a", details: "🎬 Eazhaiyin Sirippil (2000) / 🎙️ Unni Menon, Anuradha Sriram / 🎼 Deva / 📝 K. Subash" },
 { file: "Pachai Kallu.m4a", details: "🎬 Eazhaiyin Sirippil (2000) / 🎙️ Mano, Swarnalatha / 🎼 Deva / 📝 K. Subash" },
 { file: "Purave En Pt 1.m4a", details: "🎬 Eazhaiyin Sirippil (2000) / 🎙️ Deva, Hariharan, Sujatha Mohan / 🎼 Deva / 📝 Palani Bharathi" },
