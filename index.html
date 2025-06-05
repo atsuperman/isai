@@ -1,4 +1,4 @@
-                      
+                       
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1294,7 +1294,7 @@ body {
             <div class="separator">|</div>
             <div class="safe-rotating-text">
                 <a href="catalog.html" target="_blank" rel="noopener noreferrer" class="safe-link">
-                    <span class="safe-text safe-visible">VERSION 4.3</span>
+                    <span class="safe-text safe-visible">VERSION 4.4</span>
                     <span class="safe-text safe-hidden">GUIDE</span>
                 </a>
             </div>
@@ -1958,19 +1958,21 @@ document.getElementById('searchBox').addEventListener('input', (e) => {
             listItem.appendChild(flipContainer);
 
             // Update the search result click handler in the JavaScript
+// UPDATED: Clear existing duplicate before adding
 listItem.onclick = () => {
-    let selectedSong = { ...song };
-    playlist.unshift(selectedSong);
+    // Clear any existing song with same path
+    playlist = playlist.filter(item => item.path !== song.path);
+    
+    // Add the new song at the top
+    playlist.unshift({ ...song });
     updatePlaylist();
 
-    // Replace flip animation with new effect
+    // Show added confirmation
     listItem.classList.add('added');
-
     setTimeout(() => {
         listItem.remove();
     }, 1000);
 };
-
             resultsContainer.appendChild(listItem);
         });
     }
