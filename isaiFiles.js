@@ -1,9 +1,23 @@
-  
+   
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Ezhumalaiyaney.m4a", details: "🎬 Thayumanavan (2003) / 🎙️ Manikka Vinayagam, Female Vocalist (Uncredited) / 🎼 Vaigundavasaan / 📝 Vaigundavasaan, Saravanan" },
+{ file: "Karu Karu Karupayi.m4a", details: "🎬 Eazhaiyin Sirippil (2000) / 🎙️ Unni Menon, Anuradha Sriram / 🎼 Deva / 📝 K. Subash" },
+{ file: "Pachai Kallu.m4a", details: "🎬 Eazhaiyin Sirippil (2000) / 🎙️ Mano, Swarnalatha / 🎼 Deva / 📝 K. Subash" },
+{ file: "Purave En Pt 1.m4a", details: "🎬 Eazhaiyin Sirippil (2000) / 🎙️ Deva, Hariharan, Sujatha Mohan / 🎼 Deva / 📝 Palani Bharathi" },
+{ file: "Purave En Pt 2.m4a", details: "🎬 Eazhaiyin Sirippil (2000) / 🎙️ Deva, Unni Menon, Sujatha Mohan / 🎼 Deva / 📝 Palani Bharathi" },
+{ file: "Sakkaravalli.m4a", details: "🎬 Eazhaiyin Sirippil (2000) / 🎙️ Unni Menon / 🎼 Deva / 📝 Na. Muthukumar" },
+{ file: "Yeppa Yeppa.m4a", details: "🎬 Eazhaiyin Sirippil (2000) / 🎙️ Mano, Krishnaraj, Prabhu Deva, Vivek, K. Subash / 🎼 Deva / 📝 K. Subash" },
+{ file: "Mayil Pola.m4a", details: "🎬 Bharathi (2000) / 🎙️ Bhavatharini / 🎼 Ilaiyaraaja / 📝 Mu. Metha" },
+{ file: "Kona Kondakari.m4a", details: "🎬 Madha Yaanai Koottam (2013) / 🎙️ G. V. Prakash Kumar / 🎼 N. R. Raghunanthan / 📝 Yegathasi" },
+{ file: "Ooru Oram.m4a", details: "🎬 Thaai Manasu (1994) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Thoothuvelayela.m4a", details: "🎬 Thaai Manasu (1994) / 🎙️ Mano, S. Janaki / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Thuppakinna.m4a", details: "🎬 Thaai Manasu (1994) / 🎙️ S. Janaki / 🎼 Deva / 📝 Kasthuri Raja" },
+{ file: "Kambi Mathappu.m4a", details: "🎬 Sevarkkodi (2012) / 🎙️ M. L. R. Karthikeyan / 🎼 C. Sathya / 📝 Vairamuthu" },
+{ file: "Vethala Madichu.m4a", details: "🎬 Mannukketha Ponnu (1985) / 🎙️ Gangai Amaran, S. P. Sailaja / 🎼 Gangai Amaran" },
 { file: "Antha Nilava Thaan.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ Ilaiyaraaja, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
 { file: "Eratha Malai Mele.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ Malaysia Vasudevan, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
 { file: "Hey Kiliyirukku.m4a", details: "🎬 Muthal Mariyathai (1985) / 🎙️ Ilaiyaraaja, Chorus / 🎼 Ilaiyaraaja / 📝 Vairamuthu" },
