@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Jinguchaa.m4a", details: "🎬 Thug Life (2025) / 🎙️ Vaishali Samant, Shakthisree Gopalan, Adithya RK / 🎼 A. R. Rahman / 📝 Kamal Haasan" },
+{ file: "Muththa Mazhai -Chinmayi.m4a", details: "🎬 Thug Life (2025) / 🎙️ Chinmayi Sripaada / 🎼 A R Rahman / 📝 Siva Ananth" },
+{ file: "Muththa Mazhai- Dhee.m4a", details: "🎬 Thug Life (2025) / 🎙️ Dhee, Siva Ananth / 🎼 A R Rahman / 📝 Siva Ananth" },
 { file: "Aararoo.m4a", details: "🎬 Veera Thalattu (1998) / 🎙️ Swarnalatha / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
 { file: "Amman kovil.m4a", details: "🎬 Veera Thalattu (1998) / 🎙️ Gangai Amaran, S. P. Sailaja / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
 { file: "Kadha Pola.m4a", details: "🎬 Veera Thalattu (1998) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
