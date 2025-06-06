@@ -4,6 +4,14 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aararoo.m4a", details: "🎬 Veera Thalattu (1998) / 🎙️ Swarnalatha / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
+{ file: "Amman kovil.m4a", details: "🎬 Veera Thalattu (1998) / 🎙️ Gangai Amaran, S. P. Sailaja / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
+{ file: "Kadha Pola.m4a", details: "🎬 Veera Thalattu (1998) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
+{ file: "Kiliyai Pole.m4a", details: "🎬 Veera Thalattu (1998) / 🎙️ Gangai Amaran, S. P. Sailaja / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
+{ file: "Kumbabhishekam.m4a", details: "🎬 Veera Thalattu (1998) / 🎙️ S P Balasubrahmanyam, K S Chithra / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
+{ file: "Patta Pagal.m4a", details: "🎬 Veera Thalattu (1998) / 🎙️ Malaysia Vasudevan, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
+{ file: "Santhu Pottu.m4a", details: "🎬 Veera Thalattu (1998) / 🎙️ Arunmozhi, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
+{ file: "Vadi Patti.m4a", details: "🎬 Veera Thalattu (1998) / 🎙️ Gangai Amaran, S. P. Sailaja / 🎼 Ilaiyaraaja / 📝 Kasthuri Raja" },
 { file: "Ezhumalaiyaney.m4a", details: "🎬 Thayumanavan (2003) / 🎙️ Manikka Vinayagam, Female Vocalist (Uncredited) / 🎼 Vaigundavasaan / 📝 Vaigundavasaan, Saravanan" },
 { file: "Karu Karu Karupayi.m4a", details: "🎬 Eazhaiyin Sirippil (2000) / 🎙️ Unni Menon, Anuradha Sriram / 🎼 Deva / 📝 K. Subash" },
 { file: "Pachai Kallu.m4a", details: "🎬 Eazhaiyin Sirippil (2000) / 🎙️ Mano, Swarnalatha / 🎼 Deva / 📝 K. Subash" },
