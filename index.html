@@ -491,61 +491,8 @@
 }
 
 
-    /* Add these styles to your existing CSS */
-#switch {
-    position: relative;
-    z-index: 2;
-    transition: transform 0.3s ease;
-}
 
-#switch:active {
-    transform: scale(0.9);
-}
 
-.links-container {
-    position: center;
-    top: 1px;
-    left: 0%;
-    width: 75%;
-    max-width: 500px;
-    background: rgba(51, 51, 51, 0.9);
-    border-radius: 10px;
-    padding: 15px;
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    z-index: 1;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 1);
-    border: 1px solid #ff0000;
-}
-
-.link-item {
-    color: white;
-    cursor: pointer;
-    padding: 8px 15px;
-    border-radius: 5px;
-    background: rgba(25, 11, 00, 6);
-    transition: all 0.3s ease;
-    text-shadow: 0 0 10px #ffb0r0;
-    position: relative;
-    overflow: hidden;
-}
-
-.link-item:hover {
-    background: rgba(255, 0, 0, 0.2);
-    transform: translateX(10px);
-}
-
-.link-item::before {
-    content: '▶';
-    position: absolute;
-    left: -20px;
-    transition: left 0.3s ease;
-}
-
-.link-item:hover::before {
-    left: 5px;
-}
 
 .a-container {
     position: relative;
@@ -577,21 +524,7 @@
 }
     
     
-/* Add this animation to your CSS */
-@keyframes linkClick {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-    }
-    50% {
-        transform: scale(0.95);
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-    }
-}
+
     
     .logo {
     font-family: 'Arial', sans-serif;
@@ -911,94 +844,6 @@
 }
 
 
-#redBeatsLink {
-  position: relative;
-  cursor: pointer;
-  padding: 8px; /* Reduced padding */
-  margin: 4px 0; /* Added margin */
-  border-radius: 6px; /* Softer corners */
-  transition: all 0.2s ease;
-}
-
-#redBeatsLink:hover {
-  background: rgba(255,0,0,0.05); /* Subtle hover feedback */
-}
-
-#redBeatsLink.locked .verify-section {
-  display: none;
-}
-
-#redBeatsLink .locked-content {
-  padding: 8px; /* Reduced padding */
-  text-align: center;
-  font-size: 14px; /* Adjusted font size */
-  color: #ff4444; /* Brighter red */
-  pointer-events: none;
-}
-
-#redBeatsLink .locked-content small {
-  font-size: 12px; /* Smaller subtext */
-  color: #ff8888; /* Lighter red */
-  display: block;
-  margin-top: 2px;
-}
-
-#redBeatsLink .verify-section {
-  padding: 8px; /* Reduced padding */
-  background: rgba(0,0,0,0.15); /* Lighter background */
-  margin-top: 4px; /* Reduced margin */
-  border-radius: 4px; /* Tighter radius */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added depth */
-}
-
-#redBeatsLink .verify-wrapper {
-  display: flex;
-  gap: 4px; /* Tighter spacing */
-  align-items: center;
-}
-
-#redBeatsLink .verify-input {
-  flex: 1;
-  padding: 1px 1px; /* Compact padding */
-  font-size: 13px; /* Adjusted font size */
-  border: 1px solid #ff4444; /* Brighter border */
-  border-radius: 3px; /* Tighter radius */
-  background: rgba(255,255,255,0.9); /* Better contrast */
-}
-
-#redBeatsLink .verify-input:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(255,0,0,0.2); /* Focus state */
-}
-
-#redBeatsLink .verify-button {
-  padding: 0 12px; /* Compact padding */
-  height: 32px; /* Fixed height */
-  background: #ff4444; /* Brighter red */
-  color: white;
-  border: none;
-  border-radius: 3px; /* Tighter radius */
-  cursor: pointer;
-  font-size: 13px; /* Adjusted font size */
-  transition: all 0.2s ease;
-}
-
-#redBeatsLink .verify-button:hover {
-  background: #ff2222; /* Darker hover */
-}
-
-#redBeatsLink .verify-button:active {
-  transform: scale(0.98); /* Click feedback */
-}
-
-#redBeatsLink .verify-message {
-  margin-top: 4px; /* Reduced margin */
-  font-size: 11px; /* Smaller text */
-  text-align: center;
-  color: #00ff00;
-  min-height: 14px;
-  transition: opacity 0.2s ease;
-}
     
         @media screen and (max-width: 768px) {
         
@@ -1103,59 +948,11 @@ body {
         font-size: 1.8rem;
     }
         
-    .links-container {
-        
-        position: relative;
-    margin: 10px 0;
-    top: auto;
-    left: auto;
-    transform: none;
-        
-        width: 75%;
-        max-width: none;
-        padding: 10px;
-        gap: 8px;
-        background: rgba(51, 51, 51, 0.9);
-    }
 
-    .link-item {
-        font-size: 14px;
-        padding: 10px 12px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .link-item:hover {
-        transform: none;
-    }
-
-    .link-item::before {
-        content: '';
-        display: none;
-    }
-
-    .link-item:hover::before {
-        left: -20px;
-    }
    .vertical-line {
         left: 5px; /* Adjust for small screens */
     }
     
-  
-
-    /* Better touch targets */
-    .link-item {
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-    }
-
-    /* Mobile tap feedback */
-    .link-item:active {
-        background: rgba(255, 0, 0, 0.3);
-        transform: scale(0.98);
-    }
 
 
             .icon-row .icon {
@@ -1177,24 +974,7 @@ body {
 <div class="logo-container" id="logoContainer">
     <h1 class="logo">SUPER</h1>
 </div>
-<div class="links-container" id="linksContainer">
-    <!-- RED Beat`s (with verification) -->
-<!-- Update the RED Beats link section in HTML -->
-<div class="link-item locked" id="redBeatsLink">
-    <div class="locked-content">
-        <span class="main-text">RED Beat`s</span>
-        <small class="sub-text">(Locked - Type RED)</small>
-    </div>
-    <div class="verify-section" style="display:none">
-        <div class="verify-wrapper">
-            <input type="text" class="verify-input" placeholder="Type RED" style="width: 120px;">
-            <button class="verify-button">Verify</button>
-        </div>
-        <div class="verify-message"></div>
-    </div>
-</div>
-    
-</div>
+
 
   <div class="c-container" id="c-container" style="display: none;">
   <h4>search Results..</h4>
@@ -1229,12 +1009,7 @@ body {
         <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"></path>
     </svg>
 </span>
-       <span class="icon" id="switch">
-    <svg width="50" height="24" viewBox="0 0 50 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="50" height="24" rx="12" fill="#E0E0E0"/>
-        <circle id="toggle" cx="6" cy="12" r="6" fill="#000000"/>
-    </svg>
-</span>
+    
          <div id="searchBoxContainer">
     <!-- Removed the previous searchResults container -->
     <input type="text" id="searchBox" placeholder="Search.. Movie / song / artist" />
@@ -2045,108 +1820,6 @@ listItem.onclick = () => {
         // Continuously generate notes
         setInterval(createNote, 15550);
 
-    
-// Add this to your existing JavaScript
-document.getElementById('switch').addEventListener('click', function() {
-    const linksContainer = document.getElementById('linksContainer');
-    const aContainer = document.querySelector('.a-container');
-    const toggle = document.getElementById('toggle');
-    
-    // Toggle links visibility
-    linksContainer.style.display = linksContainer.style.display === 'flex' ? 'none' : 'flex';
-    
-    // Toggle switch position and color
-    const isLeft = toggle.getAttribute('cx') === '6';
-    toggle.setAttribute('cx', isLeft ? '44' : '6');
-    toggle.setAttribute('fill', isLeft ? '#ff0000' : '#000000');
-    
-    // Add/remove expanded effect
-    aContainer.classList.toggle('expanded');
-});
-
-// RED Beats Link Verification System
-const redBeatsLink = document.getElementById('redBeatsLink');
-const verifyInput = redBeatsLink.querySelector('.verify-input');
-const verifyButton = redBeatsLink.querySelector('.verify-button');
-const verifyMessage = redBeatsLink.querySelector('.verify-message');
-const lockedContent = redBeatsLink.querySelector('.locked-content');
-let resetTimer = null;
-
-// Store original locked content
-const originalLockedContent = lockedContent.innerHTML;
-
-// Reset to default state
-function resetToDefault() {
-    lockedContent.innerHTML = originalLockedContent;
-    lockedContent.style.display = 'block';
-    redBeatsLink.querySelector('.verify-section').style.display = 'none';
-    verifyInput.value = '';
-    verifyMessage.textContent = '';
-    redBeatsLink.classList.add('locked');
-}
-
-// Input field typing handler
-verifyInput.addEventListener('input', () => {
-    if (resetTimer) clearTimeout(resetTimer);
-    resetTimer = setTimeout(() => {
-        if (redBeatsLink.classList.contains('locked')) {
-            resetToDefault();
-        }
-    }, 10000);
-});
-
-// Click handler
-redBeatsLink.addEventListener('click', function(e) {
-    if (this.classList.contains('locked') && 
-       !e.target.classList.contains('verify-input') && 
-       !e.target.classList.contains('verify-button')) {
-        
-        if (resetTimer) clearTimeout(resetTimer);
-        lockedContent.style.display = 'none';
-        this.querySelector('.verify-section').style.display = 'block';
-        verifyInput.focus();
-        
-        resetTimer = setTimeout(() => {
-            if (this.classList.contains('locked')) {
-                resetToDefault();
-            }
-        }, 10000);
-    }
-});
-
-// Verification function
-function verifyRedBeats() {
-    clearTimeout(resetTimer);
-    
-    if (verifyInput.value.trim().toUpperCase() === 'RED') {
-        verifyMessage.textContent = '✓ Verified! Redirecting...';
-        
-        // Temporary success state
-        lockedContent.innerHTML = `
-            <span class="main-text" style="color: #00ff00">✓ Access Granted</span>
-            <small class="sub-text" style="color: #00ff00">Opening...</small>
-        `;
-        lockedContent.style.display = 'block';
-        redBeatsLink.querySelector('.verify-section').style.display = 'none';
-        
-        // Redirect after 2 seconds
-        setTimeout(() => {
-            window.open('https://supersez.github.io/Ted/', '_blank', 'noopener,noreferrer');
-        }, 2000);
-        
-        // Full reset after 1 second
-        setTimeout(resetToDefault, 1000);
-        
-    } else {
-        verifyMessage.textContent = '❌ Incorrect! Try again...';
-        verifyInput.value = '';
-        verifyInput.focus();
-        
-        resetTimer = setTimeout(() => {
-            resetToDefault();
-        }, 3000);
-    }
-}
 
 // Event listeners
 verifyButton.addEventListener('click', verifyRedBeats);
@@ -2219,4 +1892,4 @@ updateGlitch.addEventListener('click', async function() {
     
     </script>
 </body>
-           </html>
+           </html> 
