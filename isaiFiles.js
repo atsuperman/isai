@@ -1,9 +1,16 @@
-   
+
+  
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "A For Ambica.m4a", details: "🎬 Naan Pesa Ninaipathellam (1993) / 🎙️ Mano, Deepan Chakravarthi, Swarnalatha / 🎼 Sirpy / 📝 Poovarasu" },
+{ file: "Alelankiliye Duet.m4a", details: "🎬 Naan Pesa Ninaipathellam (1993) / 🎙️ Mano, P Susheela / 🎼 Sirpy / 📝 Palani Bharathi" },
+{ file: "Alelankiliye Solo.m4a", details: "🎬 Naan Pesa Ninaipathellam (1993) / 🎙️ K J Yesudas / 🎼 Sirpy / 📝 Palani Bharathi" },
+{ file: "Kaverikku.m4a", details: "🎬 Naan Pesa Ninaipathellam (1993) / 🎙️ Mano / 🎼 Sirpy / 📝 Palani Bharathi" },
+{ file: "Manodudhu.m4a", details: "🎬 Naan Pesa Ninaipathellam (1993) / 🎙️ K S Chithra / 🎼 Sirpy / 📝 Palani Bharathi" },
+{ file: "Poonguyil Ragame.m4a", details: "🎬 Naan Pesa Ninaipathellam (1993) / 🎙️ S P Balasubrahmanyam / 🎼 Sirpy / 📝 Palani Bharathi" },
 { file: "Jinguchaa.m4a", details: "🎬 Thug Life (2025) / 🎙️ Vaishali Samant, Shakthisree Gopalan, Adithya RK / 🎼 A. R. Rahman / 📝 Kamal Haasan" },
 { file: "Muththa Mazhai -Chinmayi.m4a", details: "🎬 Thug Life (2025) / 🎙️ Chinmayi Sripaada / 🎼 A R Rahman / 📝 Siva Ananth" },
 { file: "Muththa Mazhai- Dhee.m4a", details: "🎬 Thug Life (2025) / 🎙️ Dhee, Siva Ananth / 🎼 A R Rahman / 📝 Siva Ananth" },
