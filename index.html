@@ -1,4 +1,4 @@
-                        
+                         
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -787,60 +787,26 @@
     font-weight: bold;
 }
  
-.safe-rotating-text {
-    position: relative;
-    display: block;
-    margin: 12px 6% 0 auto;
-    width: 88%;
-    max-width: 500px;
-    text-align: right;
-    height: 24px;
-    overflow: hidden;
-    perspective: 1000px;
-}
 
-.safe-text {
-    position: absolute;
-    width: auto;
-    right: 0;
+/* Add to your existing CSS */
+.home-link {
     font: 600 10px 'Poppins', sans-serif;
-    color: #ff00ff;
-    text-shadow: 
-        0 0 10px rgba(255,0,255,0.3),
-        0 0 20px rgba(0,255,255,0.3);
-    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    background: linear-gradient(45deg, #ff00ff, #00ffff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    padding-right: 10px;
-    transform-origin: right center;
+    color: #ff6600;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-right: 2px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 3px rgba(255, 102, 0, 0.3);
 }
 
-/* New Transformation Effects */
-.safe-visible {
-    opacity: 1;
-    transform: translateX(0) rotate(0deg) scale(1);
-    filter: blur(0);
+.home-link:hover {
+    color: #ff3300;
+    text-shadow: 0 0 8px rgba(255, 51, 0, 0.6);
+    transform: translateY(-1px);
 }
 
-.safe-hidden {
-    opacity: 0;
-    transform: translateX(20px) rotate(-5deg) scale(1.2);
-    filter: blur(2px);
-}
-
-/* Hover Effects */
-.safe-rotating-text:hover .safe-text {
-    transform: translateX(-5px) rotate(1deg);
-    text-shadow: 
-        0 0 15px rgba(255,0,255,0.6),
-        0 0 30px rgba(0,255,255,0.6);
-}
-
-/* Active/Click Effect */
-.safe-rotating-text:active .safe-text {
-    transform: translateX(2px) scale(0.98);
-    transition: all 0.2s ease;
+.home-link:active {
+    transform: translateY(1px);
 }
 
 
@@ -1063,18 +1029,16 @@ body {
 
 </div>
 </div>
-   <!-- Fixed version container -->
-        <div class="version-container">
-            <div class="update-glitch">UPDATE</div>
-            <div class="separator">|</div>
-            <div class="safe-rotating-text">
-                <a href="catalog.html" target="_blank" rel="noopener noreferrer" class="safe-link">
-                    <span class="safe-text safe-visible">VERSION 4.4</span>
-                    <span class="safe-text safe-hidden">GUIDE</span>
-                </a>
-            </div>
-        </div>
-    </div>
+  <!-- Fixed version container -->
+<div class="version-container">
+    <a href="https://atsuperman.github.io/In/" class="home-link">HOME</a>
+    <div class="separator">|</div>
+    
+  
+     <a href="https://atsuperman.github.io/isai/catalog.html" class="home-link">GUIDE</a>
+       <div class="separator">|</div>
+     <div class="update-glitch">UPDATE</div>
+</div>
 
       <audio id="audioPlayer">
         Your browser does not support the audio element.
