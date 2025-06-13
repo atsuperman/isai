@@ -1850,23 +1850,6 @@ updateGlitch.addEventListener('click', async function() {
     }
 });
    
-   
-   
-// Add this isolated script at the very end of your existing script
-(() => {
-    const textElements = document.querySelectorAll('.safe-text');
-    let textIndex = 0;
-    
-    setInterval(() => {
-        textElements[textIndex].classList.remove('safe-visible');
-        textElements[textIndex].classList.add('safe-hidden');
-        
-        textIndex = (textIndex + 1) % textElements.length;
-        
-        textElements[textIndex].classList.remove('safe-hidden');
-        textElements[textIndex].classList.add('safe-visible');
-    }, 10000);
-})();
     
     </script>
 </body>
