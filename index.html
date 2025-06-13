@@ -1,4 +1,4 @@
-                         
+                          
    <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1362,6 +1362,18 @@ function playSong(index) {
 
         currentIndex = index;
         const song = playlist[currentIndex];
+        // Reset audio player properly
+audioPlayer.pause();
+audioPlayer.src = '';
+audioPlayer.load();
+
+
+// Set new source
+audioPlayer.src = song.path;
+
+// FIX: Reset position to start
+audioPlayer.currentTime = 0;
+
         audioPlayer.src = song.path;
     // Clean up song name display (remove .mp3 extension)
     const cleanSongName = song.file.replace(/\.(mp3|m4a)$/i, '').replace(/_/g, ' ');
@@ -1382,6 +1394,13 @@ function playSong(index) {
                 }]
             });
         }
+// Play with a small delay to ensure audio is properly loaded
+setTimeout(() => {
+    audioPlayer.play().then(() => {
+        // ...
+    });
+}, 100);
+
 
     audioPlayer.play().then(() => {
             // Background playback optimization
@@ -1427,7 +1446,6 @@ function playSong(index) {
 
 
 }
-
 // Auto-play next song when current ends
 document.getElementById('audioPlayer').addEventListener('ended', () => {
     if (playlist.length > 0) {
@@ -1461,12 +1479,12 @@ document.getElementById('audioPlayer').addEventListener('ended', () => {
         }
     }
 
-    // Initialize queue
-    window.addEventListener('load', () => {
-        loadQueue();
-        requestWakeLock();
-    });
-
+window.addEventListener('load', () => {
+    loadQueue();
+    requestWakeLock();
+    playlist = shuffleArray([...originalSongs]);
+    updatePlaylist();
+});
     // Save queue on changes
     audioPlayer.addEventListener('timeupdate', saveQueue);
     window.addEventListener('beforeunload', saveQueue);
