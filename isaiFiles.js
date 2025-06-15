@@ -1,10 +1,12 @@
-
-  
+   
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Anbe nee mayila.m4a", details: "🎬 Ninavirukkum Varai (1999) / 🎙️ Unni Menon, Sujatha Mohan / 🎼 Deva / 📝 Pazhani Bharathi" },
+{ file: "KathAdikkuthu kathu.m4a", details: "🎬 Ninaivirukkum Varai (1999) / 🎙️ Sabesh, Krishnaraj / 🎼 Deva / 📝 K Subash" },
+{ file: "Thirupathi Elumalai.m4a", details: "🎬 Ninaivirukkum Varai (1999) / 🎙️ Mano, Krishnaraj, Deva / 🎼 Deva / 📝 K Subash" },
 { file: "A For Ambica.m4a", details: "🎬 Naan Pesa Ninaipathellam (1993) / 🎙️ Mano, Deepan Chakravarthi, Swarnalatha / 🎼 Sirpy / 📝 Poovarasu" },
 { file: "Alelankiliye Duet.m4a", details: "🎬 Naan Pesa Ninaipathellam (1993) / 🎙️ Mano, P Susheela / 🎼 Sirpy / 📝 Palani Bharathi" },
 { file: "Alelankiliye Solo.m4a", details: "🎬 Naan Pesa Ninaipathellam (1993) / 🎙️ K J Yesudas / 🎼 Sirpy / 📝 Palani Bharathi" },
