@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Unnaikaanamal.m4a", details: "🎬 Kavithai Paadum Alaigal (1990) / 🎙️ Arunmozhi, K S Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
+{ file: "Kanne En.m4a", details: "🎬 Kavithai Paadum Alaigal (1990) / 🎙️ Mano, K S Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
+{ file: "Vaanilaa Thenilaa.m4a", details: "🎬 Kavithai Paadum Alaigal (1990) / 🎙️ Mano, K S Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
 { file: "Anbe nee mayila.m4a", details: "🎬 Ninavirukkum Varai (1999) / 🎙️ Unni Menon, Sujatha Mohan / 🎼 Deva / 📝 Pazhani Bharathi" },
 { file: "KathAdikkuthu kathu.m4a", details: "🎬 Ninaivirukkum Varai (1999) / 🎙️ Sabesh, Krishnaraj / 🎼 Deva / 📝 K Subash" },
 { file: "Thirupathi Elumalai.m4a", details: "🎬 Ninaivirukkum Varai (1999) / 🎙️ Mano, Krishnaraj, Deva / 🎼 Deva / 📝 K Subash" },
