@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "O Butterfly Duet.m4a", details: "🎬 Meera (1992) / 🎙️ S P Balasubrahmanyam, Asha Bhosle / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Pudhu Routeladan.m4a", details: "🎬 Meera (1992) / 🎙️ K J Yesudas, K S Chithra / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Iyera Meenu.m4a", details: "🎬 Mappillai Gounder (1997) / 🎙️ Swarnalatha, Mano / 🎼 Deva / 📝 Kalidasan" },
 { file: "Moonu Mozham.m4a", details: "🎬 Senathipathi (1996) / 🎙️ S P Balasubrahmanyam, K S Chithra / 🎼 Deva / 📝 Vairamuthu" },
 { file: "Unnaikaanamal.m4a", details: "🎬 Kavithai Paadum Alaigal (1990) / 🎙️ Arunmozhi, K S Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
 { file: "Kanne En.m4a", details: "🎬 Kavithai Paadum Alaigal (1990) / 🎙️ Mano, K S Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
