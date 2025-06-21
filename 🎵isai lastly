@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Chinna Kili.m4a", details: "🎬 Chinna Gounder (1992) / 🎙️ S P Balasubrahmanyam, S Janaki / 🎼 Ilaiyaraaja / 📝 R V Udhaya Kumar" },
+{ file: "Koondu Kulla.m4a", details: "🎬 Chinna Gounder (1992) / 🎙️ S P Balasubrahmanyam, S Janaki / 🎼 Ilaiyaraaja / 📝 R V Udhaya Kumar" },
+{ file: "Muthumani Malai.m4a", details: "🎬 Chinna Gounder (1992) / 🎙️ S P Balasubrahmanyam, P Susheela / 🎼 Ilaiyaraaja / 📝 R V Udhaya Kumar" },
 { file: "Vaadi Machiniye.m4a", details: "🎬 Parthiban Kanavu (2003) / 🎙️ Sirkazhi Sivachidambaram, Malathy Lakshman / 🎼 Vidyasagar / 📝 Arivumathi" },
 { file: "O Butterfly Duet.m4a", details: "🎬 Meera (1992) / 🎙️ S P Balasubrahmanyam, Asha Bhosle / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Pudhu Routeladan.m4a", details: "🎬 Meera (1992) / 🎙️ K J Yesudas, K S Chithra / 🎼 Ilaiyaraaja / 📝 Vaali" },
