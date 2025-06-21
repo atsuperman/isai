@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Onappu Thattu.m4a", details: "🎬 Chinna Jameen (1993) / 🎙️ Ilaiyaraaja, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Vaali" },
+{ file: "Oru Matharappu.m4a", details: "🎬 Chinna Jameen (1993) / 🎙️ Mano, K S Chithra / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Chinna Kili.m4a", details: "🎬 Chinna Gounder (1992) / 🎙️ S P Balasubrahmanyam, S Janaki / 🎼 Ilaiyaraaja / 📝 R V Udhaya Kumar" },
 { file: "Koondu Kulla.m4a", details: "🎬 Chinna Gounder (1992) / 🎙️ S P Balasubrahmanyam, S Janaki / 🎼 Ilaiyaraaja / 📝 R V Udhaya Kumar" },
 { file: "Muthumani Malai.m4a", details: "🎬 Chinna Gounder (1992) / 🎙️ S P Balasubrahmanyam, P Susheela / 🎼 Ilaiyaraaja / 📝 R V Udhaya Kumar" },
