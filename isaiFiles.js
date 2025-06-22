@@ -4,6 +4,8 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kandaa Vara Sollunga.m4a", details: "🎬 Karnan (2021) / 🎙️ Kidakkuzhi Mariyammal, Santhosh Narayanan / 🎼 Santhosh Narayanan / 📝 Mari Selvaraj" },
+{ file: "Uttradheenga.m4a", details: "🎬 Karnan (2021) / 🎙️ Dhee, Santhosh Narayanan / 🎼 Santhosh Narayanan / 📝 Mari Selvaraj" },
 { file: "Ill Be There For You.m4a", details: "📀 Ill Be There For You (From Sweetheart) (2025) / 🎙️ Yuvan Shankar Raja / 🎼 Yuvan Shankar Raja / 📝 Na Muthukumar" },
 { file: "Onappu Thattu.m4a", details: "🎬 Chinna Jameen (1993) / 🎙️ Ilaiyaraaja, Swarnalatha / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Oru Matharappu.m4a", details: "🎬 Chinna Jameen (1993) / 🎙️ Mano, K S Chithra / 🎼 Ilaiyaraaja / 📝 Vaali" },
