@@ -4,6 +4,10 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Adi Kaana karum.m4a", details: "🎬 Poonthotta Kavalkaran (1988) / 🎙️ K J Yesudas / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
+{ file: "Paadatha Themmaangu.m4a", details: "🎬 Poonthotta Kavalkaran (1988) / 🎙️ S P Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
+{ file: "Paaramal Paartha.m4a", details: "🎬 Poonthotta Kavalkaran (1988) / 🎙️ Mano, K S Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
+{ file: "Sindhiya Venmani.m4a", details: "🎬 Poonthotta Kaavalkaaran (1988) / 🎙️ K J Yesudas, P Susheela / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
 { file: "Nee Pogum.m4a", details: "🎬 Gramathu Minnal (1987) / 🎙️ Malaysia Vasudevan, K S Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
 { file: "Rettaikili sutthi.m4a", details: "🎬 Gramathu Minnal (1987) / 🎙️ Ilaiyaraaja, K S Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
 { file: "Kandaa Vara Sollunga.m4a", details: "🎬 Karnan (2021) / 🎙️ Kidakkuzhi Mariyammal, Santhosh Narayanan / 🎼 Santhosh Narayanan / 📝 Mari Selvaraj" },
