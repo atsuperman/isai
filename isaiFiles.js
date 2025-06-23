@@ -122,7 +122,6 @@ const repositories = [
 { file: "Neelagiri Mala Orathila.m4a", details: "🎬 Namma Annachi (1994) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Deva / 📝 Vaali" },
 { file: "Mayanginen Solla Thayanginen.m4a", details: "🎬 Naane Raja Naane Mandhiri (1985) / 🎙️ P. Jayachandran, P. Susheela / 🎼 Ilaiyaraaja / 📝 Vaali" },
 { file: "Thegam Siragadikkum.m4a", details: "🎬 Naane Raja Naane Mandhiri (1985) / 🎙️ P. Jayachandran, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Mu. Metha" },
-{ file: "Kattanum Kattanum.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ Malaysia Vasudevan, Swarnalatha / 🎼 Deva / 📝 Kasthuri Raja" },
 { file: "Maamara Kuilea.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ S. P. Balasubrahmanyam, Swarnalatha / 🎼 Deva / 📝 Kasthuri Raja" },
 { file: "Mayangaadha.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ Malaysia Vasudevan, Devi / 🎼 Deva / 📝 Kasthuri Raja" },
 { file: "Mundhi Mundhi Vinaayaganea.m4a", details: "🎬 En Aasai Rasave (1998) / 🎙️ Malaysia Vasudevan, Anuradha Sriram / 🎼 Deva / 📝 Kasthuri Raja" },
