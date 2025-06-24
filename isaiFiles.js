@@ -4,9 +4,13 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Chikkimukki Kallu.m4a", details: "🎬 Citizen (2001) / 🎙️ Shankar Mahadevan, Sadhana Sargam / 🎼 Deva / 📝 Vairamuthu" },
+{ file: "I Like You.m4a", details: "🎬 Citizen (2001) / 🎙️ Vasundhara Das / 🎼 Deva / 📝 Vairamuthu" },
+{ file: "Merkey Vidhaitha.m4a", details: "🎬 Citizen (2001) / 🎙️ Shankar Mahadevan / 🎼 Deva / 📝 Vairamuthu" },
+{ file: "Pookkara.m4a", details: "🎬 Citizen (2001) / 🎙️ Shankar Mahadevan, Vasundhara Das / 🎼 Deva / 📝 Vairamuthu" },
 { file: "Haiyo Paththikichu.m4a", details: "🎬 Rhythm (2000) / 🎙️ Udit Narayan, Vasundhara Das / 🎼 A R Rahman / 📝 Vairamuthu" },
-{ file: "Kaattrae En.m4a", details: "🎬 Rytham (2000) / 🎙️ Unni Krishnan, Kavitha Paudwal / 🎼 A R Rahman / 📝 Vairamuthu" },
-{ file: "Nathiyae.m4a", details: "🎬 Rytham (2000) / 🎙️ Unni Menon / 🎼 A R Rahman / 📝 Vairamuthu" },
+{ file: "Kaattrae En.m4a", details: "🎬 Rhythm (2000) / 🎙️ Unni Krishnan, Kavitha Paudwal / 🎼 A R Rahman / 📝 Vairamuthu" },
+{ file: "Nathiyae.m4a", details: "🎬 Rhythm (2000) / 🎙️ Unni Menon / 🎼 A R Rahman / 📝 Vairamuthu" },
 { file: "Thaniye thannanthaniye.m4a", details: "🎬 Rhythm (2000) / 🎙️ Shankar Mahadevan / 🎼 A R Rahman / 📝 Vairamuthu" },
 { file: "Vilakkethu.m4a", details: "🎬 Per Sollum Pillai (1987) / 🎙️ Malaysia Vasudevan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
 { file: "Adi Kaana karum.m4a", details: "🎬 Poonthotta Kavalkaran (1988) / 🎙️ K J Yesudas / 🎼 Ilaiyaraaja / 📝 Gangai Amaran" },
