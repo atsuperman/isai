@@ -1,4 +1,4 @@
-    
+   
 // Configuration: Add/remove repos here easily
 const repositories = [
   {
