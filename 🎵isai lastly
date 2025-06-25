@@ -4,6 +4,9 @@ const repositories = [
   {
     url: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aanandam duet.m4a", details: "🎬 Poove Unakkaga (1996) / 🎙️ P Unnikrishnan, K S Chithra / 🎼 S A Rajkumar / 📝 Palani Bharathi" },
+{ file: "Machinichi.m4a", details: "🎬 Poove Unakkaga (1996) / 🎙️ T L Maharajan, Unnikrishnan, Sujatha / 🎼 S A Rajkumar / 📝 Palani Bharathi" },
+{ file: "Sollamale.m4a", details: "🎬 Poove Unakkaga (1996) / 🎙️ P Jayachandran, Sujatha Mohan / 🎼 S A Rajkumar / 📝 Palani Bharathi" },
 { file: "Chikkimukki Kallu.m4a", details: "🎬 Citizen (2001) / 🎙️ Shankar Mahadevan, Sadhana Sargam / 🎼 Deva / 📝 Vairamuthu" },
 { file: "I Like You.m4a", details: "🎬 Citizen (2001) / 🎙️ Vasundhara Das / 🎼 Deva / 📝 Vairamuthu" },
 { file: "Merkey Vidhaitha.m4a", details: "🎬 Citizen (2001) / 🎙️ Shankar Mahadevan / 🎼 Deva / 📝 Vairamuthu" },
