@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Isai Radio</title>
+
+<style>
+body{
+background:#111;
+color:white;
+font-family:sans-serif;
+text-align:center;
+padding:30px;
+}
+
+#player{
+max-width:400px;
+margin:auto;
+background:#222;
+padding:20px;
+border-radius:10px;
+}
+
+button{
+padding:12px 25px;
+font-size:16px;
+cursor:pointer;
+}
+
+#songName{
+margin-top:15px;
+font-size:18px;
+color:#00ffc8;
+}
+</style>
+</head>
+
+<body>
+
+<div id="player">
+
+<h3>ISAI RADIO</h3>
+
+<button id="playBtn">Play</button>
+
+<div id="songName">Loading...</div>
+
+<audio id="audio"></audio>
+
+</div>
+
+<script type="module">
+
+import { songList } from './isai.js';
+
+const audio = document.getElementById("audio");
+const playBtn = document.getElementById("playBtn");
+const songName = document.getElementById("songName");
+
+let durations=[];
+let totalDuration=0;
+let loaded=0;
+let order=[];
+let playing=false;
+
+songList.forEach((song,i)=>{
+
+let a=new Audio(song.url);
+
+a.addEventListener("loadedmetadata",()=>{
+
+durations[i]=a.duration;
+loaded++;
+
+if(loaded===songList.length){
+prepareRadio();
+}
+
+});
+
+});
+
+function prepareRadio(){
+
+totalDuration = durations.reduce((a,b)=>a+b,0);
+
+const now = Math.floor(Date.now()/1000);
+
+const cycle = Math.floor(now / totalDuration) % 3;
+
+/*
+0 = normal order
+1 = reverse order
+2 = shuffle order
+*/
+
+order = [...songList.keys()];
+
+if(cycle===1){
+order.reverse();
+}
+
+if(cycle===2){
+order.sort(()=>Math.random()-0.5);
+}
+
+startRadio();
+
+}
+
+function startRadio(){
+
+const now = Math.floor(Date.now()/1000);
+
+let pos = now % totalDuration;
+
+let sum=0;
+
+for(let i=0;i<order.length;i++){
+
+let index=order[i];
+
+sum+=durations[index];
+
+if(pos<sum){
+
+audio.src=songList[index].url;
+
+audio.currentTime = durations[index]-(sum-pos);
+
+songName.textContent = songList[index].title;
+
+break;
+
+}
+
+}
+
+}
+
+audio.addEventListener("ended",()=>{
+
+let currentIndex = order.findIndex(i=>songList[i].url===audio.src);
+
+let nextIndex = order[(currentIndex+1)%order.length];
+
+audio.src = songList[nextIndex].url;
+
+songName.textContent = songList[nextIndex].title;
+
+audio.play();
+
+});
+
+playBtn.onclick=()=>{
+
+if(!playing){
+
+audio.play();
+playBtn.textContent="Stop";
+playing=true;
+
+}else{
+
+audio.pause();
+playBtn.textContent="Play";
+playing=false;
+
+}
+
+};
+
+</script>
+
+</body>
+</html>
