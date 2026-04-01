@@ -1,176 +1,231 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
-<meta charset="UTF-8">
-<title>Isai Radio</title>
-
-<style>
-body{
-background:#111;
-color:white;
-font-family:sans-serif;
-text-align:center;
-padding:30px;
-}
-
-#player{
-max-width:400px;
-margin:auto;
-background:#222;
-padding:20px;
-border-radius:10px;
-}
-
-button{
-padding:12px 25px;
-font-size:16px;
-cursor:pointer;
-}
-
-#songName{
-margin-top:15px;
-font-size:18px;
-color:#00ffc8;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Sync Player</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        
+        .player-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .status {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        
+        .sync-status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .sync-status.synced {
+            background: #00ff88;
+            color: #000;
+        }
+        
+        .sync-status.syncing {
+            background: #ffaa00;
+            color: #000;
+        }
+        
+        .song-info {
+            margin: 30px 0;
+        }
+        
+        .song-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .song-url {
+            font-size: 12px;
+            color: #888;
+            word-break: break-all;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .btn-play {
+            background: #00ff88;
+            color: #000;
+        }
+        
+        .btn-play:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+        
+        .btn-stop {
+            background: #ff4757;
+            color: #fff;
+        }
+        
+        .btn-stop:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .waveform {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            margin: 30px 0;
+        }
+        
+        .bar {
+            width: 6px;
+            background: #00ff88;
+            border-radius: 3px;
+            animation: wave 1s ease-in-out infinite;
+        }
+        
+        @keyframes wave {
+            0%, 100% { height: 10px; }
+            50% { height: 50px; }
+        }
+        
+        .bar:nth-child(odd) { animation-delay: 0.1s; }
+        .bar:nth-child(2n) { animation-delay: 0.2s; }
+        .bar:nth-child(3n) { animation-delay: 0.3s; }
+        .bar:nth-child(4n) { animation-delay: 0.4s; }
+        .bar:nth-child(5n) { animation-delay: 0.5s; }
+    </style>
 </head>
-
 <body>
+    <div class="player-container">
+        <div class="sync-status syncing" id="syncStatus">Syncing...</div>
+        <div class="status" id="serverTime">Server Time: --</div>
+        
+        <div class="waveform" id="waveform">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+        
+        <div class="song-info">
+            <div class="song-title" id="currentSong">Waiting for sync...</div>
+            <div class="song-url" id="currentUrl"></div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn btn-play" id="playBtn" disabled>▶ Play</button>
+            <button class="btn btn-stop" id="stopBtn" disabled>⏹ Stop</button>
+        </div>
+    </div>
 
-<div id="player">
+    <script type="module">
+        import { songList } from './isai.js';
+        import { RadioPlayer } from './radio-player.js';
 
-<h3>ISAI RADIO</h3>
+        const player = new RadioPlayer(songList);
+        
+        const playBtn = document.getElementById('playBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const syncStatus = document.getElementById('syncStatus');
+        const serverTime = document.getElementById('serverTime');
+        const currentSong = document.getElementById('currentSong');
+        const currentUrl = document.getElementById('currentUrl');
+        const waveform = document.getElementById('waveform');
 
-<button id="playBtn">Play</button>
+        // Update UI when player state changes
+        player.onStateChange((state) => {
+            if (state.synced) {
+                syncStatus.textContent = '🟢 Synced';
+                syncStatus.className = 'sync-status synced';
+                playBtn.disabled = false;
+                stopBtn.disabled = false;
+            } else {
+                syncStatus.textContent = '🟡 Syncing...';
+                syncStatus.className = 'sync-status syncing';
+                playBtn.disabled = true;
+                stopBtn.disabled = true;
+            }
+            
+            serverTime.textContent = `Server Time: ${state.serverTime}`;
+        });
 
-<div id="songName">Loading...</div>
+        player.onSongChange((song) => {
+            currentSong.textContent = song.title;
+            currentUrl.textContent = song.url;
+        });
 
-<audio id="audio"></audio>
+        player.onPlaying((isPlaying) => {
+            if (isPlaying) {
+                waveform.style.opacity = '1';
+                Array.from(waveform.children).forEach(bar => {
+                    bar.style.animationPlayState = 'running';
+                });
+            } else {
+                waveform.style.opacity = '0.3';
+                Array.from(waveform.children).forEach(bar => {
+                    bar.style.animationPlayState = 'paused';
+                });
+            }
+        });
 
-</div>
+        playBtn.addEventListener('click', () => {
+            player.play();
+        });
 
-<script type="module">
+        stopBtn.addEventListener('click', () => {
+            player.stop();
+        });
 
-import { songList } from './isai.js';
-
-const audio = document.getElementById("audio");
-const playBtn = document.getElementById("playBtn");
-const songName = document.getElementById("songName");
-
-let durations=[];
-let totalDuration=0;
-let loaded=0;
-let order=[];
-let playing=false;
-
-songList.forEach((song,i)=>{
-
-let a=new Audio(song.url);
-
-a.addEventListener("loadedmetadata",()=>{
-
-durations[i]=a.duration;
-loaded++;
-
-if(loaded===songList.length){
-prepareRadio();
-}
-
-});
-
-});
-
-function prepareRadio(){
-
-totalDuration = durations.reduce((a,b)=>a+b,0);
-
-const now = Math.floor(Date.now()/1000);
-
-const cycle = Math.floor(now / totalDuration) % 3;
-
-/*
-0 = normal order
-1 = reverse order
-2 = shuffle order
-*/
-
-order = [...songList.keys()];
-
-if(cycle===1){
-order.reverse();
-}
-
-if(cycle===2){
-order.sort(()=>Math.random()-0.5);
-}
-
-startRadio();
-
-}
-
-function startRadio(){
-
-const now = Math.floor(Date.now()/1000);
-
-let pos = now % totalDuration;
-
-let sum=0;
-
-for(let i=0;i<order.length;i++){
-
-let index=order[i];
-
-sum+=durations[index];
-
-if(pos<sum){
-
-audio.src=songList[index].url;
-
-audio.currentTime = durations[index]-(sum-pos);
-
-songName.textContent = songList[index].title;
-
-break;
-
-}
-
-}
-
-}
-
-audio.addEventListener("ended",()=>{
-
-let currentIndex = order.findIndex(i=>songList[i].url===audio.src);
-
-let nextIndex = order[(currentIndex+1)%order.length];
-
-audio.src = songList[nextIndex].url;
-
-songName.textContent = songList[nextIndex].title;
-
-audio.play();
-
-});
-
-playBtn.onclick=()=>{
-
-if(!playing){
-
-audio.play();
-playBtn.textContent="Stop";
-playing=true;
-
-}else{
-
-audio.pause();
-playBtn.textContent="Play";
-playing=false;
-
-}
-
-};
-
-</script>
-
+        // Initialize player
+        player.init();
+    </script>
 </body>
 </html>
