@@ -159,16 +159,11 @@
     // ============================================================
     import { songs } from './isai.js';
 
-    const BASE_URL = "https://github.com/atsuperman/play2/raw/main/";
-
-    const songList = songs.map(song => {
-        let title = song.file.replace(/\.(mp3|m4a|MP3|M4A)$/i, '');
-        return {
-            title: title,
-            url: BASE_URL + song.file,
-            details: song.details
-        };
-    });
+const songList = songs.map(song => ({
+    title: song.file.replace(/\.(mp3|m4a|MP3|M4A)$/i, ''),
+    url: song.url,
+    details: song.details
+}));
 
     // DOM elements
     const songTitleElem = document.getElementById('currentSongTitle');
