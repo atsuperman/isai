@@ -36,11 +36,11 @@
 
         .now-playing {
             text-align: center;
-            margin: 1.5rem 0 2.5rem 0;
+            margin: 1.5rem 0 1rem 0;
         }
 
         .song-title {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 600;
             letter-spacing: -0.01em;
             background: linear-gradient(135deg, #FFFFFF 0%, #C0D4FF 100%);
@@ -50,6 +50,19 @@
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             word-break: break-word;
             line-height: 1.3;
+        }
+
+        .song-details {
+            margin-top: 0.75rem;
+            font-size: 0.8rem;
+            color: #aab8e5;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+            line-height: 1.4;
+            max-width: 90%;
         }
 
         .mode-badge {
@@ -108,29 +121,19 @@
             color: #3f4e7a;
         }
 
-        .loading {
-            text-align: center;
-            margin: 1rem 0;
-            font-size: 0.9rem;
-            color: #ffd966;
-            animation: pulse 1.2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
         @media (max-width: 500px) {
             .radio-card {
                 padding: 1.5rem;
             }
             .song-title {
-                font-size: 1.7rem;
+                font-size: 1.5rem;
             }
             .toggle-btn {
                 font-size: 1.3rem;
                 padding: 0.85rem 0;
+            }
+            .song-details {
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -140,57 +143,70 @@
 <div class="radio-card">
     <div class="now-playing">
         <div class="song-title" id="currentSongTitle">⟳ INITIALIZING</div>
+        <div class="song-details" id="currentSongDetails"></div>
         <div class="mode-badge" id="modeName">SYNC PREP</div>
     </div>
     <button class="toggle-btn" id="playPauseBtn">
         <span>▶</span> PLAY
     </button>
-    <div class="sync-indicator">⚡ global timeline • all listeners same moment</div>
+    <div class="sync-indicator">⚡ boundary sync • no mid‑song seek • perfect continuity</div>
     <footer>radio sync • fixed order cycle</footer>
 </div>
 
 <script type="module">
     // ============================================================
-    // 1. Import songList from isai.js (contains metadata)
+    // 1. Import songs from isai.js (simple format)
     // ============================================================
-    import { songList } from './isai.js';
+    import { songs } from './isai.js';
+
+    const BASE_URL = "https://github.com/atsuperman/play2/raw/main/";
+
+    const songList = songs.map(song => {
+        let title = song.file.replace(/\.(mp3|m4a|MP3|M4A)$/i, '');
+        return {
+            title: title,
+            url: BASE_URL + song.file,
+            details: song.details
+        };
+    });
 
     // DOM elements
     const songTitleElem = document.getElementById('currentSongTitle');
+    const songDetailsElem = document.getElementById('currentSongDetails');
     const modeNameElem = document.getElementById('modeName');
     const playPauseBtn = document.getElementById('playPauseBtn');
 
     // Player state
     let audioElement = null;
     let isPlaying = true;
-    let syncInterval = null;
-    let durations = [];        // will be filled after loading
-    let modes = [];            // will be built after durations
+    let switchTimeout = null;
+    let durations = [];
+    let modes = [];
     let modeTotalDurations = [];
     let totalCycleDuration = 0;
-    let ready = false;         // set to true after durations loaded
+    let ready = false;
+    let currentSongGlobalIndex = -1;
+    let currentModeIndex = -1;
 
     // ============================================================
-    // 2. Function to fetch durations for all songs automatically
+    // 2. Auto-duration loading (unchanged)
     // ============================================================
-    async function loadDurations(songs) {
-        const promises = songs.map((song, index) => {
+    async function loadDurations(songsArray) {
+        const promises = songsArray.map((song, index) => {
             return new Promise((resolve) => {
                 const audio = new Audio();
                 audio.preload = 'metadata';
                 audio.src = song.url;
                 audio.addEventListener('loadedmetadata', () => {
                     const duration = audio.duration;
-                    // Clean up to free memory
                     audio.src = '';
                     audio.load();
                     resolve({ index, duration });
                 });
                 audio.addEventListener('error', () => {
                     console.warn(`Failed to load duration for ${song.title}, using fallback 180s`);
-                    resolve({ index, duration: 180 }); // fallback
+                    resolve({ index, duration: 180 });
                 });
-                // Timeout in case metadata never loads
                 setTimeout(() => {
                     if (audio.readyState < 1) {
                         console.warn(`Timeout loading ${song.title}, using fallback`);
@@ -199,28 +215,22 @@
                 }, 8000);
             });
         });
-
         const results = await Promise.all(promises);
-        const durArray = new Array(songs.length);
+        const durArray = new Array(songsArray.length);
         results.forEach(r => { durArray[r.index] = r.duration; });
         return durArray;
     }
 
     // ============================================================
-    // 3. Build the 10 fixed playback modes (based on song indices)
-    //    using the loaded durations for duration-based modes
+    // 3. Build 10 fixed modes (unchanged)
     // ============================================================
     function buildModes(durationsArray) {
         const n = durationsArray.length;
         const modesList = [];
 
-        // Mode 1: Original order
         modesList.push([...Array(n).keys()]);
-
-        // Mode 2: Reverse order
         modesList.push([...Array(n).keys()].reverse());
 
-        // Mode 3: Deterministic shuffle A (seed 42)
         const shuffleSeed = (arr, seed) => {
             const a = [...arr];
             let m = a.length;
@@ -238,15 +248,11 @@
         modesList.push(shuffleSeed([...Array(n).keys()], 77));
         modesList.push(shuffleSeed([...Array(n).keys()], 101));
 
-        // Mode 6: Even indices first
         const even = Array.from({ length: n }, (_, i) => i).filter(i => i % 2 === 0);
         const odd = Array.from({ length: n }, (_, i) => i).filter(i => i % 2 === 1);
         modesList.push([...even, ...odd]);
-
-        // Mode 7: Odd indices first
         modesList.push([...odd, ...even]);
 
-        // Mode 8: Alternating from start & end
         const alt = [];
         let left = 0, right = n-1;
         while (left <= right) {
@@ -257,21 +263,17 @@
         }
         modesList.push(alt);
 
-        // Mode 9: Ascending by duration
         const durIndices = [...Array(n).keys()].sort((a,b) => durationsArray[a] - durationsArray[b]);
         modesList.push(durIndices);
-
-        // Mode 10: Descending by duration
         modesList.push([...durIndices].reverse());
 
-        // Ensure exactly 10 modes (if songs less than 5? But we have 5 songs, so 10 modes are fine)
         return modesList.slice(0, 10);
     }
 
     // ============================================================
-    // 4. Global sync engine (uses computed durations and modes)
+    // 4. Global timeline helpers (same epoch)
     // ============================================================
-    const EPOCH_START = new Date(Date.UTC(2025, 3, 1, 0, 0, 0)).getTime(); // April 1, 2025
+    const EPOCH_START = new Date(Date.UTC(2025, 3, 1, 0, 0, 0)).getTime();
 
     function getGlobalElapsedSeconds() {
         const now = Date.now();
@@ -282,17 +284,17 @@
         return wrappedMs / 1000;
     }
 
+    // Returns { modeIndex, songIndexInMode, songGlobalIndex, positionInSongSec, remainingInSongMs }
     function getCurrentGlobalState() {
         let elapsedSec = getGlobalElapsedSeconds();
         let modeIndex = 0;
         let modeOffsetSec = elapsedSec;
         for (let i = 0; i < modeTotalDurations.length; i++) {
-            const modeDur = modeTotalDurations[i];
-            if (modeOffsetSec < modeDur) {
+            if (modeOffsetSec < modeTotalDurations[i]) {
                 modeIndex = i;
                 break;
             }
-            modeOffsetSec -= modeDur;
+            modeOffsetSec -= modeTotalDurations[i];
         }
         const modeOrder = modes[modeIndex];
         let songIdxInPlaylist = 0;
@@ -311,14 +313,14 @@
         if (currentSongGlobalIdx === -1 && modeOrder.length) {
             currentSongGlobalIdx = modeOrder[modeOrder.length-1];
             songOffsetSec = durations[currentSongGlobalIdx] - 0.01;
-            songIdxInPlaylist = modeOrder.length-1;
         }
+        const remainingSec = durations[currentSongGlobalIdx] - songOffsetSec;
+        const remainingMs = Math.max(0, remainingSec * 1000);
         return {
             modeIndex,
-            modeOffsetSec,
             songGlobalIndex: currentSongGlobalIdx,
-            songPositionSec: songOffsetSec,
-            songIdxInPlaylist,
+            positionInSongSec: songOffsetSec,
+            remainingMs: remainingMs,
             modeOrder
         };
     }
@@ -331,94 +333,165 @@
         return names[modeIdx] || `MODE ${modeIdx+1}`;
     }
 
-    function syncToGlobalTime() {
-        if (!ready) return;
+    // ============================================================
+    // 5. Core sync: only at song boundaries (no mid‑song seek)
+    // ============================================================
+    let isSwitching = false;
+
+    function scheduleNextSwitch() {
+        if (switchTimeout) clearTimeout(switchTimeout);
+        if (!ready || !isPlaying) return;
+
         const state = getCurrentGlobalState();
-        const { modeIndex, songGlobalIndex, songPositionSec, modeOrder } = state;
+        const { modeIndex, songGlobalIndex, remainingMs } = state;
         const songData = songList[songGlobalIndex];
-        const songTitle = songData.title;
-        const songUrl = songData.url;
-
-        songTitleElem.innerText = songTitle;
+        
+        // Update UI immediately
+        songTitleElem.innerText = songData.title;
+        songDetailsElem.innerText = songData.details || "";
         modeNameElem.innerText = getModeDisplayName(modeIndex);
-
-        const currentSrc = audioElement ? audioElement.src : '';
-        const needNewSong = !audioElement || currentSrc !== songUrl;
-
-        if (needNewSong) {
-            const wasPlaying = isPlaying && audioElement ? !audioElement.paused : isPlaying;
-            if (audioElement) {
-                audioElement.pause();
-                audioElement.src = '';
+        
+        // If we are already playing the correct song, just schedule the next switch
+        if (audioElement && audioElement.src === songData.url && !audioElement.ended) {
+            // No seeking, just wait for remaining time
+            if (remainingMs > 100) {
+                switchTimeout = setTimeout(() => {
+                    switchToNextSong();
+                }, remainingMs);
+            } else {
+                // Very short remaining, switch immediately
+                switchToNextSong();
             }
-            if (!audioElement) {
-                audioElement = new Audio();
-                audioElement.volume = 1;
-                audioElement.preload = 'auto';
-                audioElement.loop = false;
-            }
-            audioElement.src = songUrl;
-            audioElement.load();
-            const setPositionAndPlay = () => {
-                if (audioElement.readyState >= 2) {
-                    audioElement.currentTime = songPositionSec;
-                    if (isPlaying) {
-                        audioElement.play().catch(e => console.warn("play blocked", e));
-                    }
-                } else {
-                    audioElement.addEventListener('canplay', function onCanPlay() {
-                        audioElement.currentTime = songPositionSec;
-                        if (isPlaying) audioElement.play().catch(e => null);
-                        audioElement.removeEventListener('canplay', onCanPlay);
-                    }, { once: true });
-                }
-            };
-            setPositionAndPlay();
         } else {
-            if (audioElement && Math.abs(audioElement.currentTime - songPositionSec) > 0.35) {
-                audioElement.currentTime = songPositionSec;
-                if (isPlaying && audioElement.paused) {
-                    audioElement.play().catch(e => null);
-                }
-            }
-            if (isPlaying && audioElement.paused) {
-                audioElement.play().catch(e => null);
-            } else if (!isPlaying && !audioElement.paused) {
-                audioElement.pause();
-            }
+            // Need to load the correct song and seek to the correct position (only once at join/resume)
+            loadAndSeekToCurrentSong();
         }
     }
 
-    function startSyncLoop() {
-        if (syncInterval) clearInterval(syncInterval);
-        syncInterval = setInterval(() => {
-            syncToGlobalTime();
-        }, 500);
-        syncToGlobalTime();
-    }
-
-    function togglePlayPause() {
+    function loadAndSeekToCurrentSong() {
+        if (!ready) return;
+        const state = getCurrentGlobalState();
+        const { modeIndex, songGlobalIndex, positionInSongSec } = state;
+        const songData = songList[songGlobalIndex];
+        
+        // Update UI
+        songTitleElem.innerText = songData.title;
+        songDetailsElem.innerText = songData.details || "";
+        modeNameElem.innerText = getModeDisplayName(modeIndex);
+        
         if (!audioElement) {
             audioElement = new Audio();
             audioElement.volume = 1;
-            isPlaying = true;
-            startSyncLoop();
+            audioElement.preload = 'auto';
+            audioElement.loop = false;
+        }
+        
+        // If same song and already playing, just ensure position is correct (initial join only)
+        if (audioElement.src === songData.url && Math.abs(audioElement.currentTime - positionInSongSec) < 1) {
+            // Already correct, just schedule next switch
+            scheduleNextSwitch();
             return;
         }
+        
+        // Load new song and seek to global position (this happens only when joining or resuming)
+        audioElement.pause();
+        audioElement.src = songData.url;
+        audioElement.load();
+        
+        const onReady = () => {
+            if (audioElement.readyState >= 2) {
+                audioElement.currentTime = positionInSongSec;
+                if (isPlaying) audioElement.play().catch(e => console.warn("play error"));
+                audioElement.removeEventListener('canplay', onReady);
+                // After seeking, schedule next switch based on remaining time
+                const newState = getCurrentGlobalState();
+                const remainingMs = newState.remainingMs;
+                if (remainingMs > 100) {
+                    if (switchTimeout) clearTimeout(switchTimeout);
+                    switchTimeout = setTimeout(() => switchToNextSong(), remainingMs);
+                } else {
+                    switchToNextSong();
+                }
+            }
+        };
+        audioElement.addEventListener('canplay', onReady, { once: true });
+        // Fallback timeout
+        setTimeout(() => {
+            if (audioElement.readyState < 2) {
+                console.warn("Fallback: forcing play");
+                audioElement.currentTime = positionInSongSec;
+                if (isPlaying) audioElement.play().catch(e => null);
+                scheduleNextSwitch();
+            }
+        }, 2000);
+    }
+
+    function switchToNextSong() {
+        if (isSwitching) return;
+        isSwitching = true;
+        
+        // The global timeline has moved to the next song (or same song if drift)
+        // We simply reload from current global state (which will be the correct next song)
+        const state = getCurrentGlobalState();
+        const { songGlobalIndex, positionInSongSec } = state;
+        const songData = songList[songGlobalIndex];
+        
+        if (!audioElement) {
+            audioElement = new Audio();
+            audioElement.volume = 1;
+            audioElement.preload = 'auto';
+        }
+        
+        // If the same song is still playing (should not happen), just reschedule
+        if (audioElement.src === songData.url && Math.abs(audioElement.currentTime - positionInSongSec) < 2) {
+            // Very minor drift, just continue
+            isSwitching = false;
+            scheduleNextSwitch();
+            return;
+        }
+        
+        // Load the next song from the beginning (or correct offset if needed)
+        audioElement.pause();
+        audioElement.src = songData.url;
+        audioElement.load();
+        
+        const onCanPlay = () => {
+            if (audioElement.readyState >= 2) {
+                // Seek to the correct position (which is near the beginning of the new song)
+                audioElement.currentTime = positionInSongSec;
+                if (isPlaying) audioElement.play().catch(e => console.warn("play error"));
+                audioElement.removeEventListener('canplay', onCanPlay);
+                isSwitching = false;
+                scheduleNextSwitch(); // schedule the next boundary
+            }
+        };
+        audioElement.addEventListener('canplay', onCanPlay, { once: true });
+        // Fallback
+        setTimeout(() => {
+            if (audioElement.readyState < 2) {
+                audioElement.currentTime = positionInSongSec;
+                if (isPlaying) audioElement.play().catch(e => null);
+                isSwitching = false;
+                scheduleNextSwitch();
+            }
+        }, 2000);
+    }
+
+    // ============================================================
+    // 6. Play/Pause toggle (no extra features)
+    // ============================================================
+    function togglePlayPause() {
+        if (!ready) return;
         if (isPlaying) {
             isPlaying = false;
-            audioElement.pause();
+            if (audioElement) audioElement.pause();
+            if (switchTimeout) clearTimeout(switchTimeout);
             playPauseBtn.innerHTML = '<span>⏹️</span> STOP';
             playPauseBtn.style.background = "rgba(200, 70, 70, 0.25)";
         } else {
             isPlaying = true;
-            const state = getCurrentGlobalState();
-            if (audioElement.src !== songList[state.songGlobalIndex].url) {
-                syncToGlobalTime();
-            } else {
-                audioElement.currentTime = state.songPositionSec;
-                audioElement.play().catch(e => console.warn("play resume error"));
-            }
+            // Resume from current global position (will seek once)
+            loadAndSeekToCurrentSong();
             playPauseBtn.innerHTML = '<span>▶</span> PLAY';
             playPauseBtn.style.background = "rgba(30, 40, 65, 0.6)";
         }
@@ -435,65 +508,57 @@
     }
 
     // ============================================================
-    // 5. Initialization: load durations, build modes, start player
+    // 7. Initialization
     // ============================================================
     async function init() {
         songTitleElem.innerText = "⏳ Loading songs...";
+        songDetailsElem.innerText = "";
         modeNameElem.innerText = "FETCHING DURATIONS";
         
-        // Load durations
         durations = await loadDurations(songList);
         console.log("Durations:", durations);
         
-        // Build modes based on actual durations
         modes = buildModes(durations);
         modeTotalDurations = modes.map(modeOrder => 
-            modeOrder.reduce((sum, songIdx) => sum + durations[songIdx], 0)
+            modeOrder.reduce((sum, idx) => sum + durations[idx], 0)
         );
         totalCycleDuration = modeTotalDurations.reduce((a,b) => a+b, 0);
         
         ready = true;
         
-        // Initialize audio and start sync
         audioElement = new Audio();
         audioElement.volume = 1;
         audioElement.preload = "auto";
         audioElement.controls = false;
         
-        startSyncLoop();
+        // Start the player from the current global position
+        loadAndSeekToCurrentSong();
         isPlaying = true;
         updateButtonUI();
         
-        // Listen for visibility change to re-sync
+        // Listen for visibility changes to reschedule if needed
         document.addEventListener('visibilitychange', () => {
-            if (!document.hidden) syncToGlobalTime();
+            if (!document.hidden && isPlaying) {
+                // Re-sync on return (but no seek within song)
+                scheduleNextSwitch();
+            }
         });
         
-        // Handle ended event (just in case)
-        audioElement.addEventListener('ended', () => {
-            syncToGlobalTime();
-        });
-        
-        // Attach button listener
         playPauseBtn.addEventListener('click', () => {
             togglePlayPause();
-            updateButtonUI();
         });
         
-        // Initial sync attempt (will set correct song)
-        syncToGlobalTime();
-        
-        // Attempt to autoplay if allowed; if not, user can click PLAY.
+        // If autoplay is blocked, the user must click PLAY
         if (audioElement && isPlaying) {
             audioElement.play().catch(e => {
                 console.log("Autoplay blocked, waiting for user click.");
                 isPlaying = false;
                 updateButtonUI();
-                syncToGlobalTime(); // UI still shows current song but paused
+                if (switchTimeout) clearTimeout(switchTimeout);
             });
         }
     }
-
+    
     init();
 </script>
 </body>
