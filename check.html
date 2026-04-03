@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Comparator</title>
+    <style>
+        body { font-family: sans-serif; background: #121212; color: #e0e0e0; padding: 20px; }
+        h1 { color: #bb86fc; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { padding: 8px; border: 1px solid #333; text-align: left; }
+        th { background: #1e1e1e; }
+        .error { color: #cf6679; }
+        .warning { color: #ffb74d; }
+        .success { color: #03dac6; }
+    </style>
+</head>
+<body>
+    <h1>🎵 Music List Comparator</h1>
+    
+    <!-- Import your JS files here -->
+    <script src="xum.js"></script>
+    <script src="isai.js"></script>
+    
+    <!-- Comparison Logic -->
+    <script>
+        // Wait for files to load
+        window.onload = function() {
+            const xumSongs = songs; // From xum.js
+            
+            // Re-fetch isai.js songs (need to rebuild since variable overwritten)
+            // We'll compare based on file names
+            const xumMap = new Map(xumSongs.map(s => [s.file.toLowerCase(), s]));
+            const isaiMap = new Map(songs.map(s => [s.file.toLowerCase(), s]));
+            
+            let missing = [], extra = [], dups = [], nodur = [], diff = [];
+            const isaiCounts = new Map();
+            
+            // Count duplicates in isai
+            songs.forEach(s => {
+                const key = s.file.toLowerCase();
+                isaiCounts.set(key, (isaiCounts.get(key) || 0) + 1);
+            });
+            
+            // Find duplicates
+            isaiCounts.forEach((count, key) => {
+                if (count > 1) {
+                    const items = songs.filter(i => i.file.toLowerCase() === key);
+                    dups.push({ file: items[0].file, count, variations: [...new Set(items.map(i => i.details))].join(" | ") });
+                }
+            });
+            
+            // Compare
+            xumSongs.forEach(x => {
+                const key = x.file.toLowerCase();
+                if (!isaiMap.has(key)) {
+                    missing.push(x);
+                } else {
+                    const i = isaiMap.get(key);
+                    if (i.duration === undefined || i.duration === null) {
+                        nodur.push(i);
+                    }
+                    if (x.details !== i.details) {
+                        diff.push({ file: x.file, xDetails: x.details, iDetails: i.details });
+                    }
+                }
+            });
+            
+            songs.forEach(i => {
+                if (!xumMap.has(i.file.toLowerCase())) {
+                    extra.push(i);
+                }
+            });
+            
+            // Display Results
+            document.body.innerHTML += `
+                <h2 class="success">Stats</h2>
+                <p>xum.js: ${xumSongs.length} | isai.js: ${songs.length} | Missing: ${missing.length} | Duplicates: ${dups.length} | No Duration: ${nodur.length} | Mismatch: ${diff.length}</p>
+                
+                $${missing.length ? `<h2 class="error">❌ Missing in isai.js ($${missing.length})</h2><table><tr><th>File</th><th>Details</th></tr>$${missing.map(m => `<tr><td>$${m.file}</td><td>${m.details}</td></tr>`).join('')}</table>` : ''}
+                
+                $${extra.length ? `<h2 class="success">✅ Extra in isai.js ($${extra.length})</h2><table><tr><th>File</th><th>Details</th></tr>$${extra.map(e => `<tr><td>$${e.file}</td><td>${e.details}</td></tr>`).join('')}</table>` : ''}
+                
+                $${dups.length ? `<h2 class="warning">⚠️ Duplicates in isai.js ($${dups.length})</h2><table><tr><th>File</th><th>Count</th><th>Variations</th></tr>$${dups.map(d => `<tr><td>$${d.file}</td><td>$${d.count}</td><td>$${d.variations.substring(0, 100)}...</td></tr>`).join('')}</table>` : ''}
+                
+                $${nodur.length ? `<h2 class="warning">⚠️ Missing Duration ($${nodur.length})</h2><table><tr><th>File</th><th>Details</th></tr>$${nodur.map(n => `<tr><td>$${n.file}</td><td>${n.details}</td></tr>`).join('')}</table>` : ''}
+                
+                $${diff.length ? `<h2 class="warning">⚠️ Details Mismatch ($${diff.length})</h2><table><tr><th>File</th><th>xum.js</th><th>isai.js</th></tr>$${diff.map(d => `<tr><td>$${d.file}</td><td>$${d.xDetails}</td><td>$${d.iDetails}</td></tr>`).join('')}</table>` : ''}
+            `;
+        };
+    </script>
+</body>
+</html>
