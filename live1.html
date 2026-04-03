@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Isai - Tamil Songs</title>
+  <title>Isai - Duration Generator</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -13,116 +13,169 @@
       color: #fff;
       padding: 20px;
     }
-    .container { max-width: 800px; margin: 0 auto; }
+    .container { max-width: 1000px; margin: 0 auto; }
     h1 {
       text-align: center;
       margin-bottom: 30px;
       font-size: 2rem;
       color: #e94560;
     }
-    .stats {
-      text-align: center;
-      margin-bottom: 20px;
-      color: rgba(255,255,255,0.5);
-      font-size: 0.9rem;
-    }
-    .song-list { display: flex; flex-direction: column; gap: 15px; }
-    .song-card {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 12px;
-      padding: 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .song-card:hover {
-      background: rgba(255,255,255,0.2);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(233,69,96,0.3);
-    }
-    .song-card.selected {
-      background: rgba(233,69,96,0.3);
-      border-color: #e94560;
-    }
-    .song-header {
+    .controls {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 30px;
       flex-wrap: wrap;
-      gap: 10px;
     }
-    .song-title { font-size: 1.1rem; font-weight: 600; }
-    .song-duration-display {
-      font-size: 0.9rem;
-      color: #e94560;
-      font-weight: 500;
-      background: rgba(233,69,96,0.2);
-      padding: 4px 12px;
-      border-radius: 20px;
-      display: none;
-    }
-    .song-card.selected .song-duration-display { display: inline-block; }
-    .song-details {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.7);
-      margin-top: 10px;
-      line-height: 1.6;
-    }
-    .duration-info {
-      margin-top: 15px;
-      padding: 15px;
-      background: rgba(0,0,0,0.3);
-      border-radius: 8px;
-      display: none;
-    }
-    .song-card.selected .duration-info { display: block; }
-    .duration-copy {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #1a1a2e;
-      padding: 12px 15px;
-      border-radius: 8px;
-      border: 1px solid #e94560;
-    }
-    .duration-text {
-      font-family: 'Courier New', monospace;
-      font-size: 1rem;
-      color: #00ff88;
-      flex: 1;
-    }
-    .copy-btn {
+    .btn {
       background: #e94560;
       color: white;
       border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
+      padding: 15px 40px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.2s ease;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
-    .copy-btn:hover { background: #ff6b6b; }
-    .copy-btn.copied { background: #00ff88; color: #1a1a2e; }
+    .btn:hover { background: #ff6b6b; transform: scale(1.05); }
+    .btn:disabled { background: #666; cursor: not-allowed; transform: none; }
+    .btn.copy { background: #00ff88; color: #1a1a2e; }
+    .progress-container {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      display: none;
+    }
+    .progress-bar {
+      height: 20px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #e94560, #00ff88);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .progress-text {
+      text-align: center;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.8);
+    }
+    .output-section {
+      display: none;
+    }
+    .output-section.active { display: block; }
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .output-title { font-size: 1.2rem; color: #00ff88; }
+    .output-stats { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+    .code-container {
+      background: #0d0d1a;
+      border: 2px solid #e94560;
+      border-radius: 12px;
+      padding: 20px;
+      overflow-x: auto;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    .code-text {
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #00ff88;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .song-item {
+      margin-bottom: 5px;
+      color: #00ff88;
+    }
+    .log-container {
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+    }
+    .log-entry {
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .log-entry:last-child { border-bottom: none; }
+    .log-success { color: #00ff88; }
+    .log-loading { color: #e94560; }
     @media (max-width: 600px) {
-      .song-header { flex-direction: column; align-items: flex-start; }
       h1 { font-size: 1.5rem; }
+      .btn { padding: 12px 30px; font-size: 1rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🎵 Isai Collection</h1>
-    <div class="stats" id="stats"></div>
-    <div class="song-list" id="songList"></div>
+    <h1>🎵 Isai Duration Generator</h1>
+    
+    <div class="controls">
+      <button class="btn" id="loadBtn">▶ Load All Songs</button>
+      <button class="btn copy" id="copyBtn" disabled>📋 Copy Code</button>
+    </div>
+
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-text" id="progressText">Loading... 0 / 0</div>
+    </div>
+
+    <div class="log-container" id="logContainer"></div>
+
+    <div class="output-section" id="outputSection">
+      <div class="output-header">
+        <span class="output-title">✅ Generated Code</span>
+        <span class="output-stats" id="outputStats"></span>
+      </div>
+      <div class="code-container">
+        <div class="code-text" id="codeText"></div>
+      </div>
+    </div>
   </div>
 
   <script type="module">
     import { songs } from './isai.js';
 
-    const songList = document.getElementById('songList');
-    const stats = document.getElementById('stats');
+    const loadBtn = document.getElementById('loadBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const logContainer = document.getElementById('logContainer');
+    const outputSection = document.getElementById('outputSection');
+    const codeText = document.getElementById('codeText');
+    const outputStats = document.getElementById('outputStats');
+
     const durationCache = new Map();
+    let generatedCode = [];
+
+    function log(message, type = 'loading') {
+      const entry = document.createElement('div');
+      entry.className = `log-entry log-${type}`;
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      logContainer.appendChild(entry);
+      logContainer.scrollTop = logContainer.scrollHeight;
+    }
 
     function formatDuration(seconds) {
       const mins = Math.floor(seconds / 60);
@@ -148,80 +201,101 @@
       });
     }
 
-    async function copyToClipboard(text, btn) {
+    function escapeString(str) {
+      return str.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+    }
+
+    function generateCodeLine(song, duration) {
+      const file = escapeString(song.file);
+      const details = escapeString(song.details);
+      return `{ file: "$${file}", details: "$${details}", duration: ${duration} },`;
+    }
+
+    async function loadAllSongs() {
+      loadBtn.disabled = true;
+      copyBtn.disabled = true;
+      progressContainer.style.display = 'block';
+      outputSection.classList.remove('active');
+      logContainer.innerHTML = '';
+      generatedCode = [];
+
+      const total = songs.length;
+      let completed = 0;
+
+      log(`Starting to load ${total} songs...`, 'loading');
+
+      for (let i = 0; i < total; i++) {
+        const song = songs[i];
+        const fileName = song.file;
+        
+        log(`Loading $${i + 1}/$${total}: ${fileName}...`, 'loading');
+        
+        try {
+          const duration = await getAudioDuration(song.url);
+          const formatted = formatDuration(duration);
+          const codeLine = generateCodeLine(song, duration);
+          
+          generatedCode.push(codeLine);
+          completed++;
+          
+          const progress = (completed / total) * 100;
+          progressFill.style.width = `${progress}%`;
+          progressText.textContent = `Loading... ${completed} / ${total}`;
+          
+          log(`✓ ${fileName} - Duration: $${duration}s ($${formatted})`, 'success');
+        } catch (error) {
+          log(`✗ ${fileName} - Error: ${error.message}`, 'loading');
+          completed++;
+          const progress = (completed / total) * 100;
+          progressFill.style.width = `${progress}%`;
+          progressText.textContent = `Loading... ${completed} / ${total}`;
+        }
+
+        // Small delay to prevent browser freeze
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+
+      log('✅ All songs loaded successfully!', 'success');
+      loadBtn.disabled = false;
+      copyBtn.disabled = false;
+      progressText.textContent = `Completed! ${completed} / ${total}`;
+
+      // Generate final code
+      const finalCode = generatedCode.join('\n');
+      codeText.textContent = finalCode;
+      outputStats.textContent = `Total: ${total} songs | Duration: ${durationCache.size} loaded`;
+      outputSection.classList.add('active');
+    }
+
+    async function copyCode() {
       try {
-        await navigator.clipboard.writeText(text);
+        await navigator.clipboard.writeText(codeText.textContent);
+        copyBtn.textContent = '✓ Copied!';
+        copyBtn.classList.add('copied');
+        log('✅ Code copied to clipboard!', 'success');
+        setTimeout(() => {
+          copyBtn.textContent = '📋 Copy Code';
+          copyBtn.classList.remove('copied');
+        }, 2000);
       } catch (err) {
         const textarea = document.createElement('textarea');
-        textarea.value = text;
+        textarea.value = codeText.textContent;
         document.body.appendChild(textarea);
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
+        copyBtn.textContent = '✓ Copied!';
+        copyBtn.classList.add('copied');
+        log('✅ Code copied to clipboard!', 'success');
+        setTimeout(() => {
+          copyBtn.textContent = '📋 Copy Code';
+          copyBtn.classList.remove('copied');
+        }, 2000);
       }
-      btn.textContent = '✓ Copied!';
-      btn.classList.add('copied');
-      setTimeout(() => {
-        btn.textContent = 'Copy';
-        btn.classList.remove('copied');
-      }, 2000);
     }
 
-    function createSongCard(song, index) {
-      const card = document.createElement('div');
-      card.className = 'song-card';
-      card.dataset.index = index;
-
-      card.innerHTML = `
-        <div class="song-header">
-          <span class="song-title">${index + 1}. $${song.file.replace(/\.(m4a|mp3)$$/, '')}</span>
-          <span class="song-duration-display">⏱️ Loading...</span>
-        </div>
-        <div class="song-details">${song.details}</div>
-        <div class="duration-info">
-          <div class="duration-copy">
-            <span class="duration-text" id="duration-${index}">duration: --</span>
-            <button class="copy-btn" onclick="window.copyDuration(${index}, this)">Copy</button>
-          </div>
-        </div>
-      `;
-
-      card.addEventListener('click', async () => {
-        document.querySelectorAll('.song-card').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-
-        const durationDisplay = card.querySelector(`#duration-${index}`);
-        const durationBadge = card.querySelector('.song-duration-display');
-        durationBadge.textContent = '⏱️ Loading...';
-
-        try {
-          const duration = await getAudioDuration(song.url);
-          const formatted = formatDuration(duration);
-          durationDisplay.textContent = `duration: ${duration}`;
-          durationBadge.textContent = `⏱️ ${formatted}`;
-        } catch (error) {
-          durationDisplay.textContent = 'duration: unavailable';
-          durationBadge.textContent = '⏱️ --:--';
-        }
-      });
-
-      return card;
-    }
-
-    window.copyDuration = function(index, btn) {
-      const durationText = document.getElementById(`duration-${index}`).textContent;
-      copyToClipboard(durationText, btn);
-    };
-
-    async function init() {
-      stats.textContent = `Total Songs: ${songs.length}`;
-      songList.innerHTML = '';
-      songs.forEach((song, index) => {
-        songList.appendChild(createSongCard(song, index));
-      });
-    }
-
-    init();
+    loadBtn.addEventListener('click', loadAllSongs);
+    copyBtn.addEventListener('click', copyCode);
   </script>
 </body>
 </html>
