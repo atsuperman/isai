@@ -72,6 +72,8 @@
     .btn:hover { background: #ff6b6b; transform: scale(1.05); }
     .btn:disabled { background: #666; cursor: not-allowed; transform: none; }
     .btn.copy { background: #00ff88; color: #1a1a2e; }
+    .btn.continue { background: #ffa500; color: #1a1a2e; }
+    .btn.clear { background: #666; color: white; }
     .progress-container {
       background: rgba(255,255,255,0.1);
       border-radius: 10px;
@@ -170,12 +172,36 @@
     .log-entry:last-child { border-bottom: none; }
     .log-success { color: #00ff88; }
     .log-loading { color: #e94560; }
+    .log-warning { color: #ffa500; }
     .error-message {
       color: #ff6b6b;
       text-align: center;
       margin-bottom: 15px;
       font-size: 0.95rem;
       display: none;
+    }
+    .resume-banner {
+      background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%);
+      color: #1a1a2e;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      display: none;
+      text-align: center;
+    }
+    .resume-banner h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+    .resume-banner p {
+      margin-bottom: 15px;
+      opacity: 0.9;
+    }
+    .resume-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
     @media (max-width: 600px) {
       h1 { font-size: 1.5rem; }
@@ -195,6 +221,16 @@
   <div class="container">
     <h1>🎵 Isai Duration Generator</h1>
     
+    <!-- Resume Banner -->
+    <div class="resume-banner" id="resumeBanner">
+      <h3>⚠️ Previous Session Found!</h3>
+      <p id="resumeInfo">Loading was interrupted. You can continue from where it stopped.</p>
+      <div class="resume-buttons">
+        <button class="btn continue" id="continueBtn">▶ Continue</button>
+        <button class="btn clear" id="clearBtn">🔄 Start Fresh</button>
+      </div>
+    </div>
+
     <div class="range-inputs">
       <div class="input-group">
         <label for="fromInput">From:</label>
@@ -238,11 +274,17 @@
   <script type="module">
     import { songs } from './isai.js';
 
+    const STORAGE_KEY = 'isai_duration_progress';
+
     const fromInput = document.getElementById('fromInput');
     const toInput = document.getElementById('toInput');
     const totalSongsSpan = document.getElementById('totalSongs');
     const loadBtn = document.getElementById('loadBtn');
     const copyBtn = document.getElementById('copyBtn');
+    const continueBtn = document.getElementById('continueBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const resumeBanner = document.getElementById('resumeBanner');
+    const resumeInfo = document.getElementById('resumeInfo');
     const progressContainer = document.getElementById('progressContainer');
     const progressFill = document.getElementById('progressFill');
     const progressText = document.getElementById('progressText');
@@ -254,13 +296,70 @@
 
     const durationCache = new Map();
     let generatedCode = [];
+    let currentFrom = 0;
+    let currentTo = 0;
+    let isResuming = false;
 
     totalSongsSpan.textContent = songs.length;
 
+    // Check for saved progress on page load
+    function checkSavedProgress() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const data = JSON.parse(saved);
+          if (data && data.from !== undefined && data.to !== undefined && data.generatedCode) {
+            resumeBanner.style.display = 'block';
+            resumeInfo.textContent = 'Loading was interrupted at song #' + (data.currentIndex + 1) + '. ' +
+              data.generatedCode.length + ' songs already loaded. Continue from here?';
+            currentFrom = data.from;
+            currentTo = data.to;
+            generatedCode = data.generatedCode;
+            durationCache.clear();
+            if (data.durations) {
+              Object.keys(data.durations).forEach(key => {
+                durationCache.set(parseInt(key), data.durations[key]);
+              });
+            }
+            return true;
+          }
+        }
+      } catch (e) {
+        console.log('No saved progress found');
+      }
+      return false;
+    }
+
+    function saveProgress() {
+      try {
+        const data = {
+          from: currentFrom,
+          to: currentTo,
+          currentIndex: currentFrom + generatedCode.length,
+          generatedCode: generatedCode,
+          durations: {}
+        };
+        durationCache.forEach((value, key) => {
+          data.durations[key] = value;
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      } catch (e) {
+        console.log('Could not save progress');
+      }
+    }
+
+    function clearSavedProgress() {
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {
+        console.log('Could not clear progress');
+      }
+    }
+
     function log(message, type = 'loading') {
       const entry = document.createElement('div');
-      entry.className = `log-entry log-${type}`;
-      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      entry.className = 'log-entry log-' + type;
+      entry.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message;
       logContainer.appendChild(entry);
       logContainer.scrollTop = logContainer.scrollHeight;
     }
@@ -268,7 +367,7 @@
     function formatDuration(seconds) {
       const mins = Math.floor(seconds / 60);
       const secs = Math.floor(seconds % 60);
-      return `$${mins}:$${secs.toString().padStart(2, '0')}`;
+      return mins + ':' + secs.toString().padStart(2, '0');
     }
 
     async function getAudioDuration(url) {
@@ -290,15 +389,12 @@
     }
 
     function escapeString(str) {
-      // Only escape backslashes and quotes, nothing else
       return str.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
     }
 
     function generateCodeLine(song, duration) {
-      // Clean the file and details without adding extra characters
       const file = escapeString(song.file);
       const details = escapeString(song.details);
-      // Simple format - no template literals, just string concatenation
       return '{ file: "' + file + '", details: "' + details + '", duration: ' + duration + ' },';
     }
 
@@ -322,30 +418,18 @@
       return { valid: true, from: from - 1, to: to };
     }
 
-    async function loadSelectedRange() {
-      const validation = validateRange();
-      
-      if (!validation.valid) {
-        errorMessage.textContent = '❌ ' + validation.message;
-        errorMessage.style.display = 'block';
-        return;
-      }
-
-      errorMessage.style.display = 'none';
+    async function processRange(startIndex, endIndex) {
       loadBtn.disabled = true;
+      continueBtn.disabled = true;
       progressContainer.style.display = 'block';
       outputSection.classList.remove('active');
-      logContainer.innerHTML = '';
-      generatedCode = [];
+      
+      const total = endIndex - startIndex;
+      let completed = generatedCode.length;
 
-      const from = validation.from;
-      const to = validation.to;
-      const total = to - from;
-      let completed = 0;
+      log('Starting to load songs ' + (startIndex + 1) + ' to ' + endIndex + ' (' + total + ' songs)...', 'loading');
 
-      log('Starting to load songs ' + (from + 1) + ' to ' + to + ' (' + total + ' songs)...', 'loading');
-
-      for (let i = from; i < to; i++) {
+      for (let i = startIndex; i < endIndex; i++) {
         const song = songs[i];
         const songNumber = i + 1;
         const fileName = song.file;
@@ -360,6 +444,9 @@
           generatedCode.push(codeLine);
           completed++;
           
+          // Save progress after every song
+          saveProgress();
+
           const progress = (completed / total) * 100;
           progressFill.style.width = progress + '%';
           progressText.textContent = 'Loading... ' + completed + ' / ' + total;
@@ -378,12 +465,55 @@
 
       log('✅ All selected songs loaded successfully!', 'success');
       loadBtn.disabled = false;
+      continueBtn.disabled = false;
       progressText.textContent = 'Completed! ' + completed + ' / ' + total;
 
       const finalCode = generatedCode.join('\n');
       codeText.textContent = finalCode;
-      outputStats.textContent = 'Range: ' + (from + 1) + ' - ' + to + ' | Total: ' + total + ' songs';
+      outputStats.textContent = 'Range: ' + (currentFrom + 1) + ' - ' + currentTo + ' | Total: ' + total + ' songs';
       outputSection.classList.add('active');
+      
+      // Clear saved progress on successful completion
+      clearSavedProgress();
+      resumeBanner.style.display = 'none';
+    }
+
+    async function startLoad() {
+      const validation = validateRange();
+      
+      if (!validation.valid) {
+        errorMessage.textContent = '❌ ' + validation.message;
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      errorMessage.style.display = 'none';
+      resumeBanner.style.display = 'none';
+      currentFrom = validation.from;
+      currentTo = validation.to;
+      generatedCode = [];
+      durationCache.clear();
+      
+      await processRange(currentFrom, currentTo);
+    }
+
+    async function resumeLoad() {
+      isResuming = true;
+      const startIndex = currentFrom + generatedCode.length;
+      await processRange(startIndex, currentTo);
+    }
+
+    function clearSession() {
+      clearSavedProgress();
+      resumeBanner.style.display = 'none';
+      generatedCode = [];
+      durationCache.clear();
+      progressContainer.style.display = 'none';
+      outputSection.classList.remove('active');
+      logContainer.innerHTML = '';
+      loadBtn.disabled = false;
+      continueBtn.disabled = true;
+      log('Session cleared. Ready to start fresh.', 'warning');
     }
 
     async function copyCode() {
@@ -413,7 +543,16 @@
       }
     }
 
-    loadBtn.addEventListener('click', loadSelectedRange);
+    // Initialize
+    if (checkSavedProgress()) {
+      // Show banner, wait for user action
+    } else {
+      resumeBanner.style.display = 'none';
+    }
+
+    loadBtn.addEventListener('click', startLoad);
+    continueBtn.addEventListener('click', resumeLoad);
+    clearBtn.addEventListener('click', clearSession);
     copyBtn.addEventListener('click', copyCode);
   </script>
 </body>
