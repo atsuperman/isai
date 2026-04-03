@@ -20,6 +20,37 @@
       font-size: 2rem;
       color: #e94560;
     }
+    .range-inputs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .input-group label {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.8);
+    }
+    .input-group input {
+      width: 100px;
+      padding: 12px 15px;
+      border: 2px solid #e94560;
+      border-radius: 8px;
+      background: #0d0d1a;
+      color: #fff;
+      font-size: 1rem;
+      text-align: center;
+    }
+    .input-group input:focus {
+      outline: none;
+      border-color: #00ff88;
+    }
     .controls {
       display: flex;
       gap: 15px;
@@ -97,10 +128,6 @@
       white-space: pre-wrap;
       word-break: break-all;
     }
-    .song-item {
-      margin-bottom: 5px;
-      color: #00ff88;
-    }
     .log-container {
       background: rgba(0,0,0,0.3);
       border-radius: 8px;
@@ -118,9 +145,17 @@
     .log-entry:last-child { border-bottom: none; }
     .log-success { color: #00ff88; }
     .log-loading { color: #e94560; }
+    .error-message {
+      color: #ff6b6b;
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+      display: none;
+    }
     @media (max-width: 600px) {
       h1 { font-size: 1.5rem; }
       .btn { padding: 12px 30px; font-size: 1rem; }
+      .input-group input { width: 80px; }
     }
   </style>
 </head>
@@ -128,8 +163,23 @@
   <div class="container">
     <h1>🎵 Isai Duration Generator</h1>
     
+    <div class="range-inputs">
+      <div class="input-group">
+        <label for="fromInput">From:</label>
+        <input type="number" id="fromInput" min="1" value="1">
+      </div>
+      <span style="font-size: 1.5rem; color: #e94560;">→</span>
+      <div class="input-group">
+        <label for="toInput">To:</label>
+        <input type="number" id="toInput" min="1" value="10">
+      </div>
+      <span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">(Total songs: <span id="totalSongs">0</span>)</span>
+    </div>
+
+    <div class="error-message" id="errorMessage"></div>
+
     <div class="controls">
-      <button class="btn" id="loadBtn">▶ Load All Songs</button>
+      <button class="btn" id="loadBtn">▶ Load Selected Range</button>
       <button class="btn copy" id="copyBtn" disabled>📋 Copy Code</button>
     </div>
 
@@ -156,6 +206,9 @@
   <script type="module">
     import { songs } from './isai.js';
 
+    const fromInput = document.getElementById('fromInput');
+    const toInput = document.getElementById('toInput');
+    const totalSongsSpan = document.getElementById('totalSongs');
     const loadBtn = document.getElementById('loadBtn');
     const copyBtn = document.getElementById('copyBtn');
     const progressContainer = document.getElementById('progressContainer');
@@ -165,9 +218,13 @@
     const outputSection = document.getElementById('outputSection');
     const codeText = document.getElementById('codeText');
     const outputStats = document.getElementById('outputStats');
+    const errorMessage = document.getElementById('errorMessage');
 
     const durationCache = new Map();
     let generatedCode = [];
+
+    // Update total songs display
+    totalSongsSpan.textContent = songs.length;
 
     function log(message, type = 'loading') {
       const entry = document.createElement('div');
@@ -211,7 +268,36 @@
       return `{ file: "$${file}", details: "$${details}", duration: ${duration} },`;
     }
 
-    async function loadAllSongs() {
+    function validateRange() {
+      const from = parseInt(fromInput.value);
+      const to = parseInt(toInput.value);
+      const total = songs.length;
+
+      if (isNaN(from) || isNaN(to)) {
+        return { valid: false, message: 'Please enter valid numbers' };
+      }
+      if (from < 1 || to < 1) {
+        return { valid: false, message: 'Values must be at least 1' };
+      }
+      if (from > total || to > total) {
+        return { valid: false, message: `Values cannot exceed total songs (${total})` };
+      }
+      if (from > to) {
+        return { valid: false, message: '"From" cannot be greater than "To"' };
+      }
+      return { valid: true, from: from - 1, to: to }; // Convert to 0-indexed
+    }
+
+    async function loadSelectedRange() {
+      const validation = validateRange();
+      
+      if (!validation.valid) {
+        errorMessage.textContent = `❌ ${validation.message}`;
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      errorMessage.style.display = 'none';
       loadBtn.disabled = true;
       copyBtn.disabled = true;
       progressContainer.style.display = 'block';
@@ -219,16 +305,19 @@
       logContainer.innerHTML = '';
       generatedCode = [];
 
-      const total = songs.length;
+      const from = validation.from;
+      const to = validation.to;
+      const total = to - from;
       let completed = 0;
 
-      log(`Starting to load ${total} songs...`, 'loading');
+      log(`Starting to load songs ${from + 1} to $${to} ($${total} songs)...`, 'loading');
 
-      for (let i = 0; i < total; i++) {
+      for (let i = from; i < to; i++) {
         const song = songs[i];
+        const songNumber = i + 1;
         const fileName = song.file;
         
-        log(`Loading $${i + 1}/$${total}: ${fileName}...`, 'loading');
+        log(`Loading $${completed + 1}/$${total}: Song #${songNumber} - ${fileName}...`, 'loading');
         
         try {
           const duration = await getAudioDuration(song.url);
@@ -242,9 +331,9 @@
           progressFill.style.width = `${progress}%`;
           progressText.textContent = `Loading... ${completed} / ${total}`;
           
-          log(`✓ ${fileName} - Duration: $${duration}s ($${formatted})`, 'success');
+          log(`✓ Song #${songNumber} - Duration: $${duration}s ($${formatted})`, 'success');
         } catch (error) {
-          log(`✗ ${fileName} - Error: ${error.message}`, 'loading');
+          log(`✗ Song #${songNumber} - Error: ${error.message}`, 'loading');
           completed++;
           const progress = (completed / total) * 100;
           progressFill.style.width = `${progress}%`;
@@ -255,7 +344,7 @@
         await new Promise(resolve => setTimeout(resolve, 100));
       }
 
-      log('✅ All songs loaded successfully!', 'success');
+      log('✅ All selected songs loaded successfully!', 'success');
       loadBtn.disabled = false;
       copyBtn.disabled = false;
       progressText.textContent = `Completed! ${completed} / ${total}`;
@@ -263,7 +352,7 @@
       // Generate final code
       const finalCode = generatedCode.join('\n');
       codeText.textContent = finalCode;
-      outputStats.textContent = `Total: ${total} songs | Duration: ${durationCache.size} loaded`;
+      outputStats.textContent = `Range: ${from + 1} - ${to} | Total: ${total} songs | Duration: ${durationCache.size} loaded`;
       outputSection.classList.add('active');
     }
 
@@ -294,7 +383,7 @@
       }
     }
 
-    loadBtn.addEventListener('click', loadAllSongs);
+    loadBtn.addEventListener('click', loadSelectedRange);
     copyBtn.addEventListener('click', copyCode);
   </script>
 </body>
