@@ -5,23 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Global Sync Radio | Isai Player</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
         body {
             min-height: 100vh;
             background: linear-gradient(145deg, #0a0f1e 0%, #0c1222 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
             padding: 1rem;
         }
-
         .radio-card {
             background: rgba(18, 25, 45, 0.75);
             backdrop-filter: blur(14px);
@@ -29,49 +22,41 @@
             padding: 2rem;
             width: 100%;
             max-width: 460px;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
         }
-
-        .now-playing {
-            text-align: center;
-            margin: 1.5rem 0 1rem;
-        }
-
+        .now-playing { text-align: center; margin: 1rem 0; }
         .song-title {
             font-size: 2rem;
             font-weight: 600;
-            background: linear-gradient(135deg, #FFFFFF 0%, #C0D4FF 100%);
+            background: linear-gradient(135deg, #FFF, #C0D4FF);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
             word-break: break-word;
         }
-
         .song-details {
             margin-top: 0.75rem;
             font-size: 0.8rem;
             color: #aab8e5;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             padding: 0.5rem 1rem;
             border-radius: 2rem;
             display: inline-block;
-            line-height: 1.4;
         }
-
-        .mode-badge {
-            display: inline-block;
+        .next-song {
             margin-top: 1rem;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: #9bb5ff;
+            background: rgba(255,255,255,0.03);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            display: inline-block;
         }
-
+        .next-song span { opacity: 0.7; font-size: 0.7rem; }
         .toggle-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255,255,255,0.05);
+            border: 1.5px solid rgba(255,255,255,0.25);
             width: 100%;
             padding: 1rem;
             border-radius: 3rem;
@@ -84,26 +69,11 @@
             align-items: center;
             justify-content: center;
             gap: 0.6rem;
-        }
-
-        .toggle-btn:active {
-            transform: scale(0.97);
-        }
-
-        .sync-indicator {
-            text-align: center;
-            font-size: 0.7rem;
             margin-top: 1.5rem;
-            color: #5f7bbf;
         }
-
-        footer {
-            font-size: 0.65rem;
-            text-align: center;
-            margin-top: 1.8rem;
-            color: #3f4e7a;
-        }
-
+        .toggle-btn:active { transform: scale(0.97); }
+        .sync-indicator { text-align: center; font-size: 0.7rem; margin-top: 1.5rem; color: #5f7bbf; }
+        footer { font-size: 0.65rem; text-align: center; margin-top: 1.8rem; color: #3f4e7a; }
         @media (max-width: 500px) {
             .radio-card { padding: 1.5rem; }
             .song-title { font-size: 1.5rem; }
@@ -116,37 +86,34 @@
     <div class="now-playing">
         <div class="song-title" id="currentSongTitle">⟳ SYNCING</div>
         <div class="song-details" id="currentSongDetails"></div>
-        <div class="mode-badge" id="modeName"></div>
+        <div class="next-song"><span>⏩ Coming up next:</span> <span id="nextSongTitle">—</span></div>
     </div>
-    <button class="toggle-btn" id="playPauseBtn">
-        <span>▶</span> PLAY
-    </button>
-    <div class="sync-indicator">⚡ 4‑min slots • mode changes every 7 days • perfect sync</div>
-    <footer>radio sync • fixed schedule • no seeking</footer>
+    <button class="toggle-btn" id="playPauseBtn"><span>▶</span> PLAY</button>
+    <div class="sync-indicator">⚡ infinite mode cycling • original lengths • auto next song</div>
+    <footer>radio sync • modes run sequentially forever</footer>
 </div>
 
 <script type="module">
     import { songs } from './isai.js';
 
-    // Build song list with titles, full URLs, details
+    // Build song list with title, url, details, duration
     const songList = songs.map(song => ({
         title: song.file.replace(/\.(mp3|m4a|MP3|M4A)$/i, ''),
         url: song.url,
-        details: song.details
+        details: song.details,
+        duration: song.duration  // seconds
     }));
 
-    // ---------- Fixed schedule parameters ----------
-    const EPOCH = new Date(Date.UTC(2025, 3, 1, 0, 0, 0)).getTime(); // April 1, 2025 UTC
-    const MODE_DURATION_MS = 7 * 24 * 3600 * 1000; // 7 days
-    const SLOT_DURATION_MS = 4 * 60 * 1000;       // 4 minutes
+    // ---------- Epoch: April 1, 2026, 00:00 UTC ----------
+    const EPOCH = new Date(Date.UTC(2026, 3, 1, 0, 0, 0)).getTime();
 
-    // ---------- Build the 10 modes (same as before) ----------
-    function buildModes(songCount) {
-        const indices = [...Array(songCount).keys()];
-        const modesList = [];
+    // ---------- Build 10 playback modes (song index orders) ----------
+    function buildModes(count) {
+        const indices = [...Array(count).keys()];
+        const modes = [];
 
-        modesList.push([...indices]);                          // original
-        modesList.push([...indices].reverse());                // reverse
+        modes.push([...indices]);                       // original
+        modes.push([...indices].reverse());             // reverse
 
         const shuffleSeed = (arr, seed) => {
             const a = [...arr];
@@ -161,30 +128,29 @@
             }
             return a;
         };
-        modesList.push(shuffleSeed([...indices], 42));
-        modesList.push(shuffleSeed([...indices], 77));
-        modesList.push(shuffleSeed([...indices], 101));
+        modes.push(shuffleSeed([...indices], 42));
+        modes.push(shuffleSeed([...indices], 77));
+        modes.push(shuffleSeed([...indices], 101));
 
         const even = indices.filter(i => i % 2 === 0);
         const odd = indices.filter(i => i % 2 === 1);
-        modesList.push([...even, ...odd]);                     // even first
-        modesList.push([...odd, ...even]);                     // odd first
+        modes.push([...even, ...odd]);                  // even first
+        modes.push([...odd, ...even]);                  // odd first
 
         const alt = [];
-        let left = 0, right = songCount-1;
+        let left = 0, right = count-1;
         while (left <= right) {
             alt.push(left);
             if (left !== right) alt.push(right);
             left++; right--;
         }
-        modesList.push(alt);                                   // end‑alternating
+        modes.push(alt);                                // alternating ends
 
-        const durIndices = [...indices]; // we don't have real durations, but we still need 10 modes
-        // For the last two, we can use original order (since no durations)
-        modesList.push([...indices]);                          // placeholder for "duration ↑"
-        modesList.push([...indices].reverse());                // placeholder for "duration ↓"
+        // Last two: use original and reverse (placeholders)
+        modes.push([...indices]);
+        modes.push([...indices].reverse());
 
-        return modesList.slice(0, 10);
+        return modes.slice(0, 10);
     }
 
     const modes = buildModes(songList.length);
@@ -193,64 +159,115 @@
         "⚡ EVEN FIRST", "🌀 ODD FIRST", "🔄 END-ALT", "📈 DURATION ↑", "📉 DURATION ↓"
     ];
 
-    // ---------- Global schedule calculation ----------
-    function getCurrentSchedule() {
+    // Precompute total duration of each mode (in milliseconds)
+    const modeTotalDurationsMs = modes.map(modeOrder =>
+        modeOrder.reduce((sum, idx) => sum + songList[idx].duration, 0) * 1000
+    );
+
+    // Total cycle duration (sum of all modes)
+    const TOTAL_CYCLE_MS = modeTotalDurationsMs.reduce((a, b) => a + b, 0);
+
+    // ---------- Global schedule: find current mode and song within the infinite cycle ----------
+    function getCurrentSong() {
         const now = Date.now();
-        let elapsed = now - EPOCH;
-        if (elapsed < 0) elapsed = 0;
+        let elapsedMs = now - EPOCH;
+        if (elapsedMs < 0) elapsedMs = 0;
         
-        const modeIndex = Math.floor(elapsed / MODE_DURATION_MS) % modes.length;
-        const modeStartOffset = Math.floor(elapsed / MODE_DURATION_MS) * MODE_DURATION_MS;
-        const elapsedInMode = elapsed - modeStartOffset;
+        // Wrap around the total cycle
+        let cycleOffsetMs = elapsedMs % TOTAL_CYCLE_MS;
         
-        const slotIndex = Math.floor(elapsedInMode / SLOT_DURATION_MS);
-        const offsetInSlot = elapsedInMode % SLOT_DURATION_MS;
+        // Find which mode this falls into
+        let modeIndex = 0;
+        let modeStartMs = 0;
+        for (let i = 0; i < modeTotalDurationsMs.length; i++) {
+            if (cycleOffsetMs < modeTotalDurationsMs[i]) {
+                modeIndex = i;
+                break;
+            }
+            cycleOffsetMs -= modeTotalDurationsMs[i];
+            modeStartMs += modeTotalDurationsMs[i];
+        }
         
-        const currentModeOrder = modes[modeIndex];
-        const songPositionInMode = slotIndex % currentModeOrder.length;
-        const songGlobalIndex = currentModeOrder[songPositionInMode];
+        const modeOrder = modes[modeIndex];
+        const offsetInModeMs = cycleOffsetMs;
+        
+        // Find which song within the mode
+        let accumulated = 0;
+        let songPosInMode = -1;
+        let offsetInSongMs = 0;
+        for (let i = 0; i < modeOrder.length; i++) {
+            const songId = modeOrder[i];
+            const durMs = songList[songId].duration * 1000;
+            if (offsetInModeMs < accumulated + durMs) {
+                songPosInMode = i;
+                offsetInSongMs = offsetInModeMs - accumulated;
+                break;
+            }
+            accumulated += durMs;
+        }
+        // fallback (should never happen)
+        if (songPosInMode === -1 && modeOrder.length) {
+            songPosInMode = modeOrder.length - 1;
+            const lastId = modeOrder[songPosInMode];
+            offsetInSongMs = songList[lastId].duration * 1000 - 1;
+        }
+        
+        const currentSongGlobalIdx = modeOrder[songPosInMode];
+        const remainingInSongMs = (songList[currentSongGlobalIdx].duration * 1000) - offsetInSongMs;
+        
+        // Determine next song (for UI)
+        let nextSongGlobalIdx = null;
+        let nextPos = songPosInMode + 1;
+        if (nextPos >= modeOrder.length) {
+            // Move to next mode
+            let nextModeIndex = (modeIndex + 1) % modes.length;
+            if (modes[nextModeIndex].length) {
+                nextSongGlobalIdx = modes[nextModeIndex][0];
+            } else {
+                nextSongGlobalIdx = modeOrder[0]; // fallback
+            }
+        } else {
+            nextSongGlobalIdx = modeOrder[nextPos];
+        }
         
         return {
             modeIndex,
-            songGlobalIndex,
-            offsetInSlot,        // milliseconds into the current 4‑min slot
-            nextSwitchMs: SLOT_DURATION_MS - offsetInSlot
+            songGlobalIndex: currentSongGlobalIdx,
+            offsetInSongMs,
+            remainingInSongMs,
+            nextSongGlobalIndex: nextSongGlobalIdx
         };
     }
 
-    // ---------- Player state ----------
+    // ---------- Player UI and control ----------
+    const songTitleElem = document.getElementById('currentSongTitle');
+    const songDetailsElem = document.getElementById('currentSongDetails');
+    const nextSongTitleElem = document.getElementById('nextSongTitle');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+
     let audio = null;
     let isPlaying = true;
     let switchTimeout = null;
-    let currentSongUrl = null;
-    let currentModeIndex = -1;
-    
-    const songTitleElem = document.getElementById('currentSongTitle');
-    const songDetailsElem = document.getElementById('currentSongDetails');
-    const modeNameElem = document.getElementById('modeName');
-    const playPauseBtn = document.getElementById('playPauseBtn');
+    let isSwitching = false; // prevent overlapping switches
 
-    function loadCurrentSong() {
-        const { modeIndex, songGlobalIndex, offsetInSlot } = getCurrentSchedule();
-        const song = songList[songGlobalIndex];
-        
-        // Update UI
+    function updateUI(songIdx, nextIdx) {
+        const song = songList[songIdx];
         songTitleElem.innerText = song.title;
         songDetailsElem.innerText = song.details || "";
-        modeNameElem.innerText = MODE_NAMES[modeIndex];
-        currentModeIndex = modeIndex;
+        const nextSong = songList[nextIdx];
+        nextSongTitleElem.innerText = nextSong.title;
+    }
+
+    // Function to load next song based on current global state (called by timer or ended event)
+    function loadNextSongFromGlobal() {
+        if (isSwitching) return;
+        isSwitching = true;
+        const { songGlobalIndex, offsetInSongMs, remainingInSongMs, nextSongGlobalIndex } = getCurrentSong();
+        const song = songList[songGlobalIndex];
+        updateUI(songGlobalIndex, nextSongGlobalIndex);
         
-        // If same song and already playing, just ensure correct time (only if user paused/resumed)
-        if (audio && audio.src === song.url && !audio.ended) {
-            const targetTime = offsetInSlot / 1000;
-            if (Math.abs(audio.currentTime - targetTime) > 0.5) {
-                audio.currentTime = targetTime;
-            }
-            if (isPlaying && audio.paused) audio.play().catch(e => console.warn);
-            return;
-        }
+        const targetSec = offsetInSongMs / 1000;
         
-        // Load new song
         if (audio) {
             audio.pause();
             audio.src = '';
@@ -260,37 +277,93 @@
             audio.volume = 1;
             audio.preload = 'auto';
         }
-        
         audio.src = song.url;
         audio.load();
-        currentSongUrl = song.url;
         
-        const startAt = offsetInSlot / 1000;
-        const onCanPlay = () => {
+        const onReady = () => {
             if (audio.readyState >= 2) {
-                audio.currentTime = startAt;
-                if (isPlaying) audio.play().catch(e => console.warn("autoplay blocked"));
-                audio.removeEventListener('canplay', onCanPlay);
+                audio.currentTime = targetSec;
+                if (isPlaying) audio.play().catch(e => console.warn);
+                audio.removeEventListener('canplay', onReady);
+                // Schedule next switch based on remaining time of this new song
+                scheduleNextSwitch(remainingInSongMs);
+                isSwitching = false;
             }
         };
-        audio.addEventListener('canplay', onCanPlay, { once: true });
-        // fallback
+        audio.addEventListener('canplay', onReady, { once: true });
         setTimeout(() => {
             if (audio.readyState < 2) {
-                audio.currentTime = startAt;
+                audio.currentTime = targetSec;
                 if (isPlaying) audio.play().catch(e => null);
+                scheduleNextSwitch(remainingInSongMs);
+                isSwitching = false;
+            }
+        }, 2000);
+    }
+
+    function loadAndPlayCurrentSong() {
+        if (isSwitching) return;
+        const { songGlobalIndex, offsetInSongMs, remainingInSongMs, nextSongGlobalIndex } = getCurrentSong();
+        const song = songList[songGlobalIndex];
+        updateUI(songGlobalIndex, nextSongGlobalIndex);
+        
+        const targetSec = offsetInSongMs / 1000;
+        
+        if (audio && audio.src === song.url && !audio.ended) {
+            if (Math.abs(audio.currentTime - targetSec) > 0.5) {
+                audio.currentTime = targetSec;
+            }
+            if (isPlaying && audio.paused) audio.play().catch(e => console.warn);
+            scheduleNextSwitch(remainingInSongMs);
+            return;
+        }
+        
+        if (audio) {
+            audio.pause();
+            audio.src = '';
+            audio.load();
+        } else {
+            audio = new Audio();
+            audio.volume = 1;
+            audio.preload = 'auto';
+        }
+        audio.src = song.url;
+        audio.load();
+        
+        const onReady = () => {
+            if (audio.readyState >= 2) {
+                audio.currentTime = targetSec;
+                if (isPlaying) audio.play().catch(e => console.warn);
+                audio.removeEventListener('canplay', onReady);
+                scheduleNextSwitch(remainingInSongMs);
+            }
+        };
+        audio.addEventListener('canplay', onReady, { once: true });
+        setTimeout(() => {
+            if (audio.readyState < 2) {
+                audio.currentTime = targetSec;
+                if (isPlaying) audio.play().catch(e => null);
+                scheduleNextSwitch(remainingInSongMs);
             }
         }, 2000);
     }
     
-    function scheduleNextSwitch() {
+    function scheduleNextSwitch(delayMs) {
         if (switchTimeout) clearTimeout(switchTimeout);
-        const { nextSwitchMs } = getCurrentSchedule();
-        switchTimeout = setTimeout(() => {
-            // Time to switch to the next song slot
-            loadCurrentSong();
-            scheduleNextSwitch(); // reschedule for the following slot
-        }, nextSwitchMs);
+        if (!isPlaying) return;
+        if (delayMs > 100) {
+            switchTimeout = setTimeout(() => loadNextSongFromGlobal(), delayMs);
+        } else {
+            loadNextSongFromGlobal();
+        }
+    }
+    
+    // Auto-next when song naturally ends
+    function onSongEnded() {
+        if (!isPlaying) return;
+        // Clear any pending timer to avoid double switching
+        if (switchTimeout) clearTimeout(switchTimeout);
+        loadNextSongFromGlobal();
     }
     
     function startRadio() {
@@ -298,9 +371,9 @@
             audio = new Audio();
             audio.volume = 1;
             audio.preload = 'auto';
+            audio.addEventListener('ended', onSongEnded);
         }
-        loadCurrentSong();
-        scheduleNextSwitch();
+        loadAndPlayCurrentSong();
     }
     
     function stopRadio() {
@@ -332,26 +405,20 @@
         }
     }
     
-    // Handle visibility changes (re‑sync when tab becomes active)
     document.addEventListener('visibilitychange', () => {
         if (!document.hidden && isPlaying) {
-            // Recalculate schedule and reload current song (may have drifted)
             if (switchTimeout) clearTimeout(switchTimeout);
-            loadCurrentSong();
-            scheduleNextSwitch();
+            loadAndPlayCurrentSong();
         }
     });
     
     // Initialise
     startRadio();
     updateButtonUI();
-    
     playPauseBtn.addEventListener('click', togglePlayPause);
-    
-    // Autoplay may be blocked; if so, show STOP state and wait for user click
     if (audio) {
         audio.play().catch(e => {
-            console.log("Autoplay blocked – click PLAY to start");
+            console.log("Autoplay blocked – click PLAY");
             isPlaying = false;
             stopRadio();
             updateButtonUI();
