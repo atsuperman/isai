@@ -281,30 +281,37 @@
     const playPauseBtn = document.getElementById('playPauseBtn');
 
     let audio = null;
-    let nextAudio = null;        // Preload for next song
-    let wakeLock = null;         // Screen Wake Lock
+    let nextAudio = null;
     let isLoading = false;
     let isPlaying = true;
     let switchTimeout = null;
     let isSwitching = false;
-
-    // Wake Lock செயல்படுத்தும் function
-    async function requestWakeLock() {
-        if ('wakeLock' in navigator) {
-            try {
-                wakeLock = await navigator.wakeLock.request('screen');
-                console.log('Screen Wake Lock acquired');
-            } catch (err) {
-                console.log('Wake Lock failed (normal on some browsers):', err);
-            }
-        }
-    }
 
     function updateUI(songIdx, nextIdx) {
         const song = songList[songIdx];
         songTitleElem.innerText = song.title;
         songDetailsElem.innerText = song.details || "";
         nextSongTitleElem.innerText = songList[nextIdx] ? songList[nextIdx].title : "—";
+
+        // Media Session - Logo + Song Name மட்டும்
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: song.title,
+                artist: "SUPER இசை",
+                album: "",
+                artwork: [{
+                    src: "",  // Empty - page logo ஐ பயன்படுத்த
+                    sizes: "512x512"
+                }]
+            });
+
+            // Duration, Seek, Next, Prev எதையும் அனுமதிக்காது
+            navigator.mediaSession.setActionHandler('seekbackward', null);
+            navigator.mediaSession.setActionHandler('seekforward', null);
+            navigator.mediaSession.setActionHandler('seekto', null);
+            navigator.mediaSession.setActionHandler('previoustrack', null);
+            navigator.mediaSession.setActionHandler('nexttrack', null);
+        }
     }
 
     function preloadNextSong(nextIdx) {
@@ -399,7 +406,6 @@
             playPauseBtn.classList.add('loading');
             playPauseBtn.innerHTML = '<span>⏳</span> LOADING';
             loadAndPlayCurrentSong();
-            requestWakeLock();   // Wake Lock தொடங்கு
         }
     }
 
@@ -456,7 +462,6 @@
                     updateButtonUI();
                     preloadNextSong(nextSongGlobalIndex);
                     scheduleNextSwitch(remainingInSongMs);
-                    requestWakeLock();
                 }).catch(() => {
                     isLoading = false;
                     updateButtonUI();
@@ -491,18 +496,11 @@
         playPauseBtn.classList.add('visible');
     }, 1000);
 
-    // Visibility change - background-இல் இருந்து திரும்பும் போது resume
     document.addEventListener('visibilitychange', () => {
         if (!document.hidden && isPlaying) {
             if (switchTimeout) clearTimeout(switchTimeout);
             loadAndPlayCurrentSong();
-            requestWakeLock();
         }
-    });
-
-    // Page unload-இல் wake lock release (optional)
-    window.addEventListener('beforeunload', () => {
-        if (wakeLock) wakeLock.release();
     });
 </script>
 </body>
