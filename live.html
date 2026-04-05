@@ -8,122 +8,51 @@
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
         body {
             min-height: 100vh;
-            background: #ffffff;
+            background: linear-gradient(145deg, #f5efe5 0%, #e2d8cc 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-family: 'Inter', system-ui, sans-serif;
-            padding: 0.5rem;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            padding: 1rem;
         }
 
         .radio-card {
-            background: #fef9e6;
-            border-radius: 3rem;
-            padding: 2rem;
-            width: 100%;
-            max-width: 460px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            border: 1px solid #ddd;
-        }
-        .now-playing { text-align: center; margin: 1rem 0; }
-        .song-title {
-            font-size: 2rem;
-            font-weight: 600;
-            color: #000000;
-            word-break: break-word;
-        }
-        .song-details {
-            margin-top: 0.75rem;
-            font-size: 0.8rem;
-            color: #333333;
-            background: rgba(0,0,0,0.05);
-            padding: 0.5rem 1rem;
+            background: rgba(255, 250, 240, 0.92);
+            backdrop-filter: blur(6px);
             border-radius: 2rem;
-            display: inline-block;
-        }
-        .next-song {
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            color: #222222;
-            background: rgba(0,0,0,0.05);
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
-            display: inline-block;
-        }
-        .next-song span { opacity: 0.7; font-size: 0.7rem; }
-
-        .toggle-btn {
-            background: #e0e0e0;
-            border: 1.5px solid #cccccc;
+            padding: 2rem 1.8rem;
             width: 100%;
-            padding: 1rem;
-            border-radius: 3rem;
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: #111111;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            margin-top: 1.5rem;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .toggle-btn.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .toggle-btn:active { transform: scale(0.97); }
-
-        .toggle-btn.loading {
+            max-width: 520px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255,255,245,0.7);
+            border: 1px solid rgba(210, 180, 140, 0.6);
+            transition: all 0.3s ease;
             position: relative;
-            pointer-events: none;
-            opacity: 0.7;
         }
-        .toggle-btn.loading::after {
-            content: "";
+
+        /* Logo inside radio card - top right corner */
+        .card-logo {
             position: absolute;
-            width: 1.2rem;
-            height: 1.2rem;
-            border: 2px solid #333;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-left: 0.5rem;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+            top: 1.2rem;
+            right: 1.5rem;
+            z-index: 10;
         }
 
-        .logo-container {
-            text-align: center;
-            width: 100%;
-        }
-
-        .logo {
+        .card-logo .logo {
             font-family: 'Arial', sans-serif;
-            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            font-size: 1.4rem;
             font-weight: 900;
             text-transform: uppercase;
             background: linear-gradient(45deg, #ff0000, #ff6b6b);
             -webkit-background-clip: text;
             background-clip: text;
             color: green;
-            letter-spacing: -2px;
-            z-index: 1000;
-            padding: 0;
+            letter-spacing: -1.5px;
             position: relative;
-            margin: 10px 0 5px 0;
-            text-align: center;
             display: inline-block;
         }
 
-        .logo::after {
+        .card-logo .logo::after {
             content: 'இசை';
             font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
             font-size: 0.3em;
@@ -133,31 +62,177 @@
             color: transparent;
             position: absolute;
             right: -0.2em;
-            bottom: -0.6em;
+            bottom: -0.5em;
             text-transform: none;
             letter-spacing: 0;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
+        .now-playing {
+            text-align: left;
+            margin: 0 0 1rem 0;
+        }
+
+        .song-pad {
+            background: linear-gradient(105deg, #fefcf8 0%, #f8f2e8 100%);
+            border: none;
+            border-left: 4px solid #c07a4b;
+            border-radius: 0 24px 24px 0;
+            padding: 18px 0 18px 24px;
+            margin: 20px 0;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 8px 18px -8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .song-pad:active {
+            transform: none;
+            background: linear-gradient(105deg, #fefcf8 0%, #f8f2e8 100%);
+        }
+
+        .now-label {
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #b0652c;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: inline-block;
+            background: rgba(192, 122, 75, 0.1);
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+
+        .song-info {
+            width: 100%;
+        }
+
+        .pad-title {
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #2c2418;
+            line-height: 1.25;
+            letter-spacing: -0.2px;
+            margin-bottom: 6px;
+            word-break: break-word;
+        }
+
+        .pad-details {
+            font-size: 0.85rem;
+            color: #6a5a48;
+            line-height: 1.4;
+            font-weight: 450;
+            word-break: break-word;
+            min-height: 3.2em;
+        }
+
+        .song-details {
+            animation: fadeSlide 0.5s ease-out;
+        }
+
+        @keyframes fadeSlide {
+            0% { opacity: 0; transform: translateX(6px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch {
+            animation: glitch 0.35s linear 2;
+        }
+
+        .toggle-btn {
+            background: #2d2a24;
+            border: none;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 3rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fff3e4;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-top: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, background 0.2s;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .toggle-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .toggle-btn:active {
+            transform: scale(0.97);
+            background: #423c34;
+        }
+
+        .toggle-btn.loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        .toggle-btn.loading::after {
+            content: "";
+            position: absolute;
+            width: 1.2rem;
+            height: 1.2rem;
+            border: 2px solid #ffd8b0;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 0.5rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Hide the old standalone logo container */
+        .old-logo-container {
+            display: none;
+        }
+
         @media (max-width: 500px) {
             .radio-card { padding: 1.5rem; }
-            .song-title { font-size: 1.5rem; }
+            .card-logo .logo { font-size: 1.1rem; }
+            .song-pad { padding: 14px 0 14px 20px; }
+            .pad-title { font-size: 1.45rem; }
             .toggle-btn { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
-  <div class="logo-container">
-    <h1 class="logo">SUPER</h1>
-  </div>
-  <div class="radio-card">
+<!-- Old logo container hidden, logo moved inside card -->
+<div class="old-logo-container"></div>
+
+<div class="radio-card">
+    <div class="card-logo">
+        <h1 class="logo">SUPER</h1>
+    </div>
     <div class="now-playing">
-        <div class="song-title" id="currentSongTitle">⟳ SYNCING</div>
-        <div class="song-details" id="currentSongDetails"></div>
-        <div class="next-song"><span>⏩ Coming up next:</span> <span id="nextSongTitle">—</span></div>
+        <div class="song-pad" id="songPad">
+            <div class="now-label" id="nowLabel">NOW PLAYING</div>
+            <div class="song-info">
+                <div id="padSongTitle" class="pad-title"></div>
+                <div id="padSongDetails" class="pad-details song-details"></div>
+            </div>
+        </div>
     </div>
     <button class="toggle-btn" id="playPauseBtn"><span>▶</span> PLAY</button>
-  </div>
+</div>
 
 <script type="module">
     import { songs } from './isai.js';
@@ -174,8 +249,6 @@
     function buildModes(count) {
         const indices = [...Array(count).keys()];
         const modes = [];
-        modes.push([...indices]);
-        modes.push([...indices].reverse());
 
         const shuffleSeed = (arr, seed) => {
             const a = [...arr];
@@ -190,15 +263,16 @@
             }
             return a;
         };
+
         modes.push(shuffleSeed([...indices], 42));
         modes.push(shuffleSeed([...indices], 77));
         modes.push(shuffleSeed([...indices], 101));
-
+        
         const even = indices.filter(i => i % 2 === 0);
         const odd = indices.filter(i => i % 2 === 1);
         modes.push([...even, ...odd]);
         modes.push([...odd, ...even]);
-
+        
         const alt = [];
         let left = 0, right = count-1;
         while (left <= right) {
@@ -207,10 +281,13 @@
             left++; right--;
         }
         modes.push(alt);
-        modes.push([...indices]);
-        modes.push([...indices].reverse());
+        
+        modes.push(shuffleSeed([...indices], 123));
+        modes.push(shuffleSeed([...indices], 456));
+        modes.push(shuffleSeed([...indices], 789));
+        modes.push(shuffleSeed([...indices], 999));
 
-        return modes.slice(0, 10);
+        return modes;
     }
 
     const modes = buildModes(songList.length);
@@ -275,47 +352,30 @@
         };
     }
 
-    const songTitleElem = document.getElementById('currentSongTitle');
-    const songDetailsElem = document.getElementById('currentSongDetails');
-    const nextSongTitleElem = document.getElementById('nextSongTitle');
     const playPauseBtn = document.getElementById('playPauseBtn');
+    const songPad = document.getElementById('songPad');
+    const padSongTitle = document.getElementById('padSongTitle');
+    const padSongDetails = document.getElementById('padSongDetails');
+    const nowLabel = document.getElementById('nowLabel');
 
     let audio = null;
     let nextAudio = null;
     let isLoading = false;
-    let isPlaying = true;
+    let isPlaying = false;
     let switchTimeout = null;
     let isSwitching = false;
+    let padRestoreTimer = null;
 
     function updateUI(songIdx, nextIdx) {
         const song = songList[songIdx];
-        songTitleElem.innerText = song.title;
-        songDetailsElem.innerText = song.details || "";
-        nextSongTitleElem.innerText = songList[nextIdx] ? songList[nextIdx].title : "—";
-
-        // ==================== MEDIA SESSION - Notification / Lock Screen ====================
-        if ('mediaSession' in navigator) {
-            navigator.mediaSession.metadata = new MediaMetadata({
-                title: song.title,
-                artist: "SUPER இசை",
-                album: "",
-                artwork: [{
-                    src: "",
-                    sizes: "512x512"
-                }]
-            });
-
-            // Pause button-ஐ முழுவதும் மறைக்க (Stop logic மட்டும் வேலை செய்யும்)
-            navigator.mediaSession.setActionHandler('pause', null);
-            navigator.mediaSession.setActionHandler('play', null);
-
-            // வேறு எந்த control-உம் இல்லை
-            navigator.mediaSession.setActionHandler('seekbackward', null);
-            navigator.mediaSession.setActionHandler('seekforward', null);
-            navigator.mediaSession.setActionHandler('seekto', null);
-            navigator.mediaSession.setActionHandler('previoustrack', null);
-            navigator.mediaSession.setActionHandler('nexttrack', null);
-        }
+        padSongTitle.innerText = song.title;
+        padSongDetails.innerText = song.details || "";
+        nowLabel.innerText = "NOW PLAYING";
+        padSongDetails.classList.remove('song-details');
+        void padSongDetails.offsetWidth;
+        padSongDetails.classList.add('song-details');
+        songPad.classList.add('glitch');
+        setTimeout(() => songPad.classList.remove('glitch'), 600);
     }
 
     function preloadNextSong(nextIdx) {
@@ -417,10 +477,10 @@
         if (isLoading) return;
         if (isPlaying) {
             playPauseBtn.innerHTML = '<span>⏹️</span> STOP';
-            playPauseBtn.style.background = "rgba(200, 70, 70, 0.25)";
+            playPauseBtn.style.background = "#8b3c2a";
         } else {
             playPauseBtn.innerHTML = '<span>▶</span> PLAY';
-            playPauseBtn.style.background = "rgba(30, 40, 65, 0.6)";
+            playPauseBtn.style.background = "#2d2a24";
         }
         playPauseBtn.classList.remove('loading');
     }
@@ -491,7 +551,50 @@
         }, 1500);
     }
 
-    // Initialise
+    function showNextPreview() {
+        if (padRestoreTimer) {
+            clearTimeout(padRestoreTimer);
+            padRestoreTimer = null;
+        }
+
+        const { nextSongGlobalIndex, songGlobalIndex } = getCurrentSong();
+        const nextSong = songList[nextSongGlobalIndex];
+        const currentSong = songList[songGlobalIndex];
+
+        const isShowingNext = (nowLabel.innerText === "NEXT");
+        
+        if (isShowingNext) {
+            nowLabel.innerText = "NOW PLAYING";
+            padSongTitle.innerText = currentSong.title;
+            padSongDetails.innerText = currentSong.details || "";
+            padSongDetails.classList.remove('song-details');
+            void padSongDetails.offsetWidth;
+            padSongDetails.classList.add('song-details');
+            return;
+        }
+
+        nowLabel.innerText = "NEXT";
+        padSongTitle.innerText = nextSong.title;
+        padSongDetails.innerText = nextSong.details || "";
+        padSongDetails.classList.remove('song-details');
+        void padSongDetails.offsetWidth;
+        padSongDetails.classList.add('song-details');
+
+        padRestoreTimer = setTimeout(() => {
+            const fresh = getCurrentSong();
+            const freshSong = songList[fresh.songGlobalIndex];
+            nowLabel.innerText = "NOW PLAYING";
+            padSongTitle.innerText = freshSong.title;
+            padSongDetails.innerText = freshSong.details || "";
+            padSongDetails.classList.remove('song-details');
+            void padSongDetails.offsetWidth;
+            padSongDetails.classList.add('song-details');
+            padRestoreTimer = null;
+        }, 5000);
+    }
+
+    songPad.addEventListener('click', showNextPreview);
+
     playPauseBtn.addEventListener('click', togglePlayPause);
     loadAndPlayCurrentSong();
     updateButtonUI();
