@@ -341,9 +341,14 @@ footer { font-size: 0.65rem; text-align: center; margin-top: 1.8rem; color: #777
 
     // Function to load next song based on current global state (called by timer or ended event)
     function loadNextSongFromGlobal() {
-      if (isSwitching || isLoading) return;
-        isSwitching = true;
-        const { songGlobalIndex, offsetInSongMs, remainingInSongMs, nextSongGlobalIndex } = getCurrentSong();
+    if (isSwitching || isLoading) return;
+    isSwitching = true;
+    
+    // Add this line for better logging
+    console.log("Loading next song from global schedule...");
+    
+    const { songGlobalIndex, offsetInSongMs, remainingInSongMs, nextSongGlobalIndex } = getCurrentSong();
+    // ... மீதி code அதே போல் இருக்கட்டும்
         const song = songList[songGlobalIndex];
         updateUI(songGlobalIndex, nextSongGlobalIndex);
         
@@ -480,24 +485,41 @@ footer { font-size: 0.65rem; text-align: center; margin-top: 1.8rem; color: #777
     }, 2000);
 }
     
-    function scheduleNextSwitch(delayMs) {
-        if (switchTimeout) clearTimeout(switchTimeout);
-        if (!isPlaying) return;
-        if (delayMs > 100) {
-            switchTimeout = setTimeout(() => loadNextSongFromGlobal(), delayMs);
-        } else {
+    function scheduleNextSwitch(remainingMs) {
+    if (switchTimeout) clearTimeout(switchTimeout);
+    if (!isPlaying) return;
+
+    // Safety: If remaining time is very small or negative, switch immediately
+    if (remainingMs < 3000) {   // 3 seconds or less
+        console.log("Low remaining time, switching immediately");
+        setTimeout(() => loadNextSongFromGlobal(), 500);
+        return;
+    }
+
+    // Main timer - switch 2 seconds before actual end (to handle network delay)
+    const switchTime = Math.max(remainingMs - 2000, 100);
+
+    switchTimeout = setTimeout(() => {
+        console.log(`Timer triggered next song switch (${switchTime}ms)`);
+        loadNextSongFromGlobal();
+    }, switchTime);
+
+    // Extra safety: If ended event doesn't fire, force switch at exact end time
+    setTimeout(() => {
+        if (isPlaying && audio && audio.paused === false) {
+            console.warn("Safety fallback: forcing next song");
             loadNextSongFromGlobal();
         }
-    }
+    }, remainingMs + 500);
+}
     
-    // Auto-next when song naturally ends
-    function onSongEnded() {
-        if (!isPlaying) return;
-        // Clear any pending timer to avoid double switching
-        if (switchTimeout) clearTimeout(switchTimeout);
-        loadNextSongFromGlobal();
-    }
-    
+ // Auto-next when song naturally ends + safety fallback
+function onSongEnded() {
+    if (!isPlaying) return;
+    if (switchTimeout) clearTimeout(switchTimeout);
+    console.log("Song ended naturally → loading next");
+    loadNextSongFromGlobal();
+}
     function startRadio() {
         if (!audio) {
             audio = new Audio();
