@@ -293,19 +293,23 @@
         songDetailsElem.innerText = song.details || "";
         nextSongTitleElem.innerText = songList[nextIdx] ? songList[nextIdx].title : "—";
 
-        // Media Session - Logo + Song Name மட்டும்
+        // ==================== MEDIA SESSION - Notification / Lock Screen ====================
         if ('mediaSession' in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
                 title: song.title,
                 artist: "SUPER இசை",
                 album: "",
                 artwork: [{
-                    src: "",  // Empty - page logo ஐ பயன்படுத்த
+                    src: "",
                     sizes: "512x512"
                 }]
             });
 
-            // Duration, Seek, Next, Prev எதையும் அனுமதிக்காது
+            // Pause button-ஐ முழுவதும் மறைக்க (Stop logic மட்டும் வேலை செய்யும்)
+            navigator.mediaSession.setActionHandler('pause', null);
+            navigator.mediaSession.setActionHandler('play', null);
+
+            // வேறு எந்த control-உம் இல்லை
             navigator.mediaSession.setActionHandler('seekbackward', null);
             navigator.mediaSession.setActionHandler('seekforward', null);
             navigator.mediaSession.setActionHandler('seekto', null);
