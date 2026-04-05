@@ -7,151 +7,137 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
         body {
-    min-height: 100vh;
-    background: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Inter', system-ui, sans-serif;
-    padding: 0.5rem;  /* ← மாற்றப்பட்டது */
-}
+            min-height: 100vh;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', system-ui, sans-serif;
+            padding: 0.5rem;
+        }
 
-       .radio-card {
-    background: #fef9e6;  /* Light warm color (you can change to #f0f8ff or #e6f0fa) */
-    border-radius: 3rem;
-    padding: 2rem;
-    width: 100%;
-    max-width: 460px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    border: 1px solid #ddd;
-}
+        .radio-card {
+            background: #fef9e6;
+            border-radius: 3rem;
+            padding: 2rem;
+            width: 100%;
+            max-width: 460px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
         .now-playing { text-align: center; margin: 1rem 0; }
-     .song-title {
-    font-size: 2rem;
-    font-weight: 600;
-    color: #000000;  /* Black text */
-    word-break: break-word;
-}
-      .song-details {
-    margin-top: 0.75rem;
-    font-size: 0.8rem;
-    color: #333333;
-    background: rgba(0,0,0,0.05);
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
-    display: inline-block;
-}
+        .song-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #000000;
+            word-break: break-word;
+        }
+        .song-details {
+            margin-top: 0.75rem;
+            font-size: 0.8rem;
+            color: #333333;
+            background: rgba(0,0,0,0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            display: inline-block;
+        }
         .next-song {
-    margin-top: 1rem;
-    font-size: 0.85rem;
-    color: #222222;
-    background: rgba(0,0,0,0.05);
-    padding: 0.4rem 1rem;
-    border-radius: 2rem;
-    display: inline-block;
-}
-
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #222222;
+            background: rgba(0,0,0,0.05);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            display: inline-block;
+        }
         .next-song span { opacity: 0.7; font-size: 0.7rem; }
-  .toggle-btn {
-    background: #e0e0e0;
-    border: 1.5px solid #cccccc;
-    width: 100%;
-    padding: 1rem;
-    border-radius: 3rem;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: #111111;
-    cursor: pointer;
-    transition: 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    margin-top: 1.5rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
 
-.toggle-btn.visible {
-    opacity: 1;
-    pointer-events: auto;
-}
+        .toggle-btn {
+            background: #e0e0e0;
+            border: 1.5px solid #cccccc;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 3rem;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #111111;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-top: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .toggle-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
         .toggle-btn:active { transform: scale(0.97); }
-      .sync-indicator { text-align: center; font-size: 0.7rem; margin-top: 1.5rem; color: #555555; }
-footer { font-size: 0.65rem; text-align: center; margin-top: 1.8rem; color: #777777; }
 
-.toggle-btn:active {
-    transform: scale(0.97);
-    background: #cccccc;
-}
+        .toggle-btn.loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .toggle-btn.loading::after {
+            content: "";
+            position: absolute;
+            width: 1.2rem;
+            height: 1.2rem;
+            border: 2px solid #333;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 0.5rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
 
-/* Loading animation for button */
-.toggle-btn.loading {
-    position: relative;
-    pointer-events: none;
-    opacity: 0.7;
-}
-.toggle-btn.loading::after {
-    content: "";
-    position: absolute;
-    width: 1.2rem;
-    height: 1.2rem;
-    border: 2px solid #333;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin-left: 0.5rem;
-}
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
+        .logo-container {
+            text-align: center;
+            width: 100%;
+        }
 
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ff0000, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: green;
+            letter-spacing: -2px;
+            z-index: 1000;
+            padding: 0;
+            position: relative;
+            margin: 10px 0 5px 0;
+            text-align: center;
+            display: inline-block;
+        }
 
-/* Logo styles (from the reference) */
-.logo-container {
-    text-align: center;
-    width: 100%;
-}
-
-.logo {
-    font-family: 'Arial', sans-serif;
-    font-size: clamp(1.8rem, 6vw, 2.5rem);  /* ← மாற்றப்பட்டது */
-    font-weight: 900;
-    text-transform: uppercase;
-    background: linear-gradient(45deg, #ff0000, #ff6b6b);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: green;
-    letter-spacing: -2px;
-    z-index: 1000;
-    padding: 0;
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    margin: 10px 0 5px 0;  /* ← மாற்றப்பட்டது */
-    text-align: center;
-    display: inline-block;
-}
-
-.logo::after {
-    content: 'இசை';
-    font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
-    font-size: 0.3em;
-    background: linear-gradient(45deg, #333, #666);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    position: absolute;
-    right: -0.2em;
-    bottom: -0.6em;
-    text-transform: none;
-    letter-spacing: 0;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
+        .logo::after {
+            content: 'இசை';
+            font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+            font-size: 0.3em;
+            background: linear-gradient(45deg, #333, #666);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: absolute;
+            right: -0.2em;
+            bottom: -0.6em;
+            text-transform: none;
+            letter-spacing: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
 
         @media (max-width: 500px) {
             .radio-card { padding: 1.5rem; }
@@ -163,37 +149,33 @@ footer { font-size: 0.65rem; text-align: center; margin-top: 1.8rem; color: #777
 <body>
   <div class="logo-container">
     <h1 class="logo">SUPER</h1>
-</div>
-<div class="radio-card">
+  </div>
+  <div class="radio-card">
     <div class="now-playing">
         <div class="song-title" id="currentSongTitle">⟳ SYNCING</div>
         <div class="song-details" id="currentSongDetails"></div>
         <div class="next-song"><span>⏩ Coming up next:</span> <span id="nextSongTitle">—</span></div>
     </div>
     <button class="toggle-btn" id="playPauseBtn"><span>▶</span> PLAY</button>
-</div>
+  </div>
 
 <script type="module">
     import { songs } from './isai.js';
 
-    // Build song list with title, url, details, duration
     const songList = songs.map(song => ({
         title: song.file.replace(/\.(mp3|m4a|MP3|M4A)$/i, ''),
         url: song.url,
         details: song.details,
-        duration: song.duration  // seconds
+        duration: song.duration
     }));
 
-    // ---------- Epoch: April 1, 2026, 00:00 UTC ----------
     const EPOCH = new Date(Date.UTC(2026, 3, 1, 0, 0, 0)).getTime();
 
-    // ---------- Build 10 playback modes (song index orders) ----------
     function buildModes(count) {
         const indices = [...Array(count).keys()];
         const modes = [];
-
-        modes.push([...indices]);                       // original
-        modes.push([...indices].reverse());             // reverse
+        modes.push([...indices]);
+        modes.push([...indices].reverse());
 
         const shuffleSeed = (arr, seed) => {
             const a = [...arr];
@@ -214,8 +196,8 @@ footer { font-size: 0.65rem; text-align: center; margin-top: 1.8rem; color: #777
 
         const even = indices.filter(i => i % 2 === 0);
         const odd = indices.filter(i => i % 2 === 1);
-        modes.push([...even, ...odd]);                  // even first
-        modes.push([...odd, ...even]);                  // odd first
+        modes.push([...even, ...odd]);
+        modes.push([...odd, ...even]);
 
         const alt = [];
         let left = 0, right = count-1;
@@ -224,9 +206,7 @@ footer { font-size: 0.65rem; text-align: center; margin-top: 1.8rem; color: #777
             if (left !== right) alt.push(right);
             left++; right--;
         }
-        modes.push(alt);                                // alternating ends
-
-        // Last two: use original and reverse (placeholders)
+        modes.push(alt);
         modes.push([...indices]);
         modes.push([...indices].reverse());
 
@@ -234,44 +214,30 @@ footer { font-size: 0.65rem; text-align: center; margin-top: 1.8rem; color: #777
     }
 
     const modes = buildModes(songList.length);
-    const MODE_NAMES = [
-        "🔁 ORDER", "🔂 REVERSE", "🎲 SHUFFLE A", "🎴 SHUFFLE B", "♻️ SHUFFLE C",
-        "⚡ EVEN FIRST", "🌀 ODD FIRST", "🔄 END-ALT", "📈 DURATION ↑", "📉 DURATION ↓"
-    ];
-
-    // Precompute total duration of each mode (in milliseconds)
     const modeTotalDurationsMs = modes.map(modeOrder =>
         modeOrder.reduce((sum, idx) => sum + songList[idx].duration, 0) * 1000
     );
-
-    // Total cycle duration (sum of all modes)
     const TOTAL_CYCLE_MS = modeTotalDurationsMs.reduce((a, b) => a + b, 0);
 
-    // ---------- Global schedule: find current mode and song within the infinite cycle ----------
     function getCurrentSong() {
         const now = Date.now();
         let elapsedMs = now - EPOCH;
         if (elapsedMs < 0) elapsedMs = 0;
         
-        // Wrap around the total cycle
         let cycleOffsetMs = elapsedMs % TOTAL_CYCLE_MS;
         
-        // Find which mode this falls into
         let modeIndex = 0;
-        let modeStartMs = 0;
         for (let i = 0; i < modeTotalDurationsMs.length; i++) {
             if (cycleOffsetMs < modeTotalDurationsMs[i]) {
                 modeIndex = i;
                 break;
             }
             cycleOffsetMs -= modeTotalDurationsMs[i];
-            modeStartMs += modeTotalDurationsMs[i];
         }
         
         const modeOrder = modes[modeIndex];
         const offsetInModeMs = cycleOffsetMs;
         
-        // Find which song within the mode
         let accumulated = 0;
         let songPosInMode = -1;
         let offsetInSongMs = 0;
@@ -285,33 +251,25 @@ footer { font-size: 0.65rem; text-align: center; margin-top: 1.8rem; color: #777
             }
             accumulated += durMs;
         }
-        // fallback (should never happen)
+        
         if (songPosInMode === -1 && modeOrder.length) {
             songPosInMode = modeOrder.length - 1;
-            const lastId = modeOrder[songPosInMode];
-            offsetInSongMs = songList[lastId].duration * 1000 - 1;
+            offsetInSongMs = songList[modeOrder[songPosInMode]].duration * 1000 - 1;
         }
         
         const currentSongGlobalIdx = modeOrder[songPosInMode];
         const remainingInSongMs = (songList[currentSongGlobalIdx].duration * 1000) - offsetInSongMs;
         
-        // Determine next song (for UI)
         let nextSongGlobalIdx = null;
         let nextPos = songPosInMode + 1;
         if (nextPos >= modeOrder.length) {
-            // Move to next mode
             let nextModeIndex = (modeIndex + 1) % modes.length;
-            if (modes[nextModeIndex].length) {
-                nextSongGlobalIdx = modes[nextModeIndex][0];
-            } else {
-                nextSongGlobalIdx = modeOrder[0]; // fallback
-            }
+            nextSongGlobalIdx = modes[nextModeIndex][0];
         } else {
             nextSongGlobalIdx = modeOrder[nextPos];
         }
         
         return {
-            modeIndex,
             songGlobalIndex: currentSongGlobalIdx,
             offsetInSongMs,
             remainingInSongMs,
@@ -319,276 +277,229 @@ footer { font-size: 0.65rem; text-align: center; margin-top: 1.8rem; color: #777
         };
     }
 
-    // ---------- Player UI and control ----------
     const songTitleElem = document.getElementById('currentSongTitle');
     const songDetailsElem = document.getElementById('currentSongDetails');
     const nextSongTitleElem = document.getElementById('nextSongTitle');
     const playPauseBtn = document.getElementById('playPauseBtn');
 
     let audio = null;
+    let nextAudio = null;          // ← Preload ஆக அடுத்த பாடலுக்கு
     let isLoading = false;
     let isPlaying = true;
     let switchTimeout = null;
-    let isSwitching = false; // prevent overlapping switches
+    let isSwitching = false;
 
     function updateUI(songIdx, nextIdx) {
         const song = songList[songIdx];
         songTitleElem.innerText = song.title;
         songDetailsElem.innerText = song.details || "";
-        const nextSong = songList[nextIdx];
-        nextSongTitleElem.innerText = nextSong.title;
+        nextSongTitleElem.innerText = songList[nextIdx] ? songList[nextIdx].title : "—";
     }
 
-    // Function to load next song based on current global state (called by timer or ended event)
+    // Preload next song
+    function preloadNextSong(nextIdx) {
+        if (!nextIdx || nextIdx < 0) return;
+        if (nextAudio) {
+            nextAudio.src = '';
+        } else {
+            nextAudio = new Audio();
+            nextAudio.preload = 'auto';
+            nextAudio.volume = 1;
+        }
+        nextAudio.src = songList[nextIdx].url;
+        nextAudio.load();
+        console.log(`Preloading next song: ${songList[nextIdx].title}`);
+    }
+
     function loadNextSongFromGlobal() {
-    if (isSwitching || isLoading) return;
-    isSwitching = true;
-    
-    // Add this line for better logging
-    console.log("Loading next song from global schedule...");
-    
-    const { songGlobalIndex, offsetInSongMs, remainingInSongMs, nextSongGlobalIndex } = getCurrentSong();
-    // ... மீதி code அதே போல் இருக்கட்டும்
+        if (isSwitching || isLoading) return;
+        isSwitching = true;
+
+        console.log("=== Loading next song from global ===");
+
+        const { songGlobalIndex, offsetInSongMs, remainingInSongMs, nextSongGlobalIndex } = getCurrentSong();
         const song = songList[songGlobalIndex];
         updateUI(songGlobalIndex, nextSongGlobalIndex);
-        
+
         const targetSec = offsetInSongMs / 1000;
-        
+
+        // Current audio cleanup
         if (audio) {
             audio.pause();
             audio.src = '';
-            audio.load();
         } else {
-            audio = new Audio();
-            audio.volume = 1;
-            audio.preload = 'auto';
-        }
-        audio.src = song.url;
-        audio.load();
-        
-        const onReady = () => {
-            if (audio.readyState >= 2) {
-                audio.currentTime = targetSec;
-                if (isPlaying) audio.play().catch(e => console.warn);
-                audio.removeEventListener('canplay', onReady);
-                // Schedule next switch based on remaining time of this new song
-                scheduleNextSwitch(remainingInSongMs);
-                isSwitching = false;
-            }
-        };
-        audio.addEventListener('canplay', onReady, { once: true });
-        setTimeout(() => {
-            if (audio.readyState < 2) {
-                audio.currentTime = targetSec;
-                if (isPlaying) audio.play().catch(e => null);
-                scheduleNextSwitch(remainingInSongMs);
-                isSwitching = false;
-            }
-        }, 2000);
-    }
-
-    function loadAndPlayCurrentSong() {
-    if (isSwitching) return;
-    isLoading = true;
-    const { songGlobalIndex, offsetInSongMs, remainingInSongMs, nextSongGlobalIndex } = getCurrentSong();
-    const song = songList[songGlobalIndex];
-    updateUI(songGlobalIndex, nextSongGlobalIndex);
-    
-    const targetSec = offsetInSongMs / 1000;
-    
-    if (audio && audio.src === song.url && !audio.ended) {
-        if (Math.abs(audio.currentTime - targetSec) > 0.5) {
-            audio.currentTime = targetSec;
-        }
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                isLoading = false;
-                playPauseBtn.classList.remove('loading');
-                updateButtonUI(); // will show STOP
-            }).catch(e => {
-                isLoading = false;
-                playPauseBtn.classList.remove('loading');
-                console.warn("play error", e);
-                isPlaying = false;
-                updateButtonUI();
-            });
-        } else {
-            isLoading = false;
-            playPauseBtn.classList.remove('loading');
-            updateButtonUI();
-        }
-        scheduleNextSwitch(remainingInSongMs);
-        return;
-    }
-    
-    if (audio) {
-        audio.pause();
-        audio.src = '';
-        audio.load();
-    } else {
-        audio = new Audio();
-        audio.volume = 1;
-        audio.preload = 'auto';
-    }
-    audio.src = song.url;
-    audio.load();
-    
-    const onReady = () => {
-        if (audio.readyState >= 2) {
-            audio.currentTime = targetSec;
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    isLoading = false;
-                    playPauseBtn.classList.remove('loading');
-                    updateButtonUI();
-                }).catch(e => {
-                    isLoading = false;
-                    playPauseBtn.classList.remove('loading');
-                    console.warn("play error", e);
-                    isPlaying = false;
-                    updateButtonUI();
-                });
-            } else {
-                isLoading = false;
-                playPauseBtn.classList.remove('loading');
-                updateButtonUI();
-            }
-            audio.removeEventListener('canplay', onReady);
-            scheduleNextSwitch(remainingInSongMs);
-        }
-    };
-    audio.addEventListener('canplay', onReady, { once: true });
-    setTimeout(() => {
-        if (audio.readyState < 2) {
-            audio.currentTime = targetSec;
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    isLoading = false;
-                    playPauseBtn.classList.remove('loading');
-                    updateButtonUI();
-                }).catch(e => {
-                    isLoading = false;
-                    playPauseBtn.classList.remove('loading');
-                    isPlaying = false;
-                    updateButtonUI();
-                });
-            } else {
-                isLoading = false;
-                playPauseBtn.classList.remove('loading');
-                updateButtonUI();
-            }
-            scheduleNextSwitch(remainingInSongMs);
-        }
-    }, 2000);
-}
-    
-    function scheduleNextSwitch(remainingMs) {
-    if (switchTimeout) clearTimeout(switchTimeout);
-    if (!isPlaying) return;
-
-    // Safety: If remaining time is very small or negative, switch immediately
-    if (remainingMs < 3000) {   // 3 seconds or less
-        console.log("Low remaining time, switching immediately");
-        setTimeout(() => loadNextSongFromGlobal(), 500);
-        return;
-    }
-
-    // Main timer - switch 2 seconds before actual end (to handle network delay)
-    const switchTime = Math.max(remainingMs - 2000, 100);
-
-    switchTimeout = setTimeout(() => {
-        console.log(`Timer triggered next song switch (${switchTime}ms)`);
-        loadNextSongFromGlobal();
-    }, switchTime);
-
-    // Extra safety: If ended event doesn't fire, force switch at exact end time
-    setTimeout(() => {
-        if (isPlaying && audio && audio.paused === false) {
-            console.warn("Safety fallback: forcing next song");
-            loadNextSongFromGlobal();
-        }
-    }, remainingMs + 500);
-}
-    
- // Auto-next when song naturally ends + safety fallback
-function onSongEnded() {
-    if (!isPlaying) return;
-    if (switchTimeout) clearTimeout(switchTimeout);
-    console.log("Song ended naturally → loading next");
-    loadNextSongFromGlobal();
-}
-    function startRadio() {
-        if (!audio) {
             audio = new Audio();
             audio.volume = 1;
             audio.preload = 'auto';
             audio.addEventListener('ended', onSongEnded);
         }
-        loadAndPlayCurrentSong();
+
+        audio.src = song.url;
+        audio.load();
+
+        const onReady = () => {
+            if (audio.readyState >= 2) {
+                audio.currentTime = targetSec;
+                if (isPlaying) {
+                    audio.play().catch(e => console.warn("Play error", e));
+                }
+                // Preload அடுத்த பாடலை உடனே தயார் செய்
+                preloadNextSong(nextSongGlobalIndex);
+                scheduleNextSwitch(remainingInSongMs);
+                isSwitching = false;
+            }
+        };
+
+        audio.addEventListener('canplay', onReady, { once: true });
+
+        setTimeout(() => {
+            if (audio.readyState < 2 && isPlaying) {
+                audio.currentTime = targetSec;
+                audio.play().catch(() => {});
+                preloadNextSong(nextSongGlobalIndex);
+                scheduleNextSwitch(remainingInSongMs);
+                isSwitching = false;
+            }
+        }, 1500);
     }
-    
-    function stopRadio() {
+
+    function scheduleNextSwitch(remainingMs) {
         if (switchTimeout) clearTimeout(switchTimeout);
-        if (audio) audio.pause();
+        if (!isPlaying) return;
+
+        const switchTime = Math.max(remainingMs - 1500, 100);   // 1.5 வினாடி முன் switch
+
+        switchTimeout = setTimeout(() => {
+            console.log(`Timer triggered next song`);
+            loadNextSongFromGlobal();
+        }, switchTime);
+
+        // Safety fallback
+        setTimeout(() => {
+            if (isPlaying && audio && !audio.paused) {
+                console.warn("Safety fallback triggered");
+                loadNextSongFromGlobal();
+            }
+        }, remainingMs + 600);
     }
-    
+
+    function onSongEnded() {
+        if (!isPlaying) return;
+        if (switchTimeout) clearTimeout(switchTimeout);
+        console.log("Song ended naturally → next song");
+        loadNextSongFromGlobal();
+    }
+
     function togglePlayPause() {
-    if (isLoading) return; // prevent during loading
-    if (isPlaying) {
-        // Currently playing → user wants to stop
-        isPlaying = false;
-        stopRadio();
-        updateButtonUI(); // will set PLAY
-    } else {
-        // Currently stopped → user wants to play
-        isPlaying = true;
-        // Show loading state on button
-        playPauseBtn.classList.add('loading');
-        playPauseBtn.innerHTML = '<span>⏳</span> LOADING';
-        playPauseBtn.style.background = "#cccccc";
-        startRadio(); // this will eventually call loadAndPlayCurrentSong
+        if (isLoading) return;
+
+        if (isPlaying) {
+            isPlaying = false;
+            if (switchTimeout) clearTimeout(switchTimeout);
+            if (audio) audio.pause();
+            updateButtonUI();
+        } else {
+            isPlaying = true;
+            isLoading = true;
+            playPauseBtn.classList.add('loading');
+            playPauseBtn.innerHTML = '<span>⏳</span> LOADING';
+            loadAndPlayCurrentSong();
+        }
     }
-}
 
     function updateButtonUI() {
-    if (isLoading) return; // keep loading display
-    if (isPlaying) {
-        playPauseBtn.innerHTML = '<span>⏹️</span> STOP';
-        playPauseBtn.style.background = "rgba(200, 70, 70, 0.25)";
-        playPauseBtn.classList.remove('loading');
-    } else {
-        playPauseBtn.innerHTML = '<span>▶</span> PLAY';
-        playPauseBtn.style.background = "rgba(30, 40, 65, 0.6)";
+        if (isLoading) return;
+        if (isPlaying) {
+            playPauseBtn.innerHTML = '<span>⏹️</span> STOP';
+            playPauseBtn.style.background = "rgba(200, 70, 70, 0.25)";
+        } else {
+            playPauseBtn.innerHTML = '<span>▶</span> PLAY';
+            playPauseBtn.style.background = "rgba(30, 40, 65, 0.6)";
+        }
         playPauseBtn.classList.remove('loading');
     }
-}
-    
+
+    function loadAndPlayCurrentSong() {
+        if (isSwitching) return;
+        isLoading = true;
+
+        const { songGlobalIndex, offsetInSongMs, remainingInSongMs, nextSongGlobalIndex } = getCurrentSong();
+        const song = songList[songGlobalIndex];
+        updateUI(songGlobalIndex, nextSongGlobalIndex);
+
+        const targetSec = offsetInSongMs / 1000;
+
+        if (audio && audio.src === song.url && !audio.ended) {
+            audio.currentTime = targetSec;
+            audio.play().catch(() => {});
+            preloadNextSong(nextSongGlobalIndex);
+            scheduleNextSwitch(remainingInSongMs);
+            isLoading = false;
+            updateButtonUI();
+            return;
+        }
+
+        if (audio) {
+            audio.pause();
+            audio.src = '';
+        } else {
+            audio = new Audio();
+            audio.volume = 1;
+            audio.preload = 'auto';
+            audio.addEventListener('ended', onSongEnded);
+        }
+
+        audio.src = song.url;
+        audio.load();
+
+        const onReady = () => {
+            if (audio.readyState >= 2) {
+                audio.currentTime = targetSec;
+                audio.play().then(() => {
+                    isLoading = false;
+                    updateButtonUI();
+                    preloadNextSong(nextSongGlobalIndex);
+                    scheduleNextSwitch(remainingInSongMs);
+                }).catch(() => {
+                    isLoading = false;
+                    updateButtonUI();
+                });
+            }
+        };
+
+        audio.addEventListener('canplay', onReady, { once: true });
+
+        setTimeout(() => {
+            if (audio.readyState < 2) {
+                audio.currentTime = targetSec;
+                audio.play().then(() => {
+                    isLoading = false;
+                    updateButtonUI();
+                    preloadNextSong(nextSongGlobalIndex);
+                    scheduleNextSwitch(remainingInSongMs);
+                }).catch(() => {
+                    isLoading = false;
+                    updateButtonUI();
+                });
+            }
+        }, 1500);
+    }
+
+    // Initialise
+    playPauseBtn.addEventListener('click', togglePlayPause);
+    loadAndPlayCurrentSong();
+    updateButtonUI();
+
+    setTimeout(() => {
+        playPauseBtn.classList.add('visible');
+    }, 1000);
+
     document.addEventListener('visibilitychange', () => {
         if (!document.hidden && isPlaying) {
             if (switchTimeout) clearTimeout(switchTimeout);
             loadAndPlayCurrentSong();
         }
     });
-    
-    // Initialise
-    startRadio();
-    updateButtonUI();
-    playPauseBtn.addEventListener('click', togglePlayPause);
-    if (audio) {
-        audio.play().catch(e => {
-            console.log("Autoplay blocked – click PLAY");
-            isPlaying = false;
-            stopRadio();
-            updateButtonUI();
-        });
-    }
-    // Hide button initially (already hidden via CSS), then show after 1 second
-setTimeout(() => {
-    playPauseBtn.classList.add('visible');
-}, 1000);
 </script>
 </body>
 </html>
