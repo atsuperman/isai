@@ -236,17 +236,15 @@
         }
         
         const modeOrder = modes[modeIndex];
-        const offsetInModeMs = cycleOffsetMs;
-        
         let accumulated = 0;
         let songPosInMode = -1;
         let offsetInSongMs = 0;
         for (let i = 0; i < modeOrder.length; i++) {
             const songId = modeOrder[i];
             const durMs = songList[songId].duration * 1000;
-            if (offsetInModeMs < accumulated + durMs) {
+            if (cycleOffsetMs < accumulated + durMs) {
                 songPosInMode = i;
-                offsetInSongMs = offsetInModeMs - accumulated;
+                offsetInSongMs = cycleOffsetMs - accumulated;
                 break;
             }
             accumulated += durMs;
@@ -283,11 +281,24 @@
     const playPauseBtn = document.getElementById('playPauseBtn');
 
     let audio = null;
-    let nextAudio = null;   // ← Preload for next song
+    let nextAudio = null;        // Preload for next song
+    let wakeLock = null;         // Screen Wake Lock
     let isLoading = false;
     let isPlaying = true;
     let switchTimeout = null;
     let isSwitching = false;
+
+    // Wake Lock செயல்படுத்தும் function
+    async function requestWakeLock() {
+        if ('wakeLock' in navigator) {
+            try {
+                wakeLock = await navigator.wakeLock.request('screen');
+                console.log('Screen Wake Lock acquired');
+            } catch (err) {
+                console.log('Wake Lock failed (normal on some browsers):', err);
+            }
+        }
+    }
 
     function updateUI(songIdx, nextIdx) {
         const song = songList[songIdx];
@@ -296,24 +307,19 @@
         nextSongTitleElem.innerText = songList[nextIdx] ? songList[nextIdx].title : "—";
     }
 
-    // Preload next song in background
     function preloadNextSong(nextIdx) {
-        if (nextIdx == null || nextIdx < 0) return;
+        if (nextIdx == null) return;
         if (!nextAudio) {
             nextAudio = new Audio();
             nextAudio.preload = 'auto';
-            nextAudio.volume = 1;
         }
         nextAudio.src = songList[nextIdx].url;
         nextAudio.load();
-        console.log(`Preloading next: ${songList[nextIdx].title}`);
     }
 
     function loadNextSongFromGlobal() {
         if (isSwitching || isLoading) return;
         isSwitching = true;
-
-        console.log("=== Loading next song ===");
 
         const { songGlobalIndex, offsetInSongMs, remainingInSongMs, nextSongGlobalIndex } = getCurrentSong();
         const song = songList[songGlobalIndex];
@@ -338,7 +344,7 @@
             if (audio.readyState >= 2) {
                 audio.currentTime = targetSec;
                 if (isPlaying) audio.play().catch(e => console.warn(e));
-                preloadNextSong(nextSongGlobalIndex);   // Preload அடுத்த பாடல்
+                preloadNextSong(nextSongGlobalIndex);
                 scheduleNextSwitch(remainingInSongMs);
                 isSwitching = false;
             }
@@ -363,23 +369,19 @@
         const switchTime = Math.max(remainingMs - 1500, 100);
 
         switchTimeout = setTimeout(() => {
-            console.log("Timer triggered next song");
             loadNextSongFromGlobal();
         }, switchTime);
 
-        // Safety fallback
         setTimeout(() => {
             if (isPlaying && audio && !audio.paused) {
-                console.warn("Safety fallback triggered");
                 loadNextSongFromGlobal();
             }
-        }, remainingMs + 600);
+        }, remainingMs + 800);
     }
 
     function onSongEnded() {
         if (!isPlaying) return;
         if (switchTimeout) clearTimeout(switchTimeout);
-        console.log("Song ended naturally");
         loadNextSongFromGlobal();
     }
 
@@ -397,6 +399,7 @@
             playPauseBtn.classList.add('loading');
             playPauseBtn.innerHTML = '<span>⏳</span> LOADING';
             loadAndPlayCurrentSong();
+            requestWakeLock();   // Wake Lock தொடங்கு
         }
     }
 
@@ -453,6 +456,7 @@
                     updateButtonUI();
                     preloadNextSong(nextSongGlobalIndex);
                     scheduleNextSwitch(remainingInSongMs);
+                    requestWakeLock();
                 }).catch(() => {
                     isLoading = false;
                     updateButtonUI();
@@ -487,11 +491,18 @@
         playPauseBtn.classList.add('visible');
     }, 1000);
 
+    // Visibility change - background-இல் இருந்து திரும்பும் போது resume
     document.addEventListener('visibilitychange', () => {
         if (!document.hidden && isPlaying) {
             if (switchTimeout) clearTimeout(switchTimeout);
             loadAndPlayCurrentSong();
+            requestWakeLock();
         }
+    });
+
+    // Page unload-இல் wake lock release (optional)
+    window.addEventListener('beforeunload', () => {
+        if (wakeLock) wakeLock.release();
     });
 </script>
 </body>
