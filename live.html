@@ -283,7 +283,7 @@
     const playPauseBtn = document.getElementById('playPauseBtn');
 
     let audio = null;
-    let nextAudio = null;          // ← Preload ஆக அடுத்த பாடலுக்கு
+    let nextAudio = null;   // ← Preload for next song
     let isLoading = false;
     let isPlaying = true;
     let switchTimeout = null;
@@ -296,26 +296,24 @@
         nextSongTitleElem.innerText = songList[nextIdx] ? songList[nextIdx].title : "—";
     }
 
-    // Preload next song
+    // Preload next song in background
     function preloadNextSong(nextIdx) {
-        if (!nextIdx || nextIdx < 0) return;
-        if (nextAudio) {
-            nextAudio.src = '';
-        } else {
+        if (nextIdx == null || nextIdx < 0) return;
+        if (!nextAudio) {
             nextAudio = new Audio();
             nextAudio.preload = 'auto';
             nextAudio.volume = 1;
         }
         nextAudio.src = songList[nextIdx].url;
         nextAudio.load();
-        console.log(`Preloading next song: ${songList[nextIdx].title}`);
+        console.log(`Preloading next: ${songList[nextIdx].title}`);
     }
 
     function loadNextSongFromGlobal() {
         if (isSwitching || isLoading) return;
         isSwitching = true;
 
-        console.log("=== Loading next song from global ===");
+        console.log("=== Loading next song ===");
 
         const { songGlobalIndex, offsetInSongMs, remainingInSongMs, nextSongGlobalIndex } = getCurrentSong();
         const song = songList[songGlobalIndex];
@@ -323,7 +321,6 @@
 
         const targetSec = offsetInSongMs / 1000;
 
-        // Current audio cleanup
         if (audio) {
             audio.pause();
             audio.src = '';
@@ -340,16 +337,12 @@
         const onReady = () => {
             if (audio.readyState >= 2) {
                 audio.currentTime = targetSec;
-                if (isPlaying) {
-                    audio.play().catch(e => console.warn("Play error", e));
-                }
-                // Preload அடுத்த பாடலை உடனே தயார் செய்
-                preloadNextSong(nextSongGlobalIndex);
+                if (isPlaying) audio.play().catch(e => console.warn(e));
+                preloadNextSong(nextSongGlobalIndex);   // Preload அடுத்த பாடல்
                 scheduleNextSwitch(remainingInSongMs);
                 isSwitching = false;
             }
         };
-
         audio.addEventListener('canplay', onReady, { once: true });
 
         setTimeout(() => {
@@ -367,10 +360,10 @@
         if (switchTimeout) clearTimeout(switchTimeout);
         if (!isPlaying) return;
 
-        const switchTime = Math.max(remainingMs - 1500, 100);   // 1.5 வினாடி முன் switch
+        const switchTime = Math.max(remainingMs - 1500, 100);
 
         switchTimeout = setTimeout(() => {
-            console.log(`Timer triggered next song`);
+            console.log("Timer triggered next song");
             loadNextSongFromGlobal();
         }, switchTime);
 
@@ -386,7 +379,7 @@
     function onSongEnded() {
         if (!isPlaying) return;
         if (switchTimeout) clearTimeout(switchTimeout);
-        console.log("Song ended naturally → next song");
+        console.log("Song ended naturally");
         loadNextSongFromGlobal();
     }
 
