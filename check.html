@@ -2,92 +2,631 @@
 <html lang="ta">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Comparator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🎵 Isai Payirchi | Music Comparator</title>
     <style>
-        body { font-family: sans-serif; background: #121212; color: #e0e0e0; padding: 20px; }
-        h1 { color: #bb86fc; }
-        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-        th, td { padding: 8px; border: 1px solid #333; text-align: left; }
-        th { background: #1e1e1e; }
-        .error { color: #cf6679; }
-        .warning { color: #ffb74d; }
-        .success { color: #03dac6; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Noto Sans Tamil', system-ui, sans-serif;
+            background: #0a0c10;
+            color: #eef2ff;
+            padding: 24px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* header & button */
+        .hero {
+            background: linear-gradient(145deg, #121826 0%, #0f1117 100%);
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+            border: 1px solid rgba(187, 134, 252, 0.2);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #c084fc, #b67cf0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sub {
+            color: #9ca3af;
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+
+        .btn-start {
+            background: #bb86fc;
+            border: none;
+            color: #0a0c10;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 12px 32px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 24px;
+            box-shadow: 0 6px 14px rgba(187, 134, 252, 0.25);
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-start:hover {
+            background: #d0a6ff;
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(187, 134, 252, 0.4);
+        }
+
+        .btn-start:active {
+            transform: scale(0.98);
+        }
+
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #1e1e2a;
+            border-top: 2px solid #bb86fc;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .report-section {
+            background: #11161f;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #232830;
+            transition: 0.2s;
+        }
+
+        .report-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 5px solid #bb86fc;
+            padding-left: 15px;
+        }
+
+        .badge {
+            background: #1e293b;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: #cbd5e6;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            border-radius: 1rem;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        th {
+            background: #0f1219;
+            color: #c9d1e8;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #2a2f3a;
+        }
+
+        td {
+            padding: 10px 10px;
+            border-bottom: 1px solid #20232c;
+            vertical-align: top;
+            word-break: break-word;
+        }
+
+        tr:hover td {
+            background: #181e2a;
+        }
+
+        .error-text { color: #ffa6c9; font-weight: 500; }
+        .warning-text { color: #ffcd7e; }
+        .success-text { color: #9be9a8; }
+        .info-text { color: #79e6ff; }
+
+        .suggestion {
+            background: #2a1e3a;
+            border-radius: 14px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            color: #e2d6ff;
+        }
+
+        .stat-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #0b0f17;
+            border-radius: 1.2rem;
+            padding: 0.8rem 1.5rem;
+            flex: 1 1 auto;
+            border-left: 3px solid;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        hr {
+            border-color: #232830;
+            margin: 20px 0;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #5b6e8c;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 16px; }
+            th, td { font-size: 0.8rem; padding: 6px; }
+            .report-title { font-size: 1.2rem; }
+        }
     </style>
 </head>
 <body>
-    <h1>🎵 Music List Comparator</h1>
-    
-    <!-- Import your JS files here -->
-    <script src="xum.js"></script>
-    <script src="isai.js"></script>
-    
-    <!-- Comparison Logic -->
-    <script>
-        // Wait for files to load
-        window.onload = function() {
-            const xumSongs = songs; // From xum.js
-            
-            // Re-fetch isai.js songs (need to rebuild since variable overwritten)
-            // We'll compare based on file names
-            const xumMap = new Map(xumSongs.map(s => [s.file.toLowerCase(), s]));
-            const isaiMap = new Map(songs.map(s => [s.file.toLowerCase(), s]));
-            
-            let missing = [], extra = [], dups = [], nodur = [], diff = [];
-            const isaiCounts = new Map();
-            
-            // Count duplicates in isai
-            songs.forEach(s => {
-                const key = s.file.toLowerCase();
-                isaiCounts.set(key, (isaiCounts.get(key) || 0) + 1);
-            });
-            
-            // Find duplicates
-            isaiCounts.forEach((count, key) => {
-                if (count > 1) {
-                    const items = songs.filter(i => i.file.toLowerCase() === key);
-                    dups.push({ file: items[0].file, count, variations: [...new Set(items.map(i => i.details))].join(" | ") });
+<div class="container">
+    <div class="hero">
+        <h1>🎵 இசைப் பட்டியல் ஒப்பீடு <span style="font-size:1rem;">| Music Comparator</span></h1>
+        <div class="sub">📀 xum.js 🆚 isai.js — காணாமல் போன பாடல்கள், நகல்கள், தவறான எழுத்துக்கள், கால அளவு (duration) சரிபார்ப்பு</div>
+        <button id="startCompareBtn" class="btn-start">▶ START — ஒப்பிடத் தொடங்கு</button>
+        <div id="loadingMsg" style="margin-top: 12px; font-size: 0.85rem;"></div>
+    </div>
+
+    <div id="reportContainer" style="display: none;"></div>
+    <footer>⚡ xum.js & isai.js கோப்புகள் fetch செய்யப்பட்டு ஒப்பிடப்படும் | Duration & details mismatch உடன் தானியங்கி எழுத்துப்பிழை பரிந்துரை</footer>
+</div>
+
+<script>
+    // ------------------- Levenshtein distance for spelling mistakes ------------------
+    function levenshteinDistance(a, b) {
+        if (a.length === 0) return b.length;
+        if (b.length === 0) return a.length;
+        const matrix = [];
+        for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+        for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+        for (let i = 1; i <= b.length; i++) {
+            for (let j = 1; j <= a.length; j++) {
+                const cost = a[j-1] === b[i-1] ? 0 : 1;
+                matrix[i][j] = Math.min(
+                    matrix[i-1][j] + 1,
+                    matrix[i][j-1] + 1,
+                    matrix[i-1][j-1] + cost
+                );
+            }
+        }
+        return matrix[b.length][a.length];
+    }
+
+    function findCloseMatches(word, candidates, maxDist = 2, limit = 3) {
+        if (!word || !candidates.length) return [];
+        const lowerWord = word.toLowerCase();
+        const scored = [];
+        for (const cand of candidates) {
+            const dist = levenshteinDistance(lowerWord, cand.toLowerCase());
+            if (dist <= maxDist && dist > 0) {
+                scored.push({ candidate: cand, distance: dist });
+            }
+        }
+        scored.sort((a,b) => a.distance - b.distance);
+        return scored.slice(0, limit).map(s => s.candidate);
+    }
+
+    // ---------- safe load & parse songs from external js (xum.js / isai.js) ----------
+    async function loadSongsFromJS(url, fileNameHint) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const scriptText = await response.text();
+            // Execute in a clean function context to extract 'songs' variable
+            const extractSongs = new Function(scriptText + '; return songs;');
+            const songsArray = extractSongs();
+            if (!Array.isArray(songsArray)) throw new Error(`${fileNameHint} does not export a valid songs array`);
+            // Normalize each entry: ensure file & details, duration optional
+            return songsArray.map((item, idx) => ({
+                file: (item.file || "").trim(),
+                details: (item.details || item.title || "").trim(),
+                duration: item.duration !== undefined && item.duration !== null ? String(item.duration).trim() : null,
+                rawIndex: idx
+            })).filter(song => song.file !== ""); // skip empty file names
+        } catch (err) {
+            console.warn(`Failed to load ${url}:`, err);
+            return null; // indicate error
+        }
+    }
+
+    // ---------- duplicate detection inside a single list ----------
+    function findDuplicatesWithin(list, listName) {
+        const map = new Map(); // key: lowercase file => array of entries
+        for (const song of list) {
+            const key = song.file.toLowerCase();
+            if (!map.has(key)) map.set(key, []);
+            map.get(key).push(song);
+        }
+        const duplicates = [];
+        for (const [key, entries] of map.entries()) {
+            if (entries.length > 1) {
+                const variations = [...new Set(entries.map(e => `${e.details} | dur:${e.duration || '?'}`))];
+                duplicates.push({
+                    file: entries[0].file,
+                    count: entries.length,
+                    variations: variations.join(" | "),
+                    listName
+                });
+            }
+        }
+        return duplicates;
+    }
+
+    // ---------- missing duration entries ----------
+    function findMissingDuration(list, listName) {
+        return list.filter(song => !song.duration || song.duration === "" || song.duration === null);
+    }
+
+    // ---------- core comparison engine ----------
+    async function runComparison() {
+        const btn = document.getElementById('startCompareBtn');
+        const loadingDiv = document.getElementById('loadingMsg');
+        const reportDiv = document.getElementById('reportContainer');
+        
+        btn.disabled = true;
+        loadingDiv.innerHTML = '<span class="loader"></span> 🔄 xum.js & isai.js கோப்புகள் பதிவிறக்கம் செய்யப்படுகின்றன...';
+        reportDiv.style.display = 'none';
+        reportDiv.innerHTML = '';
+
+        // load both song lists
+        const [xumSongs, isaiSongs] = await Promise.all([
+            loadSongsFromJS('xum.js', 'xum.js'),
+            loadSongsFromJS('isai.js', 'isai.js')
+        ]);
+
+        // fallback demo data in case files are missing or errors (for robust demonstration)
+        const useFallback = !xumSongs || !isaiSongs;
+        let xumList = xumSongs, isaiList = isaiSongs;
+        let fallbackWarning = "";
+
+        if (!xumSongs) {
+            console.log("xum.js not found or invalid → using sample xum data");
+            xumList = [
+                { file: "song_01.mp3", details: "A.R.Rahman - Minsara Poove", duration: "4:32" },
+                { file: "song_02.mp3", details: "Anirudh - Why This Kolaveri", duration: "4:12" },
+                { file: "song_03.mp3", details: "Ilaiyaraaja - Thenpandi Cheemayile", duration: "5:02" },
+                { file: "song_04.mp3", details: "Harris Jayaraj - Oru Maalai", duration: "3:56" },
+                { file: "song_05.mp3", details: "Yuvan - Pichaikaran", duration: "4:20" },
+                { file: "duplicate_demo.mp3", details: "Duplicate Track - original", duration: "3:00" },
+                { file: "duplicate_demo.mp3", details: "Duplicate Track - remix", duration: "3:15" },
+                { file: "misspell_example.mp3", details: "Santhosh - Kanave Kanave", duration: "4:10" }
+            ];
+            fallbackWarning += "⚠️ xum.js கிடைக்கவில்லை, மாதிரித் தரவு பயன்படுத்தப்பட்டது. ";
+        }
+        if (!isaiSongs) {
+            console.log("isai.js not found or invalid → using sample isai data");
+            isaiList = [
+                { file: "song_01.mp3", details: "A.R.Rahman - Minsara Poove (remastered)", duration: "4:32" },
+                { file: "song_02.mp3", details: "Anirudh - Why This Kolaveri", duration: "4:12" },
+                { file: "song_03.mp3", details: "Ilaiyaraaja - Thenpandi Cheemayile", duration: null },   // missing duration
+                { file: "song_04.mp3", details: "Harris Jayaraj - Oru Maalai", duration: "3:56" },
+                { file: "song_06.mp3", details: "GVP - Oru Sila Naeram", duration: "3:44" },   // extra
+                { file: "duplicate_demo.mp3", details: "Duplicate Track - original", duration: "3:00" },
+                { file: "duplicate_demo.mp3", details: "Duplicate Track - remix version 2", duration: "3:20" },
+                { file: "misspel_example.mp3", details: "Santhosh - Kanave Kanave (alternate)", duration: "4:10" }  // intentional typo in filename
+            ];
+            fallbackWarning += "⚠️ isai.js கிடைக்கவில்லை, மாதிரித் தரவு பயன்படுத்தப்பட்டது.";
+        }
+
+        if (fallbackWarning) {
+            loadingDiv.innerHTML = `<span class="warning-text">⚠️ ${fallbackWarning}</span><br>✅ ஒப்பீடு முன்னெடுக்கப்படும் (sample data)`;
+        } else {
+            loadingDiv.innerHTML = `✅ xum.js (${xumList.length}) & isai.js (${isaiList.length}) வெற்றிகரமாக ஏற்றப்பட்டது. ஒப்பிடுகிறது...`;
+        }
+
+        // Normalize case-insensitive maps
+        const xumMap = new Map(xumList.map(s => [s.file.toLowerCase(), s]));
+        const isaiMap = new Map(isaiList.map(s => [s.file.toLowerCase(), s]));
+
+        // 1) Missing in isai.js (xum has but isai missing)
+        const missingInIsai = [];
+        for (const xSong of xumList) {
+            if (!isaiMap.has(xSong.file.toLowerCase())) {
+                missingInIsai.push(xSong);
+            }
+        }
+
+        // 2) Extra in isai.js (isai has but xum missing)
+        const extraInIsai = [];
+        for (const iSong of isaiList) {
+            if (!xumMap.has(iSong.file.toLowerCase())) {
+                extraInIsai.push(iSong);
+            }
+        }
+
+        // 3) Details mismatch (same filename but different details)
+        const detailsMismatch = [];
+        for (const xSong of xumList) {
+            const key = xSong.file.toLowerCase();
+            if (isaiMap.has(key)) {
+                const iSong = isaiMap.get(key);
+                if (xSong.details !== iSong.details) {
+                    detailsMismatch.push({
+                        file: xSong.file,
+                        xDetails: xSong.details,
+                        iDetails: iSong.details,
+                        xDur: xSong.duration,
+                        iDur: iSong.duration
+                    });
                 }
-            });
-            
-            // Compare
-            xumSongs.forEach(x => {
-                const key = x.file.toLowerCase();
-                if (!isaiMap.has(key)) {
-                    missing.push(x);
-                } else {
-                    const i = isaiMap.get(key);
-                    if (i.duration === undefined || i.duration === null) {
-                        nodur.push(i);
-                    }
-                    if (x.details !== i.details) {
-                        diff.push({ file: x.file, xDetails: x.details, iDetails: i.details });
-                    }
-                }
-            });
-            
-            songs.forEach(i => {
-                if (!xumMap.has(i.file.toLowerCase())) {
-                    extra.push(i);
-                }
-            });
-            
-            // Display Results
-            document.body.innerHTML += `
-                <h2 class="success">Stats</h2>
-                <p>xum.js: ${xumSongs.length} | isai.js: ${songs.length} | Missing: ${missing.length} | Duplicates: ${dups.length} | No Duration: ${nodur.length} | Mismatch: ${diff.length}</p>
-                
-                $${missing.length ? `<h2 class="error">❌ Missing in isai.js ($${missing.length})</h2><table><tr><th>File</th><th>Details</th></tr>$${missing.map(m => `<tr><td>$${m.file}</td><td>${m.details}</td></tr>`).join('')}</table>` : ''}
-                
-                $${extra.length ? `<h2 class="success">✅ Extra in isai.js ($${extra.length})</h2><table><tr><th>File</th><th>Details</th></tr>$${extra.map(e => `<tr><td>$${e.file}</td><td>${e.details}</td></tr>`).join('')}</table>` : ''}
-                
-                $${dups.length ? `<h2 class="warning">⚠️ Duplicates in isai.js ($${dups.length})</h2><table><tr><th>File</th><th>Count</th><th>Variations</th></tr>$${dups.map(d => `<tr><td>$${d.file}</td><td>$${d.count}</td><td>$${d.variations.substring(0, 100)}...</td></tr>`).join('')}</table>` : ''}
-                
-                $${nodur.length ? `<h2 class="warning">⚠️ Missing Duration ($${nodur.length})</h2><table><tr><th>File</th><th>Details</th></tr>$${nodur.map(n => `<tr><td>$${n.file}</td><td>${n.details}</td></tr>`).join('')}</table>` : ''}
-                
-                $${diff.length ? `<h2 class="warning">⚠️ Details Mismatch ($${diff.length})</h2><table><tr><th>File</th><th>xum.js</th><th>isai.js</th></tr>$${diff.map(d => `<tr><td>$${d.file}</td><td>$${d.xDetails}</td><td>$${d.iDetails}</td></tr>`).join('')}</table>` : ''}
+            }
+        }
+
+        // 4) Missing duration in either list (report separately)
+        const missingDurXum = findMissingDuration(xumList, "xum.js");
+        const missingDurIsai = findMissingDuration(isaiList, "isai.js");
+
+        // 5) Duplicates within each js
+        const dupXum = findDuplicatesWithin(xumList, "xum.js");
+        const dupIsai = findDuplicatesWithin(isaiList, "isai.js");
+        const allDuplicates = [...dupXum, ...dupIsai];
+
+        // 6) SPELLING MISTAKE DETECTION: for missing files & extra files (fuzzy filename match)
+        const spellingSuggestions = [];
+
+        // For each missing in isai, find close matches from isai filenames
+        const isaiFilenames = isaiList.map(s => s.file);
+        for (const missing of missingInIsai) {
+            const matches = findCloseMatches(missing.file, isaiFilenames, 2, 2);
+            if (matches.length > 0) {
+                spellingSuggestions.push({
+                    type: "missing_file_typo",
+                    originalFile: missing.file,
+                    originalDetails: missing.details,
+                    suggestedMatches: matches,
+                    listContext: "isai.js இல் இந்த பெயர் தவறாக உள்ளதா?"
+                });
+            }
+        }
+
+        // For each extra in isai, check if xum has similar name
+        const xumFilenames = xumList.map(s => s.file);
+        for (const extra of extraInIsai) {
+            const matches = findCloseMatches(extra.file, xumFilenames, 2, 2);
+            if (matches.length > 0) {
+                spellingSuggestions.push({
+                    type: "extra_file_typo",
+                    originalFile: extra.file,
+                    originalDetails: extra.details,
+                    suggestedMatches: matches,
+                    listContext: "xum.js இல் ஒத்த கோப்பு பெயர் உள்ளது, எழுத்துப்பிழை காரணமாக இருக்கலாம்."
+                });
+            }
+        }
+
+        // Additional details level spelling mistake: if same file exists but details vary slightly? (Optional high level)
+        for (const mismatch of detailsMismatch) {
+            const dist = levenshteinDistance(mismatch.xDetails.toLowerCase(), mismatch.iDetails.toLowerCase());
+            if (dist > 0 && dist <= 4) {  // minor spelling differences in details
+                spellingSuggestions.push({
+                    type: "details_typo",
+                    originalFile: mismatch.file,
+                    xDetails: mismatch.xDetails,
+                    iDetails: mismatch.iDetails,
+                    suggestionMsg: `Details இல் எழுத்துப்பிழை: "${mismatch.xDetails}" ↔ "${mismatch.iDetails}"`
+                });
+            }
+        }
+
+        // ---- BUILD FINAL REPORT HTML ----
+        let statsHtml = `
+            <div class="stat-grid">
+                <div class="stat-card" style="border-left-color:#bb86fc;">📊 xum.js: ${xumList.length} பாடல்கள்</div>
+                <div class="stat-card" style="border-left-color:#03dac6;">🎧 isai.js: ${isaiList.length} பாடல்கள்</div>
+                <div class="stat-card" style="border-left-color:#cf6679;">❌ Missing: ${missingInIsai.length}</div>
+                <div class="stat-card" style="border-left-color:#ffb74d;">🔄 Duplicates: ${allDuplicates.length}</div>
+                <div class="stat-card" style="border-left-color:#ffa69e;">⚠️ No Duration: ${missingDurXum.length + missingDurIsai.length}</div>
+                <div class="stat-card" style="border-left-color:#90e0ff;">📝 Mismatch details: ${detailsMismatch.length}</div>
+            </div>
+        `;
+
+        // Missing in isai table
+        let missingTable = '';
+        if (missingInIsai.length) {
+            missingTable = `
+                <div class="report-section">
+                    <div class="report-title"><span class="error-text">❌</span> isai.js இல் விடுபட்ட பாடல்கள் (Missing) — ${missingInIsai.length}</div>
+                    <table>
+                        <thead><tr><th>#</th><th>கோப்பு பெயர் (File)</th><th>விவரம் (Details)</th><th>Duration</th></tr></thead>
+                        <tbody>
+                            ${missingInIsai.map((m, idx) => `<tr>
+                                <td>${idx+1}</td>
+                                <td class="error-text">${escapeHtml(m.file)}</td>
+                                <td>${escapeHtml(m.details)}</td>
+                                <td>${m.duration ? escapeHtml(m.duration) : '<span class="warning-text">⚠️ இல்லை</span>'}</td>
+                            </tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
             `;
-        };
-    </script>
+        }
+
+        // Extra in isai
+        let extraTable = '';
+        if (extraInIsai.length) {
+            extraTable = `
+                <div class="report-section">
+                    <div class="report-title"><span class="success-text">➕</span> isai.js இல் கூடுதல் பாடல்கள் (Extra) — ${extraInIsai.length}</div>
+                    <table>
+                        <thead><tr><th>#</th><th>File</th><th>Details</th><th>Duration</th></tr></thead>
+                        <tbody>
+                            ${extraInIsai.map((e, idx) => `<tr>
+                                <td>${idx+1}</td>
+                                <td>${escapeHtml(e.file)}</td>
+                                <td>${escapeHtml(e.details)}</td>
+                                <td>${e.duration ? escapeHtml(e.duration) : '<span class="warning-text">❓ None</span>'}</td>
+                            </tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // Duplicates
+        let dupHtml = '';
+        if (allDuplicates.length) {
+            dupHtml = `
+                <div class="report-section">
+                    <div class="report-title"><span class="warning-text">⚠️</span> நகல் பாடல்கள் (Duplicates within same JS)</div>
+                    <table>
+                        <thead><tr><th>JS File</th><th>File Name</th><th>Count</th><th>Variations (details/duration)</th></tr></thead>
+                        <tbody>
+                            ${allDuplicates.map(d => `<tr>
+                                <td>${escapeHtml(d.listName)}</td>
+                                <td class="warning-text">${escapeHtml(d.file)}</td>
+                                <td>${d.count}</td>
+                                <td>${escapeHtml(d.variations.substring(0, 140))}${d.variations.length > 140 ? '…' : ''}</td>
+                            </tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // Missing Duration entries
+        let durationHtml = '';
+        if (missingDurXum.length || missingDurIsai.length) {
+            durationHtml = `
+                <div class="report-section">
+                    <div class="report-title"><span class="warning-text">⏱️</span> Duration இல்லாத பாடல்கள் (Missing or null duration)</div>
+                    <table>
+                        <thead><tr><th>JS File</th><th>File</th><th>Details</th><th>Current Duration</th></tr></thead>
+                        <tbody>
+                            ${missingDurXum.map(s => `<tr><td>xum.js</td><td>${escapeHtml(s.file)}</td><td>${escapeHtml(s.details)}</td><td class="error-text">❌ duration இல்லை</td></tr>`).join('')}
+                            ${missingDurIsai.map(s => `<tr><td>isai.js</td><td>${escapeHtml(s.file)}</td><td>${escapeHtml(s.details)}</td><td class="error-text">❌ duration இல்லை</td></tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // Details mismatch table
+        let mismatchHtml = '';
+        if (detailsMismatch.length) {
+            mismatchHtml = `
+                <div class="report-section">
+                    <div class="report-title"><span class="info-text">📝</span> Details பொருந்தாத பாடல்கள் (Mismatch)</div>
+                    <table>
+                        <thead><tr><th>File</th><th>xum.js Details</th><th>isai.js Details</th><th>xum Duration</th><th>isai Duration</th></tr></thead>
+                        <tbody>
+                            ${detailsMismatch.map(m => `<tr>
+                                <td>${escapeHtml(m.file)}</td>
+                                <td>${escapeHtml(m.xDetails)}</td>
+                                <td>${escapeHtml(m.iDetails)}</td>
+                                <td>${m.xDur || '-'}</td>
+                                <td>${m.iDur || '-'}</td>
+                            </tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // Spelling mistakes & suggestions
+        let spellHtml = '';
+        if (spellingSuggestions.length) {
+            spellHtml = `
+                <div class="report-section">
+                    <div class="report-title"><span class="warning-text">🔍 எழுத்துப்பிழை / தவறான வரிகள் (Spelling suggestions)</span></div>
+                    <div class="suggestion" style="background:#201c2c;">
+                        ${spellingSuggestions.map(sug => {
+                            if (sug.type === 'missing_file_typo') {
+                                return `<div><strong>📁 காணாமல் போன கோப்பு?</strong> "${escapeHtml(sug.originalFile)}" → isai.js இல் ஒத்த பெயர்கள்: <span class="info-text">${sug.suggestedMatches.map(m => `"${escapeHtml(m)}"`).join(', ')}</span><br>📄 விவரம்: ${escapeHtml(sug.originalDetails)}</div><hr style="margin:8px 0;">`;
+                            } else if (sug.type === 'extra_file_typo') {
+                                return `<div><strong>➕ கூடுதல் கோப்பு (எழுத்துப்பிழை?)</strong> "${escapeHtml(sug.originalFile)}" → xum.js இல் ஒத்தவை: ${sug.suggestedMatches.map(m => `"${escapeHtml(m)}"`).join(', ')}<br>📄 விவரம்: ${escapeHtml(sug.originalDetails)}</div><hr style="margin:8px 0;">`;
+                            } else if (sug.type === 'details_typo') {
+                                return `<div><strong>✍️ Details எழுத்துப் பிழை</strong> (File: ${escapeHtml(sug.originalFile)})<br>📌 xum: "${escapeHtml(sug.xDetails)}"<br>📌 isai: "${escapeHtml(sug.iDetails)}"<br>🔔 ${escapeHtml(sug.suggestionMsg)}</div><hr style="margin:8px 0;">`;
+                            }
+                            return '';
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        const finalReport = `
+            ${statsHtml}
+            ${missingTable}
+            ${extraTable}
+            ${dupHtml}
+            ${durationHtml}
+            ${mismatchHtml}
+            ${spellHtml}
+            ${!missingInIsai.length && !extraInIsai.length && !allDuplicates.length && !detailsMismatch.length && !missingDurXum.length && !missingDurIsai.length && !spellSuggestions.length ? 
+                '<div class="report-section"><div class="success-text">✨ இரண்டு பட்டியல்களும் முழுமையாக பொருந்துகின்றன! எந்த பிழையும் இல்லை ✨</div></div>' : ''}
+        `;
+        
+        reportDiv.innerHTML = finalReport;
+        reportDiv.style.display = 'block';
+        loadingDiv.innerHTML = '✅ ஒப்பீடு முடிந்தது. கீழே முழு அறிக்கை.';
+        btn.disabled = false;
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+
+    // Attach start button event
+    document.getElementById('startCompareBtn').addEventListener('click', () => {
+        const reportDiv = document.getElementById('reportContainer');
+        reportDiv.style.display = 'none';
+        runComparison().catch(err => {
+            console.error(err);
+            document.getElementById('loadingMsg').innerHTML = `<span class="error-text">❌ பிழை: ${err.message}. பக்கத்தை மீண்டும் ஏற்றவும்.</span>`;
+            document.getElementById('startCompareBtn').disabled = false;
+        });
+    });
+</script>
 </body>
 </html>
