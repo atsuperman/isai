@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Global Sync Radio | Isai Player</title>
+    <title>SUPER Isai | Global Sync Radio</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
         body {
@@ -30,7 +30,6 @@
             position: relative;
         }
 
-        /* Logo inside radio card - top right corner */
         .card-logo {
             position: absolute;
             top: 1.2rem;
@@ -200,7 +199,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Hide the old standalone logo container */
         .old-logo-container {
             display: none;
         }
@@ -215,7 +213,6 @@
     </style>
 </head>
 <body>
-<!-- Old logo container hidden, logo moved inside card -->
 <div class="old-logo-container"></div>
 
 <div class="radio-card">
@@ -366,6 +363,38 @@
     let isSwitching = false;
     let padRestoreTimer = null;
 
+    // ----- Media Session API (limit to play/pause only) -----
+    function updateMediaSession(songTitle) {
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: songTitle,
+                artist: 'SUPER Isai',
+                album: 'Global Sync Radio',
+                artwork: [
+                    { src: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c07a4b"/%3E%3Ctext x="50" y="67" font-size="50" text-anchor="middle" fill="white" font-family="Arial"%3ES%3C/text%3E%3C/svg%3E', sizes: '96x96', type: 'image/svg+xml' }
+                ]
+            });
+            // Set only play/pause handlers; no next/prev/seekto
+            navigator.mediaSession.setActionHandler('play', () => {
+                if (!isPlaying && !isLoading) {
+                    togglePlayPause();
+                }
+            });
+            navigator.mediaSession.setActionHandler('pause', () => {
+                if (isPlaying) {
+                    togglePlayPause();
+                }
+            });
+            // Explicitly remove other handlers by setting to null
+            navigator.mediaSession.setActionHandler('previoustrack', null);
+            navigator.mediaSession.setActionHandler('nexttrack', null);
+            navigator.mediaSession.setActionHandler('seekto', null);
+            navigator.mediaSession.setActionHandler('seekbackward', null);
+            navigator.mediaSession.setActionHandler('seekforward', null);
+        }
+    }
+
+    // Call this whenever song changes (in updateUI)
     function updateUI(songIdx, nextIdx) {
         const song = songList[songIdx];
         padSongTitle.innerText = song.title;
@@ -376,6 +405,9 @@
         padSongDetails.classList.add('song-details');
         songPad.classList.add('glitch');
         setTimeout(() => songPad.classList.remove('glitch'), 600);
+        
+        // Update Media Session metadata
+        updateMediaSession(song.title);
     }
 
     function preloadNextSong(nextIdx) {
@@ -464,6 +496,8 @@
             if (switchTimeout) clearTimeout(switchTimeout);
             if (audio) audio.pause();
             updateButtonUI();
+            // Update media session playback state
+            if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
         } else {
             isPlaying = true;
             isLoading = true;
@@ -478,9 +512,11 @@
         if (isPlaying) {
             playPauseBtn.innerHTML = '<span>⏹️</span> STOP';
             playPauseBtn.style.background = "#8b3c2a";
+            if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
         } else {
             playPauseBtn.innerHTML = '<span>▶</span> PLAY';
             playPauseBtn.style.background = "#2d2a24";
+            if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
         }
         playPauseBtn.classList.remove('loading');
     }
