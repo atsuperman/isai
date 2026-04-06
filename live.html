@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>SUPER Isai | Global Sync Radio</title>
+    <title>SUPER இசை</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
         body {
@@ -259,6 +259,9 @@
             .footer-link { font-size: 0.75rem; margin: 0 0.3rem; }
         }
     </style>
+<link rel="icon" type="image/png" href="https://github.com/atsuperman/isai/raw/refs/heads/main/isai.png">
+<link rel="apple-touch-icon" href="https://github.com/atsuperman/isai/raw/refs/heads/main/isai.png">
+
 </head>
 <body>
 <div class="old-logo-container"></div>
@@ -322,12 +325,12 @@
         modes.push(shuffleSeed([...indices], 42));
         modes.push(shuffleSeed([...indices], 77));
         modes.push(shuffleSeed([...indices], 101));
-        
+
         const even = indices.filter(i => i % 2 === 0);
         const odd = indices.filter(i => i % 2 === 1);
         modes.push([...even, ...odd]);
         modes.push([...odd, ...even]);
-        
+
         const alt = [];
         let left = 0, right = count-1;
         while (left <= right) {
@@ -336,7 +339,7 @@
             left++; right--;
         }
         modes.push(alt);
-        
+
         modes.push(shuffleSeed([...indices], 123));
         modes.push(shuffleSeed([...indices], 456));
         modes.push(shuffleSeed([...indices], 789));
@@ -355,9 +358,9 @@
         const now = Date.now();
         let elapsedMs = now - EPOCH;
         if (elapsedMs < 0) elapsedMs = 0;
-        
+
         let cycleOffsetMs = elapsedMs % TOTAL_CYCLE_MS;
-        
+
         let modeIndex = 0;
         for (let i = 0; i < modeTotalDurationsMs.length; i++) {
             if (cycleOffsetMs < modeTotalDurationsMs[i]) {
@@ -366,7 +369,7 @@
             }
             cycleOffsetMs -= modeTotalDurationsMs[i];
         }
-        
+
         const modeOrder = modes[modeIndex];
         let accumulated = 0;
         let songPosInMode = -1;
@@ -381,15 +384,15 @@
             }
             accumulated += durMs;
         }
-        
+
         if (songPosInMode === -1 && modeOrder.length) {
             songPosInMode = modeOrder.length - 1;
             offsetInSongMs = songList[modeOrder[songPosInMode]].duration * 1000 - 1;
         }
-        
+
         const currentSongGlobalIdx = modeOrder[songPosInMode];
         const remainingInSongMs = (songList[currentSongGlobalIdx].duration * 1000) - offsetInSongMs;
-        
+
         let nextSongGlobalIdx = null;
         let nextPos = songPosInMode + 1;
         if (nextPos >= modeOrder.length) {
@@ -398,7 +401,7 @@
         } else {
             nextSongGlobalIdx = modeOrder[nextPos];
         }
-        
+
         return {
             songGlobalIndex: currentSongGlobalIdx,
             offsetInSongMs,
@@ -429,8 +432,9 @@
                 artist: 'SUPER Isai',
                 album: 'Global Sync Radio',
                 artwork: [
-                    { src: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23c07a4b"/%3E%3Ctext x="50" y="67" font-size="50" text-anchor="middle" fill="white" font-family="Arial"%3ES%3C/text%3E%3C/svg%3E', sizes: '96x96', type: 'image/svg+xml' }
-                ]
+    { src: 'https://github.com/atsuperman/isai/raw/refs/heads/main/isai.png', sizes: '96x96', type: 'image/png' },
+    { src: 'data:image/svg+xml,...', sizes: '96x96', type: 'image/svg+xml' } // fallback
+]
             });
             navigator.mediaSession.setActionHandler('play', () => {
                 if (!isPlaying && !isLoading) togglePlayPause();
@@ -646,7 +650,7 @@
         const currentSong = songList[songGlobalIndex];
 
         const isShowingNext = (nowLabel.innerText === "NEXT");
-        
+
         if (isShowingNext) {
             nowLabel.innerText = "NOW PLAYING";
             padSongTitle.innerText = currentSong.title;
