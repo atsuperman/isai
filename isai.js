@@ -601,7 +601,39 @@ const repos = [
 { file: "Kaattumalli.mp3", details: "🎬 Viduthalai Part 1 (2023) / 🎤 Ilaiyaraaja, Ananya Bhat / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja", duration: 307 }
 
  ]
-  }
+  },
+
+{
+    base: "https://github.com/atsuperman/G1/raw/refs/heads/main/",
+    songs: [
+{ file: "Engalukkum Kaalam.m4a", details: "🎬 Pasamalar (1961) / 🎙️ T M Soundararajan, P Susheela / 🎼 Viswanathan–Ramamoorthy / 📝 Kannadasan", duration: 219 },
+{ file: "Malargalaipol.m4a", details: "🎬 Pasamalar (1961) / 🎙️ T M Soundararajan / 🎼 Viswanathan–Ramamoorthy / 📝 Kannadasan", duration: 292 },
+{ file: "Mayangugiraal Oru.m4a", details: "🎬 Pasamalar (1961) / 🎙️ P Susheela / 🎼 Viswanathan–Ramamoorthy / 📝 Kannadasan", duration: 245 },
+{ file: "Malarndhum Malaradha.m4a", details: "🎬 Pasamalar (1961) / 🎙️ T M Soundararajan, P Susheela / 🎼 Viswanathan–Ramamoorthy / 📝 Kannadasan", duration: 309 },
+{ file: "Paattondru Ketten.m4a", details: "🎬 Pasamalar (1961) / 🎙️ Jamuna Rani / 🎼 Viswanathan–Ramamoorthy / 📝 Kannadasan", duration: 273 },
+{ file: "Vaarai En Thozhi.m4a", details: "🎬 Pasamalar (1961) / 🎙️ L R Eswari / 🎼 Viswanathan–Ramamoorthy / 📝 Kannadasan", duration: 310 },
+{ file: "Yaar Yaar Yaar Aval.m4a", details: "🎬 Pasamalar (1961) / 🎙️ P B Sreenivas, P Susheela / 🎼 Viswanathan–Ramamoorthy / 📝 Kannadasan", duration: 262 },
+{ file: "Aadaamal Aadukiren.m4a", details: "🎬 Aayirathil Oruvan (1965) / 🎙️ P Susheela / 🎼 Viswanathan – Ramamoorthy / 📝 Vaali", duration: 249 },
+{ file: "Odum Megangalae.m4a", details: "🎬 Aayirathil Oruvan (1965) / 🎙️ T M Soundararajan / 🎼 Viswanathan–Ramamoorthy / 📝 Kannadasan", duration: 267 },
+{ file: "Atho Andha.m4a", details: "🎬 Aayirathil Oruvan (1965) / 🎙️ T M Soundararajan / 🎼 Viswanathan–Ramamoorthy / 📝 Kannadasan", duration: 305 },
+{ file: "Unnai Naan.m4a", details: "🎬 Aayirathil Oruvan (1965) / 🎙️ P Susheela / 🎼 Viswanathan–Ramamoorthy / 📝 Vaali", duration: 204 },
+{ file: "Yen Endra Kelvi.m4a", details: "🎬 Aayirathil Oruvan (1965) / 🎙️ T M Soundararajan / 🎼 M S Viswanathan‑Ramamoorthy / 📝 Vaali", duration: 222 },
+{ file: "Naanamo.m4a", details: "🎬 Aayirathil Oruvan (1965) / 🎙️ T. M. Soundararajan, P. Susheela / 🎼 Viswanathan Ramamoorthy / 📝 Kannadasan", duration: 281 }
+]
+  },
+
+  {
+    base: "https://github.com/atsuperman/play2/raw/main/",
+    songs: [
+{ file: "Paal Vannam.mp3", details: "🎬 Paasam (1962) / 🎤 P. B. Srinivas, P. Susheela / 🎼 Viswanathan - Ramamoorthy", duration: 248 },
+{ file: "Kavalaiyai Theerpadhu Naatiya.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar / 🎼 Papanasam Sivan / 📝 Papanasam Sivan", duration: 176 },
+{ file: "Soppana Vaazhvil.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar / 🎼 Papanasam Sivan / 📝 Papanasam Sivan", duration: 150 },
+{ file: "Vadhaname Chandra Bimbamo.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar / 🎼 Papanasam Sivan / 📝 Papanasam Sivan", duration: 167 },
+{ file: "Vallalai Paadum Vaayal.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar / 🎼 Papanasam Sivan", duration: 188 },
+{ file: "Vasantha Ruthu.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar, S. Jayalakshmi / 🎼 Papanasam Sivan / 📝 Papanasam Sivan", duration: 156 }
+ ]
+  }
+
 ];
 
 
