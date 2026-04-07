@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>SUPER Isai – Song Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(145deg, #f5efe5 0%, #e2d8cc 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            padding: 1.5rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #2c2418;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        h1 small {
+            font-size: 0.8rem;
+            background: #c0c0c0;
+            padding: 0.2rem 0.6rem;
+            border-radius: 2rem;
+            color: #1e1a14;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .card {
+            background: rgba(255, 250, 240, 0.92);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(210, 180, 140, 0.5);
+        }
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #b0652c;
+            border-left: 4px solid #c07a4b;
+            padding-left: 0.7rem;
+        }
+        .real-time-info {
+            background: #fefaf2;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .current-song {
+            background: linear-gradient(105deg, #fefcf8 0%, #f8f2e8 100%);
+            border-left: 4px solid #0000B8;
+            padding: 0.8rem 1rem;
+            border-radius: 0 1rem 1rem 0;
+            margin: 0.5rem 0;
+        }
+        .song-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2c2418;
+        }
+        .song-details {
+            color: #6a5a48;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+        .mode-name {
+            font-size: 0.8rem;
+            background: #e0d6c8;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .list-group {
+            margin-top: 0.8rem;
+        }
+        .list-item {
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #ddd;
+            font-size: 0.85rem;
+        }
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 0.6rem;
+            border-radius: 2rem;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 1rem;
+        }
+        .suggestions {
+            background: white;
+            border-radius: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 0.5rem;
+        }
+        .suggestion-item {
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+        .suggestion-item:hover {
+            background: #f0e6d8;
+        }
+        .song-result {
+            background: #e9e0d4;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            margin-top: 1rem;
+        }
+        .datetime-panel {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 1rem 0;
+        }
+        button {
+            background: #2d2a24;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        button:hover {
+            background: #4a4138;
+        }
+        .total-songs {
+            font-weight: bold;
+            background: #c07a4b20;
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+        }
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #8a7a68;
+            font-size: 0.75rem;
+        }
+        @media (max-width: 800px) {
+            .grid { grid-template-columns: 1fr; }
+            body { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🎵 SUPER Isai · Song Explorer 
+        <small>global sync calculator</small>
+    </h1>
+    <div class="grid">
+        <!-- LEFT COLUMN: Real‑time info -->
+        <div class="card">
+            <h2>📡 Live · Global Sync</h2>
+            <div class="real-time-info">
+                <div class="mode-name" id="modeName">Loading modes...</div>
+                <div class="current-song">
+                    <div class="song-title" id="currentTitle">—</div>
+                    <div class="song-details" id="currentDetails"></div>
+                </div>
+                <div style="font-size:0.75rem; margin-top:0.3rem;" id="timestampInfo"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+                <div style="flex:1">
+                    <strong>⏪ Previous 10 songs</strong>
+                    <div id="prevSongsList" class="list-group">—</div>
+                </div>
+                <div style="flex:1">
+                    <strong>⏩ Next 10 songs</strong>
+                    <div id="nextSongsList" class="list-group">—</div>
+                </div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="total-songs" id="totalCount">0 songs</span>
+                <span style="margin-left: 1rem;">📊 Total duration: <span id="totalDuration">0</span> hrs</span>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Search + Date lookup -->
+        <div class="card">
+            <h2>🔍 Search song</h2>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Type song name or movie / singer ..." autocomplete="off">
+            </div>
+            <div id="suggestions" class="suggestions"></div>
+            <div id="songResult" class="song-result" style="display: none;"></div>
+
+            <h2 style="margin-top: 1.5rem;">📅 Lookup by date & time</h2>
+            <div class="datetime-panel">
+                <input type="datetime-local" id="dtPicker" step="1">
+                <button id="calcBtn">🔍 Find song at this time</button>
+            </div>
+            <div id="lookupResult" class="song-result" style="display: none;"></div>
+        </div>
+    </div>
+    <footer>
+        ⚡ EPOCH: April 1, 2026 00:00 UTC — all calculations are deterministic & sync with radio player
+    </footer>
+</div>
+
+<script type="module">
+    import { songs } from './isai.js';
+
+    // ---------- build song list ----------
+    const songList = songs.map((song, idx) => ({
+        index: idx,
+        title: song.file.replace(/\.(mp3|m4a|MP3|M4A)$/i, ''),
+        details: song.details || "",
+        duration: song.duration
+    }));
+
+    // ---------- constants & globals ----------
+    const EPOCH = new Date(Date.UTC(2026, 3, 1, 0, 0, 0)).getTime(); // April 1, 2026 UTC
+
+    // ----- build modes (exactly same as radio player) -----
+    function buildModes(count) {
+        const indices = [...Array(count).keys()];
+        const modes = [];
+        const shuffleSeed = (arr, seed) => {
+            const a = [...arr];
+            let m = a.length;
+            let rng = (s) => { let t = (s * 9301 + 49297) % 233280; return t / 233280; };
+            let s = seed;
+            while (m) {
+                m--;
+                s = (s * 1103515245 + 12345) & 0x7fffffff;
+                let idx = Math.floor(rng(s) * (m+1));
+                [a[m], a[idx]] = [a[idx], a[m]];
+            }
+            return a;
+        };
+        modes.push(shuffleSeed([...indices], 42));
+        modes.push(shuffleSeed([...indices], 77));
+        modes.push(shuffleSeed([...indices], 101));
+        const even = indices.filter(i => i % 2 === 0);
+        const odd = indices.filter(i => i % 2 === 1);
+        modes.push([...even, ...odd]);
+        modes.push([...odd, ...even]);
+        const alt = [];
+        let left = 0, right = count-1;
+        while (left <= right) {
+            alt.push(left);
+            if (left !== right) alt.push(right);
+            left++; right--;
+        }
+        modes.push(alt);
+        modes.push(shuffleSeed([...indices], 123));
+        modes.push(shuffleSeed([...indices], 456));
+        modes.push(shuffleSeed([...indices], 789));
+        modes.push(shuffleSeed([...indices], 999));
+        return modes;
+    }
+
+    const modes = buildModes(songList.length);
+    // precompute mode total durations (ms)
+    const modeTotalDurationsMs = modes.map(modeOrder =>
+        modeOrder.reduce((sum, idx) => sum + songList[idx].duration, 0) * 1000
+    );
+    const TOTAL_CYCLE_MS = modeTotalDurationsMs.reduce((a, b) => a + b, 0);
+
+    // human readable mode names
+    const modeNames = [
+        "🔀 Shuffle (42)", "🔀 Shuffle (77)", "🔀 Shuffle (101)",
+        "📊 Even‑Odd", "📊 Odd‑Even", "〰️ Zigzag",
+        "🔀 Shuffle (123)", "🔀 Shuffle (456)", "🔀 Shuffle (789)", "🔀 Shuffle (999)"
+    ];
+
+    // ----- core function: get song at given timestamp (ms) -----
+    function getSongInfoAtTime(timestampMs) {
+        let elapsedMs = timestampMs - EPOCH;
+        if (elapsedMs < 0) elapsedMs = 0;
+        let cycleOffsetMs = elapsedMs % TOTAL_CYCLE_MS;
+        let modeIndex = 0;
+        for (let i = 0; i < modeTotalDurationsMs.length; i++) {
+            if (cycleOffsetMs < modeTotalDurationsMs[i]) {
+                modeIndex = i;
+                break;
+            }
+            cycleOffsetMs -= modeTotalDurationsMs[i];
+        }
+        const modeOrder = modes[modeIndex];
+        let accumulated = 0;
+        let songPosInMode = -1;
+        let offsetInSongMs = 0;
+        for (let i = 0; i < modeOrder.length; i++) {
+            const songId = modeOrder[i];
+            const durMs = songList[songId].duration * 1000;
+            if (cycleOffsetMs < accumulated + durMs) {
+                songPosInMode = i;
+                offsetInSongMs = cycleOffsetMs - accumulated;
+                break;
+            }
+            accumulated += durMs;
+        }
+        if (songPosInMode === -1 && modeOrder.length) {
+            songPosInMode = modeOrder.length - 1;
+            offsetInSongMs = songList[modeOrder[songPosInMode]].duration * 1000 - 1;
+        }
+        const currentSongGlobalIdx = modeOrder[songPosInMode];
+        const remainingInSongMs = (songList[currentSongGlobalIdx].duration * 1000) - offsetInSongMs;
+        return {
+            modeIndex,
+            modeName: modeNames[modeIndex],
+            songIndex: currentSongGlobalIdx,
+            song: songList[currentSongGlobalIdx],
+            offsetMs: offsetInSongMs,
+            remainingMs: remainingInSongMs,
+            positionInMode: songPosInMode,
+            modeOrderLength: modeOrder.length,
+            modeOrderArray: modeOrder
+        };
+    }
+
+    // ----- preload total duration sum and display -----
+    const totalSeconds = songList.reduce((sum, s) => sum + s.duration, 0);
+    const totalHours = (totalSeconds / 3600).toFixed(1);
+    document.getElementById('totalCount').innerText = `${songList.length} songs`;
+    document.getElementById('totalDuration').innerText = totalHours;
+
+    // ----- UI update (real-time) -----
+    let currentInfo = null;
+    function updateRealTimeUI() {
+        const now = Date.now();
+        const info = getSongInfoAtTime(now);
+        currentInfo = info;
+        document.getElementById('modeName').innerHTML = `${info.modeName} · mode ${info.modeIndex+1}/10`;
+        document.getElementById('currentTitle').innerText = info.song.title;
+        document.getElementById('currentDetails').innerText = info.song.details || "—";
+        const nowDate = new Date(now);
+        document.getElementById('timestampInfo').innerHTML = `🕒 ${nowDate.toLocaleString()} UTC+5:30`;
+        // update next 10 & previous 10 songs within current mode
+        const modeOrder = info.modeOrderArray;
+        const currentPos = info.positionInMode;
+        const prevIndices = [];
+        for (let i = Math.max(0, currentPos - 10); i < currentPos; i++) {
+            prevIndices.push(modeOrder[i]);
+        }
+        const nextIndices = [];
+        for (let i = currentPos + 1; i <= Math.min(modeOrder.length-1, currentPos + 10); i++) {
+            nextIndices.push(modeOrder[i]);
+        }
+        const prevListDiv = document.getElementById('prevSongsList');
+        if (prevIndices.length === 0) prevListDiv.innerHTML = '<div class="list-item">—</div>';
+        else {
+            prevListDiv.innerHTML = prevIndices.map(idx => `<div class="list-item">${songList[idx].title}</div>`).join('');
+        }
+        const nextListDiv = document.getElementById('nextSongsList');
+        if (nextIndices.length === 0) nextListDiv.innerHTML = '<div class="list-item">—</div>';
+        else {
+            nextListDiv.innerHTML = nextIndices.map(idx => `<div class="list-item">${songList[idx].title}</div>`).join('');
+        }
+    }
+    updateRealTimeUI();
+    setInterval(updateRealTimeUI, 1000);
+
+    // ----- SEARCH with suggestions (matching title or details) -----
+    const searchInput = document.getElementById('searchInput');
+    const suggestionsDiv = document.getElementById('suggestions');
+    const songResultDiv = document.getElementById('songResult');
+    let currentSuggestions = [];
+
+    function renderSuggestions(keyword) {
+        if (!keyword.trim()) {
+            suggestionsDiv.innerHTML = '';
+            return;
+        }
+        const lowerKeyword = keyword.toLowerCase();
+        const matches = songList.filter(song => 
+            song.title.toLowerCase().includes(lowerKeyword) || 
+            song.details.toLowerCase().includes(lowerKeyword)
+        ).slice(0, 15);
+        if (matches.length === 0) {
+            suggestionsDiv.innerHTML = '<div class="suggestion-item">❌ No matching songs</div>';
+            return;
+        }
+        suggestionsDiv.innerHTML = matches.map(song => `
+            <div class="suggestion-item" data-index="${song.index}">
+                <strong>${song.title}</strong><br>
+                <small>${song.details.substring(0, 80)}</small>
+            </div>
+        `).join('');
+        // attach click events
+        document.querySelectorAll('.suggestion-item').forEach(el => {
+            el.addEventListener('click', (e) => {
+                const idx = parseInt(el.dataset.index);
+                const selected = songList[idx];
+                songResultDiv.style.display = 'block';
+                songResultDiv.innerHTML = `
+                    <strong>🎵 ${selected.title}</strong><br>
+                    📝 ${selected.details || "No details"}<br>
+                    ⏱️ Duration: ${selected.duration} seconds (${Math.floor(selected.duration/60)}:${(selected.duration%60).toString().padStart(2,'0')})<br>
+                    ✅ Loaded — matches file duration exactly.
+                `;
+                searchInput.value = selected.title;
+                suggestionsDiv.innerHTML = '';
+            });
+        });
+    }
+
+    searchInput.addEventListener('input', (e) => {
+        renderSuggestions(e.target.value);
+    });
+    // hide suggestions when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
+            suggestionsDiv.innerHTML = '';
+        }
+    });
+
+    // ----- date/time lookup -----
+    const dtPicker = document.getElementById('dtPicker');
+    const calcBtn = document.getElementById('calcBtn');
+    const lookupResultDiv = document.getElementById('lookupResult');
+    // set default to current date+time (local)
+    const nowLocal = new Date();
+    nowLocal.setSeconds(0);
+    dtPicker.value = nowLocal.toISOString().slice(0, 16);
+    calcBtn.addEventListener('click', () => {
+        const localStr = dtPicker.value;
+        if (!localStr) return;
+        // convert local datetime to UTC timestamp
+        const localDate = new Date(localStr);
+        const utcTimestamp = Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate(),
+                                      localDate.getHours(), localDate.getMinutes(), localDate.getSeconds());
+        const info = getSongInfoAtTime(utcTimestamp);
+        const song = info.song;
+        lookupResultDiv.style.display = 'block';
+        lookupResultDiv.innerHTML = `
+            <strong>📅 ${localDate.toLocaleString()}</strong><br>
+            🎵 <strong>${song.title}</strong><br>
+            📝 ${song.details || "—"}<br>
+            ⏱️ Duration: ${song.duration} sec · Mode: ${info.modeName}<br>
+            🔍 Remaining in song: ${Math.floor(info.remainingMs/1000)} sec
+        `;
+    });
+
+    // show a quick demo message on first load
+    console.log("sum.html ready — total songs:", songList.length);
+</script>
+</body>
+</html>
