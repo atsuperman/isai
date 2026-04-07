@@ -718,9 +718,18 @@
         window.open('https://www.fb.com/atSUPERMAN', '_blank');
     });
     linkSuperOne.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.open('https://supersez.github.io/Ted/', '_blank');
-    });
+    e.preventDefault();
+    // FIRST: Stop the music if it is playing
+    if (isPlaying) {
+        isPlaying = false;
+        if (switchTimeout) clearTimeout(switchTimeout);
+        if (audio) audio.pause();
+        updateButtonUI();
+        if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
+    }
+    // THEN: Open the link
+    window.open('https://supersez.github.io/Ted/', '_blank');
+});
 
     linkTips.addEventListener('click', (e) => {
         e.preventDefault();
