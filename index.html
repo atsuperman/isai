@@ -719,7 +719,7 @@
     });
     linkSuperOne.addEventListener('click', (e) => {
     e.preventDefault();
-    // FIRST: Stop the music if it is playing
+    // First stop the music if playing
     if (isPlaying) {
         isPlaying = false;
         if (switchTimeout) clearTimeout(switchTimeout);
@@ -727,8 +727,8 @@
         updateButtonUI();
         if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
     }
-    // THEN: Open the link
-    window.open('https://supersez.github.io/Ted/', '_blank');
+    // Then load the link in the SAME tab
+    window.location.href = 'https://supersez.github.io/Ted/';
 });
 
     linkTips.addEventListener('click', (e) => {
