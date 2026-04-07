@@ -632,6 +632,31 @@ const repos = [
 { file: "Vallalai Paadum Vaayal.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar / 🎼 Papanasam Sivan", duration: 188 },
 { file: "Vasantha Ruthu.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar, S. Jayalakshmi / 🎼 Papanasam Sivan / 📝 Papanasam Sivan", duration: 156 }
  ]
+  },
+  
+  {
+    base: "https://github.com/atsuperman/play2/raw/main/",
+    songs: [
+{ file: "tamil_iragai_pole_clup_mix_tape.mp3", details: "Remix By dj jose", duration: 359 },
+{ file: "Jorthaale wraith Vs Remix.m4a", details: "📀 Jorthaale (Wraith V Remix) (2021) / 🎙️ Asal Kolaar, ofRO / 🎼 Wraith V / 📝 Asal Kolaar", duration: 185 },
+{ file: "vada vada Paiya mix.m4a", details: "💿 youtube Source NO1 AUDIO MIXER", duration: 290 }
+
+]
+  },
+
+  {
+    base: "https://raw.githubusercontent.com/atsuperman/O1/refs/heads/main/",
+    songs: [
+
+{ file: "Kuthu Fire- Vidya Vox.m4a", details: "📀 Kuthu Fire (2017) / 🎙️ Vidya Vox / 🎼 Shankar Tucker / 📝 Vidya Vox, Shankar Tucker", duration: 205 },
+{ file: "Machi mannaru.m4a", details: "📀Dj Donz (1999) / 📁 80s remix", duration: 220 },
+{ file: "Moodu- Brodha V.m4a", details: "📀 Moodu (2023) / 🎙️ Brodha V / 🎼 Brodha V / 📝 Brodha V", duration: 133 },
+{ file: "Sundariye mix.m4a", details: "📀 DJ unknown (2013)", duration: 279 },
+{ file: "vangonna echo extend mix.m4a", details: "📀 DJ unknown (2012)", duration: 222 },
+{ file: "vazha thoppukulla mix.m4a", details: "📀 DJ unknown (2014)", duration: 253 },
+{ file: "Thuppuran.m4a", details: "📀 Thuppuran (2022) / 🎙️ ADK, Lucky Lakmina, Abu Karim Ismail / 🎼 Pasan Liyanage / 📝 ADK, Lucky Lakmina, Pasan Liyanage", duration: 175 }
+
+]
   }
 
 ];
