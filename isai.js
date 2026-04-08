@@ -3,7 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
-  
+{ file: "Vacha Parvai Theerathadi.m4a", details: "🎬 Ilamai Kolam (1980) / 🎙️ K. J. Yesudas / 🎼 Ilaiyaraaja / 📝 Gangai Amaran", duration: 234 },  
 { file: "Chikkimukki Kallu.m4a", details: "🎬 Citizen (2001) / 🎙️ Shankar Mahadevan, Sadhana Sargam / 🎼 Deva / 📝 Vairamuthu", duration: 411 },
 { file: "I Like You.m4a", details: "🎬 Citizen (2001) / 🎙️ Vasundhara Das / 🎼 Deva / 📝 Vairamuthu", duration: 412 },
 { file: "Merkey Vidhaitha.m4a", details: "🎬 Citizen (2001) / 🎙️ Shankar Mahadevan / 🎼 Deva / 📝 Vairamuthu", duration: 373 },
