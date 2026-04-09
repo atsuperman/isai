@@ -331,12 +331,12 @@
     modes.push(shuffleSeed([...indices], 42));
     modes.push(shuffleSeed([...indices], 77));
     modes.push(shuffleSeed([...indices], 101));
-    
+
     // NEW: three shuffle modes instead of even-odd/odd-even/zigzag
     modes.push(shuffleSeed([...indices], 111));
     modes.push(shuffleSeed([...indices], 222));
     modes.push(shuffleSeed([...indices], 333));
-    
+
     modes.push(shuffleSeed([...indices], 123));
     modes.push(shuffleSeed([...indices], 456));
     modes.push(shuffleSeed([...indices], 789));
@@ -471,6 +471,17 @@
         nextAudio.load();
     }
 
+    // ========== MODIFIED: smoother transition ==========
+    function scheduleNextSwitch(remainingMs) {
+        if (switchTimeout) clearTimeout(switchTimeout);
+        if (!isPlaying) return;
+        // Switch just 300ms before the song ends (smooth transition)
+        const switchTime = Math.max(remainingMs - 300, 50);
+        switchTimeout = setTimeout(() => {
+            loadNextSongFromGlobal();
+        }, switchTime);
+    }
+
     function loadNextSongFromGlobal() {
         if (isSwitching || isLoading) return;
         isSwitching = true;
@@ -479,59 +490,56 @@
         const song = songList[songGlobalIndex];
         updateUI(songGlobalIndex, nextSongGlobalIndex);
 
-        const targetSec = offsetInSongMs / 1000;
+        // If we have a preloaded nextAudio and it matches the song we need, reuse it
+        let newAudio = null;
+        if (nextAudio && nextAudio.src === song.url && nextAudio.readyState >= 2) {
+            newAudio = nextAudio;
+            nextAudio = null; // take ownership
+        } else {
+            newAudio = new Audio();
+            newAudio.volume = 1;
+            newAudio.preload = 'auto';
+            newAudio.src = song.url;
+        }
 
+        // Stop current audio smoothly
         if (audio) {
             audio.pause();
             audio.src = '';
-        } else {
-            audio = new Audio();
-            audio.volume = 1;
-            audio.preload = 'auto';
-            audio.addEventListener('ended', onSongEnded);
+            // remove old event listener to avoid duplicates
+            audio.removeEventListener('ended', onSongEnded);
         }
 
-        audio.src = song.url;
-        audio.load();
-
-        const onReady = () => {
-            if (audio.readyState >= 2) {
-                audio.currentTime = targetSec;
-                if (isPlaying) audio.play().catch(e => console.warn(e));
-                preloadNextSong(nextSongGlobalIndex);
-                scheduleNextSwitch(remainingInSongMs);
-                isSwitching = false;
+        audio = newAudio;
+        audio.addEventListener('ended', onSongEnded);
+        
+        const targetSec = offsetInSongMs / 1000;
+        
+        const startPlay = () => {
+            if (isPlaying) {
+                // Only seek if targetSec is not near the end (to avoid glitch)
+                if (targetSec > 0.1 && targetSec < song.duration - 0.1) {
+                    audio.currentTime = targetSec;
+                }
+                audio.play().catch(e => console.warn(e));
             }
+            preloadNextSong(nextSongGlobalIndex);
+            isSwitching = false;
         };
-        audio.addEventListener('canplay', onReady, { once: true });
 
-        setTimeout(() => {
-            if (audio.readyState < 2 && isPlaying) {
-                audio.currentTime = targetSec;
-                audio.play().catch(() => {});
-                preloadNextSong(nextSongGlobalIndex);
-                scheduleNextSwitch(remainingInSongMs);
-                isSwitching = false;
-            }
-        }, 1500);
+        if (newAudio.readyState >= 2) {
+            startPlay();
+        } else {
+            newAudio.addEventListener('canplay', startPlay, { once: true });
+            // fallback: if loading takes too long, force play after 500ms
+            setTimeout(() => {
+                if (isSwitching && newAudio.readyState < 2) {
+                    startPlay();
+                }
+            }, 500);
+        }
     }
-
-    function scheduleNextSwitch(remainingMs) {
-        if (switchTimeout) clearTimeout(switchTimeout);
-        if (!isPlaying) return;
-
-        const switchTime = Math.max(remainingMs - 1500, 100);
-
-        switchTimeout = setTimeout(() => {
-            loadNextSongFromGlobal();
-        }, switchTime);
-
-        setTimeout(() => {
-            if (isPlaying && audio && !audio.paused) {
-                loadNextSongFromGlobal();
-            }
-        }, remainingMs + 800);
-    }
+    // ========== end of modified functions ==========
 
     function onSongEnded() {
         if (!isPlaying) return;
