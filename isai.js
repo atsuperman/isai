@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Aura 10 10.m4a", details: "🎬 Meesaya Murukku 2 (2026) / 🎙️ Hiphop Tamizha, Thamizh Aadhavan / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha, Thamizh Aadhavan", duration: 129 },
 { file: "Great Ji.m4a", details: "🎬 Meesaya Murukku (2017) / 🎙️ Hiphop Tamizha / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha", duration: 262 },
 { file: "Enna Nadanthalum.m4a", details: "🎬 Meesaya Murukku (2017) / 🎙️ Kaushik Krish, Hiphop Tamizha / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha", duration: 245 },
 { file: "Maatikichu.m4a", details: "🎬 Meesaya Murukku (2017) / 🎙️ Mahalingam, Hiphop Tamizha / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha", duration: 198 },
