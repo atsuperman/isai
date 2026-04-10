@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Enna Nadanthalum.m4a", details: "🎬 Meesaya Murukku (2017) / 🎙️ Kaushik Krish, Hiphop Tamizha / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha", duration: 245 },
 { file: "Maatikichu.m4a", details: "🎬 Meesaya Murukku (2017) / 🎙️ Mahalingam, Hiphop Tamizha / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha", duration: 198 },
 { file: "Pavazha Malli.m4a", details: "📀 Pavazha Malli (2026) / 🎙️ Sai Abhyankkar, Shruti Haasan / 🎼 Sai Abhyankkar", duration: 253 },
 { file: "Vetri Vetri Endru sollum.m4a", details: "🎬 Kattumarakaran (1995) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vaali", duration: 331 },
