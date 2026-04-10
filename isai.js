@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Pavazha Malli.m4a", details: "📀 Pavazha Malli (2026) / 🎙️ Sai Abhyankkar, Shruti Haasan / 🎼 Sai Abhyankkar", duration: 253 },
 { file: "Vetri Vetri Endru sollum.m4a", details: "🎬 Kattumarakaran (1995) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Vaali", duration: 331 },
 { file: "Vacha Parvai Theerathadi.m4a", details: "🎬 Ilamai Kolam (1980) / 🎙️ K. J. Yesudas / 🎼 Ilaiyaraaja / 📝 Gangai Amaran", duration: 234 },  
 { file: "Chikkimukki Kallu.m4a", details: "🎬 Citizen (2001) / 🎙️ Shankar Mahadevan, Sadhana Sargam / 🎼 Deva / 📝 Vairamuthu", duration: 411 },
