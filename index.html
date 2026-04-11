@@ -418,6 +418,7 @@
     let isSwitching = false;
     let padRestoreTimer = null;
     let loadFallbackTimer = null;   // safety timer
+    let autoPreviewTimer = null;    // auto preview 20 sec before end
 
     function updateMediaSession(songTitle) {
         if ('mediaSession' in navigator) {
@@ -462,7 +463,6 @@
 
     function preloadNextSong(nextIdx) {
         if (nextIdx == null) return;
-        // Clean up previous preload if it exists and is not currently used
         if (nextAudio) {
             nextAudio.pause();
             nextAudio.src = '';
@@ -474,19 +474,35 @@
         nextAudio.load();
     }
 
-    // Helper to completely kill an audio element
     function destroyAudio(audioObj) {
         if (!audioObj) return;
         audioObj.pause();
         audioObj.src = '';
-        audioObj.load(); // forces release of resource
-        // remove all event listeners (we only had 'ended')
+        audioObj.load();
         audioObj.removeEventListener('ended', onSongEnded);
+    }
+
+    // Helper to trigger the next preview (same as click)
+    function triggerNextPreview() {
+        if (nowLabel.innerText !== "NEXT") {
+            showNextPreview();
+        }
     }
 
     function scheduleNextSwitch(remainingMs) {
         if (switchTimeout) clearTimeout(switchTimeout);
+        if (autoPreviewTimer) clearTimeout(autoPreviewTimer);
         if (!isPlaying) return;
+
+        // Auto preview 20 seconds before end (if song longer than 20 sec)
+        if (remainingMs > 20000) {
+            const previewDelay = remainingMs - 20000;
+            autoPreviewTimer = setTimeout(() => {
+                triggerNextPreview();
+                autoPreviewTimer = null;
+            }, previewDelay);
+        }
+
         const switchTime = Math.max(remainingMs - 300, 50);
         switchTimeout = setTimeout(() => {
             loadNextSongFromGlobal();
@@ -496,9 +512,9 @@
     function loadNextSongFromGlobal() {
         if (isSwitching || isLoading) return;
         isSwitching = true;
-
-        // clear any pending fallback timer
         if (loadFallbackTimer) clearTimeout(loadFallbackTimer);
+        if (autoPreviewTimer) clearTimeout(autoPreviewTimer);
+        autoPreviewTimer = null;
 
         const { songGlobalIndex, offsetInSongMs, remainingInSongMs, nextSongGlobalIndex } = getCurrentSong();
         const song = songList[songGlobalIndex];
@@ -515,7 +531,6 @@
             newAudio.src = song.url;
         }
 
-        // Completely destroy old audio and its listener
         if (audio) {
             destroyAudio(audio);
             audio = null;
@@ -535,7 +550,6 @@
             }
             preloadNextSong(nextSongGlobalIndex);
             isSwitching = false;
-            // schedule next switch only after this song is playing
             scheduleNextSwitch(remainingInSongMs);
         };
 
@@ -543,7 +557,6 @@
             startPlay();
         } else {
             newAudio.addEventListener('canplay', startPlay, { once: true });
-            // fallback: if loading takes too long, force start
             loadFallbackTimer = setTimeout(() => {
                 if (isSwitching && newAudio.readyState < 2) {
                     startPlay();
@@ -556,7 +569,8 @@
     function onSongEnded() {
         if (!isPlaying) return;
         if (switchTimeout) clearTimeout(switchTimeout);
-        // Clean up the ended audio immediately
+        if (autoPreviewTimer) clearTimeout(autoPreviewTimer);
+        autoPreviewTimer = null;
         if (audio) {
             destroyAudio(audio);
             audio = null;
@@ -569,6 +583,8 @@
         if (isPlaying) {
             isPlaying = false;
             if (switchTimeout) clearTimeout(switchTimeout);
+            if (autoPreviewTimer) clearTimeout(autoPreviewTimer);
+            autoPreviewTimer = null;
             if (audio) audio.pause();
             updateButtonUI();
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
@@ -605,7 +621,6 @@
 
         const targetSec = offsetInSongMs / 1000;
 
-        // If existing audio matches, reuse
         if (audio && audio.src === song.url && !audio.ended) {
             audio.currentTime = targetSec;
             audio.play().catch(() => {});
@@ -616,7 +631,6 @@
             return;
         }
 
-        // Clean up old audio
         if (audio) {
             destroyAudio(audio);
             audio = null;
@@ -713,6 +727,8 @@
     document.addEventListener('visibilitychange', () => {
         if (!document.hidden && isPlaying) {
             if (switchTimeout) clearTimeout(switchTimeout);
+            if (autoPreviewTimer) clearTimeout(autoPreviewTimer);
+            autoPreviewTimer = null;
             loadAndPlayCurrentSong();
         }
     });
@@ -733,6 +749,8 @@
         if (isPlaying) {
             isPlaying = false;
             if (switchTimeout) clearTimeout(switchTimeout);
+            if (autoPreviewTimer) clearTimeout(autoPreviewTimer);
+            autoPreviewTimer = null;
             if (audio) audio.pause();
             updateButtonUI();
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
