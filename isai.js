@@ -301,7 +301,7 @@ const repos = [
 { file: "Rosapoo-M.m4a", details: "🎬 Suryavamsam (1997) / 🎙️ Hariharan / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar / 🎥 Vikraman / 🏷️ Star Music", duration: 250 },
 { file: "Salakku Salakku Selai.m4a", details: "🎬 Suryavamsam (1997) / 🎙️ Arun Mozhi, Sujatha / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar / 🎥 Vikraman / 🏷️ Star Music", duration: 241 },
 { file: "Marutha Azhagaro.m4a", details: "🎬 Sundara Purushan (1996) / 🎙️ K. S. Chithra / 🎼 Sirpy / 📝 Vairamuthu / 🎥 Sabapathy Dekshinamurthy / 🏷️ The Best Audio", duration: 288 },
-{ file: "Raja Rajane.m4a", details "🎬 Sundara Purushan (1996) / 🎙️ Sirpy, J. Livingston, Geetha / 🎼 Sirpy / 📝 Kalidasan / 🎥 Sabapathy Dekshinamurthy / 🏷️ The Best Audio", duration: 274 },
+{ file: "Raja Rajane.m4a", details: "🎬 Sundara Purushan (1996) / 🎙️ Sirpy, J. Livingston, Geetha / 🎼 Sirpy / 📝 Kalidasan / 🎥 Sabapathy Dekshinamurthy / 🏷️ The Best Audio", duration: 274 },
 { file: "Chanda O Chanda.m4a", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Harini / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio", duration: 319 },
 { file: "Chinna Chinna Kiliye.m4a", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Hariharan, Anuradha Sriram, Mahanadhi Shobana / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio", duration: 334 },
 { file: "Eshwara Vaanum Mannum.m4a", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Udit Narayan / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio", duration: 321 },
