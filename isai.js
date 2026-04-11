@@ -284,7 +284,7 @@ const repos = [
 { file: "Hey Unnaithaane.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu / 🎥 A. Jagannathan", duration: 240 },
 { file: "Jaadhi Illai.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ Malaysia Vasudevan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 A. Jagannathan", duration: 240 },
 { file: "Kadhal Maharani Kavidhai.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Muthulingam / 🎥 A. Jagannathan", duration: 240 },
-{ file: "Koo Koo Endru Kuyil.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 A. Jagannathan", duration: 240 },
+
 { file: "Journey.m4a", details: "🎬 Jaanu (2020) / 🎙️ Pradeep Kumar / 🎼 Govind Vasantha / 📝 Karthik Netha / 🎥 C. Prem Kumar", duration: 367 },
 { file: "Ding Dang Dang.m4a", details: "🎬 Panakkaran (1990) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 P. Vasu", duration: 297 },
 { file: "Maraththa Vechchavan.m4a", details: "🎬 Panakkaran (1990) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 P. Vasu", duration: 239 },
@@ -301,7 +301,7 @@ const repos = [
 { file: "Rosapoo-M.m4a", details: "🎬 Suryavamsam (1997) / 🎙️ Hariharan / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar / 🎥 Vikraman / 🏷️ Star Music", duration: 250 },
 { file: "Salakku Salakku Selai.m4a", details: "🎬 Suryavamsam (1997) / 🎙️ Arun Mozhi, Sujatha / 🎼 S. A. Rajkumar / 📝 Ra. Ravishankar / 🎥 Vikraman / 🏷️ Star Music", duration: 241 },
 { file: "Marutha Azhagaro.m4a", details: "🎬 Sundara Purushan (1996) / 🎙️ K. S. Chithra / 🎼 Sirpy / 📝 Vairamuthu / 🎥 Sabapathy Dekshinamurthy / 🏷️ The Best Audio", duration: 288 },
-{ file: "Raja Rajane.m4a", details: "🎬 Sundara Purushan (1996) / 🎙️ Sirpy, J. Livingston, Geetha / 🎼 Sirpy / 📝 Kalidasan / 🎥 Sabapathy Dekshinamurthy / 🏷️ The Best Audio", duration: 274 },
+{ file: "Raja Rajane.m4a", details "🎬 Sundara Purushan (1996) / 🎙️ Sirpy, J. Livingston, Geetha / 🎼 Sirpy / 📝 Kalidasan / 🎥 Sabapathy Dekshinamurthy / 🏷️ The Best Audio", duration: 274 },
 { file: "Chanda O Chanda.m4a", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Harini / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio", duration: 319 },
 { file: "Chinna Chinna Kiliye.m4a", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Hariharan, Anuradha Sriram, Mahanadhi Shobana / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio", duration: 334 },
 { file: "Eshwara Vaanum Mannum.m4a", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Udit Narayan / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio", duration: 321 },
