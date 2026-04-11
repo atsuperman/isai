@@ -265,7 +265,6 @@
 <script type="module">
     import { songs } from './isai.js';
 
-    // ---------- build song list ----------
     const songList = songs.map((song, idx) => ({
         index: idx,
         title: song.file.replace(/\.(mp3|m4a|MP3|M4A)$/i, ''),
@@ -274,14 +273,11 @@
         url: song.url
     }));
 
-    // ---------- constants & globals ----------
     const EPOCH = new Date(Date.UTC(2026, 3, 1, 0, 0, 0)).getTime();
 
-    // ----- build modes (exactly same as radio player) -----
     function buildModes(count) {
         const indices = [...Array(count).keys()];
         const modes = [];
-
         const shuffleSeed = (arr, seed) => {
             const a = [...arr];
             let m = a.length;
@@ -295,7 +291,6 @@
             }
             return a;
         };
-
         modes.push(shuffleSeed([...indices], 42));
         modes.push(shuffleSeed([...indices], 77));
         modes.push(shuffleSeed([...indices], 101));
@@ -306,7 +301,6 @@
         modes.push(shuffleSeed([...indices], 456));
         modes.push(shuffleSeed([...indices], 789));
         modes.push(shuffleSeed([...indices], 999));
-
         return modes;
     }
 
@@ -322,7 +316,6 @@
         "🔀 Shuffle (123)", "🔀 Shuffle (456)", "🔀 Shuffle (789)", "🔀 Shuffle (999)"
     ];
 
-    // Precompute occurrences in cycle
     function getSongOccurrencesInCycle(songIndex) {
         const occurrences = [];
         let cycleOffset = 0;
@@ -331,9 +324,7 @@
             const pos = modeOrder.indexOf(songIndex);
             if (pos === -1) continue;
             let startInMode = 0;
-            for (let i = 0; i < pos; i++) {
-                startInMode += songList[modeOrder[i]].duration * 1000;
-            }
+            for (let i = 0; i < pos; i++) startInMode += songList[modeOrder[i]].duration * 1000;
             occurrences.push({
                 modeIndex: m,
                 modeName: modeNames[m],
@@ -404,13 +395,11 @@
         };
     }
 
-    // total duration display
     const totalSeconds = songList.reduce((sum, s) => sum + s.duration, 0);
     const totalHours = (totalSeconds / 3600).toFixed(1);
     document.getElementById('totalCount').innerText = `${songList.length} songs`;
     document.getElementById('totalDuration').innerText = totalHours;
 
-    // Real-time UI
     function updateRealTimeUI() {
         const now = Date.now();
         const info = getSongInfoAtTime(now);
@@ -425,16 +414,13 @@
         for (let i = Math.max(0, currentPos - 10); i < currentPos; i++) prevIndices.push(modeOrder[i]);
         const nextIndices = [];
         for (let i = currentPos + 1; i <= Math.min(modeOrder.length-1, currentPos + 10); i++) nextIndices.push(modeOrder[i]);
-
-        const prevDiv = document.getElementById('prevSongsList');
-        prevDiv.innerHTML = prevIndices.length ? prevIndices.map(idx => `<div class="list-item">${songList[idx].title}</div>`).join('') : '<div class="list-item">—</div>';
-        const nextDiv = document.getElementById('nextSongsList');
-        nextDiv.innerHTML = nextIndices.length ? nextIndices.map(idx => `<div class="list-item">${songList[idx].title}</div>`).join('') : '<div class="list-item">—</div>';
+        document.getElementById('prevSongsList').innerHTML = prevIndices.length ? prevIndices.map(idx => `<div class="list-item">${songList[idx].title}</div>`).join('') : '<div class="list-item">—</div>';
+        document.getElementById('nextSongsList').innerHTML = nextIndices.length ? nextIndices.map(idx => `<div class="list-item">${songList[idx].title}</div>`).join('') : '<div class="list-item">—</div>';
     }
     updateRealTimeUI();
     setInterval(updateRealTimeUI, 1000);
 
-    // ----- Song validation and preview -----
+    // ---------- Validation and preview ----------
     let currentPreviewAudio = null;
     let currentSelectedSong = null;
 
@@ -451,42 +437,55 @@
         currentSelectedSong = null;
     }
 
-    // Validate song by loading metadata and comparing duration
+    // Validate song: only show error if file fails to load metadata (404, CORS, etc.)
     function validateSong(song, callback) {
         const tempAudio = new Audio();
         tempAudio.preload = 'metadata';
+        let resolved = false;
+
+        const cleanup = () => {
+            tempAudio.src = '';
+            tempAudio.onloadedmetadata = null;
+            tempAudio.onerror = null;
+        };
+
         tempAudio.onloadedmetadata = () => {
+            if (resolved) return;
+            resolved = true;
             const actualDuration = tempAudio.duration;
             const stored = song.duration;
             const diff = Math.abs(actualDuration - stored);
-            // allow 1 second tolerance for rounding
             const isMatch = diff <= 1.0;
             callback({ success: true, actualDuration, isMatch, error: null });
-            tempAudio.src = ''; // cleanup
+            cleanup();
         };
+
         tempAudio.onerror = () => {
-            callback({ success: false, actualDuration: null, isMatch: false, error: 'File not accessible or corrupted' });
-            tempAudio.src = '';
+            if (resolved) return;
+            resolved = true;
+            callback({ success: false, actualDuration: null, isMatch: false, error: 'File not accessible (404, CORS, or network issue)' });
+            cleanup();
         };
+
         tempAudio.src = song.url;
-        // timeout after 8 seconds
+        // Long timeout – only if absolutely nothing happens
         setTimeout(() => {
-            if (tempAudio.readyState === 0) {
-                tempAudio.onerror = null;
-                tempAudio.onloadedmetadata = null;
-                callback({ success: false, actualDuration: null, isMatch: false, error: 'Loading timeout – file may be missing or slow' });
-                tempAudio.src = '';
+            if (!resolved) {
+                resolved = true;
+                callback({ success: false, actualDuration: null, isMatch: false, error: 'Timeout – file may be extremely slow or unavailable' });
+                cleanup();
             }
-        }, 8000);
+        }, 15000);
     }
 
     function renderSongResult(song) {
+        const songResultDiv = document.getElementById('songResult');
         songResultDiv.style.display = 'block';
         songResultDiv.innerHTML = `
             <strong>🎵 ${song.title}</strong><br>
             📝 ${song.details || "No details"}<br>
             ⏱️ Stored duration: ${song.duration} sec (${Math.floor(song.duration/60)}:${(song.duration%60).toString().padStart(2,'0')})<br>
-            <div id="validationStatus" class="validation-status">⏳ Validating file...</div>
+            <div id="validationStatus" class="validation-status">⏳ Checking file availability...</div>
             <button id="previewPlayBtn" class="preview-btn" disabled>▶ Play this song</button>
             <div class="occ-list">
                 <div><strong>⏪ Past occurrences (last 2)</strong></div>
@@ -496,15 +495,11 @@
             </div>
         `;
 
-        // Load occurrences separately (no async needed)
         const now = Date.now();
         const { past, future } = getPastFutureOccurrences(song.index, now);
-        const pastHtml = past.map(p => `<div class="occ-item">📜 ${new Date(p.ts).toLocaleString()} (${p.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
-        const futureHtml = future.map(f => `<div class="occ-item">🔮 ${new Date(f.ts).toLocaleString()} (${f.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
-        document.getElementById('pastOccList').innerHTML = pastHtml;
-        document.getElementById('futureOccList').innerHTML = futureHtml;
+        document.getElementById('pastOccList').innerHTML = past.map(p => `<div class="occ-item">📜 ${new Date(p.ts).toLocaleString()} (${p.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
+        document.getElementById('futureOccList').innerHTML = future.map(f => `<div class="occ-item">🔮 ${new Date(f.ts).toLocaleString()} (${f.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
 
-        // Validate the song file
         validateSong(song, (result) => {
             const statusDiv = document.getElementById('validationStatus');
             const playBtn = document.getElementById('previewPlayBtn');
@@ -512,23 +507,22 @@
 
             if (!result.success) {
                 statusDiv.className = 'validation-status error';
-                statusDiv.innerHTML = `❌ Validation failed: ${result.error}. The song may not play.`;
-                playBtn.disabled = false; // still allow user to try
-                playBtn.title = "File may be unavailable, but you can try playing";
+                statusDiv.innerHTML = `❌ ${result.error}. The song may not play. You can still try the button below.`;
+                playBtn.disabled = false;
             } else {
                 if (result.isMatch) {
                     statusDiv.className = 'validation-status success';
                     statusDiv.innerHTML = `✅ File verified: actual duration = ${result.actualDuration.toFixed(1)} sec – matches stored duration exactly.`;
                 } else {
                     statusDiv.className = 'validation-status warning';
-                    statusDiv.innerHTML = `⚠️ Duration mismatch: stored ${song.duration} sec, actual ${result.actualDuration.toFixed(1)} sec. The file may be different version or corrupted.`;
+                    statusDiv.innerHTML = `⚠️ Duration mismatch: stored ${song.duration} sec, actual ${result.actualDuration.toFixed(1)} sec. The file may be a different version.`;
                 }
                 playBtn.disabled = false;
             }
         });
 
-        // attach play button event after element exists (delegation)
-        const attachPlay = () => {
+        // Attach play button event after a short delay to ensure DOM is ready
+        setTimeout(() => {
             const playBtn = document.getElementById('previewPlayBtn');
             if (playBtn && !playBtn.hasListener) {
                 playBtn.hasListener = true;
@@ -562,14 +556,12 @@
                     }
                 });
             }
-        };
-        setTimeout(attachPlay, 50);
+        }, 50);
     }
 
     // Search suggestions
     const searchInput = document.getElementById('searchInput');
     const suggestionsDiv = document.getElementById('suggestions');
-    const songResultDiv = document.getElementById('songResult');
 
     function renderSuggestions(keyword) {
         if (!keyword.trim()) {
@@ -592,7 +584,7 @@
             </div>
         `).join('');
         document.querySelectorAll('.suggestion-item').forEach(el => {
-            el.addEventListener('click', (e) => {
+            el.addEventListener('click', () => {
                 const idx = parseInt(el.dataset.index);
                 const selected = songList[idx];
                 renderSongResult(selected);
