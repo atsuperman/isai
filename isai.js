@@ -324,7 +324,6 @@ const repos = [
 { file: "Hey Unnaithaane.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu / 🎥 A. Jagannathan", duration: 240 },
 { file: "Jaadhi Illai.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ Malaysia Vasudevan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 A. Jagannathan", duration: 240 },
 { file: "Kadhal Maharani Kavidhai.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Muthulingam / 🎥 A. Jagannathan", duration: 240 },
-{ file: "Koo Koo Endru Kuyil.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 A. Jagannathan", duration: 240 },
 { file: "Journey.m4a", details: "🎬 Jaanu (2020) / 🎙️ Pradeep Kumar / 🎼 Govind Vasantha / 📝 Karthik Netha / 🎥 C. Prem Kumar", duration: 367 },
 { file: "Ding Dang Dang.m4a", details: "🎬 Panakkaran (1990) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 P. Vasu", duration: 297 },
 { file: "Maraththa Vechchavan.m4a", details: "🎬 Panakkaran (1990) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 P. Vasu", duration: 239 },
