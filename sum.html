@@ -169,6 +169,24 @@
             padding: 0.2rem 0;
             color: #4a3b2a;
         }
+        .validation-status {
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+            padding: 0.2rem;
+            border-radius: 1rem;
+        }
+        .validation-status.success {
+            color: #2c5a2a;
+            background: #d4ecd0;
+        }
+        .validation-status.error {
+            color: #a1220a;
+            background: #fae1db;
+        }
+        .validation-status.warning {
+            color: #b86b00;
+            background: #fff0d0;
+        }
         .total-songs {
             font-weight: bold;
             background: #c07a4b20;
@@ -228,7 +246,7 @@
             </div>
             <div id="suggestions" class="suggestions"></div>
             <div id="songResult" class="song-result" style="display: none;">
-                <!-- dynamic content: song info + play button + occurrences -->
+                <!-- dynamic content -->
             </div>
 
             <h2 style="margin-top: 1.5rem;">📅 Lookup by date & time</h2>
@@ -257,7 +275,7 @@
     }));
 
     // ---------- constants & globals ----------
-    const EPOCH = new Date(Date.UTC(2026, 3, 1, 0, 0, 0)).getTime(); // April 1, 2026 UTC
+    const EPOCH = new Date(Date.UTC(2026, 3, 1, 0, 0, 0)).getTime();
 
     // ----- build modes (exactly same as radio player) -----
     function buildModes(count) {
@@ -293,67 +311,55 @@
     }
 
     const modes = buildModes(songList.length);
-    // precompute mode total durations (ms)
     const modeTotalDurationsMs = modes.map(modeOrder =>
         modeOrder.reduce((sum, idx) => sum + songList[idx].duration, 0) * 1000
     );
     const TOTAL_CYCLE_MS = modeTotalDurationsMs.reduce((a, b) => a + b, 0);
 
-    // human readable mode names
     const modeNames = [
         "🔀 Shuffle (42)", "🔀 Shuffle (77)", "🔀 Shuffle (101)",
         "🔀 Shuffle (111)", "🔀 Shuffle (222)", "🔀 Shuffle (333)",
         "🔀 Shuffle (123)", "🔀 Shuffle (456)", "🔀 Shuffle (789)", "🔀 Shuffle (999)"
     ];
 
-    // Precompute for each song the absolute start times within one cycle (relative to cycle start)
-    // Returns array of { modeIndex, offsetInCycleMs } for each occurrence (10 total)
+    // Precompute occurrences in cycle
     function getSongOccurrencesInCycle(songIndex) {
         const occurrences = [];
         let cycleOffset = 0;
         for (let m = 0; m < modes.length; m++) {
             const modeOrder = modes[m];
             const pos = modeOrder.indexOf(songIndex);
-            if (pos === -1) continue; // should never happen
-            // compute start time of this song within this mode
+            if (pos === -1) continue;
             let startInMode = 0;
             for (let i = 0; i < pos; i++) {
                 startInMode += songList[modeOrder[i]].duration * 1000;
             }
-            const absoluteStartInCycle = cycleOffset + startInMode;
             occurrences.push({
                 modeIndex: m,
                 modeName: modeNames[m],
-                startTimeInCycle: absoluteStartInCycle
+                startTimeInCycle: cycleOffset + startInMode
             });
             cycleOffset += modeTotalDurationsMs[m];
         }
         return occurrences;
     }
 
-    // For a given song, get past and future occurrences relative to current timestamp
     function getPastFutureOccurrences(songIndex, nowMs) {
         const inCycle = getSongOccurrencesInCycle(songIndex);
-        // list of all absolute timestamps across cycles (from EPOCH)
-        // We'll generate cycles around now: from cycle = floor((now - EPOCH)/TOTAL_CYCLE_MS) - 2 to +2
         const baseCycle = Math.floor((nowMs - EPOCH) / TOTAL_CYCLE_MS);
         const allTimestamps = [];
         for (let delta = -2; delta <= 2; delta++) {
             const cycleStart = EPOCH + (baseCycle + delta) * TOTAL_CYCLE_MS;
             for (const occ of inCycle) {
-                const ts = cycleStart + occ.startTimeInCycle;
-                allTimestamps.push({ ts, modeName: occ.modeName, delta });
+                allTimestamps.push({ ts: cycleStart + occ.startTimeInCycle, modeName: occ.modeName });
             }
         }
-        // sort by timestamp
         allTimestamps.sort((a,b) => a.ts - b.ts);
-        // separate past and future
         const past = allTimestamps.filter(t => t.ts < nowMs).slice(-2);
         const future = allTimestamps.filter(t => t.ts > nowMs).slice(0,2);
         return { past, future };
     }
 
-    // ----- core function: get song at given timestamp (ms) -----
     function getSongInfoAtTime(timestampMs) {
         let elapsedMs = timestampMs - EPOCH;
         if (elapsedMs < 0) elapsedMs = 0;
@@ -394,57 +400,41 @@
             offsetMs: offsetInSongMs,
             remainingMs: remainingInSongMs,
             positionInMode: songPosInMode,
-            modeOrderLength: modeOrder.length,
             modeOrderArray: modeOrder
         };
     }
 
-    // ----- preload total duration sum and display -----
+    // total duration display
     const totalSeconds = songList.reduce((sum, s) => sum + s.duration, 0);
     const totalHours = (totalSeconds / 3600).toFixed(1);
     document.getElementById('totalCount').innerText = `${songList.length} songs`;
     document.getElementById('totalDuration').innerText = totalHours;
 
-    // ----- UI update (real-time) -----
-    let currentInfo = null;
+    // Real-time UI
     function updateRealTimeUI() {
         const now = Date.now();
         const info = getSongInfoAtTime(now);
-        currentInfo = info;
         document.getElementById('modeName').innerHTML = `${info.modeName} · mode ${info.modeIndex+1}/10`;
         document.getElementById('currentTitle').innerText = info.song.title;
         document.getElementById('currentDetails').innerText = info.song.details || "—";
-        const nowDate = new Date(now);
-        document.getElementById('timestampInfo').innerHTML = `🕒 ${nowDate.toLocaleString()} UTC+5:30`;
-        // update next 10 & previous 10 songs within current mode
+        document.getElementById('timestampInfo').innerHTML = `🕒 ${new Date(now).toLocaleString()} UTC+5:30`;
+
         const modeOrder = info.modeOrderArray;
         const currentPos = info.positionInMode;
         const prevIndices = [];
-        for (let i = Math.max(0, currentPos - 10); i < currentPos; i++) {
-            prevIndices.push(modeOrder[i]);
-        }
+        for (let i = Math.max(0, currentPos - 10); i < currentPos; i++) prevIndices.push(modeOrder[i]);
         const nextIndices = [];
-        for (let i = currentPos + 1; i <= Math.min(modeOrder.length-1, currentPos + 10); i++) {
-            nextIndices.push(modeOrder[i]);
-        }
-        const prevListDiv = document.getElementById('prevSongsList');
-        if (prevIndices.length === 0) prevListDiv.innerHTML = '<div class="list-item">—</div>';
-        else {
-            prevListDiv.innerHTML = prevIndices.map(idx => `<div class="list-item">${songList[idx].title}</div>`).join('');
-        }
-        const nextListDiv = document.getElementById('nextSongsList');
-        if (nextIndices.length === 0) nextListDiv.innerHTML = '<div class="list-item">—</div>';
-        else {
-            nextListDiv.innerHTML = nextIndices.map(idx => `<div class="list-item">${songList[idx].title}</div>`).join('');
-        }
+        for (let i = currentPos + 1; i <= Math.min(modeOrder.length-1, currentPos + 10); i++) nextIndices.push(modeOrder[i]);
+
+        const prevDiv = document.getElementById('prevSongsList');
+        prevDiv.innerHTML = prevIndices.length ? prevIndices.map(idx => `<div class="list-item">${songList[idx].title}</div>`).join('') : '<div class="list-item">—</div>';
+        const nextDiv = document.getElementById('nextSongsList');
+        nextDiv.innerHTML = nextIndices.length ? nextIndices.map(idx => `<div class="list-item">${songList[idx].title}</div>`).join('') : '<div class="list-item">—</div>';
     }
     updateRealTimeUI();
     setInterval(updateRealTimeUI, 1000);
 
-    // ----- SEARCH with suggestions (matching title or details) -----
-    const searchInput = document.getElementById('searchInput');
-    const suggestionsDiv = document.getElementById('suggestions');
-    const songResultDiv = document.getElementById('songResult');
+    // ----- Song validation and preview -----
     let currentPreviewAudio = null;
     let currentSelectedSong = null;
 
@@ -458,67 +448,128 @@
             btn.innerHTML = '▶ Play this song';
             btn.classList.remove('playing');
         }
+        currentSelectedSong = null;
+    }
+
+    // Validate song by loading metadata and comparing duration
+    function validateSong(song, callback) {
+        const tempAudio = new Audio();
+        tempAudio.preload = 'metadata';
+        tempAudio.onloadedmetadata = () => {
+            const actualDuration = tempAudio.duration;
+            const stored = song.duration;
+            const diff = Math.abs(actualDuration - stored);
+            // allow 1 second tolerance for rounding
+            const isMatch = diff <= 1.0;
+            callback({ success: true, actualDuration, isMatch, error: null });
+            tempAudio.src = ''; // cleanup
+        };
+        tempAudio.onerror = () => {
+            callback({ success: false, actualDuration: null, isMatch: false, error: 'File not accessible or corrupted' });
+            tempAudio.src = '';
+        };
+        tempAudio.src = song.url;
+        // timeout after 8 seconds
+        setTimeout(() => {
+            if (tempAudio.readyState === 0) {
+                tempAudio.onerror = null;
+                tempAudio.onloadedmetadata = null;
+                callback({ success: false, actualDuration: null, isMatch: false, error: 'Loading timeout – file may be missing or slow' });
+                tempAudio.src = '';
+            }
+        }, 8000);
     }
 
     function renderSongResult(song) {
         songResultDiv.style.display = 'block';
-        // Build occurrences
-        const now = Date.now();
-        const { past, future } = getPastFutureOccurrences(song.index, now);
-        const pastHtml = past.map(p => {
-            const d = new Date(p.ts);
-            return `<div class="occ-item">📜 ${d.toLocaleString()} (${p.modeName})</div>`;
-        }).join('');
-        const futureHtml = future.map(f => {
-            const d = new Date(f.ts);
-            return `<div class="occ-item">🔮 ${d.toLocaleString()} (${f.modeName})</div>`;
-        }).join('');
         songResultDiv.innerHTML = `
             <strong>🎵 ${song.title}</strong><br>
             📝 ${song.details || "No details"}<br>
-            ⏱️ Duration: ${song.duration} seconds (${Math.floor(song.duration/60)}:${(song.duration%60).toString().padStart(2,'0')})<br>
-            ✅ Loaded — matches file duration exactly.<br>
-            <button id="previewPlayBtn" class="preview-btn">▶ Play this song</button>
+            ⏱️ Stored duration: ${song.duration} sec (${Math.floor(song.duration/60)}:${(song.duration%60).toString().padStart(2,'0')})<br>
+            <div id="validationStatus" class="validation-status">⏳ Validating file...</div>
+            <button id="previewPlayBtn" class="preview-btn" disabled>▶ Play this song</button>
             <div class="occ-list">
                 <div><strong>⏪ Past occurrences (last 2)</strong></div>
-                ${pastHtml || '<div class="occ-item">—</div>'}
+                <div id="pastOccList">—</div>
                 <div style="margin-top:0.5rem;"><strong>⏩ Future occurrences (next 2)</strong></div>
-                ${futureHtml || '<div class="occ-item">—</div>'}
+                <div id="futureOccList">—</div>
             </div>
         `;
-        // attach play button event
-        const playBtn = document.getElementById('previewPlayBtn');
-        if (playBtn) {
-            playBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (currentPreviewAudio && !currentPreviewAudio.paused && currentSelectedSong === song.index) {
-                    // pause
-                    currentPreviewAudio.pause();
-                    playBtn.innerHTML = '▶ Play this song';
-                    playBtn.classList.remove('playing');
+
+        // Load occurrences separately (no async needed)
+        const now = Date.now();
+        const { past, future } = getPastFutureOccurrences(song.index, now);
+        const pastHtml = past.map(p => `<div class="occ-item">📜 ${new Date(p.ts).toLocaleString()} (${p.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
+        const futureHtml = future.map(f => `<div class="occ-item">🔮 ${new Date(f.ts).toLocaleString()} (${f.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
+        document.getElementById('pastOccList').innerHTML = pastHtml;
+        document.getElementById('futureOccList').innerHTML = futureHtml;
+
+        // Validate the song file
+        validateSong(song, (result) => {
+            const statusDiv = document.getElementById('validationStatus');
+            const playBtn = document.getElementById('previewPlayBtn');
+            if (!statusDiv || !playBtn) return;
+
+            if (!result.success) {
+                statusDiv.className = 'validation-status error';
+                statusDiv.innerHTML = `❌ Validation failed: ${result.error}. The song may not play.`;
+                playBtn.disabled = false; // still allow user to try
+                playBtn.title = "File may be unavailable, but you can try playing";
+            } else {
+                if (result.isMatch) {
+                    statusDiv.className = 'validation-status success';
+                    statusDiv.innerHTML = `✅ File verified: actual duration = ${result.actualDuration.toFixed(1)} sec – matches stored duration exactly.`;
                 } else {
-                    // stop any existing preview
-                    stopPreview();
-                    // create new audio
-                    const audio = new Audio(song.url);
-                    audio.volume = 0.8;
-                    audio.play().catch(err => console.warn("Preview play error:", err));
-                    currentPreviewAudio = audio;
-                    currentSelectedSong = song.index;
-                    playBtn.innerHTML = '⏸ Pause';
-                    playBtn.classList.add('playing');
-                    audio.addEventListener('ended', () => {
-                        if (currentPreviewAudio === audio) {
-                            playBtn.innerHTML = '▶ Play this song';
-                            playBtn.classList.remove('playing');
-                            currentPreviewAudio = null;
-                            currentSelectedSong = null;
-                        }
-                    });
+                    statusDiv.className = 'validation-status warning';
+                    statusDiv.innerHTML = `⚠️ Duration mismatch: stored ${song.duration} sec, actual ${result.actualDuration.toFixed(1)} sec. The file may be different version or corrupted.`;
                 }
-            });
-        }
+                playBtn.disabled = false;
+            }
+        });
+
+        // attach play button event after element exists (delegation)
+        const attachPlay = () => {
+            const playBtn = document.getElementById('previewPlayBtn');
+            if (playBtn && !playBtn.hasListener) {
+                playBtn.hasListener = true;
+                playBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (currentPreviewAudio && !currentPreviewAudio.paused && currentSelectedSong === song.index) {
+                        currentPreviewAudio.pause();
+                        playBtn.innerHTML = '▶ Play this song';
+                        playBtn.classList.remove('playing');
+                    } else {
+                        stopPreview();
+                        const audio = new Audio(song.url);
+                        audio.volume = 0.8;
+                        audio.play().catch(err => {
+                            console.warn("Preview play error:", err);
+                            const statusDiv = document.getElementById('validationStatus');
+                            if (statusDiv) statusDiv.innerHTML += `<br>⚠️ Playback failed: ${err.message}`;
+                        });
+                        currentPreviewAudio = audio;
+                        currentSelectedSong = song.index;
+                        playBtn.innerHTML = '⏸ Pause';
+                        playBtn.classList.add('playing');
+                        audio.addEventListener('ended', () => {
+                            if (currentPreviewAudio === audio) {
+                                playBtn.innerHTML = '▶ Play this song';
+                                playBtn.classList.remove('playing');
+                                currentPreviewAudio = null;
+                                currentSelectedSong = null;
+                            }
+                        });
+                    }
+                });
+            }
+        };
+        setTimeout(attachPlay, 50);
     }
+
+    // Search suggestions
+    const searchInput = document.getElementById('searchInput');
+    const suggestionsDiv = document.getElementById('suggestions');
+    const songResultDiv = document.getElementById('songResult');
 
     function renderSuggestions(keyword) {
         if (!keyword.trim()) {
@@ -526,8 +577,8 @@
             return;
         }
         const lowerKeyword = keyword.toLowerCase();
-        const matches = songList.filter(song => 
-            song.title.toLowerCase().includes(lowerKeyword) || 
+        const matches = songList.filter(song =>
+            song.title.toLowerCase().includes(lowerKeyword) ||
             song.details.toLowerCase().includes(lowerKeyword)
         ).slice(0, 15);
         if (matches.length === 0) {
@@ -540,7 +591,6 @@
                 <small>${song.details.substring(0, 80)}</small>
             </div>
         `).join('');
-        // attach click events
         document.querySelectorAll('.suggestion-item').forEach(el => {
             el.addEventListener('click', (e) => {
                 const idx = parseInt(el.dataset.index);
@@ -548,27 +598,22 @@
                 renderSongResult(selected);
                 searchInput.value = selected.title;
                 suggestionsDiv.innerHTML = '';
-                // stop any ongoing preview when new song selected
                 stopPreview();
             });
         });
     }
 
-    searchInput.addEventListener('input', (e) => {
-        renderSuggestions(e.target.value);
-    });
-    // hide suggestions when clicking outside
+    searchInput.addEventListener('input', (e) => renderSuggestions(e.target.value));
     document.addEventListener('click', (e) => {
         if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
             suggestionsDiv.innerHTML = '';
         }
     });
 
-    // ----- date/time lookup -----
+    // Date/time lookup
     const dtPicker = document.getElementById('dtPicker');
     const calcBtn = document.getElementById('calcBtn');
     const lookupResultDiv = document.getElementById('lookupResult');
-    // set default to current date+time (local)
     const nowLocal = new Date();
     nowLocal.setSeconds(0);
     dtPicker.value = nowLocal.toISOString().slice(0, 16);
@@ -590,7 +635,6 @@
         `;
     });
 
-    // Clean up preview audio on page unload
     window.addEventListener('beforeunload', () => {
         if (currentPreviewAudio) {
             currentPreviewAudio.pause();
