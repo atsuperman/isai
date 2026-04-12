@@ -223,6 +223,7 @@
             .album-cover { width: 70px; height: 70px; }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/jsmediatags@3.9.5/dist/jsmediatags.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -437,7 +438,7 @@
     updateRealTimeUI();
     setInterval(updateRealTimeUI, 1000);
 
-    // ---------- Simple Preview Player (no cover extraction, just play/pause) ----------
+    // ---------- Preview Player with CORS proxy for cover extraction ----------
     let currentPreviewAudio = null;
     let currentSelectedSong = null;
 
@@ -490,14 +491,33 @@
         }, 10000);
     }
 
+    // Extract album cover using a CORS proxy (corsproxy.io)
+    async function fetchAlbumArt(url) {
+        const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
+        return new Promise((resolve) => {
+            window.jsmediatags.read(proxyUrl, {
+                onSuccess: (tag) => {
+                    const picture = tag.tags.picture;
+                    if (picture && picture.data) {
+                        const base64String = picture.data.reduce((data, byte) => data + String.fromCharCode(byte), '');
+                        const dataUrl = `data:${picture.format};base64,${btoa(base64String)}`;
+                        resolve(dataUrl);
+                    } else {
+                        resolve(null);
+                    }
+                },
+                onError: () => resolve(null)
+            });
+        });
+    }
+
     async function renderSongResult(song) {
         const songResultDiv = document.getElementById('songResult');
         songResultDiv.style.display = 'block';
-        // Use a static default cover (no extraction attempt)
         const defaultCover = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23c0a080'/%3E%3Ctext x='50' y='67' font-size='40' text-anchor='middle' fill='white' font-family='Arial'%3E♪%3C/text%3E%3C/svg%3E";
         songResultDiv.innerHTML = `
             <div class="song-result-inner">
-                <img class="album-cover" src="${defaultCover}" alt="album art">
+                <img id="albumCoverImg" class="album-cover" src="${defaultCover}" alt="album art">
                 <div class="song-info-text">
                     <strong>🎵 ${song.title}</strong><br>
                     📝 ${song.details || "No details"}<br>
@@ -519,7 +539,7 @@
         document.getElementById('pastOccList').innerHTML = past.map(p => `<div class="occ-item">📜 ${new Date(p.ts).toLocaleString()} (${p.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
         document.getElementById('futureOccList').innerHTML = future.map(f => `<div class="occ-item">🔮 ${new Date(f.ts).toLocaleString()} (${f.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
 
-        // Validate and update status (but play button is already enabled)
+        // Validate and update status (non‑blocking)
         validateSong(song, (result) => {
             const statusDiv = document.getElementById('validationStatus');
             if (!statusDiv) return;
@@ -536,6 +556,15 @@
                 }
             }
         });
+
+        // Try to fetch album cover via CORS proxy
+        const coverImg = document.getElementById('albumCoverImg');
+        if (coverImg) {
+            const coverDataUrl = await fetchAlbumArt(song.url);
+            if (coverDataUrl) {
+                coverImg.src = coverDataUrl;
+            }
+        }
 
         // Attach play button event
         const playBtn = document.getElementById('previewPlayBtn');
