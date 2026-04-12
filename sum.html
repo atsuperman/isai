@@ -142,7 +142,7 @@
             height: 100px;
             border-radius: 12px;
             object-fit: cover;
-            background: #ccc;
+            background: #ddd;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             flex-shrink: 0;
         }
@@ -458,21 +458,26 @@
         currentSelectedSong = null;
     }
 
-    // Extract album cover from audio file using music-metadata-browser
+    // Extract album cover from audio file using music-metadata-browser (improved)
     async function fetchAlbumArt(url) {
         try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error('Fetch failed');
+            // Fetch the audio file as a blob with CORS enabled
+            const response = await fetch(url, { mode: 'cors' });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const arrayBuffer = await response.arrayBuffer();
-            const metadata = await window.musicMetadata.parseBuffer(arrayBuffer, { mimeType: 'audio/mpeg' });
+            // Determine mime type from URL extension
+            let mimeType = 'audio/mpeg';
+            if (url.toLowerCase().endsWith('.m4a')) mimeType = 'audio/mp4';
+            const metadata = await window.musicMetadata.parseBuffer(arrayBuffer, { mimeType });
             if (metadata.common.picture && metadata.common.picture.length > 0) {
                 const picture = metadata.common.picture[0];
+                // picture.data is a Uint8Array, convert to Blob
                 const blob = new Blob([picture.data], { type: picture.format });
                 return URL.createObjectURL(blob);
             }
             return null;
         } catch (err) {
-            console.warn("Album art extraction failed:", err);
+            console.warn("Album art extraction failed for", url, err);
             return null;
         }
     }
@@ -515,7 +520,7 @@
     async function renderSongResult(song) {
         const songResultDiv = document.getElementById('songResult');
         songResultDiv.style.display = 'block';
-        // Initial HTML with placeholder for cover
+        // Initial HTML with a placeholder cover
         songResultDiv.innerHTML = `
             <div class="song-result-inner">
                 <img id="albumCoverImg" class="album-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23c0a080'/%3E%3Ctext x='50' y='67' font-size='40' text-anchor='middle' fill='white' font-family='Arial'%3E♪%3C/text%3E%3C/svg%3E" alt="album art">
@@ -562,14 +567,17 @@
             }
         });
 
-        // Extract and set album cover
+        // Extract album cover asynchronously and update the image
         const coverImg = document.getElementById('albumCoverImg');
         if (coverImg) {
             const coverUrl = await fetchAlbumArt(song.url);
             if (coverUrl) {
                 coverImg.src = coverUrl;
-                // Revoke object URL after load to free memory
                 coverImg.onload = () => URL.revokeObjectURL(coverUrl);
+                coverImg.onerror = () => {
+                    // fallback already set
+                    if (coverUrl) URL.revokeObjectURL(coverUrl);
+                };
             }
         }
 
