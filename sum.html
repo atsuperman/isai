@@ -223,8 +223,6 @@
             .album-cover { width: 70px; height: 70px; }
         }
     </style>
-    <!-- jsmediatags for cover extraction (optional, won't break play) -->
-    <script src="https://cdn.jsdelivr.net/npm/jsmediatags@3.9.5/dist/jsmediatags.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -439,7 +437,7 @@
     updateRealTimeUI();
     setInterval(updateRealTimeUI, 1000);
 
-    // ---------- Validation, Album Cover (optional), and Preview ----------
+    // ---------- Simple Preview Player (no cover extraction, just play/pause) ----------
     let currentPreviewAudio = null;
     let currentSelectedSong = null;
 
@@ -456,7 +454,7 @@
         currentSelectedSong = null;
     }
 
-    // Simple validation that enables the play button even if metadata fails
+    // Validate song duration (non‑blocking)
     function validateSong(song, callback) {
         const tempAudio = new Audio();
         tempAudio.preload = 'metadata';
@@ -492,38 +490,20 @@
         }, 10000);
     }
 
-    // Extract album cover (optional, errors won't break)
-    function fetchAlbumArt(url, callback) {
-        window.jsmediatags.read(url, {
-            onSuccess: (tag) => {
-                const picture = tag.tags.picture;
-                if (picture && picture.data) {
-                    const base64String = picture.data.reduce((data, byte) => data + String.fromCharCode(byte), '');
-                    const dataUrl = `data:${picture.format};base64,${btoa(base64String)}`;
-                    callback(dataUrl);
-                } else {
-                    callback(null);
-                }
-            },
-            onError: (error) => {
-                console.warn("Album art extraction failed:", error);
-                callback(null);
-            }
-        });
-    }
-
     async function renderSongResult(song) {
         const songResultDiv = document.getElementById('songResult');
         songResultDiv.style.display = 'block';
+        // Use a static default cover (no extraction attempt)
+        const defaultCover = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23c0a080'/%3E%3Ctext x='50' y='67' font-size='40' text-anchor='middle' fill='white' font-family='Arial'%3E♪%3C/text%3E%3C/svg%3E";
         songResultDiv.innerHTML = `
             <div class="song-result-inner">
-                <img id="albumCoverImg" class="album-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23c0a080'/%3E%3Ctext x='50' y='67' font-size='40' text-anchor='middle' fill='white' font-family='Arial'%3E♪%3C/text%3E%3C/svg%3E" alt="album art">
+                <img class="album-cover" src="${defaultCover}" alt="album art">
                 <div class="song-info-text">
                     <strong>🎵 ${song.title}</strong><br>
                     📝 ${song.details || "No details"}<br>
                     ⏱️ Stored duration: ${song.duration} sec (${Math.floor(song.duration/60)}:${(song.duration%60).toString().padStart(2,'0')})<br>
                     <div id="validationStatus" class="validation-status">⏳ Checking file...</div>
-                    <button id="previewPlayBtn" class="preview-btn" disabled>▶ Play this song</button>
+                    <button id="previewPlayBtn" class="preview-btn">▶ Play this song</button>
                 </div>
             </div>
             <div class="occ-list">
@@ -539,14 +519,13 @@
         document.getElementById('pastOccList').innerHTML = past.map(p => `<div class="occ-item">📜 ${new Date(p.ts).toLocaleString()} (${p.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
         document.getElementById('futureOccList').innerHTML = future.map(f => `<div class="occ-item">🔮 ${new Date(f.ts).toLocaleString()} (${f.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
 
-        // Validate and enable play button regardless (always enable after short delay)
+        // Validate and update status (but play button is already enabled)
         validateSong(song, (result) => {
             const statusDiv = document.getElementById('validationStatus');
-            const playBtn = document.getElementById('previewPlayBtn');
-            if (!statusDiv || !playBtn) return;
+            if (!statusDiv) return;
             if (!result.success) {
                 statusDiv.className = 'validation-status error';
-                statusDiv.innerHTML = `❌ ${result.error}. Play button still available.`;
+                statusDiv.innerHTML = `❌ ${result.error}. Play button may still work.`;
             } else {
                 if (result.isMatch) {
                     statusDiv.className = 'validation-status success';
@@ -556,56 +535,45 @@
                     statusDiv.innerHTML = `⚠️ Duration mismatch: stored ${song.duration} sec, actual ${result.actualDuration.toFixed(1)} sec.`;
                 }
             }
-            // Enable button regardless
-            playBtn.disabled = false;
         });
 
-        // Try to fetch cover (if fails, fallback remains)
-        const coverImg = document.getElementById('albumCoverImg');
-        if (coverImg) {
-            fetchAlbumArt(song.url, (dataUrl) => {
-                if (dataUrl) coverImg.src = dataUrl;
-            });
-        }
-
-        // Attach play button event (ensure it works even if validation is slow)
-        setTimeout(() => {
-            const playBtn = document.getElementById('previewPlayBtn');
-            if (playBtn && !playBtn.hasListener) {
-                playBtn.hasListener = true;
-                playBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    if (currentPreviewAudio && !currentPreviewAudio.paused && currentSelectedSong === song.index) {
-                        currentPreviewAudio.pause();
+        // Attach play button event
+        const playBtn = document.getElementById('previewPlayBtn');
+        if (playBtn && !playBtn.hasListener) {
+            playBtn.hasListener = true;
+            playBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (currentPreviewAudio && !currentPreviewAudio.paused && currentSelectedSong === song.index) {
+                    currentPreviewAudio.pause();
+                    playBtn.innerHTML = '▶ Play this song';
+                    playBtn.classList.remove('playing');
+                } else {
+                    stopPreview();
+                    const audio = new Audio(song.url);
+                    audio.volume = 0.8;
+                    audio.play().then(() => {
+                        currentPreviewAudio = audio;
+                        currentSelectedSong = song.index;
+                        playBtn.innerHTML = '⏸ Pause';
+                        playBtn.classList.add('playing');
+                        audio.addEventListener('ended', () => {
+                            if (currentPreviewAudio === audio) {
+                                playBtn.innerHTML = '▶ Play this song';
+                                playBtn.classList.remove('playing');
+                                currentPreviewAudio = null;
+                                currentSelectedSong = null;
+                            }
+                        });
+                    }).catch(err => {
+                        console.warn("Playback error:", err);
+                        const statusDiv = document.getElementById('validationStatus');
+                        if (statusDiv) statusDiv.innerHTML += `<br>⚠️ Playback failed: ${err.message}`;
                         playBtn.innerHTML = '▶ Play this song';
                         playBtn.classList.remove('playing');
-                    } else {
-                        stopPreview();
-                        const audio = new Audio(song.url);
-                        audio.volume = 0.8;
-                        audio.play().then(() => {
-                            currentPreviewAudio = audio;
-                            currentSelectedSong = song.index;
-                            playBtn.innerHTML = '⏸ Pause';
-                            playBtn.classList.add('playing');
-                            audio.addEventListener('ended', () => {
-                                if (currentPreviewAudio === audio) {
-                                    playBtn.innerHTML = '▶ Play this song';
-                                    playBtn.classList.remove('playing');
-                                    currentPreviewAudio = null;
-                                    currentSelectedSong = null;
-                                }
-                            });
-                        }).catch(err => {
-                            console.warn("Preview play error:", err);
-                            const statusDiv = document.getElementById('validationStatus');
-                            if (statusDiv) statusDiv.innerHTML += `<br>⚠️ Playback failed: ${err.message}`;
-                            playBtn.disabled = false;
-                        });
-                    }
-                });
-            }
-        }, 100);
+                    });
+                }
+            });
+        }
     }
 
     // Search suggestions
