@@ -223,7 +223,8 @@
             .album-cover { width: 70px; height: 70px; }
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/music-metadata-browser@7.2.5/lib/index.min.js"></script>
+    <!-- jsmediatags library for reliable cover extraction -->
+    <script src="https://cdn.jsdelivr.net/npm/jsmediatags@3.9.5/dist/jsmediatags.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -438,7 +439,7 @@
     updateRealTimeUI();
     setInterval(updateRealTimeUI, 1000);
 
-    // ---------- Validation, Album Cover, and Preview ----------
+    // ---------- Validation, Album Cover (using jsmediatags), and Preview ----------
     let currentPreviewAudio = null;
     let currentSelectedSong = null;
 
@@ -455,27 +456,26 @@
         currentSelectedSong = null;
     }
 
-    // Improved album art extraction using music-metadata-browser with better CORS handling
-    async function fetchAlbumArt(url) {
-        try {
-            // Use fetch with no-cors? No, we need actual data. GitHub raw supports CORS.
-            const response = await fetch(url, { mode: 'cors' });
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const arrayBuffer = await response.arrayBuffer();
-            // Determine correct mime type
-            let mimeType = 'audio/mpeg';
-            if (url.toLowerCase().endsWith('.m4a')) mimeType = 'audio/mp4';
-            const metadata = await window.musicMetadata.parseBuffer(arrayBuffer, { mimeType });
-            if (metadata.common.picture && metadata.common.picture.length) {
-                const pic = metadata.common.picture[0];
-                const blob = new Blob([pic.data], { type: pic.format });
-                return URL.createObjectURL(blob);
+    // Extract album cover using jsmediatags (supports MP3 and M4A)
+    function fetchAlbumArt(url, callback) {
+        // jsmediatags requires the URL to be accessible with CORS.
+        // For GitHub raw, it works.
+        window.jsmediatags.read(url, {
+            onSuccess: (tag) => {
+                const picture = tag.tags.picture;
+                if (picture && picture.data) {
+                    const base64String = picture.data.reduce((data, byte) => data + String.fromCharCode(byte), '');
+                    const dataUrl = `data:${picture.format};base64,${btoa(base64String)}`;
+                    callback(dataUrl);
+                } else {
+                    callback(null);
+                }
+            },
+            onError: (error) => {
+                console.warn("jsmediatags error:", error);
+                callback(null);
             }
-            return null;
-        } catch (err) {
-            console.warn("Album art extraction failed:", err);
-            return null;
-        }
+        });
     }
 
     function validateSong(song, callback) {
@@ -560,18 +560,15 @@
             }
         });
 
-        // Extract album cover
+        // Extract cover using jsmediatags
         const coverImg = document.getElementById('albumCoverImg');
         if (coverImg) {
-            const coverUrl = await fetchAlbumArt(song.url);
-            if (coverUrl) {
-                coverImg.src = coverUrl;
-                coverImg.onload = () => URL.revokeObjectURL(coverUrl);
-                coverImg.onerror = () => {
-                    console.warn("Cover image failed to load, keeping fallback");
-                    if (coverUrl) URL.revokeObjectURL(coverUrl);
-                };
-            }
+            fetchAlbumArt(song.url, (dataUrl) => {
+                if (dataUrl) {
+                    coverImg.src = dataUrl;
+                }
+                // if no cover, fallback stays
+            });
         }
 
         setTimeout(() => {
