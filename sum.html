@@ -132,24 +132,6 @@
             padding: 0.8rem;
             margin-top: 1rem;
         }
-        .song-result-inner {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        .album-cover {
-            width: 100px;
-            height: 100px;
-            border-radius: 12px;
-            object-fit: cover;
-            background: #ddd;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            flex-shrink: 0;
-        }
-        .song-info-text {
-            flex: 1;
-            min-width: 150px;
-        }
         .datetime-panel {
             display: flex;
             gap: 0.5rem;
@@ -220,10 +202,8 @@
         @media (max-width: 800px) {
             .grid { grid-template-columns: 1fr; }
             body { padding: 1rem; }
-            .album-cover { width: 70px; height: 70px; }
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/jsmediatags@3.9.5/dist/jsmediatags.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -265,7 +245,9 @@
                 <input type="text" id="searchInput" placeholder="Type song name or movie / singer ..." autocomplete="off">
             </div>
             <div id="suggestions" class="suggestions"></div>
-            <div id="songResult" class="song-result" style="display: none;"></div>
+            <div id="songResult" class="song-result" style="display: none;">
+                <!-- dynamic content -->
+            </div>
 
             <h2 style="margin-top: 1.5rem;">📅 Lookup by date & time</h2>
             <div class="datetime-panel">
@@ -438,7 +420,7 @@
     updateRealTimeUI();
     setInterval(updateRealTimeUI, 1000);
 
-    // ---------- Preview Player with CORS proxy for cover extraction ----------
+    // ---------- Validation and preview ----------
     let currentPreviewAudio = null;
     let currentSelectedSong = null;
 
@@ -455,16 +437,18 @@
         currentSelectedSong = null;
     }
 
-    // Validate song duration (non‑blocking)
+    // Validate song: only show error if file fails to load metadata (404, CORS, etc.)
     function validateSong(song, callback) {
         const tempAudio = new Audio();
         tempAudio.preload = 'metadata';
         let resolved = false;
+
         const cleanup = () => {
             tempAudio.src = '';
             tempAudio.onloadedmetadata = null;
             tempAudio.onerror = null;
         };
+
         tempAudio.onloadedmetadata = () => {
             if (resolved) return;
             resolved = true;
@@ -475,57 +459,34 @@
             callback({ success: true, actualDuration, isMatch, error: null });
             cleanup();
         };
+
         tempAudio.onerror = () => {
             if (resolved) return;
             resolved = true;
-            callback({ success: false, actualDuration: null, isMatch: false, error: 'File not accessible' });
+            callback({ success: false, actualDuration: null, isMatch: false, error: 'File not accessible (404, CORS, or network issue)' });
             cleanup();
         };
+
         tempAudio.src = song.url;
+        // Long timeout – only if absolutely nothing happens
         setTimeout(() => {
             if (!resolved) {
                 resolved = true;
-                callback({ success: false, actualDuration: null, isMatch: false, error: 'Timeout' });
+                callback({ success: false, actualDuration: null, isMatch: false, error: 'Timeout – file may be extremely slow or unavailable' });
                 cleanup();
             }
-        }, 10000);
+        }, 15000);
     }
 
-    // Extract album cover using a CORS proxy (corsproxy.io)
-    async function fetchAlbumArt(url) {
-        const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
-        return new Promise((resolve) => {
-            window.jsmediatags.read(proxyUrl, {
-                onSuccess: (tag) => {
-                    const picture = tag.tags.picture;
-                    if (picture && picture.data) {
-                        const base64String = picture.data.reduce((data, byte) => data + String.fromCharCode(byte), '');
-                        const dataUrl = `data:${picture.format};base64,${btoa(base64String)}`;
-                        resolve(dataUrl);
-                    } else {
-                        resolve(null);
-                    }
-                },
-                onError: () => resolve(null)
-            });
-        });
-    }
-
-    async function renderSongResult(song) {
+    function renderSongResult(song) {
         const songResultDiv = document.getElementById('songResult');
         songResultDiv.style.display = 'block';
-        const defaultCover = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23c0a080'/%3E%3Ctext x='50' y='67' font-size='40' text-anchor='middle' fill='white' font-family='Arial'%3E♪%3C/text%3E%3C/svg%3E";
         songResultDiv.innerHTML = `
-            <div class="song-result-inner">
-                <img id="albumCoverImg" class="album-cover" src="${defaultCover}" alt="album art">
-                <div class="song-info-text">
-                    <strong>🎵 ${song.title}</strong><br>
-                    📝 ${song.details || "No details"}<br>
-                    ⏱️ Stored duration: ${song.duration} sec (${Math.floor(song.duration/60)}:${(song.duration%60).toString().padStart(2,'0')})<br>
-                    <div id="validationStatus" class="validation-status">⏳ Checking file...</div>
-                    <button id="previewPlayBtn" class="preview-btn">▶ Play this song</button>
-                </div>
-            </div>
+            <strong>🎵 ${song.title}</strong><br>
+            📝 ${song.details || "No details"}<br>
+            ⏱️ Stored duration: ${song.duration} sec (${Math.floor(song.duration/60)}:${(song.duration%60).toString().padStart(2,'0')})<br>
+            <div id="validationStatus" class="validation-status">⏳ Checking file availability...</div>
+            <button id="previewPlayBtn" class="preview-btn" disabled>▶ Play this song</button>
             <div class="occ-list">
                 <div><strong>⏪ Past occurrences (last 2)</strong></div>
                 <div id="pastOccList">—</div>
@@ -539,48 +500,47 @@
         document.getElementById('pastOccList').innerHTML = past.map(p => `<div class="occ-item">📜 ${new Date(p.ts).toLocaleString()} (${p.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
         document.getElementById('futureOccList').innerHTML = future.map(f => `<div class="occ-item">🔮 ${new Date(f.ts).toLocaleString()} (${f.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
 
-        // Validate and update status (non‑blocking)
         validateSong(song, (result) => {
             const statusDiv = document.getElementById('validationStatus');
-            if (!statusDiv) return;
+            const playBtn = document.getElementById('previewPlayBtn');
+            if (!statusDiv || !playBtn) return;
+
             if (!result.success) {
                 statusDiv.className = 'validation-status error';
-                statusDiv.innerHTML = `❌ ${result.error}. Play button may still work.`;
+                statusDiv.innerHTML = `❌ ${result.error}. The song may not play. You can still try the button below.`;
+                playBtn.disabled = false;
             } else {
                 if (result.isMatch) {
                     statusDiv.className = 'validation-status success';
-                    statusDiv.innerHTML = `✅ Verified: actual ${result.actualDuration.toFixed(1)} sec (matches stored).`;
+                    statusDiv.innerHTML = `✅ File verified: actual duration = ${result.actualDuration.toFixed(1)} sec – matches stored duration exactly.`;
                 } else {
                     statusDiv.className = 'validation-status warning';
-                    statusDiv.innerHTML = `⚠️ Duration mismatch: stored ${song.duration} sec, actual ${result.actualDuration.toFixed(1)} sec.`;
+                    statusDiv.innerHTML = `⚠️ Duration mismatch: stored ${song.duration} sec, actual ${result.actualDuration.toFixed(1)} sec. The file may be a different version.`;
                 }
+                playBtn.disabled = false;
             }
         });
 
-        // Try to fetch album cover via CORS proxy
-        const coverImg = document.getElementById('albumCoverImg');
-        if (coverImg) {
-            const coverDataUrl = await fetchAlbumArt(song.url);
-            if (coverDataUrl) {
-                coverImg.src = coverDataUrl;
-            }
-        }
-
-        // Attach play button event
-        const playBtn = document.getElementById('previewPlayBtn');
-        if (playBtn && !playBtn.hasListener) {
-            playBtn.hasListener = true;
-            playBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (currentPreviewAudio && !currentPreviewAudio.paused && currentSelectedSong === song.index) {
-                    currentPreviewAudio.pause();
-                    playBtn.innerHTML = '▶ Play this song';
-                    playBtn.classList.remove('playing');
-                } else {
-                    stopPreview();
-                    const audio = new Audio(song.url);
-                    audio.volume = 0.8;
-                    audio.play().then(() => {
+        // Attach play button event after a short delay to ensure DOM is ready
+        setTimeout(() => {
+            const playBtn = document.getElementById('previewPlayBtn');
+            if (playBtn && !playBtn.hasListener) {
+                playBtn.hasListener = true;
+                playBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (currentPreviewAudio && !currentPreviewAudio.paused && currentSelectedSong === song.index) {
+                        currentPreviewAudio.pause();
+                        playBtn.innerHTML = '▶ Play this song';
+                        playBtn.classList.remove('playing');
+                    } else {
+                        stopPreview();
+                        const audio = new Audio(song.url);
+                        audio.volume = 0.8;
+                        audio.play().catch(err => {
+                            console.warn("Preview play error:", err);
+                            const statusDiv = document.getElementById('validationStatus');
+                            if (statusDiv) statusDiv.innerHTML += `<br>⚠️ Playback failed: ${err.message}`;
+                        });
                         currentPreviewAudio = audio;
                         currentSelectedSong = song.index;
                         playBtn.innerHTML = '⏸ Pause';
@@ -593,16 +553,10 @@
                                 currentSelectedSong = null;
                             }
                         });
-                    }).catch(err => {
-                        console.warn("Playback error:", err);
-                        const statusDiv = document.getElementById('validationStatus');
-                        if (statusDiv) statusDiv.innerHTML += `<br>⚠️ Playback failed: ${err.message}`;
-                        playBtn.innerHTML = '▶ Play this song';
-                        playBtn.classList.remove('playing');
-                    });
-                }
-            });
-        }
+                    }
+                });
+            }
+        }, 50);
     }
 
     // Search suggestions
