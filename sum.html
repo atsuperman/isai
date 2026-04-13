@@ -420,7 +420,7 @@
     updateRealTimeUI();
     setInterval(updateRealTimeUI, 1000);
 
-    // ---------- Validation and preview ----------
+    // ---------- Improved Validation and Preview ----------
     let currentPreviewAudio = null;
     let currentSelectedSong = null;
 
@@ -437,13 +437,33 @@
         currentSelectedSong = null;
     }
 
-    // Validate song: only show error if file fails to load metadata (404, CORS, etc.)
-    function validateSong(song, callback) {
+    // New validation: first check if file is reachable (fast), then load metadata with long timeout
+    async function validateSong(song, callback) {
+        // Step 1: quick fetch to check if file exists and CORS is okay (range request)
+        let fileReachable = false;
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            const response = await fetch(song.url, { method: 'HEAD', signal: controller.signal });
+            clearTimeout(timeoutId);
+            fileReachable = response.ok;
+        } catch (err) {
+            fileReachable = false;
+        }
+
+        if (!fileReachable) {
+            callback({ success: false, actualDuration: null, isMatch: false, error: 'File not accessible (404 or network issue)' });
+            return;
+        }
+
+        // Step 2: load audio metadata with a long timeout (30 seconds)
         const tempAudio = new Audio();
         tempAudio.preload = 'metadata';
         let resolved = false;
+        let timeoutId = null;
 
         const cleanup = () => {
+            if (timeoutId) clearTimeout(timeoutId);
             tempAudio.src = '';
             tempAudio.onloadedmetadata = null;
             tempAudio.onerror = null;
@@ -452,33 +472,33 @@
         tempAudio.onloadedmetadata = () => {
             if (resolved) return;
             resolved = true;
+            cleanup();
             const actualDuration = tempAudio.duration;
             const stored = song.duration;
             const diff = Math.abs(actualDuration - stored);
             const isMatch = diff <= 1.0;
             callback({ success: true, actualDuration, isMatch, error: null });
-            cleanup();
         };
 
         tempAudio.onerror = () => {
             if (resolved) return;
             resolved = true;
-            callback({ success: false, actualDuration: null, isMatch: false, error: 'File not accessible (404, CORS, or network issue)' });
             cleanup();
+            callback({ success: false, actualDuration: null, isMatch: false, error: 'Audio metadata could not be loaded (possibly corrupted file)' });
         };
 
         tempAudio.src = song.url;
-        // Long timeout – only if absolutely nothing happens
-        setTimeout(() => {
+        // 30 seconds timeout – very generous
+        timeoutId = setTimeout(() => {
             if (!resolved) {
                 resolved = true;
-                callback({ success: false, actualDuration: null, isMatch: false, error: 'Timeout – file may be extremely slow or unavailable' });
                 cleanup();
+                callback({ success: false, actualDuration: null, isMatch: false, error: 'Loading took too long (>30s). The file may be very large or server slow, but you can still try to play it.' });
             }
-        }, 15000);
+        }, 30000);
     }
 
-    function renderSongResult(song) {
+    async function renderSongResult(song) {
         const songResultDiv = document.getElementById('songResult');
         songResultDiv.style.display = 'block';
         songResultDiv.innerHTML = `
@@ -500,6 +520,7 @@
         document.getElementById('pastOccList').innerHTML = past.map(p => `<div class="occ-item">📜 ${new Date(p.ts).toLocaleString()} (${p.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
         document.getElementById('futureOccList').innerHTML = future.map(f => `<div class="occ-item">🔮 ${new Date(f.ts).toLocaleString()} (${f.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
 
+        // Validate and update status
         validateSong(song, (result) => {
             const statusDiv = document.getElementById('validationStatus');
             const playBtn = document.getElementById('previewPlayBtn');
@@ -507,8 +528,7 @@
 
             if (!result.success) {
                 statusDiv.className = 'validation-status error';
-                statusDiv.innerHTML = `❌ ${result.error}. The song may not play. You can still try the button below.`;
-                playBtn.disabled = false;
+                statusDiv.innerHTML = `❌ ${result.error} The song may not play, but you can still try the button below.`;
             } else {
                 if (result.isMatch) {
                     statusDiv.className = 'validation-status success';
@@ -517,8 +537,9 @@
                     statusDiv.className = 'validation-status warning';
                     statusDiv.innerHTML = `⚠️ Duration mismatch: stored ${song.duration} sec, actual ${result.actualDuration.toFixed(1)} sec. The file may be a different version.`;
                 }
-                playBtn.disabled = false;
             }
+            // Enable the play button regardless
+            playBtn.disabled = false;
         });
 
         // Attach play button event after a short delay to ensure DOM is ready
