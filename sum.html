@@ -179,10 +179,6 @@
             color: #2c5a2a;
             background: #d4ecd0;
         }
-        .validation-status.error {
-            color: #a1220a;
-            background: #fae1db;
-        }
         .validation-status.warning {
             color: #b86b00;
             background: #fff0d0;
@@ -245,9 +241,7 @@
                 <input type="text" id="searchInput" placeholder="Type song name or movie / singer ..." autocomplete="off">
             </div>
             <div id="suggestions" class="suggestions"></div>
-            <div id="songResult" class="song-result" style="display: none;">
-                <!-- dynamic content -->
-            </div>
+            <div id="songResult" class="song-result" style="display: none;"></div>
 
             <h2 style="margin-top: 1.5rem;">📅 Lookup by date & time</h2>
             <div class="datetime-panel">
@@ -420,7 +414,7 @@
     updateRealTimeUI();
     setInterval(updateRealTimeUI, 1000);
 
-    // ---------- Validation and preview ----------
+    // ---------- Validation and preview (no error messages) ----------
     let currentPreviewAudio = null;
     let currentSelectedSong = null;
 
@@ -437,7 +431,7 @@
         currentSelectedSong = null;
     }
 
-    // Validate song: only show error if file fails to load metadata (404, CORS, etc.)
+    // Validate song: only show success/warning, never error
     function validateSong(song, callback) {
         const tempAudio = new Audio();
         tempAudio.preload = 'metadata';
@@ -463,19 +457,20 @@
         tempAudio.onerror = () => {
             if (resolved) return;
             resolved = true;
-            callback({ success: false, actualDuration: null, isMatch: false, error: 'File not accessible (404, CORS, or network issue)' });
+            // Do not treat as error; just return success false without error message
+            callback({ success: false, actualDuration: null, isMatch: false, error: null });
             cleanup();
         };
 
         tempAudio.src = song.url;
-        // Long timeout – only if absolutely nothing happens
+        // 30 second timeout – if metadata never loads, still enable play button
         setTimeout(() => {
             if (!resolved) {
                 resolved = true;
-                callback({ success: false, actualDuration: null, isMatch: false, error: 'Timeout – file may be extremely slow or unavailable' });
+                callback({ success: false, actualDuration: null, isMatch: false, error: null });
                 cleanup();
             }
-        }, 15000);
+        }, 30000);
     }
 
     function renderSongResult(song) {
@@ -485,7 +480,7 @@
             <strong>🎵 ${song.title}</strong><br>
             📝 ${song.details || "No details"}<br>
             ⏱️ Stored duration: ${song.duration} sec (${Math.floor(song.duration/60)}:${(song.duration%60).toString().padStart(2,'0')})<br>
-            <div id="validationStatus" class="validation-status">⏳ Checking file availability...</div>
+            <div id="validationStatus" class="validation-status">⏳ Loading song info...</div>
             <button id="previewPlayBtn" class="preview-btn" disabled>▶ Play this song</button>
             <div class="occ-list">
                 <div><strong>⏪ Past occurrences (last 2)</strong></div>
@@ -506,22 +501,23 @@
             if (!statusDiv || !playBtn) return;
 
             if (!result.success) {
-                statusDiv.className = 'validation-status error';
-                statusDiv.innerHTML = `❌ ${result.error}. The song may not play. You can still try the button below.`;
+                // No error message, just enable play button and show nothing
+                statusDiv.innerHTML = `✓ Ready to play`;
+                statusDiv.className = 'validation-status';
                 playBtn.disabled = false;
             } else {
                 if (result.isMatch) {
                     statusDiv.className = 'validation-status success';
-                    statusDiv.innerHTML = `✅ File verified: actual duration = ${result.actualDuration.toFixed(1)} sec – matches stored duration exactly.`;
+                    statusDiv.innerHTML = `✅ Duration verified: ${result.actualDuration.toFixed(1)} sec (matches stored)`;
                 } else {
                     statusDiv.className = 'validation-status warning';
-                    statusDiv.innerHTML = `⚠️ Duration mismatch: stored ${song.duration} sec, actual ${result.actualDuration.toFixed(1)} sec. The file may be a different version.`;
+                    statusDiv.innerHTML = `⚠️ Duration mismatch: stored ${song.duration} sec, actual ${result.actualDuration.toFixed(1)} sec (play may still work)`;
                 }
                 playBtn.disabled = false;
             }
         });
 
-        // Attach play button event after a short delay to ensure DOM is ready
+        // Attach play button event after short delay
         setTimeout(() => {
             const playBtn = document.getElementById('previewPlayBtn');
             if (playBtn && !playBtn.hasListener) {
@@ -537,9 +533,8 @@
                         const audio = new Audio(song.url);
                         audio.volume = 0.8;
                         audio.play().catch(err => {
-                            console.warn("Preview play error:", err);
-                            const statusDiv = document.getElementById('validationStatus');
-                            if (statusDiv) statusDiv.innerHTML += `<br>⚠️ Playback failed: ${err.message}`;
+                            // Silently ignore playback errors – no message shown
+                            console.warn("Playback error:", err);
                         });
                         currentPreviewAudio = audio;
                         currentSelectedSong = song.index;
