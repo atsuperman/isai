@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Koo Koo Endru Kuyil.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 A. Jagannathan", duration: 276 },
 { file: "O Podu.m4a", details: "🎬 Gemini (2002) / 🎙️ S. P. Balasubrahmanyam, Anuradha Sriram / 🎼 Bharadwaj / 📝 Vairamuthu", duration: 240 },
 { file: "Deewana Deewana.m4a", details: "🎬 Gemini (2002) / 🎙️ Sadhana Sargam / 🎼 Bharadwaj / 📝 Vairamuthu", duration: 266 },
 { file: "Aura 10 10.m4a", details: "🎬 Meesaya Murukku 2 (2026) / 🎙️ Hiphop Tamizha, Thamizh Aadhavan / 🎼 Hiphop Tamizha / 📝 Hiphop Tamizha, Thamizh Aadhavan", duration: 129 },
