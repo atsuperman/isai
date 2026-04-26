@@ -394,13 +394,24 @@
     document.getElementById('totalCount').innerText = `${songList.length} songs`;
     document.getElementById('totalDuration').innerText = totalHours;
 
+    // Helper: format date as DD/MM/YYYY, HH:MM:SS
+    function formatDateTime(date) {
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const seconds = date.getSeconds().toString().padStart(2, '0');
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+    }
+
     function updateRealTimeUI() {
         const now = Date.now();
         const info = getSongInfoAtTime(now);
         document.getElementById('modeName').innerHTML = `${info.modeName} · mode ${info.modeIndex+1}/10`;
         document.getElementById('currentTitle').innerText = info.song.title;
         document.getElementById('currentDetails').innerText = info.song.details || "—";
-        document.getElementById('timestampInfo').innerHTML = `🕒 ${new Date(now).toLocaleString()} UTC+5:30`;
+        document.getElementById('timestampInfo').innerHTML = `🕒 ${formatDateTime(new Date(now))}`;
 
         const modeOrder = info.modeOrderArray;
         const currentPos = info.positionInMode;
@@ -457,13 +468,11 @@
         tempAudio.onerror = () => {
             if (resolved) return;
             resolved = true;
-            // Do not treat as error; just return success false without error message
             callback({ success: false, actualDuration: null, isMatch: false, error: null });
             cleanup();
         };
 
         tempAudio.src = song.url;
-        // 30 second timeout – if metadata never loads, still enable play button
         setTimeout(() => {
             if (!resolved) {
                 resolved = true;
@@ -492,8 +501,8 @@
 
         const now = Date.now();
         const { past, future } = getPastFutureOccurrences(song.index, now);
-        document.getElementById('pastOccList').innerHTML = past.map(p => `<div class="occ-item">📜 ${new Date(p.ts).toLocaleString()} (${p.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
-        document.getElementById('futureOccList').innerHTML = future.map(f => `<div class="occ-item">🔮 ${new Date(f.ts).toLocaleString()} (${f.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
+        document.getElementById('pastOccList').innerHTML = past.map(p => `<div class="occ-item">📜 ${formatDateTime(new Date(p.ts))} (${p.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
+        document.getElementById('futureOccList').innerHTML = future.map(f => `<div class="occ-item">🔮 ${formatDateTime(new Date(f.ts))} (${f.modeName})</div>`).join('') || '<div class="occ-item">—</div>';
 
         validateSong(song, (result) => {
             const statusDiv = document.getElementById('validationStatus');
@@ -501,7 +510,6 @@
             if (!statusDiv || !playBtn) return;
 
             if (!result.success) {
-                // No error message, just enable play button and show nothing
                 statusDiv.innerHTML = `✓ Ready to play`;
                 statusDiv.className = 'validation-status';
                 playBtn.disabled = false;
@@ -517,7 +525,6 @@
             }
         });
 
-        // Attach play button event after short delay
         setTimeout(() => {
             const playBtn = document.getElementById('previewPlayBtn');
             if (playBtn && !playBtn.hasListener) {
@@ -533,7 +540,6 @@
                         const audio = new Audio(song.url);
                         audio.volume = 0.8;
                         audio.play().catch(err => {
-                            // Silently ignore playback errors – no message shown
                             console.warn("Playback error:", err);
                         });
                         currentPreviewAudio = audio;
@@ -614,7 +620,7 @@
         const song = info.song;
         lookupResultDiv.style.display = 'block';
         lookupResultDiv.innerHTML = `
-            <strong>📅 ${localDate.toLocaleString()}</strong><br>
+            <strong>📅 ${formatDateTime(localDate)}</strong><br>
             🎵 <strong>${song.title}</strong><br>
             📝 ${song.details || "—"}<br>
             ⏱️ Duration: ${song.duration} sec · Mode: ${info.modeName}<br>
