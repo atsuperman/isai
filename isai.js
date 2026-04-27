@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Katta Katta.m4a", details: "🎬 Gemini (2002) / 🎙️ Shankar Mahadevan, Swarnalatha / 🎼 Bharadwaj / 📝 Vairamuthu", duration: 293 },
 { file: "Koo Koo Endru Kuyil.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 A. Jagannathan", duration: 276 },
 { file: "O Podu.m4a", details: "🎬 Gemini (2002) / 🎙️ S. P. Balasubrahmanyam, Anuradha Sriram / 🎼 Bharadwaj / 📝 Vairamuthu", duration: 240 },
 { file: "Deewana Deewana.m4a", details: "🎬 Gemini (2002) / 🎙️ Sadhana Sargam / 🎼 Bharadwaj / 📝 Vairamuthu", duration: 266 },
