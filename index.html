@@ -482,7 +482,6 @@
         audioObj.removeEventListener('ended', onSongEnded);
     }
 
-    // Helper to trigger the next preview (same as click)
     function triggerNextPreview() {
         if (nowLabel.innerText !== "NEXT") {
             showNextPreview();
@@ -494,7 +493,6 @@
         if (autoPreviewTimer) clearTimeout(autoPreviewTimer);
         if (!isPlaying) return;
 
-        // Auto preview 20 seconds before end (if song longer than 20 sec)
         if (remainingMs > 20000) {
             const previewDelay = remainingMs - 20000;
             autoPreviewTimer = setTimeout(() => {
@@ -611,6 +609,7 @@
         playPauseBtn.classList.remove('loading');
     }
 
+    // ========== FIXED: load song but do NOT autoplay ==========
     function loadAndPlayCurrentSong() {
         if (isSwitching) return;
         isLoading = true;
@@ -621,16 +620,20 @@
 
         const targetSec = offsetInSongMs / 1000;
 
+        // Reuse existing matching audio (without autoplay)
         if (audio && audio.src === song.url && !audio.ended) {
             audio.currentTime = targetSec;
-            audio.play().catch(() => {});
+            if (isPlaying) {
+                audio.play().catch(() => {});
+            }
             preloadNextSong(nextSongGlobalIndex);
-            scheduleNextSwitch(remainingInSongMs);
+            if (isPlaying) scheduleNextSwitch(remainingInSongMs);
             isLoading = false;
             updateButtonUI();
             return;
         }
 
+        // Destroy old audio and create new one
         if (audio) {
             destroyAudio(audio);
             audio = null;
@@ -642,21 +645,27 @@
         newAudio.src = song.url;
         audio = newAudio;
         audio.addEventListener('ended', onSongEnded);
-
         audio.load();
 
         const onReady = () => {
             if (audio.readyState >= 2) {
                 audio.currentTime = targetSec;
-                audio.play().then(() => {
+                if (isPlaying) {
+                    audio.play().then(() => {
+                        isLoading = false;
+                        updateButtonUI();
+                        preloadNextSong(nextSongGlobalIndex);
+                        scheduleNextSwitch(remainingInSongMs);
+                    }).catch(() => {
+                        isLoading = false;
+                        updateButtonUI();
+                    });
+                } else {
                     isLoading = false;
                     updateButtonUI();
                     preloadNextSong(nextSongGlobalIndex);
-                    scheduleNextSwitch(remainingInSongMs);
-                }).catch(() => {
-                    isLoading = false;
-                    updateButtonUI();
-                });
+                    // do not schedule next switch when paused
+                }
             }
         };
 
@@ -665,18 +674,25 @@
         setTimeout(() => {
             if (audio.readyState < 2) {
                 audio.currentTime = targetSec;
-                audio.play().then(() => {
+                if (isPlaying) {
+                    audio.play().then(() => {
+                        isLoading = false;
+                        updateButtonUI();
+                        preloadNextSong(nextSongGlobalIndex);
+                        scheduleNextSwitch(remainingInSongMs);
+                    }).catch(() => {
+                        isLoading = false;
+                        updateButtonUI();
+                    });
+                } else {
                     isLoading = false;
                     updateButtonUI();
                     preloadNextSong(nextSongGlobalIndex);
-                    scheduleNextSwitch(remainingInSongMs);
-                }).catch(() => {
-                    isLoading = false;
-                    updateButtonUI();
-                });
+                }
             }
         }, 1500);
     }
+    // ======================================================
 
     function showNextPreview() {
         if (padRestoreTimer) {
@@ -717,6 +733,8 @@
 
     songPad.addEventListener('click', showNextPreview);
     playPauseBtn.addEventListener('click', togglePlayPause);
+    
+    // Load initial song but do NOT autoplay (isPlaying = false)
     loadAndPlayCurrentSong();
     updateButtonUI();
 
