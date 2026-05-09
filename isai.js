@@ -352,8 +352,6 @@ const repos = [
 { file: "Salomiya.m4a", details: "🎬 Kannedhirey Thondrinal (1998) / 🎙️ Deva / 🎼 Deva / 📝 Vairamuthu / 🎥 Ravichandran / 🏷️ The Best Audio", duration: 291 },
 { file: "Nee Malaraa Malaraa.mp3", details: "🎬 Arputham (2002) / 🎙️ P. Unnikrishnan, K. S. Chithra / 🎼 Shiva / 📝 Pa. Vijay / 🎥 Arputhan / 🏷️ Super Good Films", duration: 274 },
 { file: "Pothunda Pothunda.mp3", details: "🎬 Arputham (2002) / 🎙️ Tippu / 🎼 Shiva / 📝 Pa. Vijay / 🎥 Arputhan / 🏷️ Super Good Films", duration: 321 },
-{ file: "Deeyaalo Deeyaalo (Ava Mela Aasa).mp3", details: "🎬 Kayal (2014) / 🎙️ Orathanadu Gopu / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music", duration: 212 },
-{ file: "Unna Ippo Paakkanum.mp3", details: "🎬 Kayal (2014) / 🎙️ Haricharan, Vandana Srinivasan / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music", duration: 263 },
 { file: "Unnai Ninaithu naan.mp3", details: "🎬 Ninaithen Vandhai (1998) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra, Sujatha / 🎼 Deva / 📝 Vaali / 🎥 K. Selva Bharathy", duration: 240 },
 { file: "Vanna Nilave.mp3", details: "🎬 Ninaithen Vandhai (1998) / 🎙️ Hariharan / 🎼 Deva / 📝 Palani Bharathi / 🎥 K. Selva Bharathy", duration: 240 },
 { file: "Enthen Kuilenge.mp3", details: "🎬 Kannukkul Nilavu (2000) / 🎙️ P. Unni Krishnan, Anuradha Sriram / 🎼 Ilaiyaraaja / 📝 Pazhani Bharathi / 🎥 Fazil", duration: 294 },
