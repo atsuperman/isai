@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Srivalli.m4a", details: "🎬 Pushpa The Rise (2021) / 🎙️ Sid Sriram / 🎼 Devi Sri Prasad / 📝 Chandrabose", duration: 221 },
 { file: "Yen Aala Paakkaporen.m4a", details: "🎬 Kayal (2014) / 🎙️ K. G. Ranjith, Shreya Ghoshal / 🎼 D. Imman / 📝 Yugabharathi", duration: 216 },
 { file: "Penn Oruthi.m4a", details: "🎬 Gemini (2002) / 🎙️ S. P. Balasubrahmanyam / 🎼 Bharadwaj / 📝 Vairamuthu", duration: 309 },
 { file: "Katta Katta.m4a", details: "🎬 Gemini (2002) / 🎙️ Shankar Mahadevan, Swarnalatha / 🎼 Bharadwaj / 📝 Vairamuthu", duration: 293 },
