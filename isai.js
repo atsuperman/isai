@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Raavana Mavandaa.m4a", details: "🎬 Jana Nayagan (2026) / 🎙️ Anirudh Ravichander / 🎼 Anirudh Ravichander / 📝 Vivek", duration: 107 },
 { file: "Thalapathy Kacheri.m4a", details: "🎬 Jana Nayagan (2026) / 🎙️ Anirudh Ravichander, Thalapathy Vijay, Arivu / 🎼 Anirudh Ravichander / 📝 Arivu", duration: 197 },
 { file: "Saami Saami.m4a", details: "🎬 Pushpa The Rise (2021) / 🎙️ Rajalakshmi Senthil ganesh / 🎼 Devi Sri Prasad / 📝 Viveka", duration: 224 },
 { file: "Oo Solriya Oo Oo Solriya.m4a", details: "🎬 Pushpa The Rise (2021) / 🎙️ Andrea Jeremiah / 🎼 Devi Sri Prasad / 📝 Viveka", duration: 223 },
