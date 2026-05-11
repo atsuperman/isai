@@ -579,6 +579,8 @@ const repos = [
 { file: "Annakili II.mp3", details: "🎬 4 Students (2004) / 🎙️ Prasanna chorus / 🎼 Jassie Gift / 📝 Palani Bharathi", duration: 260 },
 { file: "Annakili.mp3", details: "🎬 4 Students (2004) / 🎙️ Jassie Gift / 🎼 Jassie Gift / 📝 Kaithapram", duration: 262 },
 { file: "Padagottum Pattamma.mp3", details: "🎬 Chinnavar (2020) / 🎙️ Malaysia Vasudevan, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran", duration: 306 },
+{ file: "Iceboy.m4a", details: "📀 ICEBOY / 🎙️ Asal Kolaar / 🎼 SHIV PAUL / 📝 Asal Kolaar, SHIV PAUL", duration: 194 },
+{ file: "Psilo Vibin.m4a", details: "📀 Psilo Vibin / 🎙️ Paal Dabba / 🎼 Foxn / 📝 Paal Dabba", duration: 144 },
 
 { file: "Maaraappu Chela.mp3", details: "🎬 Chinnavar (2020) / 🎙️ Mano, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran", duration: 299 },
 { file: "Kottukkili.mp3", details: "🎬 Chinnavar (2020) / 🎙️ K. S. Chithra, S. P. Balasubrahmanyam / 🎼 Ilaiyaraaja / 📝 Gangai Amaran", duration: 307 },
