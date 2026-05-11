@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "God Mode.m4a", details: "🎬 Karuppu (2026) / 🎙️ Sai Abhyankkar, Gana Muthu / 🎼 Sai Abhyankkar / 📝 Vishnu Edavan", duration: 240 },
 { file: "Oru Pere Varalaaru.m4a", details: "🎬 Jana Nayagan (2026) / 🎙️ Vishal Mishra, Anirudh Ravichander / 🎼 Anirudh Ravichander / 📝 Vivek", duration: 235 },
 { file: "Raavana Mavandaa.m4a", details: "🎬 Jana Nayagan (2026) / 🎙️ Anirudh Ravichander / 🎼 Anirudh Ravichander / 📝 Vivek", duration: 107 },
 { file: "Thalapathy Kacheri.m4a", details: "🎬 Jana Nayagan (2026) / 🎙️ Anirudh Ravichander, Thalapathy Vijay, Arivu / 🎼 Anirudh Ravichander / 📝 Arivu", duration: 197 },
