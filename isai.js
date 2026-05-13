@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Rajinikanth OverNight Mashup.m4a", details: "📀 RAJINIKANTH OVERNIGHT SMASHUP/  🎧 DJ Sam Chennai", duration: 194 },
 { file: "Oh Penne ELECTRO MIX.m4a", details: "📀 Oh Penne (Electro Clash Mix) /  🎧 DJ Sam Chennai", duration: 249 },
 { file: "Chinnan Sirisu.m4a", details: "🎬 Kunguma Poovum Konjum Puraavum (2009) / 🎙️ Javed Ali, Bela Shende / 🎼 Yuvan Shankar Raja / 📝 Vaali", duration: 301 },
 { file: "Kadaloram.m4a", details: "🎬 Kunguma Poovum Konjum Puraavum (2009) / 🎙️ Yuvan Shankar Raja / 🎼 Yuvan Shankar Raja / 📝 Vaali", duration: 331 },
