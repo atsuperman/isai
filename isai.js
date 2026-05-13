@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Kadaloram.m4a", details: "🎬 Kunguma Poovum Konjum Puraavum (2009) / 🎙️ Yuvan Shankar Raja / 🎼 Yuvan Shankar Raja / 📝 Vaali", duration: 331 },
 { file: "Kadaya Saathu.m4a", details: "📀 Kadaya Saathu / 🎙️ Eraiarasu / 🎼 Rohith Abraham (OfRo) / 📝 Vaasi", duration: 159 },
 { file: "God Mode.m4a", details: "🎬 Karuppu (2026) / 🎙️ Sai Abhyankkar, Gana Muthu / 🎼 Sai Abhyankkar / 📝 Vishnu Edavan", duration: 240 },
 { file: "Oru Pere Varalaaru.m4a", details: "🎬 Jana Nayagan (2026) / 🎙️ Vishal Mishra, Anirudh Ravichander / 🎼 Anirudh Ravichander / 📝 Vivek", duration: 235 },
