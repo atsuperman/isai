@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Koodamela Deep House Mashup.m4a", details: "📀 Koodamela Deep house Mix  / 🎧 DJ Sam Chennai", duration: 291 },
 { file: "Un Mela Oru Progressive Mix.m4a", details: "📀 Un mela oru Mix  / 🎧 DJ Sam Chennai", duration: 215 },
 { file: "Rajinikanth OverNight Mashup.m4a", details: "📀 RAJINIKANTH OVERNIGHT SMASHUP/  🎧 DJ Sam Chennai", duration: 194 },
 { file: "Oh Penne ELECTRO MIX.m4a", details: "📀 Oh Penne (Electro Clash Mix) /  🎧 DJ Sam Chennai", duration: 249 },
