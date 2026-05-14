@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Antha Kanna Paathaka Remix.m4a", details: "📀 Antha Kanna Paathakka Mix / 🎧 DJ SAM CHENNAI", duration: 205 },
 { file: "Enjoy Enjaami Remix.m4a", details: "📀 Enjoy Enjaami reMix / 🎧 DJ SAM CHENNAI", duration: 199 },
 { file: "Malare Deep House.m4a", details: "📀 Malare Deep House / 🎧 DJ SAM CHENNAI", duration: 269 },
 { file: "Pudhu Vellai Mazhai Deep House.m4a", details: "📀 Pudhu Vellai Mazhai Deep House / 🎧 DJ SAM CHENNAI", duration: 315 },
