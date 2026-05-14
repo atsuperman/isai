@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Pudhu Vellai Mazhai Deep House.m4a", details: "📀 Pudhu Vellai Mazhai Deep House / 🎧 DJ SAM CHENNAI", duration: 315 },
 { file: "Munbe Vaa Lovetronic Mix.m4a", details: "📀 Munbe Vaa Lovetronic Mix / 🎧 DJ SAM CHENNAI", duration: 235 },
 { file: "Aandipatti Funked Mix.m4a", details: "📀 Antipatti Funked Mix / 🎧 DJ Sam Chennai", duration: 222 },
 { file: "Koodamela Deep House Mashup.m4a", details: "📀 Koodamela Deep house Mix  / 🎧 DJ Sam Chennai", duration: 291 },
