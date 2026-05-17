@@ -72,6 +72,7 @@
             margin: 0 0 1rem 0;
         }
 
+        /* Updated song-pad with flex layout for image + text */
         .song-pad {
             background: linear-gradient(105deg, #fefcf8 0%, #f8f2e8 100%);
             border: none;
@@ -84,11 +85,29 @@
             box-shadow: 0 8px 18px -8px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: background 0.2s;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
         }
 
         .song-pad:active {
             transform: none;
             background: linear-gradient(105deg, #fefcf8 0%, #f8f2e8 100%);
+        }
+
+        .album-cover {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            object-fit: cover;
+            background: #ddd;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        .song-info {
+            flex: 1;
+            min-width: 0; /* prevent overflow */
         }
 
         .now-label {
@@ -104,27 +123,22 @@
             border-radius: 20px;
         }
 
-        .song-info {
-            width: 100%;
-        }
-
         .pad-title {
-            font-size: 1.85rem;
+            font-size: 1.3rem;  /* reduced from 1.85rem */
             font-weight: 700;
             color: #2c2418;
             line-height: 1.25;
             letter-spacing: -0.2px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             word-break: break-word;
         }
 
         .pad-details {
-            font-size: 0.85rem;
+            font-size: 0.75rem;  /* reduced from 0.85rem */
             color: #6a5a48;
             line-height: 1.4;
             font-weight: 450;
             word-break: break-word;
-            min-height: 3.2em;
         }
 
         .song-details {
@@ -253,8 +267,10 @@
         @media (max-width: 500px) {
             .radio-card { padding: 1.5rem; }
             .card-logo .logo { font-size: 1.1rem; }
-            .song-pad { padding: 14px 0 14px 20px; }
-            .pad-title { font-size: 1.45rem; }
+            .song-pad { padding: 12px 0 12px 16px; gap: 0.8rem; }
+            .album-cover { width: 55px; height: 55px; }
+            .pad-title { font-size: 1.1rem; }
+            .pad-details { font-size: 0.7rem; }
             .toggle-btn { font-size: 1.3rem; }
             .footer-link { font-size: 0.75rem; margin: 0 0.3rem; }
         }
@@ -272,8 +288,9 @@
     </div>
     <div class="now-playing">
         <div class="song-pad" id="songPad">
-            <div class="now-label" id="nowLabel">NOW PLAYING</div>
+            <img id="albumCover" class="album-cover" src="https://github.com/atsuperman/play2/raw/main/0.jpg" alt="cover" onerror="this.src='https://github.com/atsuperman/play2/raw/main/0.jpg'">
             <div class="song-info">
+                <div class="now-label" id="nowLabel">NOW PLAYING</div>
                 <div id="padSongTitle" class="pad-title"></div>
                 <div id="padSongDetails" class="pad-details song-details"></div>
             </div>
@@ -305,7 +322,9 @@
         title: song.file.replace(/\.(mp3|m4a|MP3|M4A)$/i, ''),
         url: song.url,
         details: song.details,
-        duration: song.duration
+        duration: song.duration,
+        // base URL derived from the repo base (extract base up to last '/')
+        baseUrl: song.url.substring(0, song.url.lastIndexOf('/') + 1)
     }));
 
     const EPOCH = new Date(Date.UTC(2026, 3, 1, 0, 0, 0)).getTime();
@@ -409,6 +428,7 @@
     const padSongTitle = document.getElementById('padSongTitle');
     const padSongDetails = document.getElementById('padSongDetails');
     const nowLabel = document.getElementById('nowLabel');
+    const albumCoverImg = document.getElementById('albumCover');
 
     let audio = null;
     let nextAudio = null;
@@ -448,6 +468,15 @@
         }
     }
 
+    // Helper to get cover URL for a song
+    function getCoverUrl(song) {
+        // derive image file name: same as audio file name but with .jpg extension
+        const baseFileName = song.title;
+        // encodeURIComponent for safety
+        const encodedFileName = encodeURIComponent(baseFileName + '.jpg');
+        return song.baseUrl + encodedFileName;
+    }
+
     function updateUI(songIdx, nextIdx) {
         const song = songList[songIdx];
         padSongTitle.innerText = song.title;
@@ -459,6 +488,14 @@
         songPad.classList.add('glitch');
         setTimeout(() => songPad.classList.remove('glitch'), 600);
         updateMediaSession(song.title);
+
+        // Update album cover
+        const coverUrl = getCoverUrl(song);
+        albumCoverImg.src = coverUrl;
+        // Fallback if image fails to load (404, etc.)
+        albumCoverImg.onerror = () => {
+            albumCoverImg.src = 'https://github.com/atsuperman/play2/raw/main/0.jpg';
+        };
     }
 
     function preloadNextSong(nextIdx) {
@@ -609,7 +646,6 @@
         playPauseBtn.classList.remove('loading');
     }
 
-    // ========== FIXED: load song but do NOT autoplay ==========
     function loadAndPlayCurrentSong() {
         if (isSwitching) return;
         isLoading = true;
@@ -620,7 +656,6 @@
 
         const targetSec = offsetInSongMs / 1000;
 
-        // Reuse existing matching audio (without autoplay)
         if (audio && audio.src === song.url && !audio.ended) {
             audio.currentTime = targetSec;
             if (isPlaying) {
@@ -633,7 +668,6 @@
             return;
         }
 
-        // Destroy old audio and create new one
         if (audio) {
             destroyAudio(audio);
             audio = null;
@@ -664,7 +698,6 @@
                     isLoading = false;
                     updateButtonUI();
                     preloadNextSong(nextSongGlobalIndex);
-                    // do not schedule next switch when paused
                 }
             }
         };
@@ -692,7 +725,6 @@
             }
         }, 1500);
     }
-    // ======================================================
 
     function showNextPreview() {
         if (padRestoreTimer) {
@@ -710,6 +742,7 @@
             padSongDetails.classList.remove('song-details');
             void padSongDetails.offsetWidth;
             padSongDetails.classList.add('song-details');
+            // Also restore cover? We'll keep current cover (from current song) – no change needed.
             return;
         }
         nowLabel.innerText = "NEXT";
@@ -718,6 +751,7 @@
         padSongDetails.classList.remove('song-details');
         void padSongDetails.offsetWidth;
         padSongDetails.classList.add('song-details');
+        // Optionally change cover to next song's cover? We'll keep current cover as is.
         padRestoreTimer = setTimeout(() => {
             const fresh = getCurrentSong();
             const freshSong = songList[fresh.songGlobalIndex];
@@ -727,14 +761,18 @@
             padSongDetails.classList.remove('song-details');
             void padSongDetails.offsetWidth;
             padSongDetails.classList.add('song-details');
+            // Restore cover
+            const coverUrl = getCoverUrl(freshSong);
+            albumCoverImg.src = coverUrl;
+            albumCoverImg.onerror = () => {
+                albumCoverImg.src = 'https://github.com/atsuperman/play2/raw/main/0.jpg';
+            };
             padRestoreTimer = null;
         }, 5000);
     }
 
     songPad.addEventListener('click', showNextPreview);
     playPauseBtn.addEventListener('click', togglePlayPause);
-    
-    // Load initial song but do NOT autoplay (isPlaying = false)
     loadAndPlayCurrentSong();
     updateButtonUI();
 
