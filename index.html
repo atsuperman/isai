@@ -438,7 +438,6 @@
     let autoPreviewTimer = null;
 
     const DEFAULT_COVER_URL = 'https://github.com/atsuperman/play2/raw/main/0.jpg';
-    const LOGO_URL = 'https://github.com/atsuperman/isai/raw/refs/heads/main/isai.png';
 
     function getCoverUrl(song) {
         const baseFileName = song.title;
@@ -446,30 +445,25 @@
         return song.baseUrl + encodedFileName;
     }
 
-    // Update Media Session with multiple fallback artworks
-    function updateMediaSession(songTitle, specificCoverUrl) {
+    // Media Session: always use the same cover logic as the UI
+    function updateMediaSession(songTitle, coverUrl) {
         if ('mediaSession' in navigator) {
-            // Try specific cover first, then default 0.jpg, then the page logo
+            // Build artwork array with the same coverUrl (UI uses it, Media Session uses it)
+            // Do NOT include the page logo. Only the song cover or default fallback.
             const artworks = [];
-            if (specificCoverUrl) {
-                artworks.push({ src: specificCoverUrl, sizes: '96x96', type: 'image/jpeg' });
-                artworks.push({ src: specificCoverUrl, sizes: '128x128', type: 'image/jpeg' });
-                artworks.push({ src: specificCoverUrl, sizes: '192x192', type: 'image/jpeg' });
-                artworks.push({ src: specificCoverUrl, sizes: '256x256', type: 'image/jpeg' });
-                artworks.push({ src: specificCoverUrl, sizes: '512x512', type: 'image/jpeg' });
+            if (coverUrl) {
+                artworks.push({ src: coverUrl, sizes: '96x96', type: 'image/jpeg' });
+                artworks.push({ src: coverUrl, sizes: '128x128', type: 'image/jpeg' });
+                artworks.push({ src: coverUrl, sizes: '192x192', type: 'image/jpeg' });
+                artworks.push({ src: coverUrl, sizes: '256x256', type: 'image/jpeg' });
+                artworks.push({ src: coverUrl, sizes: '512x512', type: 'image/jpeg' });
             }
-            // always add fallback 0.jpg
+            // Also add the default 0.jpg as a fallback (in case the specific cover is not yet loaded)
             artworks.push({ src: DEFAULT_COVER_URL, sizes: '96x96', type: 'image/jpeg' });
             artworks.push({ src: DEFAULT_COVER_URL, sizes: '128x128', type: 'image/jpeg' });
             artworks.push({ src: DEFAULT_COVER_URL, sizes: '192x192', type: 'image/jpeg' });
             artworks.push({ src: DEFAULT_COVER_URL, sizes: '256x256', type: 'image/jpeg' });
             artworks.push({ src: DEFAULT_COVER_URL, sizes: '512x512', type: 'image/jpeg' });
-            // final fallback: logo
-            artworks.push({ src: LOGO_URL, sizes: '96x96', type: 'image/png' });
-            artworks.push({ src: LOGO_URL, sizes: '128x128', type: 'image/png' });
-            artworks.push({ src: LOGO_URL, sizes: '192x192', type: 'image/png' });
-            artworks.push({ src: LOGO_URL, sizes: '256x256', type: 'image/png' });
-            artworks.push({ src: LOGO_URL, sizes: '512x512', type: 'image/png' });
 
             navigator.mediaSession.metadata = new MediaMetadata({
                 title: songTitle,
@@ -508,7 +502,7 @@
             albumCoverImg.src = DEFAULT_COVER_URL;
         };
 
-        // Update Media Session with the same cover (fallbacks included)
+        // Update Media Session with the same cover (the specific cover, but fallback to default)
         updateMediaSession(song.title, coverUrl);
     }
 
