@@ -439,50 +439,83 @@
 
     const DEFAULT_COVER_URL = 'https://github.com/atsuperman/play2/raw/main/0.jpg';
 
+    // Helper: get cover URL for a song
     function getCoverUrl(song) {
         const baseFileName = song.title;
         const encodedFileName = encodeURIComponent(baseFileName + '.jpg');
         return song.baseUrl + encodedFileName;
     }
 
-    // Media Session: always use the same cover logic as the UI
-    function updateMediaSession(songTitle, coverUrl) {
-        if ('mediaSession' in navigator) {
-            // Build artwork array with the same coverUrl (UI uses it, Media Session uses it)
-            // Do NOT include the page logo. Only the song cover or default fallback.
-            const artworks = [];
-            if (coverUrl) {
-                artworks.push({ src: coverUrl, sizes: '96x96', type: 'image/jpeg' });
-                artworks.push({ src: coverUrl, sizes: '128x128', type: 'image/jpeg' });
-                artworks.push({ src: coverUrl, sizes: '192x192', type: 'image/jpeg' });
-                artworks.push({ src: coverUrl, sizes: '256x256', type: 'image/jpeg' });
-                artworks.push({ src: coverUrl, sizes: '512x512', type: 'image/jpeg' });
-            }
-            // Also add the default 0.jpg as a fallback (in case the specific cover is not yet loaded)
-            artworks.push({ src: DEFAULT_COVER_URL, sizes: '96x96', type: 'image/jpeg' });
-            artworks.push({ src: DEFAULT_COVER_URL, sizes: '128x128', type: 'image/jpeg' });
-            artworks.push({ src: DEFAULT_COVER_URL, sizes: '192x192', type: 'image/jpeg' });
-            artworks.push({ src: DEFAULT_COVER_URL, sizes: '256x256', type: 'image/jpeg' });
-            artworks.push({ src: DEFAULT_COVER_URL, sizes: '512x512', type: 'image/jpeg' });
+    // Revoke any previous Media Session artwork object URL
+    let currentArtworkBlobUrl = null;
 
+    // Update Media Session with a loaded blob URL
+    async function updateMediaSessionWithImage(songTitle, imageUrl) {
+        if (!('mediaSession' in navigator)) return;
+        try {
+            // Fetch the image as a blob to ensure it's loaded and CORS-friendly
+            const response = await fetch(imageUrl, { mode: 'cors' });
+            if (!response.ok) throw new Error('Image fetch failed');
+            const blob = await response.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            // Revoke previous blob URL to avoid memory leaks
+            if (currentArtworkBlobUrl) {
+                URL.revokeObjectURL(currentArtworkBlobUrl);
+            }
+            currentArtworkBlobUrl = blobUrl;
+            const artwork = [
+                { src: blobUrl, sizes: '96x96', type: blob.type },
+                { src: blobUrl, sizes: '128x128', type: blob.type },
+                { src: blobUrl, sizes: '192x192', type: blob.type },
+                { src: blobUrl, sizes: '256x256', type: blob.type },
+                { src: blobUrl, sizes: '512x512', type: blob.type }
+            ];
             navigator.mediaSession.metadata = new MediaMetadata({
                 title: songTitle,
                 artist: 'SUPER Isai',
                 album: 'Global Sync Radio',
-                artwork: artworks
+                artwork: artwork
             });
-            navigator.mediaSession.setActionHandler('play', () => {
-                if (!isPlaying && !isLoading) togglePlayPause();
-            });
-            navigator.mediaSession.setActionHandler('pause', () => {
-                if (isPlaying) togglePlayPause();
-            });
-            navigator.mediaSession.setActionHandler('previoustrack', null);
-            navigator.mediaSession.setActionHandler('nexttrack', null);
-            navigator.mediaSession.setActionHandler('seekto', null);
-            navigator.mediaSession.setActionHandler('seekbackward', null);
-            navigator.mediaSession.setActionHandler('seekforward', null);
+        } catch (err) {
+            console.warn("Media Session image fetch failed, using default fallback", err);
+            // Fallback to default 0.jpg
+            try {
+                const fallbackResp = await fetch(DEFAULT_COVER_URL, { mode: 'cors' });
+                if (fallbackResp.ok) {
+                    const fallbackBlob = await fallbackResp.blob();
+                    const fallbackBlobUrl = URL.createObjectURL(fallbackBlob);
+                    if (currentArtworkBlobUrl) URL.revokeObjectURL(currentArtworkBlobUrl);
+                    currentArtworkBlobUrl = fallbackBlobUrl;
+                    const fallbackArtwork = [
+                        { src: fallbackBlobUrl, sizes: '96x96', type: fallbackBlob.type },
+                        { src: fallbackBlobUrl, sizes: '128x128', type: fallbackBlob.type },
+                        { src: fallbackBlobUrl, sizes: '192x192', type: fallbackBlob.type },
+                        { src: fallbackBlobUrl, sizes: '256x256', type: fallbackBlob.type },
+                        { src: fallbackBlobUrl, sizes: '512x512', type: fallbackBlob.type }
+                    ];
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: songTitle,
+                        artist: 'SUPER Isai',
+                        album: 'Global Sync Radio',
+                        artwork: fallbackArtwork
+                    });
+                }
+            } catch (fallbackErr) {
+                console.warn("Even default cover fetch failed, media session will have no artwork");
+            }
         }
+        // Always set action handlers
+        navigator.mediaSession.setActionHandler('play', () => {
+            if (!isPlaying && !isLoading) togglePlayPause();
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+            if (isPlaying) togglePlayPause();
+        });
+        navigator.mediaSession.setActionHandler('previoustrack', null);
+        navigator.mediaSession.setActionHandler('nexttrack', null);
+        navigator.mediaSession.setActionHandler('seekto', null);
+        navigator.mediaSession.setActionHandler('seekbackward', null);
+        navigator.mediaSession.setActionHandler('seekforward', null);
     }
 
     function updateUI(songIdx, nextIdx) {
@@ -496,14 +529,15 @@
         songPad.classList.add('glitch');
         setTimeout(() => songPad.classList.remove('glitch'), 600);
 
+        // Update UI cover
         const coverUrl = getCoverUrl(song);
         albumCoverImg.src = coverUrl;
         albumCoverImg.onerror = () => {
             albumCoverImg.src = DEFAULT_COVER_URL;
         };
 
-        // Update Media Session with the same cover (the specific cover, but fallback to default)
-        updateMediaSession(song.title, coverUrl);
+        // Update Media Session with the same cover (load as blob)
+        updateMediaSessionWithImage(song.title, coverUrl);
     }
 
     function destroyAudio(audioObj) {
