@@ -439,29 +439,46 @@
 
     const DEFAULT_COVER_URL = 'https://github.com/atsuperman/play2/raw/main/0.jpg';
 
-    // Helper: get cover URL for a song
     function getCoverUrl(song) {
         const baseFileName = song.title;
         const encodedFileName = encodeURIComponent(baseFileName + '.jpg');
         return song.baseUrl + encodedFileName;
     }
 
-    // Revoke any previous Media Session artwork object URL
+    // Store current artwork blob URL to revoke later
     let currentArtworkBlobUrl = null;
 
-    // Update Media Session with a loaded blob URL
-    async function updateMediaSessionWithImage(songTitle, imageUrl) {
+    // Helper: safely set Media Session metadata (title + artwork from blob)
+    async function setMediaSessionWithArtwork(songTitle, imageUrl) {
         if (!('mediaSession' in navigator)) return;
+        // First set metadata with a placeholder artwork to ensure title appears immediately
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: songTitle,
+            artist: 'SUPER Isai',
+            album: 'Global Sync Radio',
+            artwork: []  // empty for now, will be updated
+        });
+        // Always set action handlers
+        navigator.mediaSession.setActionHandler('play', () => {
+            if (!isPlaying && !isLoading) togglePlayPause();
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+            if (isPlaying) togglePlayPause();
+        });
+        navigator.mediaSession.setActionHandler('previoustrack', null);
+        navigator.mediaSession.setActionHandler('nexttrack', null);
+        navigator.mediaSession.setActionHandler('seekto', null);
+        navigator.mediaSession.setActionHandler('seekbackward', null);
+        navigator.mediaSession.setActionHandler('seekforward', null);
+
+        // Then try to load the actual image
         try {
-            // Fetch the image as a blob to ensure it's loaded and CORS-friendly
             const response = await fetch(imageUrl, { mode: 'cors' });
             if (!response.ok) throw new Error('Image fetch failed');
             const blob = await response.blob();
             const blobUrl = URL.createObjectURL(blob);
-            // Revoke previous blob URL to avoid memory leaks
-            if (currentArtworkBlobUrl) {
-                URL.revokeObjectURL(currentArtworkBlobUrl);
-            }
+            // Revoke previous blob
+            if (currentArtworkBlobUrl) URL.revokeObjectURL(currentArtworkBlobUrl);
             currentArtworkBlobUrl = blobUrl;
             const artwork = [
                 { src: blobUrl, sizes: '96x96', type: blob.type },
@@ -477,7 +494,7 @@
                 artwork: artwork
             });
         } catch (err) {
-            console.warn("Media Session image fetch failed, using default fallback", err);
+            console.warn("Could not load specific cover, falling back to default", err);
             // Fallback to default 0.jpg
             try {
                 const fallbackResp = await fetch(DEFAULT_COVER_URL, { mode: 'cors' });
@@ -501,21 +518,9 @@
                     });
                 }
             } catch (fallbackErr) {
-                console.warn("Even default cover fetch failed, media session will have no artwork");
+                console.warn("Even default cover failed, leaving no artwork");
             }
         }
-        // Always set action handlers
-        navigator.mediaSession.setActionHandler('play', () => {
-            if (!isPlaying && !isLoading) togglePlayPause();
-        });
-        navigator.mediaSession.setActionHandler('pause', () => {
-            if (isPlaying) togglePlayPause();
-        });
-        navigator.mediaSession.setActionHandler('previoustrack', null);
-        navigator.mediaSession.setActionHandler('nexttrack', null);
-        navigator.mediaSession.setActionHandler('seekto', null);
-        navigator.mediaSession.setActionHandler('seekbackward', null);
-        navigator.mediaSession.setActionHandler('seekforward', null);
     }
 
     function updateUI(songIdx, nextIdx) {
@@ -529,15 +534,15 @@
         songPad.classList.add('glitch');
         setTimeout(() => songPad.classList.remove('glitch'), 600);
 
-        // Update UI cover
+        // UI cover
         const coverUrl = getCoverUrl(song);
         albumCoverImg.src = coverUrl;
         albumCoverImg.onerror = () => {
             albumCoverImg.src = DEFAULT_COVER_URL;
         };
 
-        // Update Media Session with the same cover (load as blob)
-        updateMediaSessionWithImage(song.title, coverUrl);
+        // Media Session with title and artwork
+        setMediaSessionWithArtwork(song.title, coverUrl);
     }
 
     function destroyAudio(audioObj) {
