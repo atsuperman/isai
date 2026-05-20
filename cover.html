@@ -193,7 +193,7 @@
             <div id="withoutCoverList" class="song-list">⏳ Scanning songs...</div>
         </div>
     </div>
-    <footer>⚡ Cover images are checked via HTTP HEAD requests (same URL as audio file but .jpg).<br>This may take a moment for 600+ songs.</footer>
+    <footer>⚡ Cover images are detected by actually loading the image (same URL as audio but .jpg).<br>This may take a moment for 600+ songs.</footer>
 </div>
 
 <script type="module">
@@ -204,7 +204,7 @@
         const title = song.file.replace(/\.(mp3|m4a|MP3|M4A)$/i, '');
         const baseUrl = song.url.substring(0, song.url.lastIndexOf('/') + 1);
         return {
-            index: null, // will set later
+            index: null,
             title: title,
             url: song.url,
             details: song.details,
@@ -213,35 +213,47 @@
             coverUrl: baseUrl + encodeURIComponent(title + '.jpg')
         };
     });
-    // Add index
     songList.forEach((s, i) => s.index = i);
 
     const totalCount = songList.length;
     document.getElementById('totalCount').innerText = totalCount;
-    document.getElementById('withCoverCountInline').innerText = '0';
-    document.getElementById('withoutCoverCountInline').innerText = '0';
 
     let withCover = [];
     let withoutCover = [];
 
-    // Helper: check if cover exists (HEAD request)
-    async function coverExists(url) {
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 3000);
-            const response = await fetch(url, { method: 'HEAD', signal: controller.signal });
-            clearTimeout(timeoutId);
-            return response.ok;
-        } catch (err) {
-            return false;
-        }
+    // Reliable cover check: try to load the image with a timeout
+    function coverExists(url) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            let resolved = false;
+            const timeout = setTimeout(() => {
+                if (!resolved) {
+                    resolved = true;
+                    resolve(false);
+                }
+            }, 3000);
+            img.onload = () => {
+                if (!resolved) {
+                    resolved = true;
+                    clearTimeout(timeout);
+                    resolve(true);
+                }
+            };
+            img.onerror = () => {
+                if (!resolved) {
+                    resolved = true;
+                    clearTimeout(timeout);
+                    resolve(false);
+                }
+            };
+            img.src = url;
+        });
     }
 
-    // Process songs in batches to avoid overwhelming network
     async function processSongs() {
-        const batchSize = 10;
+        const batchSize = 5; // smaller batch to avoid too many parallel image loads
         let processed = 0;
-        const updateUI = () => {
+        const updateCounters = () => {
             document.getElementById('withCoverCount').innerText = withCover.length;
             document.getElementById('withoutCoverCount').innerText = withoutCover.length;
             document.getElementById('withCoverCountInline').innerText = withCover.length;
@@ -260,11 +272,10 @@
             });
             await Promise.all(promises);
             processed += batch.length;
-            // Update UI progressively
             renderLists();
-            updateUI();
-            // small delay to avoid rate limiting
-            await new Promise(r => setTimeout(r, 100));
+            updateCounters();
+            // small delay to be gentle
+            await new Promise(r => setTimeout(r, 50));
         }
     }
 
@@ -277,7 +288,6 @@
             currentPreviewAudio.pause();
             currentPreviewAudio = null;
         }
-        // Reset all preview buttons text
         document.querySelectorAll('.preview-btn').forEach(btn => {
             btn.innerHTML = '▶ Play preview';
             btn.classList.remove('playing');
@@ -290,8 +300,7 @@
         const withoutCoverDiv = document.getElementById('withoutCoverList');
 
         if (withCover.length === 0 && withoutCover.length === 0 && songList.length > 0) {
-            withCoverDiv.innerHTML = '<div class="loading">⌛ Checking covers...</div>';
-            withoutCoverDiv.innerHTML = '<div class="loading">⌛ Checking covers...</div>';
+            // still scanning
             return;
         }
 
@@ -302,7 +311,7 @@
             item.className = 'song-item';
             item.innerHTML = `
                 <div class="song-header" data-idx="${song.index}">
-                    <img src="${song.coverUrl}" class="cover-indicator" onerror="this.style.display='none'">
+                    <img src="${song.coverUrl}" class="cover-indicator" alt="cover" referrerpolicy="no-referrer">
                     <div class="song-title">${escapeHtml(song.title)}</div>
                     <span style="font-size:0.7rem; color:#c07a4b;">▼</span>
                 </div>
@@ -311,7 +320,7 @@
                         <strong>Duration:</strong> ${Math.floor(song.duration/60)}:${(song.duration%60).toString().padStart(2,'0')}<br>
                         <strong>Details:</strong> ${escapeHtml(song.details) || "—"}<br>
                     </div>
-                    <img src="${song.coverUrl}" class="cover-thumb" alt="cover" onerror="this.style.display='none'">
+                    <img src="${song.coverUrl}" class="cover-thumb" alt="cover" referrerpolicy="no-referrer" onerror="this.style.display='none'">
                     <button class="preview-btn" data-url="${song.url}" data-idx="${song.index}">▶ Play preview</button>
                 </div>
             `;
@@ -341,24 +350,27 @@
             withoutCoverDiv.appendChild(item);
         });
 
-        // Attach click handlers for expand/collapse
+        // Attach expand handlers
         document.querySelectorAll('.song-header').forEach(header => {
             const idx = header.dataset.idx;
             const expandDiv = document.getElementById(`expand-${idx}`);
-            header.addEventListener('click', (e) => {
-                e.stopPropagation();
-                expandDiv.classList.toggle('show');
-            });
+            if (expandDiv) {
+                header.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    expandDiv.classList.toggle('show');
+                });
+            }
         });
 
         // Attach preview button handlers
         document.querySelectorAll('.preview-btn').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
+            // Remove previous listener to avoid duplicates
+            btn.removeEventListener('click', btn._listener);
+            const listener = async (e) => {
                 e.stopPropagation();
                 const url = btn.dataset.url;
                 const idx = parseInt(btn.dataset.idx);
                 if (currentPreviewAudio && currentPreviewSongIndex === idx && !currentPreviewAudio.paused) {
-                    // pause current
                     currentPreviewAudio.pause();
                     btn.innerHTML = '▶ Play preview';
                     btn.classList.remove('playing');
@@ -390,11 +402,12 @@
                         }, 1500);
                     }
                 }
-            });
+            };
+            btn._listener = listener;
+            btn.addEventListener('click', listener);
         });
     }
 
-    // Simple XSS protection
     function escapeHtml(str) {
         if (!str) return '';
         return str.replace(/[&<>]/g, function(m) {
@@ -402,14 +415,13 @@
             if (m === '<') return '&lt;';
             if (m === '>') return '&gt;';
             return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
         });
     }
 
-    // Start processing
+    // Start scanning
     processSongs().then(() => {
         console.log(`Done: ${withCover.length} with cover, ${withoutCover.length} without`);
+        renderLists(); // final render
     });
 </script>
 </body>
