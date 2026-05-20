@@ -54,11 +54,25 @@
             font-weight: 700;
             color: #b0652c;
         }
+        .search-container {
+            margin: 1rem 0 1rem 0;
+            width: 100%;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 1rem;
+            font-family: inherit;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
         }
         .card {
             background: rgba(255, 250, 240, 0.92);
@@ -105,6 +119,25 @@
         .song-title {
             flex: 1;
             font-weight: 600;
+        }
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0 0.3rem;
+            border-radius: 6px;
+            transition: background 0.1s;
+            color: #7a6a58;
+        }
+        .copy-btn:hover {
+            background: #e0d6c8;
+            color: #2c2418;
+        }
+        .copy-feedback {
+            font-size: 0.7rem;
+            margin-left: 0.3rem;
+            color: #2c8a2c;
         }
         .cover-indicator {
             width: 32px;
@@ -183,6 +216,9 @@
         <div class="stat-card">🖼️ With cover: <span id="withCoverCount">0</span></div>
         <div class="stat-card">❌ Without cover: <span id="withoutCoverCount">0</span></div>
     </div>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="🔍 Search song name or details... (e.g., 'Arunachalam', 'ARRahman')" autocomplete="off">
+    </div>
     <div class="grid">
         <div class="card">
             <h2>🖼️ Songs with cover <span id="withCoverCountInline"></span></h2>
@@ -220,6 +256,7 @@
 
     let withCover = [];
     let withoutCover = [];
+    let scanningComplete = false;
 
     // Reliable cover check: try to load the image with a timeout
     function coverExists(url) {
@@ -251,15 +288,7 @@
     }
 
     async function processSongs() {
-        const batchSize = 5; // smaller batch to avoid too many parallel image loads
-        let processed = 0;
-        const updateCounters = () => {
-            document.getElementById('withCoverCount').innerText = withCover.length;
-            document.getElementById('withoutCoverCount').innerText = withoutCover.length;
-            document.getElementById('withCoverCountInline').innerText = withCover.length;
-            document.getElementById('withoutCoverCountInline').innerText = withoutCover.length;
-        };
-
+        const batchSize = 5;
         for (let i = 0; i < songList.length; i += batchSize) {
             const batch = songList.slice(i, i + batchSize);
             const promises = batch.map(async (song) => {
@@ -271,15 +300,21 @@
                 }
             });
             await Promise.all(promises);
-            processed += batch.length;
-            renderLists();
-            updateCounters();
-            // small delay to be gentle
+            // Update counts progressively
+            document.getElementById('withCoverCount').innerText = withCover.length;
+            document.getElementById('withoutCoverCount').innerText = withoutCover.length;
+            document.getElementById('withCoverCountInline').innerText = withCover.length;
+            document.getElementById('withoutCoverCountInline').innerText = withoutCover.length;
+            // Render current state
+            filterAndRender(document.getElementById('searchInput').value);
             await new Promise(r => setTimeout(r, 50));
         }
+        scanningComplete = true;
+        filterAndRender(document.getElementById('searchInput').value);
+        console.log(`Done: ${withCover.length} with cover, ${withoutCover.length} without`);
     }
 
-    // --- expand/collapse, preview player ---
+    // --- expand/collapse, preview player, copy ---
     let currentPreviewAudio = null;
     let currentPreviewSongIndex = null;
 
@@ -295,24 +330,68 @@
         currentPreviewSongIndex = null;
     }
 
-    function renderLists() {
+    async function copySongTitle(title, btnElement) {
+        try {
+            await navigator.clipboard.writeText(title);
+            const originalHTML = btnElement.innerHTML;
+            btnElement.innerHTML = '✓';
+            setTimeout(() => {
+                btnElement.innerHTML = originalHTML;
+            }, 1000);
+        } catch (err) {
+            console.warn('Copy failed', err);
+            const textarea = document.createElement('textarea');
+            textarea.value = title;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            const originalHTML = btnElement.innerHTML;
+            btnElement.innerHTML = '✓';
+            setTimeout(() => {
+                btnElement.innerHTML = originalHTML;
+            }, 1000);
+        }
+    }
+
+    function filterAndRender(searchTerm) {
+        if (!scanningComplete && (withCover.length === 0 && withoutCover.length === 0)) {
+            // still initial scanning, show loading
+            document.getElementById('withCoverList').innerHTML = '<div class="loading">⌛ Scanning covers...</div>';
+            document.getElementById('withoutCoverList').innerHTML = '<div class="loading">⌛ Scanning covers...</div>';
+            return;
+        }
+        const term = (searchTerm || '').trim().toLowerCase();
+        const filteredWith = term === '' ? withCover : withCover.filter(song => 
+            song.title.toLowerCase().includes(term) || 
+            (song.details && song.details.toLowerCase().includes(term))
+        );
+        const filteredWithout = term === '' ? withoutCover : withoutCover.filter(song => 
+            song.title.toLowerCase().includes(term) || 
+            (song.details && song.details.toLowerCase().includes(term))
+        );
+
+        // Update inline counts (filtered)
+        document.getElementById('withCoverCountInline').innerText = `(${filteredWith.length}/${withCover.length})`;
+        document.getElementById('withoutCoverCountInline').innerText = `(${filteredWithout.length}/${withoutCover.length})`;
+
+        renderLists(filteredWith, filteredWithout);
+    }
+
+    function renderLists(withList, withoutList) {
         const withCoverDiv = document.getElementById('withCoverList');
         const withoutCoverDiv = document.getElementById('withoutCoverList');
 
-        if (withCover.length === 0 && withoutCover.length === 0 && songList.length > 0) {
-            // still scanning
-            return;
-        }
-
         // Render with cover
         withCoverDiv.innerHTML = '';
-        withCover.forEach(song => {
+        withList.forEach(song => {
             const item = document.createElement('div');
             item.className = 'song-item';
             item.innerHTML = `
                 <div class="song-header" data-idx="${song.index}">
                     <img src="${song.coverUrl}" class="cover-indicator" alt="cover" referrerpolicy="no-referrer">
                     <div class="song-title">${escapeHtml(song.title)}</div>
+                    <button class="copy-btn" data-title="${escapeHtml(song.title)}" title="Copy song name">📋</button>
                     <span style="font-size:0.7rem; color:#c07a4b;">▼</span>
                 </div>
                 <div class="expandable" id="expand-${song.index}">
@@ -329,13 +408,14 @@
 
         // Render without cover
         withoutCoverDiv.innerHTML = '';
-        withoutCover.forEach(song => {
+        withoutList.forEach(song => {
             const item = document.createElement('div');
             item.className = 'song-item';
             item.innerHTML = `
                 <div class="song-header" data-idx="${song.index}">
                     <div class="no-cover-indicator">🎵</div>
                     <div class="song-title">${escapeHtml(song.title)}</div>
+                    <button class="copy-btn" data-title="${escapeHtml(song.title)}" title="Copy song name">📋</button>
                     <span style="font-size:0.7rem; color:#c07a4b;">▼</span>
                 </div>
                 <div class="expandable" id="expand-${song.index}">
@@ -350,23 +430,38 @@
             withoutCoverDiv.appendChild(item);
         });
 
-        // Attach expand handlers
+        // Attach expand handlers (click on header, except copy button)
         document.querySelectorAll('.song-header').forEach(header => {
             const idx = header.dataset.idx;
             const expandDiv = document.getElementById(`expand-${idx}`);
             if (expandDiv) {
-                header.addEventListener('click', (e) => {
+                header.removeEventListener('click', header._expandListener);
+                const expandListener = (e) => {
+                    if (e.target.classList && e.target.classList.contains('copy-btn')) return;
                     e.stopPropagation();
                     expandDiv.classList.toggle('show');
-                });
+                };
+                header._expandListener = expandListener;
+                header.addEventListener('click', expandListener);
             }
+        });
+
+        // Attach copy button handlers
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.removeEventListener('click', btn._copyListener);
+            const copyListener = async (e) => {
+                e.stopPropagation();
+                const title = btn.getAttribute('data-title');
+                await copySongTitle(title, btn);
+            };
+            btn._copyListener = copyListener;
+            btn.addEventListener('click', copyListener);
         });
 
         // Attach preview button handlers
         document.querySelectorAll('.preview-btn').forEach(btn => {
-            // Remove previous listener to avoid duplicates
-            btn.removeEventListener('click', btn._listener);
-            const listener = async (e) => {
+            btn.removeEventListener('click', btn._previewListener);
+            const previewListener = async (e) => {
                 e.stopPropagation();
                 const url = btn.dataset.url;
                 const idx = parseInt(btn.dataset.idx);
@@ -403,8 +498,8 @@
                     }
                 }
             };
-            btn._listener = listener;
-            btn.addEventListener('click', listener);
+            btn._previewListener = previewListener;
+            btn.addEventListener('click', previewListener);
         });
     }
 
@@ -418,10 +513,16 @@
         });
     }
 
+    // Initialize search listener
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', (e) => {
+        filterAndRender(e.target.value);
+    });
+
     // Start scanning
     processSongs().then(() => {
-        console.log(`Done: ${withCover.length} with cover, ${withoutCover.length} without`);
-        renderLists(); // final render
+        // Final render
+        filterAndRender(searchInput.value);
     });
 </script>
 </body>
