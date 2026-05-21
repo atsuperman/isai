@@ -445,20 +445,31 @@
         return song.baseUrl + encodedFileName;
     }
 
-    // Store current artwork blob URL to revoke later
-    let currentArtworkBlobUrl = null;
-
-    // Helper: safely set Media Session metadata (title + artwork from blob)
-    async function setMediaSessionWithArtwork(songTitle, imageUrl) {
+    // Media Session: set metadata with direct image URLs (no blob fetch)
+    function updateMediaSession(songTitle, coverUrl) {
         if (!('mediaSession' in navigator)) return;
-        // First set metadata with a placeholder artwork to ensure title appears immediately
+        // Build artwork array with the specific cover and fallback to default
+        const artworks = [];
+        if (coverUrl) {
+            artworks.push({ src: coverUrl, sizes: '96x96', type: 'image/jpeg' });
+            artworks.push({ src: coverUrl, sizes: '128x128', type: 'image/jpeg' });
+            artworks.push({ src: coverUrl, sizes: '192x192', type: 'image/jpeg' });
+            artworks.push({ src: coverUrl, sizes: '256x256', type: 'image/jpeg' });
+            artworks.push({ src: coverUrl, sizes: '512x512', type: 'image/jpeg' });
+        }
+        // Always include default cover as fallback
+        artworks.push({ src: DEFAULT_COVER_URL, sizes: '96x96', type: 'image/jpeg' });
+        artworks.push({ src: DEFAULT_COVER_URL, sizes: '128x128', type: 'image/jpeg' });
+        artworks.push({ src: DEFAULT_COVER_URL, sizes: '192x192', type: 'image/jpeg' });
+        artworks.push({ src: DEFAULT_COVER_URL, sizes: '256x256', type: 'image/jpeg' });
+        artworks.push({ src: DEFAULT_COVER_URL, sizes: '512x512', type: 'image/jpeg' });
+
         navigator.mediaSession.metadata = new MediaMetadata({
             title: songTitle,
             artist: 'SUPER Isai',
             album: 'Global Sync Radio',
-            artwork: []  // empty for now, will be updated
+            artwork: artworks
         });
-        // Always set action handlers
         navigator.mediaSession.setActionHandler('play', () => {
             if (!isPlaying && !isLoading) togglePlayPause();
         });
@@ -470,57 +481,6 @@
         navigator.mediaSession.setActionHandler('seekto', null);
         navigator.mediaSession.setActionHandler('seekbackward', null);
         navigator.mediaSession.setActionHandler('seekforward', null);
-
-        // Then try to load the actual image
-        try {
-            const response = await fetch(imageUrl, { mode: 'cors' });
-            if (!response.ok) throw new Error('Image fetch failed');
-            const blob = await response.blob();
-            const blobUrl = URL.createObjectURL(blob);
-            // Revoke previous blob
-            if (currentArtworkBlobUrl) URL.revokeObjectURL(currentArtworkBlobUrl);
-            currentArtworkBlobUrl = blobUrl;
-            const artwork = [
-                { src: blobUrl, sizes: '96x96', type: blob.type },
-                { src: blobUrl, sizes: '128x128', type: blob.type },
-                { src: blobUrl, sizes: '192x192', type: blob.type },
-                { src: blobUrl, sizes: '256x256', type: blob.type },
-                { src: blobUrl, sizes: '512x512', type: blob.type }
-            ];
-            navigator.mediaSession.metadata = new MediaMetadata({
-                title: songTitle,
-                artist: 'SUPER Isai',
-                album: 'Global Sync Radio',
-                artwork: artwork
-            });
-        } catch (err) {
-            console.warn("Could not load specific cover, falling back to default", err);
-            // Fallback to default 0.jpg
-            try {
-                const fallbackResp = await fetch(DEFAULT_COVER_URL, { mode: 'cors' });
-                if (fallbackResp.ok) {
-                    const fallbackBlob = await fallbackResp.blob();
-                    const fallbackBlobUrl = URL.createObjectURL(fallbackBlob);
-                    if (currentArtworkBlobUrl) URL.revokeObjectURL(currentArtworkBlobUrl);
-                    currentArtworkBlobUrl = fallbackBlobUrl;
-                    const fallbackArtwork = [
-                        { src: fallbackBlobUrl, sizes: '96x96', type: fallbackBlob.type },
-                        { src: fallbackBlobUrl, sizes: '128x128', type: fallbackBlob.type },
-                        { src: fallbackBlobUrl, sizes: '192x192', type: fallbackBlob.type },
-                        { src: fallbackBlobUrl, sizes: '256x256', type: fallbackBlob.type },
-                        { src: fallbackBlobUrl, sizes: '512x512', type: fallbackBlob.type }
-                    ];
-                    navigator.mediaSession.metadata = new MediaMetadata({
-                        title: songTitle,
-                        artist: 'SUPER Isai',
-                        album: 'Global Sync Radio',
-                        artwork: fallbackArtwork
-                    });
-                }
-            } catch (fallbackErr) {
-                console.warn("Even default cover failed, leaving no artwork");
-            }
-        }
     }
 
     function updateUI(songIdx, nextIdx) {
@@ -534,15 +494,15 @@
         songPad.classList.add('glitch');
         setTimeout(() => songPad.classList.remove('glitch'), 600);
 
-        // UI cover
+        // Update UI cover
         const coverUrl = getCoverUrl(song);
         albumCoverImg.src = coverUrl;
         albumCoverImg.onerror = () => {
             albumCoverImg.src = DEFAULT_COVER_URL;
         };
 
-        // Media Session with title and artwork
-        setMediaSessionWithArtwork(song.title, coverUrl);
+        // Update Media Session artwork (direct URL, no blob)
+        updateMediaSession(song.title, coverUrl);
     }
 
     function destroyAudio(audioObj) {
