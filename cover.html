@@ -134,11 +134,6 @@
             background: #e0d6c8;
             color: #2c2418;
         }
-        .copy-feedback {
-            font-size: 0.7rem;
-            margin-left: 0.3rem;
-            color: #2c8a2c;
-        }
         .cover-indicator {
             width: 32px;
             height: 32px;
@@ -169,6 +164,7 @@
             font-size: 0.8rem;
             color: #6a5a48;
             margin: 0.5rem 0;
+            word-break: break-all;
         }
         .preview-btn {
             background: #2d2a24;
@@ -300,12 +296,10 @@
                 }
             });
             await Promise.all(promises);
-            // Update counts progressively
             document.getElementById('withCoverCount').innerText = withCover.length;
             document.getElementById('withoutCoverCount').innerText = withoutCover.length;
             document.getElementById('withCoverCountInline').innerText = withCover.length;
             document.getElementById('withoutCoverCountInline').innerText = withoutCover.length;
-            // Render current state
             filterAndRender(document.getElementById('searchInput').value);
             await new Promise(r => setTimeout(r, 50));
         }
@@ -314,7 +308,7 @@
         console.log(`Done: ${withCover.length} with cover, ${withoutCover.length} without`);
     }
 
-    // --- expand/collapse, preview player, copy ---
+    // --- expand/collapse, preview player, copy (with .jpg) ---
     let currentPreviewAudio = null;
     let currentPreviewSongIndex = null;
 
@@ -330,9 +324,11 @@
         currentPreviewSongIndex = null;
     }
 
+    // Copy song title + ".jpg" to clipboard
     async function copySongTitle(title, btnElement) {
+        const textToCopy = title + '.jpg';
         try {
-            await navigator.clipboard.writeText(title);
+            await navigator.clipboard.writeText(textToCopy);
             const originalHTML = btnElement.innerHTML;
             btnElement.innerHTML = '✓';
             setTimeout(() => {
@@ -341,7 +337,7 @@
         } catch (err) {
             console.warn('Copy failed', err);
             const textarea = document.createElement('textarea');
-            textarea.value = title;
+            textarea.value = textToCopy;
             document.body.appendChild(textarea);
             textarea.select();
             document.execCommand('copy');
@@ -356,7 +352,6 @@
 
     function filterAndRender(searchTerm) {
         if (!scanningComplete && (withCover.length === 0 && withoutCover.length === 0)) {
-            // still initial scanning, show loading
             document.getElementById('withCoverList').innerHTML = '<div class="loading">⌛ Scanning covers...</div>';
             document.getElementById('withoutCoverList').innerHTML = '<div class="loading">⌛ Scanning covers...</div>';
             return;
@@ -371,9 +366,8 @@
             (song.details && song.details.toLowerCase().includes(term))
         );
 
-        // Update inline counts (filtered)
-        document.getElementById('withCoverCountInline').innerText = `(${filteredWith.length}/${withCover.length})`;
-        document.getElementById('withoutCoverCountInline').innerText = `(${filteredWithout.length}/${withoutCover.length})`;
+        document.getElementById('withCoverCountInline').innerHTML = `(${filteredWith.length}/${withCover.length})`;
+        document.getElementById('withoutCoverCountInline').innerHTML = `(${filteredWithout.length}/${withoutCover.length})`;
 
         renderLists(filteredWith, filteredWithout);
     }
@@ -382,7 +376,6 @@
         const withCoverDiv = document.getElementById('withCoverList');
         const withoutCoverDiv = document.getElementById('withoutCoverList');
 
-        // Render with cover
         withCoverDiv.innerHTML = '';
         withList.forEach(song => {
             const item = document.createElement('div');
@@ -391,13 +384,14 @@
                 <div class="song-header" data-idx="${song.index}">
                     <img src="${song.coverUrl}" class="cover-indicator" alt="cover" referrerpolicy="no-referrer">
                     <div class="song-title">${escapeHtml(song.title)}</div>
-                    <button class="copy-btn" data-title="${escapeHtml(song.title)}" title="Copy song name">📋</button>
+                    <button class="copy-btn" data-title="${escapeHtml(song.title)}" title="Copy song name + .jpg">📋</button>
                     <span style="font-size:0.7rem; color:#c07a4b;">▼</span>
                 </div>
                 <div class="expandable" id="expand-${song.index}">
                     <div class="details">
                         <strong>Duration:</strong> ${Math.floor(song.duration/60)}:${(song.duration%60).toString().padStart(2,'0')}<br>
                         <strong>Details:</strong> ${escapeHtml(song.details) || "—"}<br>
+                        <strong>Full URL:</strong> <span style="word-break:break-all;">${escapeHtml(song.url)}</span><br>
                     </div>
                     <img src="${song.coverUrl}" class="cover-thumb" alt="cover" referrerpolicy="no-referrer" onerror="this.style.display='none'">
                     <button class="preview-btn" data-url="${song.url}" data-idx="${song.index}">▶ Play preview</button>
@@ -406,7 +400,6 @@
             withCoverDiv.appendChild(item);
         });
 
-        // Render without cover
         withoutCoverDiv.innerHTML = '';
         withoutList.forEach(song => {
             const item = document.createElement('div');
@@ -415,13 +408,14 @@
                 <div class="song-header" data-idx="${song.index}">
                     <div class="no-cover-indicator">🎵</div>
                     <div class="song-title">${escapeHtml(song.title)}</div>
-                    <button class="copy-btn" data-title="${escapeHtml(song.title)}" title="Copy song name">📋</button>
+                    <button class="copy-btn" data-title="${escapeHtml(song.title)}" title="Copy song name + .jpg">📋</button>
                     <span style="font-size:0.7rem; color:#c07a4b;">▼</span>
                 </div>
                 <div class="expandable" id="expand-${song.index}">
                     <div class="details">
                         <strong>Duration:</strong> ${Math.floor(song.duration/60)}:${(song.duration%60).toString().padStart(2,'0')}<br>
                         <strong>Details:</strong> ${escapeHtml(song.details) || "—"}<br>
+                        <strong>Full URL:</strong> <span style="word-break:break-all;">${escapeHtml(song.url)}</span><br>
                         <em>⚠️ No cover image found.</em>
                     </div>
                     <button class="preview-btn" data-url="${song.url}" data-idx="${song.index}">▶ Play preview</button>
@@ -430,7 +424,7 @@
             withoutCoverDiv.appendChild(item);
         });
 
-        // Attach expand handlers (click on header, except copy button)
+        // Attach expand handlers
         document.querySelectorAll('.song-header').forEach(header => {
             const idx = header.dataset.idx;
             const expandDiv = document.getElementById(`expand-${idx}`);
@@ -513,17 +507,10 @@
         });
     }
 
-    // Initialize search listener
     const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', (e) => {
-        filterAndRender(e.target.value);
-    });
+    searchInput.addEventListener('input', (e) => filterAndRender(e.target.value));
 
-    // Start scanning
-    processSongs().then(() => {
-        // Final render
-        filterAndRender(searchInput.value);
-    });
+    processSongs().then(() => filterAndRender(searchInput.value));
 </script>
 </body>
 </html>
