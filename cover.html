@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>SUPER Isai – Cover Analyzer</title>
+    <title>SUPER Isai – Cover Analyzer + Duplicate Finder</title>
     <style>
         * {
             margin: 0;
@@ -96,6 +96,51 @@
             max-height: 70vh;
             overflow-y: auto;
             padding-right: 0.5rem;
+        }
+        .duplicate-section {
+            margin-top: 1.5rem;
+        }
+        .duplicate-card {
+            background: rgba(255, 250, 240, 0.92);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(210, 180, 140, 0.5);
+        }
+        .duplicate-item {
+            background: #fefaf2;
+            border-radius: 1rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid #e9dfd1;
+            overflow: hidden;
+        }
+        .duplicate-header {
+            padding: 0.8rem;
+            cursor: pointer;
+            background: #f5ede2;
+            font-weight: 600;
+            color: #a1220a;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .duplicate-details {
+            padding: 0.8rem;
+            border-top: 1px dashed #ddd;
+            display: none;
+            font-size: 0.8rem;
+        }
+        .duplicate-details.show {
+            display: block;
+        }
+        .index-badge {
+            background: #c0a080;
+            color: white;
+            border-radius: 20px;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.7rem;
+            font-weight: normal;
         }
         .song-item {
             background: #fefaf2;
@@ -204,16 +249,17 @@
 </head>
 <body>
 <div class="container">
-    <h1>🎵 SUPER Isai · Cover Analyzer
-        <small>check which songs have album art</small>
+    <h1>🎵 SUPER Isai · Cover Analyzer + Duplicate Finder
+        <small>check covers and find duplicates</small>
     </h1>
     <div class="stats">
         <div class="stat-card">📊 Total songs: <span id="totalCount">0</span></div>
         <div class="stat-card">🖼️ With cover: <span id="withCoverCount">0</span></div>
         <div class="stat-card">❌ Without cover: <span id="withoutCoverCount">0</span></div>
+        <div class="stat-card">🔄 Duplicate groups: <span id="dupGroupCount">0</span></div>
     </div>
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="🔍 Search song name or details... (e.g., 'Arunachalam', 'ARRahman')" autocomplete="off">
+        <input type="text" id="searchInput" placeholder="🔍 Search song name or details..." autocomplete="off">
     </div>
     <div class="grid">
         <div class="card">
@@ -225,18 +271,27 @@
             <div id="withoutCoverList" class="song-list">⏳ Scanning songs...</div>
         </div>
     </div>
-    <footer>⚡ Cover images are detected by actually loading the image (same URL as audio but .jpg).<br>This may take a moment for 600+ songs.</footer>
+
+    <!-- Duplicate section -->
+    <div class="duplicate-section" id="duplicateSection" style="display: none;">
+        <div class="duplicate-card">
+            <h2>🔄 Duplicate Songs (same title+details or same URL)</h2>
+            <div id="duplicateList" class="song-list">Loading...</div>
+        </div>
+    </div>
+
+    <footer>⚡ Cover images are detected by actually loading the image (same URL as audio but .jpg).<br>Duplicate detection groups identical (title + details) or identical URLs.</footer>
 </div>
 
 <script type="module">
     import { songs } from './isai.js';
 
-    // Build song list with base URLs
-    const songList = songs.map(song => {
+    // Build song list with base URLs and preserve original order
+    const songList = songs.map((song, idx) => {
         const title = song.file.replace(/\.(mp3|m4a|MP3|M4A)$/i, '');
         const baseUrl = song.url.substring(0, song.url.lastIndexOf('/') + 1);
         return {
-            index: null,
+            index: idx,
             title: title,
             url: song.url,
             details: song.details,
@@ -245,7 +300,6 @@
             coverUrl: baseUrl + encodeURIComponent(title + '.jpg')
         };
     });
-    songList.forEach((s, i) => s.index = i);
 
     const totalCount = songList.length;
     document.getElementById('totalCount').innerText = totalCount;
@@ -254,7 +308,57 @@
     let withoutCover = [];
     let scanningComplete = false;
 
-    // Reliable cover check: try to load the image with a timeout
+    // --- Duplicate detection ---
+    function findDuplicates() {
+        const titleDetailsMap = new Map(); // key: normalized title + details
+        const urlMap = new Map(); // key: url
+        const duplicateGroups = [];
+
+        // First pass: group by normalized title+details
+        for (const song of songList) {
+            const normTitle = song.title.trim().toLowerCase();
+            const normDetails = (song.details || "").trim().toLowerCase();
+            const key = `${normTitle}|${normDetails}`;
+            if (!titleDetailsMap.has(key)) titleDetailsMap.set(key, []);
+            titleDetailsMap.get(key).push(song);
+        }
+        // Filter groups with more than one song
+        for (const [key, group] of titleDetailsMap.entries()) {
+            if (group.length > 1) {
+                duplicateGroups.push({ type: 'Same title + details', songs: group });
+            }
+        }
+
+        // Second pass: group by exact URL
+        for (const song of songList) {
+            const url = song.url;
+            if (!urlMap.has(url)) urlMap.set(url, []);
+            urlMap.get(url).push(song);
+        }
+        for (const [url, group] of urlMap.entries()) {
+            if (group.length > 1) {
+                // avoid duplicates if already caught by title+details? Still show as separate warning
+                duplicateGroups.push({ type: 'Same URL (exact duplicate)', songs: group });
+            }
+        }
+
+        // Remove duplicate groups that are completely identical (same set of songs) – simple dedup by JSON
+        const uniqueGroups = [];
+        const groupKeys = new Set();
+        for (const grp of duplicateGroups) {
+            const sortedIndices = grp.songs.map(s => s.index).sort().join(',');
+            const key = `${grp.type}|${sortedIndices}`;
+            if (!groupKeys.has(key)) {
+                groupKeys.add(key);
+                uniqueGroups.push(grp);
+            }
+        }
+        return uniqueGroups;
+    }
+
+    let duplicateGroups = [];
+
+    // --- cover detection ---
     function coverExists(url) {
         return new Promise((resolve) => {
             const img = new Image();
@@ -305,10 +409,64 @@
         }
         scanningComplete = true;
         filterAndRender(document.getElementById('searchInput').value);
-        console.log(`Done: ${withCover.length} with cover, ${withoutCover.length} without`);
+        // Now compute duplicates
+        duplicateGroups = findDuplicates();
+        document.getElementById('dupGroupCount').innerText = duplicateGroups.length;
+        renderDuplicates();
+        if (duplicateGroups.length > 0) {
+            document.getElementById('duplicateSection').style.display = 'block';
+        }
+        console.log(`Done: ${withCover.length} with cover, ${withoutCover.length} without, ${duplicateGroups.length} duplicate groups`);
     }
 
-    // --- expand/collapse, preview player, copy (with .jpg) ---
+    // --- Render duplicate groups (collapsible) ---
+    function renderDuplicates() {
+        const container = document.getElementById('duplicateList');
+        if (!container) return;
+        if (duplicateGroups.length === 0) {
+            container.innerHTML = '<div class="loading">✅ No duplicates found</div>';
+            return;
+        }
+        container.innerHTML = '';
+        duplicateGroups.forEach((group, idx) => {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'duplicate-item';
+            const typeColor = group.type.includes('URL') ? '#b86b00' : '#a1220a';
+            groupDiv.innerHTML = `
+                <div class="duplicate-header" data-dup-idx="${idx}">
+                    <span style="background:${typeColor}; color:white; padding:0.2rem 0.5rem; border-radius:20px; font-size:0.7rem;">${group.type}</span>
+                    <span>${group.songs.length} songs</span>
+                    <span style="font-size:0.7rem; margin-left:auto;">▼</span>
+                </div>
+                <div class="duplicate-details" id="dup-details-${idx}">
+                    ${group.songs.map(song => `
+                        <div class="song-item" style="margin-bottom:0.3rem;">
+                            <div class="song-header" style="cursor:default; background:#fff;">
+                                <span class="index-badge">Index: ${song.index}</span>
+                                <div class="song-title">${escapeHtml(song.title)}</div>
+                            </div>
+                            <div style="padding:0.3rem 0.8rem 0.8rem 0.8rem; font-size:0.75rem;">
+                                <div><strong>Details:</strong> ${escapeHtml(song.details) || "—"}</div>
+                                <div><strong>URL:</strong> <span style="word-break:break-all;">${escapeHtml(song.url)}</span></div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(groupDiv);
+        });
+        // attach toggle listeners
+        document.querySelectorAll('.duplicate-header').forEach(header => {
+            const idx = header.dataset.dupIdx;
+            const detailsDiv = document.getElementById(`dup-details-${idx}`);
+            header.addEventListener('click', (e) => {
+                e.stopPropagation();
+                detailsDiv.classList.toggle('show');
+            });
+        });
+    }
+
+    // --- existing UI logic (cover lists, search, copy, preview) ---
     let currentPreviewAudio = null;
     let currentPreviewSongIndex = null;
 
@@ -324,7 +482,6 @@
         currentPreviewSongIndex = null;
     }
 
-    // Copy song title + ".jpg" to clipboard
     async function copySongTitle(title, btnElement) {
         const textToCopy = title + '.jpg';
         try {
@@ -335,7 +492,6 @@
                 btnElement.innerHTML = originalHTML;
             }, 1000);
         } catch (err) {
-            console.warn('Copy failed', err);
             const textarea = document.createElement('textarea');
             textarea.value = textToCopy;
             document.body.appendChild(textarea);
@@ -440,7 +596,7 @@
             }
         });
 
-        // Attach copy button handlers
+        // Copy button handlers
         document.querySelectorAll('.copy-btn').forEach(btn => {
             btn.removeEventListener('click', btn._copyListener);
             const copyListener = async (e) => {
@@ -452,7 +608,7 @@
             btn.addEventListener('click', copyListener);
         });
 
-        // Attach preview button handlers
+        // Preview button handlers
         document.querySelectorAll('.preview-btn').forEach(btn => {
             btn.removeEventListener('click', btn._previewListener);
             const previewListener = async (e) => {
