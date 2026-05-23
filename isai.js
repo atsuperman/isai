@@ -66,7 +66,7 @@ const repos = [
 { file: "Iyera Meenu.m4a", details: "🎬 Mappillai Gounder (1997) / 🎙️ Swarnalatha, Mano / 🎼 Deva / 📝 Kalidasan", duration: 242 },
 { file: "Moonu Mozham.m4a", details: "🎬 Senathipathi (1996) / 🎙️ S P Balasubrahmanyam, K S Chithra / 🎼 Deva / 📝 Vairamuthu", duration: 278 },
 { file: "Unnaikaanamal.m4a", details: "🎬 Kavithai Paadum Alaigal (1990) / 🎙️ Arunmozhi, K S Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran", duration: 309 },
-{ file: "Kanne En.m4a", details: "🎬 Kavithai Paadum Alaigal (1990) / 🎙️ Mano, K S Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran", duration: 296 },
+{ file: "Kanne En.m4a", details: "🎬 Kavithai Paadum Alaigal (1990) / 🎙️ Mano, K S Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran", duration: 296 },
 { file: "Vaanilaa Thenilaa.m4a", details: "🎬 Kavithai Paadum Alaigal (1990) / 🎙️ Mano, K S Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran", duration: 271 },
 { file: "Anbe nee mayila.m4a", details: "🎬 Ninavirukkum Varai (1999) / 🎙️ Unni Menon, Sujatha Mohan / 🎼 Deva / 📝 Pazhani Bharathi", duration: 325 },
 { file: "KathAdikkuthu kathu.m4a", details: "🎬 Ninaivirukkum Varai (1999) / 🎙️ Sabesh, Krishnaraj / 🎼 Deva / 📝 K Subash", duration: 258 },
@@ -297,10 +297,10 @@ const repos = [
 { file: "Mannile.m4a", details: "🎬 Mazhai (2005) / 🎙️ S. P. B. Charan, Sumangali / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar", duration: 324 },
 { file: "Muthu Mazhaiye.m4a", details: "🎬 Mazhai (2005) / 🎙️ Sagar, Sumangali / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar", duration: 83 },
 { file: "Nee Varumbodhu.m4a", details: "🎬 Mazhai (2005) / 🎙️ K. S. Chithra, Kalpana, Raqueeb Alam / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar", duration: 335 },
-{ file: "Thappe Ille.m4a", details: "🎬 Mazhai (2005) / 🎙️ S. P. Balasubrahmanyam, Harini / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar", duration: 236 },
-{ file: "Enga Vacha Enga vacha.m4a", details: "🎬 Pattikattan (1989) / 🎙️ Malaysia Vasudevan, K. S. Chithra / 🎼 Shankar–Ganesh / 📝 Vaali / 🎥 T. S. Krishnakumar", duration: 261 },
+
+
 { file: "Kilakku Sivakiyile.m4a", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ Rajagopal, Sujatha Mohan, P. G. Srikanth / 🎼 Adithyan / 📝 K. Rajeshwar / 🎥 Pratap Pothen", duration: 231 },
-{ file: "Oyila Paadum Paatule.m4a", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ K. S. Chithra / 🎼 Adithyan / 📝 Vairamuthu / 🎥 Pratap Pothen", duration: 383 },
+
 { file: "Kadhala Kadhala.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Hariharan, Sujatha / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 346 },
 { file: "Kadhali Kadhali.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Hariharan / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 345 },
 { file: "Kalyanam Katcheri.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 329 },
@@ -308,7 +308,6 @@ const repos = [
 { file: "Velai Velai.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 325 },
 { file: "Hey Unnaithaane.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu / 🎥 A. Jagannathan", duration: 240 },
 { file: "Jaadhi Illai.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ Malaysia Vasudevan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 A. Jagannathan", duration: 240 },
-{ file: "Kadhal Maharani Kavidhai.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Muthulingam / 🎥 A. Jagannathan", duration: 240 },
 
 { file: "Journey.m4a", details: "🎬 Jaanu (2020) / 🎙️ Pradeep Kumar / 🎼 Govind Vasantha / 📝 Karthik Netha / 🎥 C. Prem Kumar", duration: 367 },
 { file: "Ding Dang Dang.m4a", details: "🎬 Panakkaran (1990) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 P. Vasu", duration: 297 },
@@ -339,16 +338,15 @@ const repos = [
 { file: "Unna Ippo Paakkanum.mp3", details: "🎬 Kayal (2014) / 🎙️ Haricharan, Vandana Srinivasan / 🎼 D. Imman / 📝 Yugabharathi / 🎥 Prabhu Solomon / 🏷️ Sony Music", duration: 263 },
 { file: "Thappe Ille.m4a", details: "🎬 Mazhai (2005) / 🎙️ S. P. Balasubrahmanyam, Harini / 🎼 Devi Sri Prasad / 📝 Vairamuthu / 🎥 Rajkumar", duration: 236 },
 { file: "Enga Vacha Enga vacha.m4a", details: "🎬 Pattikattan (1989) / 🎙️ Malaysia Vasudevan, K. S. Chithra / 🎼 Shankar–Ganesh / 📝 Vaali / 🎥 T. S. Krishnakumar", duration: 261 },
-{ file: "Kilakku Sivakiyile.m4a", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ Rajagopal, Sujatha Mohan, P. G. Srikanth / 🎼 Adithyan / 📝 K. Rajeshwar / 🎥 Pratap Pothen", duration: 231 },
+
 { file: "Oyila Paadum Paatule.m4a", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ K. S. Chithra / 🎼 Adithyan / 📝 Vairamuthu / 🎥 Pratap Pothen", duration: 383 },
-{ file: "Kadhala Kadhala.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Hariharan, Sujatha / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 346 },
+
 { file: "Kadhali Kadhali.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Hariharan / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 345 },
 { file: "Kalyanam Katcheri.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 329 },
 { file: "Rukku Rukku Rukku.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Kamal Haasan, Sujatha / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 354 },
 { file: "Velai Velai.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 325 },
 { file: "Hey Unnaithaane.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu / 🎥 A. Jagannathan", duration: 240 },
 { file: "Jaadhi Illai.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ Malaysia Vasudevan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 A. Jagannathan", duration: 240 },
-{ file: "Kadhal Maharani Kavidhai.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Muthulingam / 🎥 A. Jagannathan", duration: 240 },
 { file: "Journey.m4a", details: "🎬 Jaanu (2020) / 🎙️ Pradeep Kumar / 🎼 Govind Vasantha / 📝 Karthik Netha / 🎥 C. Prem Kumar", duration: 367 },
 { file: "Ding Dang Dang.m4a", details: "🎬 Panakkaran (1990) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 P. Vasu", duration: 297 },
 { file: "Maraththa Vechchavan.m4a", details: "🎬 Panakkaran (1990) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 P. Vasu", duration: 239 },
@@ -624,7 +622,7 @@ const repos = [
 { file: "Chillanjirukkiye.mp3", details: "🎬 Lubber Pandhu (2024) / 🎤 Pradeep Kumar, Shivangi / 🎼 Sean Roldan / 📝 Mohan Rajan", duration: 247 }
 
 ]
-  },
+  },
 
   {
     base: "https://github.com/atsuperman/PLAY/raw/main/",
@@ -633,7 +631,7 @@ const repos = [
 { file: "Kaattumalli.mp3", details: "🎬 Viduthalai Part 1 (2023) / 🎤 Ilaiyaraaja, Ananya Bhat / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja", duration: 307 }
 
  ]
-  },
+  },
 
 {
     base: "https://github.com/atsuperman/G1/raw/refs/heads/main/",
@@ -665,7 +663,7 @@ const repos = [
 { file: "Vasantha Ruthu.mp3", details: "🎬 Sivakavi (1943) / 🎙️ M. K. Thyagaraja Bhagavathar, S. Jayalakshmi / 🎼 Papanasam Sivan / 📝 Papanasam Sivan", duration: 156 }
  ]
   },
-  
+
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
