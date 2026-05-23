@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>SUPER Isai – Cover Analyzer + Duplicate Finder</title>
+    <title>SUPER Isai – Cover Analyzer + Duplicate Cleaner</title>
     <style>
         * {
             margin: 0;
@@ -17,7 +17,7 @@
             min-height: 100vh;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         h1 {
@@ -97,10 +97,10 @@
             overflow-y: auto;
             padding-right: 0.5rem;
         }
-        .duplicate-section {
+        .duplicate-section, .clean-section {
             margin-top: 1.5rem;
         }
-        .duplicate-card {
+        .duplicate-card, .clean-card {
             background: rgba(255, 250, 240, 0.92);
             backdrop-filter: blur(4px);
             border-radius: 1.5rem;
@@ -108,39 +108,41 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(210, 180, 140, 0.5);
         }
-        .duplicate-item {
-            background: #fefaf2;
-            border-radius: 1rem;
-            margin-bottom: 0.8rem;
-            border: 1px solid #e9dfd1;
-            overflow: hidden;
-        }
-        .duplicate-header {
-            padding: 0.8rem;
-            cursor: pointer;
-            background: #f5ede2;
-            font-weight: 600;
-            color: #a1220a;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .duplicate-details {
-            padding: 0.8rem;
-            border-top: 1px dashed #ddd;
-            display: none;
+        .removed-table {
+            width: 100%;
+            border-collapse: collapse;
             font-size: 0.8rem;
         }
-        .duplicate-details.show {
-            display: block;
+        .removed-table th, .removed-table td {
+            border: 1px solid #ddd;
+            padding: 0.4rem;
+            text-align: left;
+            vertical-align: top;
         }
-        .index-badge {
-            background: #c0a080;
+        .removed-table th {
+            background: #e0d6c8;
+        }
+        .code-container {
+            background: #1e1a14;
+            color: #f0f0f0;
+            padding: 1rem;
+            border-radius: 1rem;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .copy-btn-code {
+            background: #2d2a24;
+            border: none;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
             color: white;
-            border-radius: 20px;
-            padding: 0.2rem 0.6rem;
-            font-size: 0.7rem;
-            font-weight: normal;
+            cursor: pointer;
+            margin-top: 0.5rem;
         }
         .song-item {
             background: #fefaf2;
@@ -249,14 +251,15 @@
 </head>
 <body>
 <div class="container">
-    <h1>🎵 SUPER Isai · Cover Analyzer + Duplicate Finder
-        <small>check covers and find duplicates</small>
+    <h1>🎵 SUPER Isai · Cover Analyzer + Duplicate Cleaner
+        <small>check covers, find duplicates, generate cleaned isai.js</small>
     </h1>
     <div class="stats">
         <div class="stat-card">📊 Total songs: <span id="totalCount">0</span></div>
         <div class="stat-card">🖼️ With cover: <span id="withCoverCount">0</span></div>
         <div class="stat-card">❌ Without cover: <span id="withoutCoverCount">0</span></div>
         <div class="stat-card">🔄 Duplicate groups: <span id="dupGroupCount">0</span></div>
+        <div class="stat-card">🗑️ Removed songs: <span id="removedCount">0</span></div>
     </div>
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="🔍 Search song name or details..." autocomplete="off">
@@ -272,20 +275,45 @@
         </div>
     </div>
 
-    <!-- Duplicate section -->
+    <!-- Duplicate groups section (collapsible) -->
     <div class="duplicate-section" id="duplicateSection" style="display: none;">
         <div class="duplicate-card">
-            <h2>🔄 Duplicate Songs (same title+details or same URL)</h2>
+            <h2>🔄 Duplicate Groups (kept first occurrence, rest removed)</h2>
             <div id="duplicateList" class="song-list">Loading...</div>
         </div>
     </div>
 
-    <footer>⚡ Cover images are detected by actually loading the image (same URL as audio but .jpg).<br>Duplicate detection groups identical (title + details) or identical URLs.</footer>
+    <!-- Removed songs table -->
+    <div class="duplicate-section" id="removedTableSection" style="display: none;">
+        <div class="duplicate-card">
+            <h2>🗑️ Removed Duplicates (lines to delete from isai.js)</h2>
+            <div style="overflow-x: auto;">
+                <table class="removed-table" id="removedTable">
+                    <thead>
+                        <tr><th>Original Index (0‑based)</th><th>Song Title</th><th>Details</th><th>Base URL</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cleaned isai.js code section -->
+    <div class="clean-section" id="cleanSection" style="display: none;">
+        <div class="clean-card">
+            <h2>📄 Cleaned isai.js (duplicates removed)</h2>
+            <div class="code-container" id="cleanedCodeContainer">Generating...</div>
+            <button class="copy-btn-code" id="copyCleanedBtn">📋 Copy cleaned code</button>
+        </div>
+    </div>
+
+    <footer>⚡ Cover images are detected by actually loading the image (same URL as audio but .jpg).<br>Duplicate detection uses exact match on title+details (case‑insensitive). Removed songs are those after the first occurrence in each duplicate group.</footer>
 </div>
 
 <script type="module">
     import { songs } from './isai.js';
 
+    // --- original repos? We'll reconstruct later from songs list ---
     // Build song list with base URLs and preserve original order
     const songList = songs.map((song, idx) => {
         const title = song.file.replace(/\.(mp3|m4a|MP3|M4A)$/i, '');
@@ -308,55 +336,77 @@
     let withoutCover = [];
     let scanningComplete = false;
 
-    // --- Duplicate detection ---
-    function findDuplicates() {
-        const titleDetailsMap = new Map(); // key: normalized title + details
-        const urlMap = new Map(); // key: url
-        const duplicateGroups = [];
+    // --- Duplicate detection and cleaning ---
+    let duplicateGroups = [];     // groups of duplicates (each group contains all occurrences)
+    let removedIndices = [];      // indices to remove (all but first in each group)
+    let cleanedReposCode = "";    // generated cleaned isai.js code
 
-        // First pass: group by normalized title+details
+    function findDuplicatesAndClean() {
+        // Group by normalized title+details
+        const groups = new Map(); // key -> array of song objects
         for (const song of songList) {
             const normTitle = song.title.trim().toLowerCase();
             const normDetails = (song.details || "").trim().toLowerCase();
             const key = `${normTitle}|${normDetails}`;
-            if (!titleDetailsMap.has(key)) titleDetailsMap.set(key, []);
-            titleDetailsMap.get(key).push(song);
+            if (!groups.has(key)) groups.set(key, []);
+            groups.get(key).push(song);
         }
-        // Filter groups with more than one song
-        for (const [key, group] of titleDetailsMap.entries()) {
+        const duplicateGroupsArray = [];
+        const toKeep = new Set(); // indices to keep (first of each group)
+        removedIndices = [];
+        for (const [key, group] of groups.entries()) {
             if (group.length > 1) {
-                duplicateGroups.push({ type: 'Same title + details', songs: group });
+                duplicateGroupsArray.push({ type: 'Same title + details', songs: group });
+                // keep the first occurrence (lowest index)
+                group.sort((a,b) => a.index - b.index);
+                const keepIdx = group[0].index;
+                toKeep.add(keepIdx);
+                for (let i = 1; i < group.length; i++) {
+                    removedIndices.push(group[i].index);
+                }
+            } else {
+                toKeep.add(group[0].index);
             }
         }
-
-        // Second pass: group by exact URL
-        for (const song of songList) {
-            const url = song.url;
-            if (!urlMap.has(url)) urlMap.set(url, []);
-            urlMap.get(url).push(song);
-        }
-        for (const [url, group] of urlMap.entries()) {
-            if (group.length > 1) {
-                // avoid duplicates if already caught by title+details? Still show as separate warning
-                duplicateGroups.push({ type: 'Same URL (exact duplicate)', songs: group });
-            }
-        }
-
-        // Remove duplicate groups that are completely identical (same set of songs) – simple dedup by JSON
-        const uniqueGroups = [];
-        const groupKeys = new Set();
-        for (const grp of duplicateGroups) {
-            const sortedIndices = grp.songs.map(s => s.index).sort().join(',');
-            const key = `${grp.type}|${sortedIndices}`;
-            if (!groupKeys.has(key)) {
-                groupKeys.add(key);
-                uniqueGroups.push(grp);
-            }
-        }
-        return uniqueGroups;
+        duplicateGroups = duplicateGroupsArray;
+        document.getElementById('dupGroupCount').innerText = duplicateGroups.length;
+        document.getElementById('removedCount').innerText = removedIndices.length;
+        // Generate cleaned repos code
+        generateCleanedCode(toKeep);
+        return { duplicateGroups, removedIndices };
     }
 
-    let duplicateGroups = [];
+    // Reconstruct repos structure from original songs (grouped by baseUrl, preserve order)
+    function generateCleanedCode(keepIndicesSet) {
+        // We need to rebuild the exact structure of isai.js: const repos = [ { base: "...", songs: [...] }, ... ]
+        // We have original songList with each song's baseUrl and original index.
+        // We'll group songs by baseUrl, then within each group keep songs in original order, but only those in keepIndicesSet.
+        const groupsByBase = new Map(); // baseUrl -> array of songs (preserving original order)
+        for (const song of songList) {
+            if (!keepIndicesSet.has(song.index)) continue;
+            if (!groupsByBase.has(song.baseUrl)) groupsByBase.set(song.baseUrl, []);
+            groupsByBase.get(song.baseUrl).push(song);
+        }
+        // Build repos array as JavaScript code
+        let reposCode = 'const repos = [\n';
+        for (const [baseUrl, songsInRepo] of groupsByBase.entries()) {
+            reposCode += `  {\n    base: "${baseUrl}",\n    songs: [\n`;
+            for (const song of songsInRepo) {
+                // Escape backticks and quotes in details
+                const escapedDetails = (song.details || "").replace(/`/g, '\\`').replace(/\${/g, '\\${');
+                reposCode += `      { file: "${escapeJsString(song.title + song.file.substring(song.title.length))}", details: \`${escapedDetails}\`, duration: ${song.duration} },\n`;
+            }
+            reposCode += `    ]\n  },\n`;
+        }
+        reposCode += `];\n\n// Build final songs array with full URL and duration\nexport const songs = [];\nfor (const repo of repos) {\n  for (const s of repo.songs) {\n    songs.push({\n      file: s.file,\n      url: repo.base + encodeURIComponent(s.file),\n      details: s.details,\n      duration: s.duration\n    });\n  }\n}\n`;
+        cleanedReposCode = reposCode;
+        document.getElementById('cleanedCodeContainer').innerText = reposCode;
+    }
+
+    function escapeJsString(str) {
+        if (!str) return '';
+        return str.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+    }
 
     // --- cover detection ---
     function coverExists(url) {
@@ -400,55 +450,53 @@
                 }
             });
             await Promise.all(promises);
-            document.getElementById('withCoverCount').innerText = withCover.length;
-            document.getElementById('withoutCoverCount').innerText = withoutCover.length;
-            document.getElementById('withCoverCountInline').innerText = withCover.length;
-            document.getElementById('withoutCoverCountInline').innerText = withoutCover.length;
+            updateCoverCounters();
             filterAndRender(document.getElementById('searchInput').value);
             await new Promise(r => setTimeout(r, 50));
         }
         scanningComplete = true;
         filterAndRender(document.getElementById('searchInput').value);
-        // Now compute duplicates
-        duplicateGroups = findDuplicates();
-        document.getElementById('dupGroupCount').innerText = duplicateGroups.length;
-        renderDuplicates();
+        // Now find duplicates and generate cleaned code
+        const { duplicateGroups, removedIndices } = findDuplicatesAndClean();
+        renderDuplicates(duplicateGroups);
+        renderRemovedTable(removedIndices);
         if (duplicateGroups.length > 0) {
             document.getElementById('duplicateSection').style.display = 'block';
+            document.getElementById('removedTableSection').style.display = 'block';
+            document.getElementById('cleanSection').style.display = 'block';
         }
-        console.log(`Done: ${withCover.length} with cover, ${withoutCover.length} without, ${duplicateGroups.length} duplicate groups`);
+        updateCoverCounters();
     }
 
-    // --- Render duplicate groups (collapsible) ---
-    function renderDuplicates() {
+    function updateCoverCounters() {
+        document.getElementById('withCoverCount').innerText = withCover.length;
+        document.getElementById('withoutCoverCount').innerText = withoutCover.length;
+        document.getElementById('withCoverCountInline').innerText = withCover.length;
+        document.getElementById('withoutCoverCountInline').innerText = withoutCover.length;
+    }
+
+    function renderDuplicates(groups) {
         const container = document.getElementById('duplicateList');
         if (!container) return;
-        if (duplicateGroups.length === 0) {
+        if (groups.length === 0) {
             container.innerHTML = '<div class="loading">✅ No duplicates found</div>';
             return;
         }
         container.innerHTML = '';
-        duplicateGroups.forEach((group, idx) => {
+        groups.forEach((group, idx) => {
             const groupDiv = document.createElement('div');
             groupDiv.className = 'duplicate-item';
-            const typeColor = group.type.includes('URL') ? '#b86b00' : '#a1220a';
             groupDiv.innerHTML = `
-                <div class="duplicate-header" data-dup-idx="${idx}">
-                    <span style="background:${typeColor}; color:white; padding:0.2rem 0.5rem; border-radius:20px; font-size:0.7rem;">${group.type}</span>
+                <div class="duplicate-header" data-dup-idx="${idx}" style="padding:0.8rem; cursor:pointer; background:#f5ede2; display:flex; align-items:center; gap:0.5rem;">
+                    <span style="background:#a1220a; color:white; padding:0.2rem 0.5rem; border-radius:20px; font-size:0.7rem;">${group.type}</span>
                     <span>${group.songs.length} songs</span>
                     <span style="font-size:0.7rem; margin-left:auto;">▼</span>
                 </div>
-                <div class="duplicate-details" id="dup-details-${idx}">
+                <div class="duplicate-details" id="dup-details-${idx}" style="display:none; padding:0.8rem;">
                     ${group.songs.map(song => `
-                        <div class="song-item" style="margin-bottom:0.3rem;">
-                            <div class="song-header" style="cursor:default; background:#fff;">
-                                <span class="index-badge">Index: ${song.index}</span>
-                                <div class="song-title">${escapeHtml(song.title)}</div>
-                            </div>
-                            <div style="padding:0.3rem 0.8rem 0.8rem 0.8rem; font-size:0.75rem;">
-                                <div><strong>Details:</strong> ${escapeHtml(song.details) || "—"}</div>
-                                <div><strong>URL:</strong> <span style="word-break:break-all;">${escapeHtml(song.url)}</span></div>
-                            </div>
+                        <div style="margin-bottom:0.5rem; border-bottom:1px solid #eee; padding:0.3rem;">
+                            <strong>Index ${song.index}:</strong> ${escapeHtml(song.title)}<br>
+                            <small>Details: ${escapeHtml(song.details) || "—"}</small>
                         </div>
                     `).join('')}
                 </div>
@@ -461,9 +509,33 @@
             const detailsDiv = document.getElementById(`dup-details-${idx}`);
             header.addEventListener('click', (e) => {
                 e.stopPropagation();
-                detailsDiv.classList.toggle('show');
+                if (detailsDiv.style.display === 'none') detailsDiv.style.display = 'block';
+                else detailsDiv.style.display = 'none';
             });
         });
+    }
+
+    function renderRemovedTable(removedIndices) {
+        const tbody = document.querySelector('#removedTable tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        if (removedIndices.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4">No duplicates removed</td></tr>';
+            return;
+        }
+        // sort removed indices ascending for clarity
+        const sorted = [...removedIndices].sort((a,b) => a - b);
+        for (const idx of sorted) {
+            const song = songList[idx];
+            tbody.innerHTML += `
+                <tr>
+                    <td>${idx}</td>
+                    <td>${escapeHtml(song.title)}</td>
+                    <td>${escapeHtml(song.details) || "—"}</td>
+                    <td style="word-break:break-all;">${escapeHtml(song.baseUrl)}</td>
+                </tr>
+            `;
+        }
     }
 
     // --- existing UI logic (cover lists, search, copy, preview) ---
@@ -665,6 +737,17 @@
 
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', (e) => filterAndRender(e.target.value));
+
+    // Copy cleaned code button
+    document.getElementById('copyCleanedBtn').addEventListener('click', () => {
+        const code = document.getElementById('cleanedCodeContainer').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+            const btn = document.getElementById('copyCleanedBtn');
+            const original = btn.innerText;
+            btn.innerText = '✓ Copied!';
+            setTimeout(() => btn.innerText = original, 1500);
+        }).catch(err => console.warn('Copy failed', err));
+    });
 
     processSongs().then(() => filterAndRender(searchInput.value));
 </script>
