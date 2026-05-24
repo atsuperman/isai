@@ -217,7 +217,7 @@
             font-size: 0.7rem;
             white-space: pre-wrap;
             word-break: break-all;
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
         }
         .copy-btn-code {
@@ -248,7 +248,7 @@
 <body>
 <div class="container">
     <h1>🎵 SUPER Isai · Cover Analyzer + Duplicate Cleaner
-        <small>7‑in‑1 tool</small>
+        <small>remove duplicates, generate clean isai.js</small>
     </h1>
     <div class="stats" id="statsArea">
         <div class="stat-card">📊 Total songs: <span id="totalCount">0</span></div>
@@ -277,7 +277,7 @@
             <h2>🗑️ Removed duplicates (lines to delete from original isai.js)</h2>
             <div style="overflow-x: auto;">
                 <table class="removed-table" id="removedTable">
-                    <thead><tr><th>Original Index (0‑based)</th><th>Song Title</th><th>Details</th><th>Base URL</th></tr></thead>
+                    <thead><tr><th>Original Index</th><th>Song Title</th><th>Details</th><th>Base URL</th></tr></thead>
                     <tbody></tbody>
                 </table>
             </div>
@@ -295,25 +295,29 @@
     <!-- Cleaned isai.js code (feature 6) -->
     <div class="clean-section" id="cleanSection" style="display: none;">
         <div class="section-card">
-            <h2>📄 Cleaned isai.js (duplicates removed)</h2>
+            <h2>📄 Cleaned isai.js (duplicates removed, ready to copy)</h2>
             <div class="code-container" id="cleanedCodeContainer">Generating...</div>
             <button class="copy-btn-code" id="copyCleanedBtn">📋 Copy cleaned code</button>
         </div>
     </div>
 
-    <footer>⚡ Cover images are tested by loading them. Duplicate detection: case‑insensitive match of title+details. First occurrence kept.</footer>
+    <footer>⚡ Duplicate detection: case‑insensitive match of title+details (trimmed). First occurrence kept.</footer>
 </div>
 
 <script type="module">
     import { songs } from './isai.js';
 
-    // Build song list with all metadata
+    // Build detailed song list with original file name (including extension)
     const songList = songs.map((song, idx) => {
-        const title = song.file.replace(/\.(mp3|m4a|MP3|M4A)$/i, '');
+        const originalFile = song.file;                         // e.g. "Chikkimukki Kallu.m4a"
+        const title = originalFile.replace(/\.(mp3|m4a|MP3|M4A)$/i, '');
+        const ext = originalFile.match(/\.(mp3|m4a|MP3|M4A)$/i)[0]; // preserve original extension
+        const fullFileName = title + ext;                       // reconstruct original file name
         const baseUrl = song.url.substring(0, song.url.lastIndexOf('/') + 1);
         return {
             index: idx,
             title: title,
+            originalFile: fullFileName,
             url: song.url,
             details: song.details,
             duration: song.duration,
@@ -326,9 +330,9 @@
     let withoutCover = [];
     let scanningComplete = false;
 
-    // --- Duplicate detection (by title+details, case-insensitive, trimmed) ---
+    // --- Duplicate detection by title+details (case-insensitive, trimmed) ---
     function findDuplicatesAndRemoved() {
-        const groups = new Map(); // key -> array of song objects
+        const groups = new Map();
         for (const song of songList) {
             const normTitle = song.title.trim().toLowerCase();
             const normDetails = (song.details || "").trim().toLowerCase();
@@ -342,7 +346,6 @@
         for (const [key, group] of groups.entries()) {
             if (group.length > 1) {
                 duplicateGroups.push({ type: 'Same title+details', songs: group });
-                // keep the one with smallest index
                 group.sort((a,b) => a.index - b.index);
                 toKeepIndices.add(group[0].index);
                 for (let i = 1; i < group.length; i++) {
@@ -355,25 +358,35 @@
         return { duplicateGroups, toKeepIndices, removedIndices };
     }
 
-    // --- Generate cleaned isai.js code (reconstruct repos) ---
+    // --- Generate cleaned isai.js code preserving original repo structure ---
     function generateCleanedCode(keepIndicesSet) {
-        // group kept songs by baseUrl (preserve order of appearance)
+        // First, we need to rebuild the exact repos array as in original isai.js
+        // We have the original 'songs' array from import, which already contains all songs with correct order.
+        // But we want to group by baseUrl and preserve the original order of repos and songs.
+        // Since we cannot easily get the original repos structure, we'll reconstruct by grouping kept songs by baseUrl,
+        // and then output them in the order of first appearance of each baseUrl in the original songList.
         const keptSongs = songList.filter(s => keepIndicesSet.has(s.index));
         const groupsByBase = new Map();
         for (const song of keptSongs) {
             if (!groupsByBase.has(song.baseUrl)) groupsByBase.set(song.baseUrl, []);
             groupsByBase.get(song.baseUrl).push(song);
         }
-        // build repos array as a string
+        // Preserve the order of baseUrls as they first appear in original songList
+        const orderedBaseUrls = [];
+        for (const song of songList) {
+            if (!orderedBaseUrls.includes(song.baseUrl) && groupsByBase.has(song.baseUrl)) {
+                orderedBaseUrls.push(song.baseUrl);
+            }
+        }
+        // Build the repos array string
         let reposCode = 'const repos = [\n';
-        for (const [baseUrl, songsInRepo] of groupsByBase.entries()) {
+        for (const baseUrl of orderedBaseUrls) {
+            const songsInRepo = groupsByBase.get(baseUrl);
             reposCode += `  {\n    base: "${baseUrl}",\n    songs: [\n`;
             for (const song of songsInRepo) {
-                // Reconstruct original file name from title and extension (preserve original file extension from song.url)
-                let ext = '.m4a';
-                if (song.url.endsWith('.mp3')) ext = '.mp3';
-                const fileName = song.title + ext;
                 const escapedDetails = (song.details || "").replace(/`/g, '\\`').replace(/\${/g, '\\${');
+                // Ensure the file name uses the original extension
+                const fileName = song.originalFile;
                 reposCode += `      { file: "${fileName}", details: \`${escapedDetails}\`, duration: ${song.duration} },\n`;
             }
             reposCode += `    ]\n  },\n`;
@@ -417,24 +430,20 @@
         scanningComplete = true;
         filterAndRender(document.getElementById('searchInput').value);
 
-        // Duplicate and cleaning
         const { duplicateGroups, toKeepIndices, removedIndices } = findDuplicatesAndRemoved();
         document.getElementById('dupGroupCount').innerText = duplicateGroups.length;
         document.getElementById('removedCount').innerText = removedIndices.length;
-        // render duplicate groups
         renderDuplicateGroups(duplicateGroups);
-        // render removed table
         renderRemovedTable(removedIndices);
-        // generate cleaned code
+        
         const cleanedCode = generateCleanedCode(toKeepIndices);
         document.getElementById('cleanedCodeContainer').innerText = cleanedCode;
-        // show sections if needed
+        
         if (duplicateGroups.length > 0) {
             document.getElementById('duplicateSection').style.display = 'block';
             document.getElementById('removedSection').style.display = 'block';
             document.getElementById('cleanSection').style.display = 'block';
         } else {
-            // still show clean section with no changes? optional
             document.getElementById('cleanSection').style.display = 'block';
         }
         updateCoverCounters();
@@ -688,11 +697,9 @@
         });
     }
 
-    // Search input
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', (e) => filterAndRender(e.target.value));
 
-    // Copy cleaned code button
     document.getElementById('copyCleanedBtn').addEventListener('click', () => {
         const code = document.getElementById('cleanedCodeContainer').innerText;
         navigator.clipboard.writeText(code).then(() => {
@@ -703,7 +710,6 @@
         });
     });
 
-    // Start scanning
     processSongs();
 </script>
 </body>
