@@ -302,20 +302,10 @@ const repos = [
 { file: "Kilakku Sivakiyile.m4a", details: "🎬 Seevalaperi Pandi (1994) / 🎙️ Rajagopal, Sujatha Mohan, P. G. Srikanth / 🎼 Adithyan / 📝 K. Rajeshwar / 🎥 Pratap Pothen", duration: 231 },
 
 { file: "Kadhala Kadhala.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Hariharan, Sujatha / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 346 },
-{ file: "Kadhali Kadhali.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Hariharan / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 345 },
-{ file: "Kalyanam Katcheri.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 329 },
-{ file: "Rukku Rukku Rukku.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ Kamal Haasan, Sujatha / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 354 },
-{ file: "Velai Velai.m4a", details: "🎬 Avvai Shanmugi (1996) / 🎙️ S. P. Balasubrahmanyam / 🎼 Deva / 📝 Vaali / 🎥 K. S. Ravikumar", duration: 325 },
-{ file: "Hey Unnaithaane.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Vairamuthu / 🎥 A. Jagannathan", duration: 240 },
-{ file: "Jaadhi Illai.m4a", details: "🎬 Kadhal Parisu (1987) / 🎙️ Malaysia Vasudevan / 🎼 Ilaiyaraaja / 📝 Gangai Amaran / 🎥 A. Jagannathan", duration: 240 },
 
-{ file: "Journey.m4a", details: "🎬 Jaanu (2020) / 🎙️ Pradeep Kumar / 🎼 Govind Vasantha / 📝 Karthik Netha / 🎥 C. Prem Kumar", duration: 367 },
-{ file: "Ding Dang Dang.m4a", details: "🎬 Panakkaran (1990) / 🎙️ S. P. Balasubrahmanyam, K. S. Chithra / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 P. Vasu", duration: 297 },
-{ file: "Maraththa Vechchavan.m4a", details: "🎬 Panakkaran (1990) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 P. Vasu", duration: 239 },
-{ file: "Nooru Varusham (Female).m4a", details: "🎬 Panakkaran (1990) / 🎙️ S. Janaki / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu", duration: 271 },
 { file: "Nooru Varusham (Male).m4a", details: "🎬 Panakkaran (1990) / 🎙️ Mano / 🎼 Ilaiyaraaja / 📝 Vaali / 🎥 P. Vasu", duration: 267 },
 { file: "Silence Silence.m4a", details: "🎬 Panakkaran (1990) / 🎙️ S. P. Balasubrahmanyam, S. Janaki / 🎼 Ilaiyaraaja / 📝 Pulamaipithan / 🎥 P. Vasu", duration: 279 },
-{ file: "Ullukulla Chakaravarthy.m4a", details: "🎬 Panakkaran (1990) / 🎙️ Ilaiyaraaja / 🎼 Ilaiyaraaja / 📝 Ilaiyaraaja / 🎥 P. Vasu", duration: 272 },
+
 { file: "Kanakozhikku Kaluthula Vellai.m4a", details: "🎬 Suyamvaram (1999) / 🎙️ Anuradha Sriram, Sabesan / 🎼 Deva / 📝 Ponniyin Selvan / 🎥 Various Directors", duration: 314 },
 { file: "Margazhi Maasathu.m4a", details: "🎬 Suyamvaram (1999) / 🎙️ S. P. Balasubrahmanyam, Mano, Unnikrishnan, Swarnalatha, Sujatha Mohan / 🎼 S. A. Rajkumar / 📝 Palani Bharathi / 🎥 Various Directors", duration: 453 },
 { file: "Sekka Sevantha Valea.m4a", details: "🎬 Suyamvaram (1999) / 🎙️ Hariharan, Sujatha Mohan / 🎼 Sirpy / 📝 Palani Bharathi / 🎥 Various Directors", duration: 304 },
