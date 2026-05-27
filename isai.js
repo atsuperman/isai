@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Esa Kaaththa.m4a", details: "🎬 My Lord (2025) / 🎙️ Sathyaprakash, Chinmayi Sripada / 🎼 Sean Roldan / 📝 Yugabharathi", duration: 238 },
 { file: "Vari Vari by Dhee.m4a", details: "📀 Vari Vari (2026) / 🎙️ Dhee / 🎼 Santhosh Narayanan / 📝 Vivek", duration: 202 },
 { file: "Antha Kanna Paathaka Remix.m4a", details: "📀 Antha Kanna Paathakka Mix / 🎧 DJ SAM CHENNAI", duration: 205 },
 { file: "Enjoy Enjaami Remix.m4a", details: "📀 Enjoy Enjaami reMix / 🎧 DJ SAM CHENNAI", duration: 199 },
