@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Naa Ready.m4a", details: "🎬 Leo (2023) / 🎙️ Vijay, Anirudh Ravichander, Asal Kolaar / 🎼 Anirudh Ravichander / 📝 Vishnu Edavan", duration: 248 },
 { file: "Chinna Chinna Kangal.m4a", details: "🎬 The Greatest of All Time (2024) / 🎙️ Thalapathy Vijay, Bhavatharini / 🎼 Yuvan Shankar Raja / 📝 Kabilan Vairamuthu", duration: 269 },
 { file: "Poojaikkettha Poovidhu Ai Remix.m4a", details: "💽 TAMIL ECHO SONGS / 📁 TAMIL AI REMIX COLLECTION", duration: 271 },
 { file: "Aasaiya Kaatthula Ai Remix.m4a", details: "💽 TAMIL ECHO SONGS / 📁 TAMIL AI REMIX COLLECTION", duration: 261 },
