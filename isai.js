@@ -3,6 +3,7 @@ const repos = [
   {
     base: "https://github.com/atsuperman/play2/raw/main/",
     songs: [
+{ file: "Chinna Chinna Kangal.m4a", details: "🎬 The Greatest of All Time (2024) / 🎙️ Thalapathy Vijay, Bhavatharini / 🎼 Yuvan Shankar Raja / 📝 Kabilan Vairamuthu", duration: 269 },
 { file: "Poojaikkettha Poovidhu Ai Remix.m4a", details: "💽 TAMIL ECHO SONGS / 📁 TAMIL AI REMIX COLLECTION", duration: 271 },
 { file: "Aasaiya Kaatthula Ai Remix.m4a", details: "💽 TAMIL ECHO SONGS / 📁 TAMIL AI REMIX COLLECTION", duration: 261 },
 { file: "Esa Kaaththa.m4a", details: "🎬 My Lord (2025) / 🎙️ Sathyaprakash, Chinmayi Sripada / 🎼 Sean Roldan / 📝 Yugabharathi", duration: 238 },
