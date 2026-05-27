@@ -598,7 +598,6 @@ const repos = [
 { file: "Aalappol_Velapol.mp3", details: "🎬 Ejamaan (1993) / 🎤 S.P. Balasubrahmanyam, Chithra / 🎼 Ilaiyaraaja / 📝 Vaali", duration: 305 },
 { file: "Peelings.mp3", details: "🎬 Pushpa 2 - The Rule ( Tamil) / 2024 /🎙️ Senthil Ganesh, Rajalakshmi /🎼 Devi Sri Prasad / 📝 Viveka, Siju Thuravoor", duration: 247 },
 { file: "Nee_Pottu_Vacha.mp3", details: "🎬 Ponmana Selvan (1989) / 🎤 Malaysia Vasudevan, Mano, K.S. Chithra / 🎼 Ilaiyaraaja / 📝 Gangai Amaran", duration: 266 },
-{ file: "Naa_Ready.mp3", details: "🎬 Leo (2023) / 🎤 Thalapathy Vijay, Anirudh Ravichander / 🎼 Anirudh Ravichander / 📝 Vishnu Edavan", duration: 254 },
 { file: "Hey_Minnale.mp3", details: "🎬 Amaran (2024) / 🎤 Haricharan, Shweta Mohan / 🎼 G.V Prakash Kumar / 📝 Karthik Netha", duration: 230 },
 { file: "Achacho.mp3", details: "🎬 Aranmanai 4 (2024) / 🎤 Kharesma Ravichandran, Srinisha Jayaseelan, Hiphop Tamizha / 🎼 Hiphop Tamizha / 📝 Vignesh Srikanth", duration: 193 },
 { file: "Edho Solla.mp3", details: "🎬 Murungakkai Chips (2020) / 🎤 Sid Sriram / 🎼 Dharan Kumar / 📝 Ravindhar Chandrasekaran", duration: 303 },
